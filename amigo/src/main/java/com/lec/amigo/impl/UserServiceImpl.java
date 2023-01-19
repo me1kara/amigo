@@ -1,5 +1,6 @@
 package com.lec.amigo.impl;
 
+
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +32,6 @@ public class UserServiceImpl implements UserService{
 		// mail server 설정
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
-
 		String hostSMTPid = "amigo931224";
 		String hostSMTPpwd = "tjdgud!2";
 	
@@ -76,32 +76,32 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void searchPw(HttpServletResponse res, UserVO vo) throws Exception {
-		res.setContentType("text/html;charset=utf-8");
-		UserVO user = userDAO.getUser(vo.getUser_email());
-		PrintWriter out = res.getWriter();
-		// 가입된 이메일이 아니면
-		if(!vo.getUser_email().equals(user.getUser_email())) {
-			out.print("등록되지 않은 이메일입니다.");
-			out.close();
-		}else {
-			// 임시 비밀번호 생성
-			String pw = "";
-			for (int i = 0; i < 12; i++) {
-				pw += (char) ((Math.random() * 26) + 97);
-			}
-			vo.setUser_pw(pw);
-			// 비밀번호 변경
-			
-			userDAO.updatePw(vo);
-			// 비밀번호 변경 메일 발송
-			sendEmail(vo, "searchpw");
+	   public void searchPw(HttpServletResponse res, UserVO vo) throws Exception {
+	      res.setContentType("text/html;charset=utf-8");
+	      UserVO user = userDAO.getUser(vo.getUser_email());
+	      PrintWriter out = res.getWriter();
+	      // 가입된 이메일이 아니면
+	      if(!vo.getUser_email().equals(user.getUser_email())) {
+	         out.print("등록되지 않은 이메일입니다.");
+	         out.close();
+	      }else {
+	         // 임시 비밀번호 생성
+	         String pw = "";
+	         for (int i = 0; i < 12; i++) {
+	            pw += (char) ((Math.random() * 26) + 97);
+	         }
+	         vo.setUser_pw(pw);
+	         // 비밀번호 변경
+	         
+	         userDAO.updatePw(vo);
+	         // 비밀번호 변경 메일 발송
+	         sendEmail(vo, "searchpw");
 
-			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
-			out.close();
-		}
+	         out.print("이메일로 임시 비밀번호를 발송하였습니다.");
+	         out.close();
+	      }
 
-	}
+	   }
 
 	public UserVO insertUser(UserVO userVO) {
 		return userDAO.insertUser(userVO);

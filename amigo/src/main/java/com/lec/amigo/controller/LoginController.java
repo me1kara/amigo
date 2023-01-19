@@ -1,10 +1,12 @@
 package com.lec.amigo.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,9 +78,9 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/search_pwd.do", method = RequestMethod.POST)
-	public void search_pwq(@ModelAttribute UserVO vo, HttpServletResponse res) throws Exception {
-		userService.searchPw(res, vo);
-	}
+	   public void search_pwq(@ModelAttribute UserVO vo, HttpServletResponse res) throws Exception {
+	      userService.searchPw(res, vo);
+	   }
 	
 	// 약관동의
 	@RequestMapping(value="/terms.do", method = RequestMethod.GET)
@@ -93,9 +95,13 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/signup.do", method = RequestMethod.POST)
-	public String signup(UserVO userVO) {
+	public String signup(UserVO userVO, HttpServletRequest req, Model model) {
+		
+		userVO.setUser_addr(userVO.getUser_addr()+" "+req.getParameter("user_addr2"));		
 		userService.insertUser(userVO);
-		return "view/login/login_form.jsp";
+		model.addAttribute("msg", "회원가입이 완료되었습니다. 로그인 해주세요.");
+		model.addAttribute("url", "login.do");
+		return "view/signup/sign_up_alert.jsp";
 	}
 	
 	// 아이디중복체크
