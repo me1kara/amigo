@@ -16,13 +16,28 @@
   <script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
 
 
-<!--한국어  달력 쓰려면 추가 로드-->
+<!--한국어 달력 쓰려면 추가 로드-->
 <script src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>  
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src='<%=request.getContextPath() %>/resources/fullcalendar-6.0.3/dist/index.global.js'></script>
+    <script>
+    
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');0
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          contentHeight: 300
+   
+        });
+        calendar.render();
+      });
+
+    </script>
 <title>펫시터02_펫시터예약폼</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -33,6 +48,31 @@
     	td{
     		width:100px;heigth:500px;
     	}
+		.select {
+		    padding: 15px 10px;
+		}
+		.select input[type=radio]{
+		    display: none;
+		}
+		.select input[type=radio]+label{
+		    display: inline-block;
+		    cursor: pointer;
+		    height: 24px;
+		    width: 90px;
+		    border: 1px solid #333;
+		    line-height: 24px;
+		    text-align: center;
+		    font-weight:bold;
+		    font-size:13px;
+		}
+		.select input[type=radio]+label{
+		    background-color: #fff;
+		    color: #333;
+		}
+		.select input[type=radio]:checked+label{
+		    background-color: #333;
+		    color: #fff;
+		}
     </style>
 </head>
 
@@ -44,38 +84,32 @@
 		<div class="container">
 			
 			
-			<form action="book.do">
-					
-			<button class="btn btn-secondary">방문</button>
-			<button class="btn btn-secondary">위탁</button>
 			
+			<form action="book.do">
+			<div class="select">
+     			<input type="radio" id="select1" name="shop" value="visit"><label for="select1">방문</label>
+     			<input type="radio" id="select2" name="shop" value="consign"><label for="select2">위탁</label>
+			</div>
+					
+
 			<br>
 			<b>예약날짜</b>
-			
 			<br>
+		  	<div id='calendar-container'>
+    			<div id='calendar'></div>
+  			</div>
 			
-			
-			<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#calendar">
-				<img src="http://192.168.0.101:8088/amigo/resources/img/dool.png" alt="달력" /> 	
-			</button><br>
-			
-			이용주소 <input type="text" name="address" id="submitAddress" /><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#address">변경</button><br>
-			휴대전화 <input type="text" name="phone" /><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#phone">변경</button><br>
+			이용주소 <input type="text" name="address" id="address" /><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#address_modal">변경</button><br>
 			
 			<b>특이사항</b><br>
 			<textarea></textarea><br>
 			
 			<b>비용:30000원</b><br>
 			
-			<b>개인정보이용동의</b><br>
+			<input type="checkbox" name="term" value="true"/><b>개인정보이용동의</b><br>		
+			<button type="button" class="btn" data-bs-toggle="collapse" data-bs-target="#term">더보기</button><br>
 			
-			
-			
-			
-			
-			<div class="btn" data-bs-toggle="collapse" data-bs-target="#term">더보기</div><br>
-			
-			<p id="term" class="collapse">얼마나 튼튼하며 그들의 피부가 얼마나ㅁㄴㅇㅁㄴㅇㄴㅁㅇ</p>
+			<div id="term" class="collapse">얼마나 튼튼하며 그들의 피부가 얼마나ㅁㄴㅇㅁㄴㅇㄴㅁㅇ</div>
 			
 			<button class="btn btn-primary" onclick="history.back(-1)">이전</button>
 			<button type="submit" class="btn btn-primary">확인</button>
@@ -105,12 +139,10 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-
-
-		<body>
+		
    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
+   		
    		<input type="text" id="datepicker" class="form-control"/>
-		</body>
       	
         
       </div>
@@ -124,7 +156,7 @@
   </div>
 </div>
 
-<div class="modal" id="address">
+<div class="modal" id="address_modal">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -162,37 +194,6 @@
   </div>
 </div>
 
-<div class="modal" id="phone">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">휴대폰변경 모달창</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-		<body>
-   <!-- 시작시 기본 날짜 설정은 value를 이용 -->
-   		<input type="text" id="datepicker" class="form-control"/>
-   		
-   		
-		</body>
-      	
-        
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
 
       	<script>
    	$(function() {
@@ -224,9 +225,7 @@
 	 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
             <script>
             	$('#address_submit').click(function(){
-            			
-            			
-            			$('#submitAddress').val($('#sample4_postcode').val() + $("#sample4_roadAddress").val() + '히'+ $("#sample4_jibunAddress").val());
+            			$('#address').val($("#sample4_roadAddress").val() + $("#sample4_jibunAddress").val());
             		}
             	);
                 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -279,6 +278,5 @@
                     }).open();
                 }
             </script>
-	
 </body>
 </html>
