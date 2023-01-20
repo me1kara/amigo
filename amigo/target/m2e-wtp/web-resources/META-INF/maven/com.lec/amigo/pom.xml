@@ -15,14 +15,13 @@
 	</properties>
 	<dependencies>
 	
-	
-		<!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 		<dependency>
-   			 <groupId>javax.inject</groupId>
-    		 <artifactId>javax.inject</artifactId>
-    		<version>1</version>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version> 
 		</dependency>
-		
+	
 		<!-- 한글경로 -->
 		<dependency>
     		<groupId>xerces</groupId>
@@ -35,6 +34,13 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-email</artifactId>
 			<version>1.2</version>
+		</dependency>
+		
+	   <!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>1.6.2</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->

@@ -10,9 +10,8 @@
   crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>로그인전01_처음화면</title>
+<title>메인홈</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
@@ -20,22 +19,29 @@
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-	
+		
+		<br>
 		<div class="container">
 		
-		<a href="login.do">이메일 로그인</a>
-		<br>
-		<a href="terms.do">이메일 가입</a>
-		<br>
-		<a href="dog.do">강아지등록(컨트롤 통해서)</a>
-		<br>
-		<a href="view/mypage/amigo_profile_insert.jsp">강아지등록</a>
-		
-		<br><br>
-		<a href="main_tour.do">둘러보기</a>
-		
-		</div>
+		<script>
+		 function main_fail() {
+     		alert("로그인 후 이용가능한 페이지입니다.");
+         }
+		</script>
 
+		<a href="#" onclick="main_fail();">펫시터</a> <br>
+		<a href="#" onclick="main_fail();">추천산책루트</a><br>
+		<a href="#" onclick="main_fail()">병원</a><br>
+		<a href="#" onclick="main_fail()">고객센터</a><br>
+		<a href="#" onclick="main_fail()">커뮤니티</a><br>
+	
+		<!-- 메뉴바 만들기 전에 임시로 채팅연결용으로 사용 -->
+		<a href="#" onclick="main_fail()">채팅목록</a><br>
+		
+		
+		<a href="home.jsp">로그인 하러하기</a><br>
+	
+		</div>
 	<%@include file="/includes/footer.jsp" %>
 
 	
