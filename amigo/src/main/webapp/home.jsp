@@ -18,25 +18,83 @@
     <![endif]-->
 </head>
 <body>
-	
-	<%@include file="/includes/header.jsp" %>
-	
+	<!-- 로그인 화면에서는 네비바가 필요 없을거 같습니다. --> 
+	<!-- <@include file="/includes/header.jsp" %> -->
+	 
+	 <!--  
+	     과거 코드
 		<div class="container">
 		
 		<a href="login.do">이메일 로그인</a>
 		<br>
 		<a href="terms.do">이메일 가입</a>
 		<br>
-		<a href="dog.do">강아지등록(컨트롤 통해서)</a>
-		<br>
-		<a href="view/mypage/amigo_profile_insert.jsp">강아지등록</a>
 		
 		<br><br>
 		<a href="main_tour.do">둘러보기</a>
 		
 		</div>
+		-->
+		
+		 <!-- 메인 화면-->
+    <!-- icon -->
+    <div class="text-center">
+      <img
+        class="img-responsive"
+        src="resources/img/logo2.png"
+        alt="AmigoMainLogo"
+        width="450"
+        height="440"
+      />
+    </div>
+    <!-- icon end-->
+    <hr />
+    <div class="loginLogo2 text-center" width="90">
+      <img src="resources/img/logo1.png" alt="logo1" />
+    </div>
+    <!-- 로그인 폼 -->
+    <!-- Submit button -->
+    <section class="vh-100">
+      <form>
+        <div class="container py-5 h-100" align="center">
+          <!-- 이메일 로그인 -->
+          <button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='login.do';">
+            이메일 로그인
+          </button>
+          <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="location.href='terms.do';">
+            이메일 가입
+          </button>
+          <!-- 이메일 로그인 end -->
+          <!-- 카카오, 지메일 -->
+          <div class="container py-5 h-100" align="center">
+            <a class="kakaoLogin" href="#" alt="kakao">
+              <img src="resources/img/kakao.png" alt="kakaoButton" width="242" />
+            </a>
+            <a class="googleLogin" href="#" alt="google">
+              <img
+                src="resources/img/google.png"
+                alt="googleButton"
+                height="65"
+                width="250"
+              />
+            </a>
+          </div>
+          <!-- 카카오, 지메일 end -->
+        </div>
+        <div class="container text-center">
+          <div class="row justify-content-between">
+            <div class="col-4"><a href="#">가입/로그인이 안되요</a></div>
+            <div class="col-4"><a href="main_tour.do">둘러보기</a></div>
+          </div>
+        </div>
+      </form>
+    </section>
+    <!-- 로그인 end -->
+    <!-- 하단 -->
+    <!-- 메인 화면 종료 -->
+  </body>
 
-	<%@include file="/includes/footer.jsp" %>
+  	<!--  	<@include file="/includes/footer.jsp" %> -->
 
 	
 </body>
