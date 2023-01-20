@@ -143,5 +143,9 @@ public class UserServiceImpl implements UserService{
         return Integer.toString(checkNum);
  
 	}
+
+	public int nickCheck(String user_nick) {
+		return userDAO.nickCheck(user_nick);
+	}
 	
 }
