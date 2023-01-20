@@ -40,6 +40,18 @@
                     <label for="inputName">이메일주소*</label>
                     <input type="email" class="form-control" id="user_email" name="user_email" placeholder="이메일 주소" onchange="checkEmail();" check_email="fail" required>
                     <span id="confirmEmail"></span>
+                    <br>
+                    <button type="button" id="email_auth_btn" class="email_auth_btn">인증번호 받기</button>
+                    <input type="text" placeholder="인증번호 입력" id="email_auth_key" onchange="email_auth_Confirm();">
+                    <script>
+                    function email_auth_Confirm() {
+                    if($('#email_auth_key').val() != email_auth_cd){
+            				alert("인증번호가 일치하지 않습니다.");
+            			} else {
+            				alert("인증번호 확인완료");
+            			}
+                    }
+                    </script>
                 </div>
                 <div class="form-group">
                     <label for="InputEmail">비밀번호*</label>
@@ -49,7 +61,32 @@
                     <label for="inputPasswordCheck">비밀번호 확인*</label>
                     <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호 확인을 위해 다시 한 번 입력 해 주세요" onkeyup="passConfirm();" check_pw="fail">
                      <span id="confirmMsg"></span>
-
+                     
+         			<script type="text/javascript">  
+    				/* 자바 스크립트 함수 선언(이메일 중복 확인) */
+					  		 $("#email_auth_btn").click(function(){	     	 
+					    	 var user_email = $('#user_email').val();
+					    	 
+					    	 if(user_email == ''){
+					    	 	alert("이메일을 입력해주세요.");
+					    	 	return false;
+					    	 }
+					    	 
+					    	 $.ajax({
+								type : "post",
+								url : "emailAuth.do",
+								data : {user_email : user_email},
+								success: function(data){
+									alert("인증번호가 발송되었습니다.");
+									email_auth_cd = data;
+								},
+								error: function(data){
+									alert("메일 발송에 실패했습니다.");
+								}
+							}); 
+						});
+  				</script>
+  				
 				<script type="text/javascript">
 				/* 자바 스크립트 함수 선언(비밀번호 확인) */
 				
@@ -187,32 +224,37 @@
                 <div class="form-group text-center">
                     <input type="submit" id="join-submit" class="btn btn-primary"  value="다음으로" >
                 </div>
+                
                 <script>
+                
                 function checkResult() {
                 	
                 if ($('#user_email').attr("check_email") == "fail"){
-				    alert("이메일 중복체크를 해주시기 바랍니다.");
+				    alert("사용중인 이메일입니다. 다른 이메일을 입력하세요.");
 				    $('#user_email').focus();
 				    return false;
                 } 
+                
                 if ($('#passwordCheck').attr("check_pw") == "fail"){
 				    alert("비밀번호를 확인해주시기 바랍니다.");
 				    $('#passwordCheck').focus();
 				    return false;
-                } 
-                	return true;
-                
                 }
-          
+                
+                if($('#email_auth_key').val() == '' || $('#email_auth_key').val() != email_auth_cd){
+        			alert("이메일 인증을 해주시기 바랍니다.");
+        			$('#email_auth_key').focus();
+        			return false;
+        		}
+                
+                	return true;
+                }
                 </script>
                 
 		</form>
         </div>
  
     </article>
-</body>
-</html>
-
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

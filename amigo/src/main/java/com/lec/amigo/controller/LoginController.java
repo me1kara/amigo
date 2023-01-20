@@ -1,13 +1,12 @@
 package com.lec.amigo.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -70,6 +69,13 @@ public class LoginController {
 		return "home.jsp";
 	}
 	
+	// 이메일로 인증하기
+	@PostMapping("/emailAuth.do")
+	@ResponseBody
+	public String emailAuth(String user_email) {	
+		System.out.println(user_email);
+		return userService.emailAuth(user_email);
+	}
 	
 	// 비밀번호 찾기
 	@RequestMapping(value = "/search_pwd.do", method = RequestMethod.GET)
@@ -78,8 +84,17 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/search_pwd.do", method = RequestMethod.POST)
-	   public void search_pwq(@ModelAttribute UserVO vo, HttpServletResponse res) throws Exception {
-	      userService.searchPw(res, vo);
+	   public String search_pwq(UserVO vo, Model model) {
+	     int cnt = userService.searchPw(vo);
+	     if (cnt != 0) {
+	 		model.addAttribute("msg", "이메일로 임시 비밀번호가 전송되었습니다.");
+			model.addAttribute("url", "login.do");
+			return "view/login/search_pwd_alert.jsp";
+	     } else {
+	    	model.addAttribute("msg", "등록된 이메일이 없습니다. 다시 입력해주세요.");
+			model.addAttribute("url", "search_pwd.do");
+			return "view/login/search_pwd_alert.jsp";
+	     }
 	   }
 	
 	// 약관동의
@@ -114,6 +129,12 @@ public class LoginController {
 		} else {
 			return "success";
 		}
+	}
+	
+	// 둘러보기
+	@RequestMapping(value="/main_tour.do", method = RequestMethod.GET) 
+	public String main_tour() {
+		return "view/main_tour.jsp"; 
 	}
 	
 }

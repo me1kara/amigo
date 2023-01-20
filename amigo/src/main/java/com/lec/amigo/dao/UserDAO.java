@@ -32,6 +32,7 @@ public class UserDAO {
 	private String updatePw = "";
 	private String insertUser = "";
 	private String emailCheck = "";
+	private String readEmail = "";
 	
 	@PostConstruct
 	public void getSqlPropeties() {
@@ -89,5 +90,6 @@ public class UserDAO {
 		int cnt = jdbcTemplate.queryForObject(emailCheck, Integer.class, user_email);
 		return cnt;
 	}
+	
 
 }
