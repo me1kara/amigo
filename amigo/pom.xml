@@ -13,10 +13,19 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
-	<dependencies>
-	
-			<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+	<dependencies>	
+		<!-- 롬복 -->
 		<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>compile</scope>
+        </dependency>
+	
+		<dependency>
+   			 <groupId>javax.inject</groupId>
+    		 <artifactId>javax.inject</artifactId>
+    		<version>1</version>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context-support</artifactId>
 		    <version>${org.springframework-version}</version> 

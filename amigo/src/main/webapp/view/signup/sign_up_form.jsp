@@ -61,6 +61,7 @@
                     <label for="inputPasswordCheck">비밀번호 확인*</label>
                     <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호 확인을 위해 다시 한 번 입력 해 주세요" onkeyup="passConfirm();" check_pw="fail">
                      <span id="confirmMsg"></span>
+
                      
          			<script type="text/javascript">  
     				/* 자바 스크립트 함수 선언(이메일 중복 확인) */
@@ -152,6 +153,10 @@
                     <label for="inputName">닉네임*</label>
                     <input type="text" class="form-control" id="inputName" name="user_nick" placeholder="닉네임" required>
                 </div>
+                <div class="form-group">
+                    <label for="inputAddr">주소*</label>
+                    <input type="text" class="form-control" id="inputAddr" name="user_addr" placeholder="거주지주소" required>
+                    <span>시/군/구까지 입력해주세요.</span>
                   <div class="form-group">
                  <label for="sample4_roadAddress">주소*</label><br>
                <input type="text" id="sample4_postcode" placeholder="우편번호">

@@ -12,6 +12,8 @@ import javax.websocket.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -22,9 +24,12 @@ import com.lec.amigo.dao.ChatDAO;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.UserVO;
 
+import lombok.RequiredArgsConstructor;
+
+
 public class ChatHandler extends TextWebSocketHandler{
 	
-	private static List<WebSocketSession> sessions = new ArrayList();
+	private static HashMap<String, WebSocketSession> sessions = new HashMap<>();
 	
 	//세션구별용
 	
@@ -34,27 +39,34 @@ public class ChatHandler extends TextWebSocketHandler{
 	
 	ChatDAO chatDao = new ChatDAO();
 	
+
 	//private static final Logger logger = LoggerFactory.getLogger(ChatServer.class);
 	//ChatDAO chatDao = new ChatDAO();
+	
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("서버연결");	
+		System.out.println("서버연결"+session.getId());	
 		//세션리스트에 세션저장
-		sessions.add(session);
-		//유저-세션 저장	
+		//유저-세션 저장
+		sessions.put(session.getId(), session);
+		
+		/*
 		ChatRoom ch = getRoomUser(session);
-		if(ch!=null) chatDao.setRoom(ch);
+		if(ch!=null) {
+			boolean chat_room_is = chatDao.getRoom(ch);		
+			if(!chat_room_is)chatDao.setRoom(ch);
+		};
+		*/
 		
-		//일단 채팅방 생성시기는 계약이 성립됐을때
-		//인덱스만 가져오고 
-		
-			
+	
 	}
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-	
-		String msg = message.getPayload();				
+		String msg = message.getPayload();
+		System.out.println(msg+"영자짱???");
+		
 		String no=null;
 		int roomIndex=0;
 		String sendUser=null;
@@ -75,34 +87,31 @@ public class ChatHandler extends TextWebSocketHandler{
 				
 		}		
 		
-		
-		
 		//String id = chatDao.getSessionId(roomIndex);
 		 
+	
+		int user_no = getUser(session).getUser_no();
 		
-		int index=getRoomUser(session).getChat_index();
 		
 		
 		if (no.equals("1")) {
 			// 누군가 접속 > 1#아무개
 			
 			//for(String id:idList) {
-				for (WebSocketSession s : sessions) {
+				for (String key : sessions.keySet()) {
+					WebSocketSession s = sessions.get(key);
 						if (s != session) { // 현재 접속자가 아닌 나머지 사람들				
 							try {
 								
-								//해당 세션의 인덱스 리스트를 속성으로 가져오고
-								//인덱스리스트를 for 돌려서 메세지 보낸사람의 인덱스와 일치하는것만 추출하고
-								//둘이 비교해서 보냄
-								if(getRoomUser(s)!=null) {
+								//세션의 로그인정보가 있으면
+								if(getUser(s)!=null) {
+									//해당 세션의 유저가 메세지의 룸번호를 가지고있는지 조회
+									boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
 									
-									boolean checkIndex = chatDao.checkRoomIndex(getRoomUser(s).getUser_no(), index);
-									
-									//해당 유저가 해당 인덱스를 가지고있기 때문에 
-									
-									System.out.println("작성자인덱스:"+index+"다른방인덱스:"+getRoomUser(s).getChat_index());				
+									//해당 
+									System.out.println("작성자인덱스:"+roomIndex+"다른방작성자:"+getUser(s).getUser_nick());				
 									if(checkIndex) {
-										s.sendMessage(new TextMessage("1#" + sendUser + "#"));
+										s.sendMessage(new TextMessage("1#" + sendUser + "#"+roomIndex));
 									}	
 								}
 								
@@ -120,27 +129,23 @@ public class ChatHandler extends TextWebSocketHandler{
 				
 			
 		} else if (no.equals("2")) {
-			chatDao.insertChat(index, sendUser, text);
+			
+			chatDao.insertChat(roomIndex, user_no, text);
 		//	for(String id:idList) {			
 			// 누군가 메세지를 전송
-			for (WebSocketSession s : sessions) {
-				
+			for (String key : sessions.keySet()) {
+				WebSocketSession s = sessions.get(key);
 
 					if (s != session) { // 현재 접속자가 아닌 나머지 사람들							
 						try {
 							System.out.println("2#" + sendUser + ":" + text);
-							
 							//세션아이디로 인덱스를 구하고,
 							//해당인덱스와 일치하면 문자를 보내면됨
-							
-							if(getRoomUser(s)!=null) {
-								
-								
-								boolean checkIndex = chatDao.checkRoomIndex(getRoomUser(s).getUser_no(), index);
-								System.out.println("작성자인덱스:"+index+"다른방인덱스:"+getRoomUser(s).getChat_index());
+							if(getUser(s)!=null) {				
+								boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
+								System.out.println("작성자인덱스:"+"다른방작성자:"+getUser(s).getUser_nick());
 								if(checkIndex) {
-									s.sendMessage(new TextMessage("2#" + sendUser +"#" + text));
-									
+									s.sendMessage(new TextMessage("2#" + sendUser +"#" + text+"#"+roomIndex));							
 								}
 							}
 							//s.getBasicRemote().sendText("2#" + snderId +"#" + text);
@@ -158,20 +163,20 @@ public class ChatHandler extends TextWebSocketHandler{
 			System.out.println("호히히히");
 			//for(String id:idList) {
 			// 누군가 접속 > 3#아무개
-				for (WebSocketSession s : sessions) {
-					
+					for (String key : sessions.keySet()) {
+						WebSocketSession s = sessions.get(key);
 				//	if(id.equals(s.getId())) {
 						if (s != session) { // 현재 접속자가 아닌 나머지 사람들
 							try {
 								
 								
-								if(getRoomUser(s)!=null) {
-									boolean checkIndex = chatDao.checkRoomIndex(getRoomUser(s).getUser_no(), index);
+								if(getUser(s)!=null) {
+									boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
 									
-									System.out.println("작성자인덱스:"+index+"다른방인덱스:"+getRoomUser(s).getChat_index());
+									System.out.println("작성자인덱스:"+roomIndex+"다른방작성자:"+getUser(s).getUser_nick());
 								
 									if(checkIndex) {
-									s.sendMessage(new TextMessage("3#" + sendUser + "#"));
+									s.sendMessage(new TextMessage("3#" + sendUser + "#"+roomIndex));
 									}
 								}
 								
@@ -182,30 +187,30 @@ public class ChatHandler extends TextWebSocketHandler{
 						}	
 					//}
 				}
-				sessions.remove(session);
+				sessions.remove(session.getId());
 			}
 		
 			
 		}	
 	
-	private String getId(WebSocketSession session) {
+	private UserVO getUser(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
-		
-		UserVO loginUser = (UserVO)httpSession.get("힝");
+		UserVO loginUser = (UserVO)httpSession.get("user");
 		
 		if(loginUser!=null) {
-			return session.getId();
-		}else return loginUser.getUser_name();
+			return loginUser;
+		}else return null;
 		
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		
+		sessions.remove(session.getId());
 		System.out.println(status.toString());
 		System.out.println("닫혀용!");
 		
 	}
+	
 	
 	public ChatRoom getRoomUser(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
