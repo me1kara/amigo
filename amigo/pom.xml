@@ -16,6 +16,14 @@
 	<dependencies>
 	
 	
+		<!-- 롬복 -->
+		<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>compile</scope>
+        </dependency>
+	
 		<!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
 		<dependency>
    			 <groupId>javax.inject</groupId>
