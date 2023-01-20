@@ -28,12 +28,6 @@
 		<a href="terms.do">이메일 가입</a>
 
 		</div>
-		<a href="dog.do">강아지등록(컨트롤 통해서)</a>
-		<br>
-		<a href="view/mypage/amigo_profile_insert.jsp">강아지등록</a>
-		
-		  
-
 	<%@include file="/includes/footer.jsp" %>
 
 	

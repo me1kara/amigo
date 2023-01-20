@@ -7,7 +7,7 @@ import com.lec.amigo.vo.DogVO;
 public interface DogService {
 	
 	DogVO getDog(DogVO dog);
-	List<DogVO> getDogList(DogVO dog);
+	List<DogVO> getDogList(int user_no);
 	DogVO insertDog(DogVO dog);
 	int deleteDog(DogVO dog);
 	int updateDog(DogVO dog);

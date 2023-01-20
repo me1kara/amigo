@@ -13,6 +13,8 @@ public class DogRowMapper implements RowMapper<DogVO> {
 	@Override
 	public DogVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		DogVO dog = new DogVO();
+		dog.setDog_no(rs.getInt("dog_no"));
+		dog.setUser_no(rs.getInt("user_no"));
 		dog.setDog_name(rs.getString("dog_name"));
 		dog.setDog_gender(rs.getString("dog_gender"));
 		dog.setDog_breeds(rs.getString("dog_breeds"));
@@ -23,7 +25,7 @@ public class DogRowMapper implements RowMapper<DogVO> {
 		dog.setDog_image_url(rs.getString("dog_image_url"));
 		dog.setDog_notice(rs.getString("dog_notice"));
 		dog.setDog_terms(rs.getBoolean("dog_terms"));
-		
+			
 		return dog;
 	}
 }
