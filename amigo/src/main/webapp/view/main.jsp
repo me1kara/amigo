@@ -25,6 +25,7 @@
 		<a href="#">추천산책루트</a>
 		<a href="#">병원</a>
 		<a href="#">고객센터</a>
+		<a href="#">커뮤니티</a>
 	
 		<!-- 메뉴바 만들기 전에 임시로 채팅연결용으로 사용 -->
 		<a href="view/customer_service/customer_service_chat.jsp">채팅목록</a>	
