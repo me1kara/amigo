@@ -1,6 +1,6 @@
 package com.lec.amigo.vo;
 
-import java.util.Date;
+
 
 public class DogVO {
 

@@ -16,14 +16,12 @@ public class DogServiceImpl implements DogService {
 	DogDAO dogDAO;
 	
 	@Override
-	public DogVO getDog(DogVO dog) {
-		// TODO Auto-generated method stub
-		return null;
+	public DogVO getDog(int dog_no) {
+		return dogDAO.getDog(dog_no);
 	}
 
 	@Override
 	public List<DogVO> getDogList(int user_no) {
-		// TODO Auto-generated method stub
 		return dogDAO.getDogList(user_no);
 	}
 

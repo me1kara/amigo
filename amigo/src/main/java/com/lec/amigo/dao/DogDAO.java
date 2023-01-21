@@ -41,15 +41,13 @@ public class DogDAO {
 	}
 	
 	public List<DogVO> getDogList(int user_no) {
-
-		Object[] args = {user_no};
-		
+		Object[] args = {user_no};		
 		return jdbcTemplate.query(selectDogListByUserNo, args, new DogRowMapper());
 	}
 	
-	public DogVO getDog(DogVO dog) {
-		Object[] args = { dog.getDog_no() };
-		return (DogVO) jdbcTemplate.queryForObject(selectDog, args, new DogRowMapper());
+	public DogVO getDog(int dog_no) {
+		Object[] args = {dog_no};
+		return (DogVO)jdbcTemplate.queryForObject(selectDog, args, new DogRowMapper());
 	}
 	
 	public DogVO insertDog(DogVO dog) {

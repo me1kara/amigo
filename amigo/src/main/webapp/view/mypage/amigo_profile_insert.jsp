@@ -103,7 +103,7 @@
 					
 					 
 		<!-- user_no 벨류값 받아서 폼에 기입해야함 (현재 임의로 1 넣음) -->
-		<input class="form-control" type="hidden" name="user_no" value="1">
+		<input class="form-control" type="hidden" name="user_no" value="3">
 				    
 				<div class="col-md-6 text-center">           
 				<button type="submit" class="btn btn-primary text-center">등록완료</button>
