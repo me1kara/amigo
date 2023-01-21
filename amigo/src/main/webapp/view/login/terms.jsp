@@ -39,7 +39,7 @@
         <h4>약관동의가 필요해요</h4>
     </div>
     <div>
-        <input type='checkbox'
+       <input type='checkbox'
        name='amigoTAC' 
        value='selectall'
        onclick='selectAll(this)'/> <b>전체동의</b>

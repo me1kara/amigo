@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
 <script
@@ -19,16 +19,27 @@
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
+		
+		<br>
 		<div class="container">
 		
-		<a href="sitter/sitter_service_main.jsp">펫시터</a>
-		<a href="#">추천산책루트</a>
-		<a href="#">병원</a>
-		<a href="#">고객센터</a>
-		<a href="#">커뮤니티</a>
+		<script>
+		 function main_fail() {
+     		alert("로그인 후 이용가능한 페이지입니다.");
+         }
+		</script>
+
+		<a href="#" onclick="main_fail();">펫시터</a> <br>
+		<a href="#" onclick="main_fail();">추천산책루트</a><br>
+		<a href="#" onclick="main_fail()">병원</a><br>
+		<a href="#" onclick="main_fail()">고객센터</a><br>
+		<a href="#" onclick="main_fail()">커뮤니티</a><br>
 	
 		<!-- 메뉴바 만들기 전에 임시로 채팅연결용으로 사용 -->
-		<a href="view/customer_service/customer_service_chat.jsp">채팅목록</a>	
+		<a href="#" onclick="main_fail()">채팅목록</a><br>
+		
+		
+		<a href="home.jsp">로그인 하러하기</a><br>
 	
 		</div>
 	<%@include file="/includes/footer.jsp" %>
