@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class ChatVO {
 	
+	private int chat_no;
 	private int index;
 	private String user_nick;
 	private String content;
@@ -54,6 +55,13 @@ public class ChatVO {
 	public void setEmo(String emo) {
 		this.emo = emo;
 	}
+	public int getChat_no() {
+		return chat_no;
+	}
+	public void setChat_no(int chat_no) {
+		this.chat_no = chat_no;
+	}
+	
 	@Override
 	public String toString() {
 		return "ChatVO [index=" + index + ", user_nick=" + user_nick + ", content=" + content + ", date=" + date

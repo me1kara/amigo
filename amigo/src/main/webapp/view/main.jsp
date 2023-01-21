@@ -27,8 +27,7 @@
 		<a href="#">고객센터</a>
 		<a href="#">커뮤니티</a>
 	
-		<!-- 메뉴바 만들기 전에 임시로 채팅연결용으로 사용 -->
-		<a href="view/customer_service/customer_service_chat.jsp">채팅목록</a>	
+		<!-- 메뉴바 만들기 전에 임시로 채팅연결용으로 사용 -->	
 	
 		</div>
 	<%@include file="/includes/footer.jsp" %>

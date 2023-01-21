@@ -60,7 +60,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="far fa-clone"></i>채팅</a>
+            <a class="nav-link" href="/amigo/view/customer_service/customer_service_chat.jsp"><i class="far fa-clone"></i>채팅</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"
