@@ -6,7 +6,7 @@
 <%@page import="com.lec.amigo.dao.ChatDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+   
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -26,14 +26,15 @@
 		System.out.println(index+"로그인실패!");
 	}
 */
-	
-		
+
 	ChatDAO dao = new ChatDAO();
 	List<ChatVO> chatList = dao.getChatList(index);
 	
 	
-	
 %>
+
+
+	
 
 
 
@@ -55,7 +56,23 @@
 	overflow: auto;
 	}
   </style>
+	<script>
 
+    $(document).ready(function () {
+    	/*
+		$('#chat_no_'+${chat.getChat_no() }).click(function(){
+			console.log('하이하이');
+			$('.chat_option_item').toggle();
+
+		});
+    	*/
+    });
+    
+    
+
+    
+
+	</script>
 </head>
 <body>
 
@@ -83,18 +100,24 @@
 							<c:choose>
 							<c:when test="${chat.getUser_nick()!=user.getUser_nick() }">			
 							
-							<li style="margin-bottom:3px; clear: both;">
+							<li style="margin-bottom:3px; clear: both;" class="chat_no_${chat.getChat_no() }">
 							[${chat.getUser_nick() }] ${chat.getContent()}					 
 							<span style="font-size:11px;color:#777;">${chat.getDate() }</span>
 							</li>
 							</c:when>													
 							<c:when test="${chat.getUser_nick()==user.getUser_nick() }">
 							
-							<li style="margin-bottom:3px; float:right;">
+							<li style="margin-bottom:3px; float:right;" class="chat_no_${chat.getChat_no() }">
 								<span>${chat.getContent()}</span>
+							</li>
+							<li class="chat_option_item chat_no_${chat.getChat_no() }">
+								<button onclick="chat_delete(${chat.getChat_no()})">삭제</button>
 							</li>
 							</c:when>
 							</c:choose>
+							
+
+							
 						</c:forEach>		 
 					</ul>
 				</td>	
@@ -112,7 +135,11 @@
   let index = "<%=index%>";
   // 웹 소켓
   var ws = new WebSocket(url);
-  
+  		function chat_delete(chat_no){
+		ws.send('4#' + chat_no+'#'+index);
+		$('.chat_no_'+chat_no).remove();
+		console.log(chat_no+'넘버확인용');
+		}
   	   	// 소켓 이벤트 매핑
   	   	ws.onopen = function () {
   	   		console.log('서버 연결 성공');
@@ -130,18 +157,32 @@
   	  			let no;
   	  			let user;
   	  			let txt;
-  	  			let roomIndex;		
+  	  			let roomIndex;
+  	  			let chat_no;
   	  			
-  	  			if(msg.length==3){
+  	  			if(msg.length==2){
+  	  				let delete_no = msg[0];
+  	  				
+  	  				console.log(delete_no);
+  	  				roomIndex = msg[1];
+  	  				
+  	  				if(parseInt(roomIndex)==index){
+  	  					console.log('여기 들어와짐?'+delete_no);
+  	  					$('.chat_no_'+delete_no).remove();
+	  				}
+  	  					
+  	  			}else if(msg.length==3){
   	  			    no = msg[0];
   	  			    user = msg[1];
   	  			    roomIndex = msg[2];
-  	  			}else if(msg.length==4){
+  	  			}else if(msg.length==5){
   	  				no = msg[0]; 
   	  				user = msg[1];
   	  				txt = msg[2];
   	  				roomIndex = msg[3];
+  	  				chat_no = msg[4];
   	  			}
+  	  			
   	  			console.log('인덱스:'+index+'룸인덱스:'+roomIndex);		
   	  			if (no == '1') {
   	  				if(parseInt(roomIndex)==index){
@@ -149,7 +190,15 @@
   	  				}
   	  			} else if (no == '2') {
   	  				if(parseInt(roomIndex)==index){
-  	  					print(user, txt);
+  	  					
+  	  					if(user=='<%=user.getUser_nick()%>'){
+  	  				
+  	  						printMe(txt, chat_no);
+  	  					}else{
+  	  						print(user, txt, chat_no);
+  	  						
+  	  					}
+  	  					
   	  				}
   	  			} else if (no == '3') {
   	  				if(parseInt(roomIndex)==index){
@@ -172,9 +221,10 @@
   	  			console.log(evt.data);
   	  		};
   	  	  // 메세지 전송 및 아이디
-  	  	  function print(user, txt) {
+  	  	  function print(user, txt, chat_no) {
   	  	  	let temp = '';
-  	  	  	temp += '<li style="margin-bottom:3px;">';
+  	  	
+  	  	  	temp += '<li style="margin-bottom:3px; clear: both;" class="chat_no_'+chat_no+'">';
   	  	  	temp += '[' + user + '] ';
   	  	  	temp += txt;
   	  	  	temp += ' <span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
@@ -183,11 +233,17 @@
   	  	  	$('#list').append(temp);
   	  	  	$('#list').scrollTop($('#list').prop('scrollHeight'));
   	  	  }
-  	  	  function printMe(txt) {
+  	  	  function printMe(txt, chat_no) {
+  	  		  	
+  	  		  	console.log('확인용숫자'+chat_no);
     	  	  	let temp = '';
-    	  	  	temp += '<li style="margin-bottom:3px; text-align:right;">';
-    	  	  	temp += txt;
+    	  	  	temp += '<li style="margin-bottom:3px; float:right;" class="chat_no_'+chat_no+'">';
+    	  	  	temp += '<span>'+txt+'</span>';
     	  	  	temp += '</li>';
+    	  	  	temp += '<li class="chat_option_item chat_no_'+chat_no+'">';
+    	  	  	temp += '<button onclick="chat_delete('+chat_no+')">삭제</button>';
+    	  	  	temp += '</li>';
+    	  	  
     	  	  			
     	  	  	$('#list').append(temp);
     	  	  	$('#list').scrollTop($('#list').prop('scrollHeight'));
@@ -197,7 +253,7 @@
   	  	  function print2(user) {
   	  	  	let temp = '';
   	  	  	temp += '<li style="margin-bottom:3px;">';
-  	  	  	temp += "'" + user + "' 이(가) 접속했습니다." ;
+  	  	  	temp += "'" + user + "' 이(가) 입장했습니다." ;
   	  	  	temp += ' <span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
   	  	  	temp += '</li>';
   	  	  	$('#list').append(temp);
@@ -216,7 +272,7 @@
   	  	  $('#chat_submit_btn').click(function(){
 	  	  		console.log($(this));
   	  	  		ws.send('2#' + user_name + '#' + $(this).val() + '#'+index); //서버에게
-  	  	  		printMe($('#msg').val()); //본인 대화창에
+  	  	  		//printMe($('#msg').val()); //본인 대화창에
   	  	        $('#msg').val('');
   	  	  		$('#msg').focus();
   	  	  	}
@@ -229,13 +285,15 @@
   	  	  		console.log($(this));
   	  	  		ws.send('2#' + user_name + '#' + $(this).val() + '#'+index); //서버에게
   	  	  		
-  	  	  		printMe($(this).val()); //본인 대화창에
+  	  	  		//printMe($(this).val()); //본인 대화창에
   	  	  		
   	  	        $('#msg').val('');
   	  	  		$('#msg').focus();
   	  	  				
   	  	  	}
   	  	  });
+  	  	  
+  	    	
   		};
           
   		
@@ -244,5 +302,6 @@
 
   
   </script>
+
 </body>
 </html>

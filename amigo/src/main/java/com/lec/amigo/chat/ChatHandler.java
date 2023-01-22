@@ -31,8 +31,7 @@ public class ChatHandler extends TextWebSocketHandler{
 	
 	private static HashMap<String, WebSocketSession> sessions = new HashMap<>();
 	
-	//세션구별용
-	
+	//세션구별용	
 //	private Map<String, WebSocketSession> userSessions = new HashMap();
 	
 	//private Map<ChatRoom, WebSocketSession> indexSessions = new HashMap();
@@ -65,7 +64,6 @@ public class ChatHandler extends TextWebSocketHandler{
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String msg = message.getPayload();
-		System.out.println(msg+"영자짱???");
 		
 		String no=null;
 		int roomIndex=0;
@@ -75,10 +73,13 @@ public class ChatHandler extends TextWebSocketHandler{
 		
 		String[] strs = msg.split("#");
 		
+		
 		if(strs!=null && strs.length==3) {
 				no = strs[0];
-				sendUser =strs[1];
 				roomIndex = Integer.parseInt(strs[2]);
+				if(no.equals("1")) {
+				sendUser =strs[1];				
+				}
 		}else if(strs!=null && strs.length==4) {
 				no = strs[0];
 				sendUser =strs[1];
@@ -130,13 +131,18 @@ public class ChatHandler extends TextWebSocketHandler{
 			
 		} else if (no.equals("2")) {
 			
-			chatDao.insertChat(roomIndex, user_no, text);
+			int a = chatDao.insertChat(roomIndex, user_no, text);
+			int chat_no=0;
+			if(a>0) {
+			chat_no = chatDao.getLastChat(roomIndex).getChat_no();
+			}
+			System.out.println("챗넘버"+chat_no);
 		//	for(String id:idList) {			
 			// 누군가 메세지를 전송
 			for (String key : sessions.keySet()) {
 				WebSocketSession s = sessions.get(key);
 
-					if (s != session) { // 현재 접속자가 아닌 나머지 사람들							
+					//if (s != session) { // 현재 접속자가 아닌 나머지 사람들							
 						try {
 							System.out.println("2#" + sendUser + ":" + text);
 							//세션아이디로 인덱스를 구하고,
@@ -145,7 +151,7 @@ public class ChatHandler extends TextWebSocketHandler{
 								boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
 								System.out.println("작성자인덱스:"+"다른방작성자:"+getUser(s).getUser_nick());
 								if(checkIndex) {
-									s.sendMessage(new TextMessage("2#" + sendUser +"#" + text+"#"+roomIndex));							
+									s.sendMessage(new TextMessage("2#" + sendUser +"#" + text+"#"+roomIndex+"#"+chat_no));							
 								}
 							}
 							//s.getBasicRemote().sendText("2#" + snderId +"#" + text);
@@ -154,7 +160,7 @@ public class ChatHandler extends TextWebSocketHandler{
 						}
 			
 					//}
-				}
+				//}
 				
 			//}
 			}
@@ -188,6 +194,37 @@ public class ChatHandler extends TextWebSocketHandler{
 					//}
 				}
 				sessions.remove(session.getId());
+			}else if(no.equals("4")) {
+				System.out.println("삭제"+strs[1]);
+				if(strs[1]!=null) {
+					int chat_no = Integer.parseInt(strs[1]);
+					boolean deleteCheck = chatDao.delete(chat_no);
+					for (String key : sessions.keySet()) {
+						WebSocketSession s = sessions.get(key);
+				//	if(id.equals(s.getId())) {
+						if (s != session) { // 현재 접속자가 아닌 나머지 사람들
+							try {
+								if(getUser(s)!=null) {
+									boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
+									
+									System.out.println("작성자인덱스:"+roomIndex+"다른방작성자:"+getUser(s).getUser_nick());
+								
+									if(checkIndex) {
+										System.out.println(chat_no+"방번호입니다");
+									s.sendMessage(new TextMessage(chat_no + "#"+roomIndex));
+									}
+								}
+								
+//								s.getBasicRemote().sendText("3#" + user + "#");
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}	
+					//}
+				}
+				}  
+				
+				
 			}
 		
 			
