@@ -77,7 +77,7 @@ public class ChatDAO {
 	public List<ChatVO> getChatList(int index){
 		List<ChatVO> chatList = new ArrayList<ChatVO>();
 		String sql = "SELECT sitt_chat_no, sitt_chat_index,user_nick, sitt_chat_content, sitt_chat_regdate,sitt_chat_readis,sitt_chat_file,sitt_chat_emo "
-				+ "FROM sit_chat s, user u where sitt_chat_index=? and u.user_no=s.user_no";
+				+ "FROM sit_chat s, user u where sitt_chat_index=? and u.user_no=s.user_no order by s.sitt_chat_no";
 		
 		
 		//Object[] args = {index};
@@ -119,12 +119,10 @@ public class ChatDAO {
 		return chatList;
 	}
 	
-	public void insertChat(int index, int user_no, String content) {
+	public int insertChat(int index, int user_no, String content) {
 		
 		Connection conn = JDBCUtility.getConnection();
 		String sql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,SYSDATE(),0,?,?)";
-		
-	
 		
 		try {
 		//	jdbcTemplate.update(sql, index, user, content, null, null);
@@ -149,6 +147,7 @@ public class ChatDAO {
 			System.out.println(row+"건이 업데이트됐습니다");
 			System.out.println("디비 삽입성공!");
 			JDBCUtility.commit(conn);
+			return row;
 			}else {
 				JDBCUtility.rollback(conn);
 			}
@@ -160,7 +159,7 @@ public class ChatDAO {
 			JDBCUtility.close(conn, null, pstmt);
 		}
 		
-		
+		return 0;
 		
 	}
 	
@@ -332,7 +331,7 @@ public class ChatDAO {
 	}
 	
 	public ChatVO getLastChat(int index) {
-		String sql = "select sitt_chat_no, sitt_chat_index,user_nick, sitt_chat_content,sitt_chat_regdate,sitt_chat_readis,sitt_chat_file,sitt_chat_emo from sit_chat s,user u where sitt_chat_index=? and u.user_no=s.user_no order by sitt_chat_regdate desc limit 1";
+		String sql = "select sitt_chat_no, sitt_chat_index,user_nick, sitt_chat_content,sitt_chat_regdate,sitt_chat_readis,sitt_chat_file,sitt_chat_emo from sit_chat s,user u where sitt_chat_index=? and u.user_no=s.user_no order by sitt_chat_no desc limit 1";
 		
 
 		ChatVO chat = new ChatVO();
