@@ -15,7 +15,11 @@
 <% 
 	UserVO user = (UserVO)session.getAttribute("user");
 	int index=Integer.parseInt(request.getParameter("index"));
-	int user_no = user.getUser_no(); 
+	int user_no = user.getUser_no();
+	
+	boolean check = false;
+	
+
 	
 /*
 	if((int)request.getAttribute("idCheck")>0){
@@ -28,8 +32,14 @@
 */
 
 	ChatDAO dao = new ChatDAO();
-	List<ChatVO> chatList = dao.getChatList(index);
+	check = dao.checkRoomIndex(user_no, index);
 	
+	if(!check){
+		%>
+		<script>alert('잘못된 접근입니다!'); history.go(-3);</script>
+		<% 
+	}
+	List<ChatVO> chatList = dao.getChatList(index);
 	
 %>
 
@@ -68,14 +78,10 @@
     	*/
     });
     
-    
-
-    
 
 	</script>
 </head>
 <body>
-
 	<c:set var="user" value="<%=user %>"/>
 	<div class="container">
 		<h1 class="page-header">채팅방</h1>		
@@ -302,6 +308,19 @@
 
   
   </script>
-
+  
+  <!-- 
+      <a href="/amigo/hi.do">에러실험</a>
+   
+    <form action="upload.do" method="post" enctype="multipart/form-data">
+	파일 선택 : <input type="file"name="file"> 
+	<input type="submit" value="전송">
+	</form>
+	
+	<form action="upload2.do" method="post" enctype="multipart/form-data">
+	파일 선택 : <input type="file" multiple="multiple" name="files"> 
+	<input type="submit" value="전송">
+	</form>
+  -->
 </body>
 </html>

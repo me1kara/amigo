@@ -226,7 +226,7 @@ public class ChatDAO {
 	public boolean checkRoomIndex(int user_no, int roomindex) {
 		
 		
-		String sql = "select count(chat_index) chat_index from chat_room where user_no=? and chat_index=?";
+		String sql = "select distinct chat_index chat_index from chat_room where user_no=? and chat_index=?";
 		
 		//int row = jdbcTemplate.queryForObject(sql, Integer.class);
 		
@@ -421,6 +421,34 @@ public class ChatDAO {
 			}
 		
 		return false;
+	}
+
+
+	public List<Integer> getRoomList(int user_no) {
+		
+		List<Integer> room_list = new ArrayList<Integer>();
+		String sql = "select chat_index from chat_room where user_no=?";
+		Connection conn = JDBCUtility.getConnection();
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_no);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println("챗 인덱스 확인용"+rs.getInt("chat_index"));
+				room_list.add(rs.getInt("chat_index"));
+			}
+			return room_list;		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCUtility.close(conn, rs, null);
+		}
+				
+		return null;
 	}
 	
 	
