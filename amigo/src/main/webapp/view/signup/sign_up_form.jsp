@@ -61,6 +61,7 @@
                     <label for="passwordCheck">비밀번호 확인*</label>
                     <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호 확인을 위해 다시 한 번 입력 해 주세요" onkeyup="passConfirm();" check_pw="fail">
                      <span id="confirmMsg"></span>
+
                      
          			<script type="text/javascript">  
     				/* 자바 스크립트 함수 선언(이메일 중복 확인) */
@@ -183,15 +184,15 @@
                     <label for="user_nick">닉네임*</label>
                     <input type="text" class="form-control" id="user_nick" name="user_nick" placeholder="닉네임" check_nick="fail" onchange="checkNick();" required>
                     <span id="confirmNick"></span>
-                </div>
-                <div class="form-group">
-                 	<label for="sample4_roadAddress">주소*</label><br>
-               		<input type="text" id="sample4_postcode" placeholder="우편번호">
-               		<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-               		<input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" placeholder="도로명주소">
-               		<input type="hidden" id="sample4_jibunAddress" class="form-control" placeholder="지번주소">
-               		<span id="guide" style="color:#999;display:none"></span>
-               		<input type="text" id="sample4_detailAddress" class="form-control" name="user_addr2" placeholder="상세주소">
+                </div>        
+                 <div class="form-group">
+                 <label for="sample4_roadAddress">주소*</label><br>
+               <input type="text" id="sample4_postcode" placeholder="우편번호">
+               <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+               <input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" placeholder="도로명주소">
+               <input type="hidden" id="sample4_jibunAddress" class="form-control" placeholder="지번주소">
+               <span id="guide" style="color:#999;display:none"></span>
+               <input type="text" id="sample4_detailAddress" class="form-control" name="user_addr2" placeholder="상세주소">
                 </div>
                 
                 
