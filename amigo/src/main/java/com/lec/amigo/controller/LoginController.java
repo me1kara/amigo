@@ -130,11 +130,23 @@ public class LoginController {
 		return "view/signup/sign_up_alert.jsp";
 	}
 	
-	// 아이디중복체크
+	// 이메일 중복체크
 	@PostMapping("emailCheck.do")
 	@ResponseBody
 	public String emailCheck(@RequestParam("user_email") String user_email){
 		int cnt = userService.emailCheck(user_email);
+		if (cnt != 0) {
+			return "fail";
+		} else {
+			return "success";
+		}
+	}
+	
+	// 닉네임 중복체크
+	@PostMapping("nickCheck.do")
+	@ResponseBody
+	public String nickCheck(@RequestParam("user_nick") String user_nick){
+		int cnt = userService.nickCheck(user_nick);
 		if (cnt != 0) {
 			return "fail";
 		} else {

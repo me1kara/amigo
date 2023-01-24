@@ -32,13 +32,14 @@ public class UserDAO {
 	private String updatePw = "";
 	private String insertUser = "";
 	private String emailCheck = "";
-	private String readEmail = "";
+	private String nickCheck = "";
 	
 	@PostConstruct
 	public void getSqlPropeties() {
 		updatePw   = environment.getProperty("updatePw");
 		insertUser = environment.getProperty("insertUser");
 		emailCheck = environment.getProperty("emailCheck");
+		nickCheck = environment.getProperty("nickCheck");
 	}
 	
 	private Connection conn = null;
@@ -88,6 +89,11 @@ public class UserDAO {
 
 	public int emailCheck(String user_email) {
 		int cnt = jdbcTemplate.queryForObject(emailCheck, Integer.class, user_email);
+		return cnt;
+	}
+
+	public int nickCheck(String user_nick) {
+		int cnt = jdbcTemplate.queryForObject(nickCheck, Integer.class, user_nick);
 		return cnt;
 	}
 	

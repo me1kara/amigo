@@ -10,8 +10,9 @@
   crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>메인홈</title>
+<title>게시판06_유저글수정폼(커뮤니티)</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
@@ -20,15 +21,7 @@
 	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
-		
-		<a href="sitter/sitter_service_main.jsp">펫시터</a>
-		<a href="#">추천산책루트</a>
-		<a href="#">병원</a>
-		<a href="#">고객센터</a>
-		<a href="user_board_list.do">커뮤니티</a>
-	
-		<!-- 메뉴바 만들기 전에 임시로 채팅연결용으로 사용 -->	
-	
+
 		</div>
 	<%@include file="/includes/footer.jsp" %>
 
