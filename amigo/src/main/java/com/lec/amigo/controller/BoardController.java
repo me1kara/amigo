@@ -77,7 +77,7 @@ public class BoardController {
 		boardService.updateBoard(board);
 		model.addAttribute("msg","글이 정상적으로 수정되었습니다.");
 		model.addAttribute("url","user_board_list.do");
-		return "view/comunity/update_alert.jsp";
+		return "view/comunity/alert.jsp";
 	}
 	
 	@RequestMapping(value="/user_board_delete.do", method=RequestMethod.GET)
@@ -107,6 +107,19 @@ public class BoardController {
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("boardList", boardList);		
 		return "view/comunity/user_board_list.jsp";
+	}
+	
+	@RequestMapping(value="/user_board_insert.do", method=RequestMethod.GET)
+	public String user_board_insert() {
+		return "view/comunity/user_board_insert.jsp";
+	}
+	
+	@RequestMapping(value="view/user_board_insert.do", method=RequestMethod.POST)
+	public String user_board_insert(Model model, BoardVO board) {
+		boardService.insertBoard(board);
+		model.addAttribute("msg","글이 정상적으로 등록되었습니다.");
+		model.addAttribute("url","../user_board_list.do");
+		return "../view/comunity/alert.jsp";
 	}
 	
 }

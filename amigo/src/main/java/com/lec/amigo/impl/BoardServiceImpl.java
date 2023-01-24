@@ -52,6 +52,11 @@ public class BoardServiceImpl implements BoardService{
 		return boardDAO.selectCate(board);
 	}
 
+	@Override
+	public BoardVO insertBoard(BoardVO board) {
+		return boardDAO.insertBoard(board);
+	}
+
 
 	
 	

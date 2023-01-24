@@ -20,7 +20,7 @@
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-			<div class="container"  align="center">
+	<div class="container"  align="center">
 		<div class="mt-4 p-5 bg-primary text-white rounded">
 			<h3>게시글 수정</h3>		
 		</div>

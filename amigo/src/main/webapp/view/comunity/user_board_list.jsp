@@ -144,21 +144,10 @@
 		</div> <!-- 페이징 -->
 		
 		<div class="col-2 btn-group">
-			    <a href="board/insertBoard.jsp" class="col-1 btn btn-primary me-2">글등록</a>
+			    <a href="view/comunity/user_insert_board.jsp" class="col-1 btn btn-primary me-2">글등록</a>
 		</div>					
 	</div> <!-- main  -->
 	
-	<script>
-		$(function() {
-			// 목록 갯수 변경
-			$('#rowPerPage').change(function(e) {
-				$('#curPage').val(1);
-				$('#rowSizePerPage').val($(this).val());
-				$('#boardForm').submit();
-			});	//#rowPerPage		
-			
-		})
-	</script>
 	    
 	    
 <%@include file="/includes/footer.jsp" %>

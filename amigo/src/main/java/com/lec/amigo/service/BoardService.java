@@ -14,5 +14,6 @@ public interface BoardService {
 	int updateBoard(BoardVO board);
 	int deleteBoard(BoardVO board);
 	List<BoardVO> selectCate(BoardVO board);
+	BoardVO insertBoard(BoardVO board);
 	
 }
