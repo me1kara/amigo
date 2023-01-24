@@ -19,8 +19,6 @@
 	
 	boolean check = false;
 	
-
-	
 /*
 	if((int)request.getAttribute("idCheck")>0){
 		index = (int)request.getAttribute("idCheck");
@@ -39,8 +37,7 @@
 		<script>alert('잘못된 접근입니다!'); history.go(-3);</script>
 		<% 
 	}
-	List<ChatVO> chatList = dao.getChatList(index);
-	
+	List<ChatVO> chatList = dao.getChatList(index);	
 %>
 
 
@@ -116,6 +113,7 @@
 							<li style="margin-bottom:3px; float:right;" class="chat_no_${chat.getChat_no() }">
 								<span>${chat.getContent()}</span>
 							</li>
+							
 							<li class="chat_option_item chat_no_${chat.getChat_no() }">
 								<button onclick="chat_delete(${chat.getChat_no()})">삭제</button>
 							</li>
@@ -138,27 +136,44 @@
 	<script>
 //채팅 서버 주소
   var url = "ws://localhost:8088/amigo/chatHandler.do";
-  let index = "<%=index%>";
+  var index = "<%=index%>";
   // 웹 소켓
   var ws = new WebSocket(url);
+  		ws.binaryType = "arraybuffer";
   		function chat_delete(chat_no){
-		ws.send('4#' + chat_no+'#'+index);
+	  		let option ={
+		  			no : "4",
+		  			type: "message",
+		  			chatNo : ""+chat_no+"",
+		  			roomIndex : index
+		  	}
+	  	ws.send(JSON.stringify(option));
+	  	
 		$('.chat_no_'+chat_no).remove();
-		console.log(chat_no+'넘버확인용');
 		}
   	   	// 소켓 이벤트 매핑
   	   	ws.onopen = function () {
   	   		console.log('서버 연결 성공');
   	   	 	let user_name = '<%=user.getUser_nick()%>';
-  	   		//print($('#user').val(), '입장했습니다.');
-  	   		// 현재 사용자가 입장했다고 서버에게 통지(유저명 전달)
-  	   		// -> 1#유저명
-  			ws.send('1#' + user_name + '#' + index); 
+	  		let ent ={
+		  			no : "1",
+		  			type: "message",
+		  			userName : user_name,
+		  			roomIndex : index
+		  	}
+  			ws.send(JSON.stringify(ent)); 
   			$('#msg').focus();
   			
-  			ws.onmessage = function (evt) {	
+  			ws.onmessage = function (evt) {
   			  	console.log(evt.data);
-  	  			let msg = evt.data.split("#");
+  			  	
+  			  	if(typeof evt.data == "string"){
+  	  			let msg = evt.data;
+  	  			var jd = JSON.parse(msg);
+  	  			
+  	  			console.log(jd);
+  	  			
+  	  			let jdl = Object.keys(jd);
   	  			
   	  			let no;
   	  			let user;
@@ -166,27 +181,27 @@
   	  			let roomIndex;
   	  			let chat_no;
   	  			
-  	  			if(msg.length==2){
-  	  				let delete_no = msg[0];
-  	  				
-  	  				console.log(delete_no);
-  	  				roomIndex = msg[1];
-  	  				
+  	  			
+  	  			if(jd.no=="4"){
+  	  				let delete_no = jd.chatNo;	
+  	  				roomIndex = jd.roomIndex;			
+  	  				console.log(index+":"+roomIndex);
+  			
   	  				if(parseInt(roomIndex)==index){
   	  					console.log('여기 들어와짐?'+delete_no);
   	  					$('.chat_no_'+delete_no).remove();
 	  				}
   	  					
-  	  			}else if(msg.length==3){
-  	  			    no = msg[0];
-  	  			    user = msg[1];
-  	  			    roomIndex = msg[2];
-  	  			}else if(msg.length==5){
-  	  				no = msg[0]; 
-  	  				user = msg[1];
-  	  				txt = msg[2];
-  	  				roomIndex = msg[3];
-  	  				chat_no = msg[4];
+  	  			}else if(jd.no=="1"){
+  	  			    no = jd.no;
+  	  			    user = jd.userName;
+  	  			    roomIndex = jd.index;
+  	  			}else if(jd.no=="2"){
+  	  				no = jd.no;
+  	  				user = jd.userName;
+  	  				txt = jd.msg;
+  	  				roomIndex = jd.roomIndex;
+  	  				chat_no = jd.chatNo;
   	  			}
   	  			
   	  			console.log('인덱스:'+index+'룸인덱스:'+roomIndex);		
@@ -212,6 +227,12 @@
 	  				}
   	  				
   	  			}
+  			  	}
+  			  	else{
+  			  		console.log("비나리타입");
+  			  		console.log(event.data.byteLength);
+  			  			  		
+  			  	}
   	  			$('#list').scrollTop($('#list').prop('scrollHeight'));
   	  		};
   	  	   			
@@ -277,7 +298,7 @@
   	  	  }
   	  	  $('#chat_submit_btn').click(function(){
 	  	  		console.log($(this));
-  	  	  		ws.send('2#' + user_name + '#' + $(this).val() + '#'+index); //서버에게
+	  	  		send_text();
   	  	  		//printMe($('#msg').val()); //본인 대화창에
   	  	        $('#msg').val('');
   	  	  		$('#msg').focus();
@@ -289,15 +310,25 @@
   	  	  		//서버에게 메시지 전달
   	  	  		//2#유저명#메시지	  		
   	  	  		console.log($(this));
-  	  	  		ws.send('2#' + user_name + '#' + $(this).val() + '#'+index); //서버에게
-  	  	  		
+  	  	  		//ws.send('2#' + user_name + '#' + $(this).val() + '#'+index); //서버에게	  		
+  	  	  		send_text();
   	  	  		//printMe($(this).val()); //본인 대화창에
-  	  	  		
-  	  	        $('#msg').val('');
-  	  	  		$('#msg').focus();
-  	  	  				
+  	  	  		$('#msg').val('');
+  				$('#msg').focus();	  	  		
+  	  					
   	  	  	}
   	  	  });
+  		  function send_text() {
+	  		let option ={
+	  			no : "2",
+	  			type: "message",
+	  			userName : user_name,
+	  			msg :  $('#msg').val(),
+	  			roomIndex : index
+	  		}
+	  		ws.send(JSON.stringify(option));
+	  		
+  		  }
   	  	  
   	    	
   		};
