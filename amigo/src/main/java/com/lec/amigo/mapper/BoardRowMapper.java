@@ -18,8 +18,9 @@ public class BoardRowMapper implements RowMapper<BoardVO>{
 		board.setUbd_cont(rs.getString("ubd_cont"));
 		board.setUbd_cnt(rs.getInt("ubd_cnt"));
 		board.setUbd_cate(rs.getString("ubd_cate"));
-		board.setUbd_no(rs.getInt("user_no"));
+		board.setUser_no(rs.getInt("user_no"));
 		board.setDog_kind(rs.getString("dog_kind"));
+		board.setUser_nick(rs.getString("user_nick"));
 		return board;
 	}
 

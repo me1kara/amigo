@@ -19,9 +19,40 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public List<BoardVO> getBoardList(SearchVO searchVO) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDAO.getBoardList(searchVO);
 	}
+
+	@Override
+	public int getTotalRowCount(SearchVO searchVO) {
+		return boardDAO.getTotalRowCount(searchVO);
+	}
+
+	@Override
+	public BoardVO getBoard(BoardVO board) {
+		return boardDAO.getBoard(board);
+	}
+
+	@Override
+	public void updateCount(int ubd_no) {
+		boardDAO.updateCount(ubd_no);
+	}
+
+	@Override
+	public int updateBoard(BoardVO board) {
+		return boardDAO.updateBoard(board);
+	}
+
+	@Override
+	public int deleteBoard(BoardVO board) {
+		return boardDAO.deleteBoard(board);
+	}
+
+	@Override
+	public List<BoardVO> selectCate(BoardVO board) {
+		return boardDAO.selectCate(board);
+	}
+
+
 	
 	
 }

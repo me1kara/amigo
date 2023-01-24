@@ -17,6 +17,7 @@ public class BoardVO {
 	private int user_no;
 	private String dog_kind;
 	private MultipartFile uploadFile;
+	private String user_nick;
 	
 	public int getUbd_no() {
 		return ubd_no;
@@ -84,6 +85,14 @@ public class BoardVO {
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}
+	
+	public String getUser_nick() {
+		return user_nick;
+	}
+	public void setUser_nick(String user_nick) {
+		this.user_nick = user_nick;
+	}
+	
 	
 	@Override
 	public String toString() {
