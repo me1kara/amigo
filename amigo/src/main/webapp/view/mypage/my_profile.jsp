@@ -110,8 +110,10 @@
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
     <![endif]-->
-	<%@include file="/includes/footer.jsp" %>
-
+    
+    <!-- 이곳은 푸터가 조금 다르기 때문에 직접 적용해줬음
+	<@include file="/includes/footer.jsp" %>
+	-->
 	
 </body>
 </html>
