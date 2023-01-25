@@ -50,9 +50,7 @@
             <div class="right"></div>
           </div>
           <li class="nav-item">
-            <a class="nav-link" href="#"
-              ><i class="fas fa-tachometer-alt"></i>마이페이지</a
-            >
+            <a class="nav-link" href="<%=request.getContextPath() %>/view/mypage/my_page_list.jsp"><i class="fas fa-tachometer-alt"></i>마이페이지</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="#"
@@ -63,9 +61,7 @@
             <a class="nav-link" href="<%=request.getContextPath() %>/view/customer_service/customer_service_chat.jsp"><i class="far fa-clone"></i>채팅</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"
-              ><i class="far fa-calendar-alt"></i>커뮤니티</a
-            >
+            <a class="nav-link" href="<%=request.getContextPath() %>/view/comunity/user_board_list.jsp"><i class="far fa-calendar-alt"></i>커뮤니티</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"
