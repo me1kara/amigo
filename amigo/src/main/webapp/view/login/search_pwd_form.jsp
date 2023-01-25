@@ -19,20 +19,46 @@
 </head>
 <body>
 	
-	<%@include file="/includes/header.jsp" %>
-		<div class="container">
-		
-		<form action="search_pwd.do" method="post">
-		<input type="text" name="user_email" id="user_email" placeholder="이메일"><br><br>
-		<input type="submit" value="임시 비밀번호 발급"></a>
-		</form>
-		
-		<br>
-		<a href="login.do">로그인</a>
-		<a href="terms.do">회원가입</a>
-		
-		</div>
-	<%@include file="/includes/footer.jsp" %>
+<!-- header -->
+	<div class="container">
+	   <div class="container text-center mt-5 mb-5">
+      <img src="resources/img/logo1.png" alt="logo" />
+    </div>
+    <!-- header -->
+    <!-- email seach -->
+    <form action="search_pwd.do" method="post">
+      <div class="form-group">
+        <label for="search_pwdInput mt-5"></label>
+        <input
+          type="text"
+          name="user_email"
+          class="form-control"
+          id="user_email"
+          placeholder="이메일"
+        />
+      </div> <!-- email seach  end -->
+      <!-- button -->
+      <div class="d-grid">
+        <button type="submit" class="btn btn-default btn-primary mt-5 mb-5" value="임시 비밀번호 발급">
+          임시 비밀번호 발급
+        </button>
+         <!-- button end -->
+      </div>
+    </form>
+    <br />
+    <hr />
+    <!-- pwd footer -->
+    <div class="container text-center mt-5 mb-5">
+      <div class="row justify-content-between">
+        <div class="col-4"><a href="login.do">로그인</a></div>
+        <div class="col-4"><a href="terms.do">회원가입</a></div>
+      </div>
+    </div> <!-- pwd footer end -->
+    </div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/script.js"></script>
 
 	
 </body>
