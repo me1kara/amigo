@@ -47,7 +47,7 @@
           <a href="#" class="mypage_link">공지사항</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">계정관리</a>
+          <a href="account_controll.jsp" class="mypage_link">계정관리</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">펫시터 지원하기</a>
@@ -62,7 +62,7 @@
  <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/script.js"></script>
+    <script src="../resources/js/script.js"></script>
 	
 </body>
 </html>

@@ -22,7 +22,9 @@
 <!-- header -->
 	<div class="container">
 	   <div class="container text-center mt-5 mb-5">
+	   <a href="home.jsp">
       <img src="resources/img/logo1.png" alt="logo" />
+      </a>
     </div>
     <!-- header -->
     <!-- email seach -->
