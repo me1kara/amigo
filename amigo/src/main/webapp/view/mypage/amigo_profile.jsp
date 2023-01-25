@@ -31,7 +31,7 @@
 				    <a href="amigo_profile_insert.jsp" class="col-1 btn btn-primary">등록하기</a>
 				</div>
 			</c:when>
-		<!-- 반려견리스트 -->
+		
 	   <c:otherwise>
 		<p>반려동물 프로필</p>
 			<div class="row mt-4">
