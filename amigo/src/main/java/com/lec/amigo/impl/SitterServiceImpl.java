@@ -23,8 +23,9 @@ import com.lec.amigo.vo.SitterVO;
 
 		@Override
 		public SitterVO insertSitter(SitterVO svo) {
-			// SitterDAO.insertSitter(svo);
 			return null;
+			//return SitterDAO.insertSitter(svo);
+			
 		}
 
 		@Override
@@ -34,7 +35,7 @@ import com.lec.amigo.vo.SitterVO;
 		}
 
 		@Override
-		public SitterVO SitterInfo(SitterVO svo) {
+		public SitterVO sitterInfo(int sitno) {
 			// 펫시터에 대한 상세정보
 			return null;
 		}

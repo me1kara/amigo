@@ -16,73 +16,13 @@
 
 <%
 	UserVO user = new UserVO();
-	user.setUser_name("홍길동");
+	user.setUser_name("홍길동");  // 일단 이곳은 유저 VO를 가져오도록 동작->유저네임 임의 세팅 후 동작 시켜봄, 즉 더미
 	session.setAttribute("user", user);
 	System.out.println("안녕?"); // 일단 데이
 
 %><!-- 스크립트는 상단에 작성하였습니다 먼저 '현재 하는일'에서 직접 입력 선택 시 내용 무조건 입력하기 -->
-<script>
-    document.getElementById("sitter_apply_form").addEventListener("submit", function(e) {// 아직 에러남...addEventListener uncaught - properties of null에러
-        var othersInput = document.getElementById("sitter_others_input");   //id가 sitter~~와 같은 인풋 받고
-        var othersRadio = document.getElementById("flexRadioDefault6");     // 6번 라디오박스 받고
-        if (othersRadio.checked && othersInput.value === "") {              // 6번박스가 체크됐는데 인풋이 공백이면, 경고창이 뜨도록함.
-            alert("내용을 입력해주세요");
-            e.preventDefault();
-        }
-    });
-</script>
-<script>
-	function form_Check() {
-		// form에서 필요한 id값 받아 변수저장
-		var sitGender = document.getElementById("sit_gender");
-		var sitMale   = document.getElementById("male");
-		var sitFemale = document.getElementById("Female");
-		var sitBirth  = document.getElementById("sit_Birth");
-		var sitSmoking  = document.getElementById("sit_Smoking");
-		var sitJob  = document.getElementById("sit_job");
-		var sitDays  = document.getElementById("sit_days");
-		var sitTime  = document.getElementById("sit_time");
-		var sitExp  = document.getElementById("sit_exp");
-		var sitCareExp  = document.getElementById("sit_care_exp");
-		var sitIntro  = document.getElementById("sit_intro");
-		var sitAuthIs  = document.getElementById("sit_auth_is");
-		
-		if(!sitMale.checked && !sitFemale.checked) {
-			alert("성별을 선택해 주세요");
-			sitFemale.focus();
-			return false;
-		}
-			
-		
-	}
 
-</script>
-<script>
-	document.getElementById("sitter_apply_form").addEventListener("submit", function(e) { 
-		var genderMale = Document.GetElementById("option1");           // 인풋 id가 option1
-		var genderFemale = Document.GetElementById("option2");         // 인풋 id가 option2 일때
-		if(!genderMale.checked && !genderFemale.checked){              // 둘중 하나는 무조건 체크해야 함
-			alert("성별을 체크하세요");
-			e.preventDefault();
-		}
-	});
-</script>
-<script>
-	document.getElementById("sitter_apply_form").addEventListener("submit", function(e) {
-  		var smokingYes = document.getElementById("sit_smoking_yes");
- 		var smokingNo = document.getElementById("sit_smoking_no");
- 		if (smokingYes.checked || (!smokingYes.checked && !smokingNo.checked)) { //흡연에 체크했거나, 아무데도 체크를 안했으면
-  	 	    alert("흡연자는 지원이 불가합니다.");                                    // 경고창이 뜸
- 	        e.preventDefault();
-    }
-});
-</script>
-<script>
-	document.getElementById("sitter_apply_form").addEventListener("keydown", evt => {
-		if (evt.code === "Enter") 
-			evt.preventDefault();
-	});
-</script>
+
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,20 +46,24 @@
 			<form role="form" action="sitter_apply_form.do" method="post" onSubmit="return checkData();">
 			<div class="row">
 			
-	
+				<input type="hidden" class="form-control" name="user_no" value="1">
 				<input type="hidden" class="form-control" name="user_name" value="${ sessionScope.user.getUser_name() }" >
 				<input type="hidden" class="form-control" name="user_phone" value="${ sessionScope.user.getUser_phone() }">
 				<input type="hidden" class="form-control" name="user_addr" value="${ sessionScope.user.getUser_addr() }" >
+				<input type="hidden" class="form-control" name="sit_auth_is" value="0">
 				<!-- 히든타입. disabled는 값 전달이 안돼서 히든을 사용하여 세션에서 값을 받은 것. -->
+				<!-- sit_auth_is 는 승인여부로 기본값은 0, 즉 false 로 관리자에게 넘길 것. -->
 			
 				<div class="form-group">
 				<h4>1. 기본정보</h4>
-					<h4>프로필사진</h4>
+					<h4>프로필사진*</h4>
 				</div>
-					<div class="myPhoto text-center">
+					
+					<div class="form-group text-center">
 					<img class="profile-user-img img-fluid img-circle"
 					src="${path}/dist/img/profile/${login.userImg}"
 					alt="User profile picture">
+					<input class="form-control" name="sit_photo" value="이미지없어" required> 
 					</div>
 				<br>
 				<div class="form-group text-center">
@@ -130,23 +74,82 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="user_name">지원자 성명</label> <!-- 위에처럼 숨기거나 자동으로 뜨거나 둘중하나로할것 -->
+					<label for="user_name">지원자 성명</label> <!-- 사용자 편의를 위해 자동으로 뜨게 하나 disabled은 값이 안넘어가니 상단에 hidden처리. -->
 					<div class="name_input_box">
 					<input class="form-control" name="user_name" value="${ sessionScope.user.getUser_name() }" disabled>
 					</div>
 				</div><br>
 				
 				<div class="form-group">
-					<label for="sit_gender">성별</label>
+					<label for="sit_gender">성별*</label>
 					<div class="gender_input_box">
-					<input type="radio"  class="btn-check" name="sit_gender" id="male" autocomplete="off">
+					<input type="radio"  class="btn-check" name="sit_gender" id="male" value="m" autocomplete="off">
 					<label class="btn btn-secondary" for="male">남성</label>
-					<input type="radio"  class="btn-check" name="sit_gender" id="female" autocomplete="off" required>
+					<input type="radio"  class="btn-check" name="sit_gender" id="female" value="f" autocomplete="off" required>
 					<label class="btn btn-secondary" for="female">여성</label>
-					</div>
+					</div>             <!-- 밸류값은 m 과 f 로 넘길 것 -->
 				</div><br><br> 
 
 				<script type="text/javascript">
+				
+				function checkData(){
+					var smokingYes = document.getElementById('sit_smoking_yes');
+					if (smokingYes.checked){
+						alert("흡연자는 반려동물에게 피해를 줄 수 있어 가입이 제한됩니다");
+						return false;   // alert 기능 확인함(230125)
+					}
+					
+					var othersInput = document.getElementById("sitter_others_input");   //id가 sitter~~와 같은 인풋 받고
+			        var othersRadio = document.getElementById("flexRadioDefault6");     // 6번 라디오박스 받고
+			        if (othersRadio.checked && othersInput.value === "") {              // 6번박스가 체크됐는데 인풋이 공백이면, 경고창이 뜨도록함.
+			            alert("상세내용을 입력해주세요");
+			        	return false;   // alert 기능 확인함(230125)
+			        }
+			        
+			 //  아래는 boolean을 int 값으로 바꾸는 함수인데 안 먹힘.       
+			        
+			        // querySelector('input[name="sit_smoking"]:checked').value;
+			        // querySelector('input[name="sit_exp"]:checked').value;
+			        // querySelector('input[name="sit_auth_is"]').value;
+			        
+			    /*    var smokingValue = document.getElementByName("sit_smoking").value;
+			        var expValue = document.getElementByName("sit_exp").value;
+			        var authValue = document.getElementByName("sit_auth_is").value;
+
+			        var smokingIntegerValue;
+			        var expIntegerValue;
+			        var authIntegerValue;
+
+			        if (smokingValue === "1") {
+			            smokingIntegerValue = 1;
+			        } else {
+			            smokingIntegerValue = 0;
+			        }
+
+			        if (expValue === "1") {
+			            expIntegerValue = 1;
+			        } else {
+			            expIntegerValue = 0;
+			        }
+
+			        if (authValue === "1") {
+			            authIntegerValue = 1;
+			        } else {
+			            authIntegerValue = 0;
+			        }*/
+			        
+			        
+			       /* var sitBirth  = document.getElementById('sit_birth_8digit');
+			        var birth_pattern = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]))/
+			            if(!birth_pattern.test(sitBirth.value)){
+			            	alert('생년월일 8자리를 입력해주세요'); 
+			                // sitBirth.value=''; 괜히 인풋에 있는거 지우지 말고 남겨 놓기.
+			            sitBirth.focus(); 
+			            return false;    //  이거 테스트해봤는데 안먹힘. ; 를 써야되나..
+			            }*/
+					return true;
+				}
+				
 				
 				
 				
@@ -159,9 +162,9 @@
 				
 				
 				<div class="form-group">
-					<label for="sit_birth">생년월일</label>
+					<label for="sit_birth">생년월일*</label>
 					<div class="birth_input_box">
-					<input class="form-control" name="sit_birth" required>
+					<input class="form-control" name="sit_birth" id="sit_birth_8digit" required>
 					</div>
 					<span>04년생부터(만 18세 이상) 지원이 가능합니다.</span>
 				</div><br>
@@ -184,87 +187,96 @@
 				</div><br>
 				
 				<div class="form-group">
-					<label for="sit_smoking">흡연여부</label>
+					<label for="sit_smoking">흡연여부*</label>
 					<div class="smoking_input_box">
 					<input type="radio"  class="btn-check" name="sit_smoking" id="sit_smoking_yes" value="1">
 					<label class="btn btn-secondary" for="sit_smoking_yes">흡연</label>
 					<input type="radio"  class="btn-check" name="sit_smoking" id="sit_smoking_no" value="0" required>
 					<label class="btn btn-secondary" for="sit_smoking_no">비흡연</label>
 					</div>
-				</div>  <br><br>     
+				</div>  <br><br>    
+				<div class="form-group">
+					<label for="sit_exp">시터 경험여부*</label>
+					<div class="exp_input_box">
+					<input type="radio"  class="btn-check" name="sit_exp" id="sit_exp_yes" value="1" required>
+					<label class="btn btn-secondary" for="sit_exp_yes">경험자</label>
+					<input type="radio"  class="btn-check" name="sit_exp" id="sit_exp_no" value="0">
+					<label class="btn btn-secondary" for="sit_exp_no">비경험자</label>
+					</div>
+				</div> 
 				
 				
 				
 				<div class="form-group">
-					<label for="sitter_job">현재 하시는 일</label>
+					<label for="sit_job">현재 하시는 일*</label>
 					
 					<div class="form-check">
-  						<input class="form-check-input" type="radio" name="sitter_job" id="flexRadioDefault1">
- 						 <label class="form-check-label" for="sitter_job">주부</label>
+  						<input class="form-check-input" type="radio" name="sit_job" id="flexRadioDefault1" value="주부">
+ 						 <label class="form-check-label" for="sit_job">주부</label>
 					</div>
 					<div class="form-check">
- 						 <input class="form-check-input" type="radio" name="sitter_job" id="flexRadioDefault2">
- 						 <label class="form-check-label" for="sitter_job">학생</label>
+ 						 <input class="form-check-input" type="radio" name="sit_job" id="flexRadioDefault2" value="학생">
+ 						 <label class="form-check-label" for="sit_job">학생</label>
 					</div>
 					<div class="form-check">
- 						 <input class="form-check-input" type="radio" name="sitter_job" id="flexRadioDefault3">
- 						 <label class="form-check-label" for="sitter_job">직장인</label>
+ 						 <input class="form-check-input" type="radio" name="sit_job" id="flexRadioDefault3" value="직장인">
+ 						 <label class="form-check-label" for="sit_job">직장인</label>
 					</div>
 					<div class="form-check">
- 						 <input class="form-check-input" type="radio" name="sitter_job" id="flexRadioDefault4">
- 						 <label class="form-check-label" for="sitter_job">프리랜서</label>
+ 						 <input class="form-check-input" type="radio" name="sit_job" id="flexRadioDefault4" value="프리랜서">
+ 						 <label class="form-check-label" for="sit_job">프리랜서</label>
 					</div>
 					<div class="form-check">
- 						 <input class="form-check-input" type="radio" name="sitter_job" id="flexRadioDefault5">
- 						 <label class="form-check-label" for="sitter_job">구직자</label>
+ 						 <input class="form-check-input" type="radio" name="sit_job" id="flexRadioDefault5" value="구직자">
+ 						 <label class="form-check-label" for="sit_job">구직자</label>
 					</div>
 					<div class="form-check">
- 						 <input class="form-check-input" type="radio" name="sitter_job" id="flexRadioDefault6" required>
- 						 <label class="form-check-label" for="sitter_job">직접 입력</label>
+ 						 <input class="form-check-input" type="radio" name="sit_job" id="flexRadioDefault6" value="" required>
+ 						 <label class="form-check-label" for="sit_job">직접 입력</label>
 					</div>
-					<input class="form-control" name="sitter_job" id="sitter_others_input" placeholder="이곳에 직접 입력해주세요">
+					<input class="form-control" name="sit_job" id="sitter_others_input" placeholder="이곳에 직접 입력해주세요">
 				</div>  <br><br>
 				
 				<hr />
 				<h4>2. 활동 정보</h4>
 				
 				<div class="form-group">
-					<label for="sitter_days">활동 가능한 일수(한 달 기준)</label>
+					<label for="sit_days">활동 가능한 일수(한 달 기준)*</label>
 					
 					<div class="form-check2">
-  						<input class="form-check-input" type="radio" name="sitter_days" id="sitter_days1" required>
- 						 <label class="form-check-label" for="sitter_days">주말 포함한 30일 모두 가능합니다.</label>
+  						<input class="form-check-input" type="radio" name="sit_days" id="sitter_days1" value="주말 포함한 30일 모두 가능합니다." required>
+ 						 <label class="form-check-label" for="sit_days">주말 포함한 30일 모두 가능합니다.</label>
 					</div>
 					<div class="form-check2">
- 						 <input class="form-check-input" type="radio" name="sitter_days" id="sitter_days2">
- 						 <label class="form-check-label" for="sitter_days">평균 20일 이상 가능합니다.</label>
+ 						 <input class="form-check-input" type="radio" name="sit_days" id="sitter_days2" value="평균 20일 이상 가능합니다.">
+ 						 <label class="form-check-label" for="sit_days">평균 20일 이상 가능합니다.</label>
 					</div>
 					<div class="form-check2">
- 						 <input class="form-check-input" type="radio" name="sitter_days" id="sitter_days3">
- 						 <label class="form-check-label" for="sitter_days">평균 20일 이하 가능합니다.</label>
+ 						 <input class="form-check-input" type="radio" name="sit_days" id="sitter_days3" value="평균 20일 이하 가능합니다.">
+ 						 <label class="form-check-label" for="sit_days">평균 20일 이하 가능합니다.</label>
 					</div>
 					<div class="form-check2">
- 						 <input class="form-check-input" type="radio" name="sitter_days" id="sitter_days4">
- 						 <label class="form-check-label" for="sitter_days"></label>  
- 						  주말만 가능합니다.<br>
- 						  <span class="sitter_weekends">(방문 펫시터로 활동이 어려울 수 있습니다.)</span>						         
+ 						 <input class="form-check-input" type="radio" name="sit_days" id="sitter_days4" value="주말만 가능합니다.">
+ 						 <label class="form-check-label" for="sit_days">주말만 가능합니다.</label>  
+ 						  <br>
+ 						  <span class="sit_weekends">(방문 펫시터로 활동이 어려울 수 있습니다.)</span>						         
 					</div>
 				</div><br>
 				
 				<div class="form-group">
-					<label for="sitter_time">활동 가능한 시간대</label>
+					<label for="sit_time">활동 가능한 시간대*</label>
 					
 					<div class="form-check3">
-  						<input class="form-check-input" type="radio" name="sitter_time" id="sitter_times1" required>
- 						 <label class="form-check-label" for="sitter_time">모두 가능합니다.</label>
+  						<input class="form-check-input" type="radio" name="sit_time" id="sitter_times1" value="모두 가능합니다" required>
+ 						 <label class="form-check-label" for="sit_time">모두 가능합니다.</label>
 					</div>
 					<div class="form-check3">
- 						 <input class="form-check-input" type="radio" name="sitter_time" id="sitter_times2">
- 						 <label class="form-check-label" for="sitter_time">오전타임(오전8:00~오후12:00)</label>
+ 						 <input class="form-check-input" type="radio" name="sit_time" id="sitter_times2" value="오전타임(오전8:00~오후12:00)">
+ 						 <label class="form-check-label" for="sit_time">오전타임(오전8:00~오후12:00)</label>
 					</div>
 					<div class="form-check3">
- 						 <input class="form-check-input" type="radio" name="sitter_time" id="sitter_times3">
- 						 <label class="form-check-label" for="sitter_time">오후타임(오후12:00~오후06:00)</label>
+ 						 <input class="form-check-input" type="radio" name="sit_time" id="sitter_times3" value="오후타임(오후12:00~오후06:00)">
+ 						 <label class="form-check-label" for="sit_time">오후타임(오후12:00~오후06:00)</label>
 					</div>
 				</div>
 				
@@ -277,7 +289,7 @@
 
 
 				<div class="form-group">
-					<label for="sit_intro">자기소개</label>
+					<label for="sit_intro">자기소개*</label>
 					<textarea class="form-control" name="sit_intro" placeholder="자기소개를 작성해주세요" required>더미2</textarea>
 					<p>등록된 휴대폰 번호로 합격 여부를 알려드립니다..</p>
 				</div> 

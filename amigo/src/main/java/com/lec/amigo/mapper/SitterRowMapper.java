@@ -10,13 +10,10 @@ import com.lec.amigo.vo.SitterVO;
 											// JDBC 템플릿이  있어야 됨.
 public class SitterRowMapper implements RowMapper<SitterVO>{
 
+	// Sitter 테이블에 Sit_no 인 시터번호는 Auto-Increment로 자동증가 시퀀스임. 그래서 추가안함
 	@Override
 	public SitterVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		
-		SitterVO sit = new SitterVO();
-		
-		// Sitter 테이블에 Sit_no 인 시터번호는 Auto-Increment로 자동증가 시퀀스임. 그래서 추가안함
-                      
+		SitterVO sit = new SitterVO();          
 		sit.setUser_no(rs.getInt("user_no"));                       
 		sit.setSit_gender(rs.getString("sit_gender"));      
 		sit.setSit_birth(rs.getString("sit_birth"));        
@@ -28,9 +25,7 @@ public class SitterRowMapper implements RowMapper<SitterVO>{
 		sit.setSit_care_exp(rs.getString("sit_care_exp"));  
 		sit.setSit_intro(rs.getString("sit_intro"));        
 		sit.setSit_photo(rs.getString("sit_photo")); 
-		sit.setSit_auth_is(rs.getBoolean("sit_auth_is"));
-		
-		
+		sit.setSit_auth_is(rs.getBoolean("sit_auth_is"));	
 		
 		return sit;
 	}

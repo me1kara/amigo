@@ -33,14 +33,31 @@ public class SitterDAO {
 	@Autowired
 	Environment environment;
 	
+	private String sitterInfo   = "select * from petsitter where user_no = ?";
 	private String insertSitter = "";
+	private String selectSitterList = "select * from petsitter where sit_no = ? ";
 	
 	@PostConstruct
 	public void getSqlProperties() {
 		
 		insertSitter = environment.getProperty("insertSitter");
+		sitterInfo   = environment.getProperty("sitterInfo");
+		selectSitterList = environment.getProperty("selectSitterList");
 	}
 	
+	private Connection conn = null;
+	private PreparedStatement stmt = null;
+	private ResultSet rs = null;
+	SitterVO sit = null;
+	
+	public SitterVO sitterInfo (int sitno) {
+		try {
+			
+		} catch (Exception e) {
+			
+		}
+		return sit;
+	}
 	//private String insertSitter = "INSERT INTO pet_sitter (user_no, sit_gender, sit_birth, sit_smoking, sit_job, sit_days, "
 	//		+ "sit_time, sit_exp, sit_care_exp, sit_intro, sit_photo) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	// 23/01/19 : JDBC템플릿이,,,즉,,property 가 안먹힌다면, 주석을 푼다. 23/01/19
@@ -54,7 +71,7 @@ public class SitterDAO {
         		svo.getSit_birth(), svo.isSit_smoking(),
         		svo.getSit_job(), svo.getSit_days(), svo.getSit_time(), 
         		svo.isSit_exp(), svo.getSit_care_exp(), svo.getSit_intro(),
-        		svo.getSit_photo());
+        		svo.getSit_photo(), svo.isSit_auth_is());
    
         return svo;
         
