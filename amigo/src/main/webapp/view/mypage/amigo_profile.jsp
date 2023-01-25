@@ -60,7 +60,6 @@
 								<td>${ dog.getDog_breeds()}</td>
 								<td>${ dog.getDog_birth() }</td>
 								<td>${ dog.getDog_weight() }kg</td>
-				<!-- 				<td>${ dog.isDog_neutered() }</td>   -->
 				    			<td><c:choose><c:when test="${ dog.isDog_neutered() }">예</c:when>
 										      <c:when test="${ !dog.isDog_neutered() }">아니오</c:when></c:choose></td>
 				    			<td><c:choose><c:when test="${ dog.isDog_rabies_vacc() }">예</c:when>
