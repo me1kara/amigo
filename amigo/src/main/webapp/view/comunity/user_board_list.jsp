@@ -144,7 +144,7 @@
 		</div> <!-- 페이징 -->
 		
 		<div class="col-2 btn-group">
-			    <a href="view/comunity/user_insert_board.jsp" class="col-1 btn btn-primary me-2">글등록</a>
+			    <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
 		</div>					
 	</div> <!-- main  -->
 	

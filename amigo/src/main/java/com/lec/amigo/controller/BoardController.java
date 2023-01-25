@@ -1,7 +1,10 @@
 package com.lec.amigo.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.service.BoardService;
@@ -31,6 +35,11 @@ public class BoardController {
 	Environment environment;
 	
 	private String uploadFolder = "";
+	
+	@PostConstruct
+	public void getUploadPathPropeties() {
+		uploadFolder = environment.getProperty("uploadFolder");
+	}
 	
 	@RequestMapping("/user_board_list.do")
 	public String getBoardList (Model model, SearchVO searchVO,
@@ -114,12 +123,18 @@ public class BoardController {
 		return "view/comunity/user_board_insert.jsp";
 	}
 	
-	@RequestMapping(value="view/user_board_insert.do", method=RequestMethod.POST)
-	public String user_board_insert(Model model, BoardVO board) {
+	@RequestMapping(value="/user_board_insert.do", method=RequestMethod.POST)
+	public String user_board_insert(Model model, BoardVO board) throws IOException {
+		MultipartFile uploadFile = board.getUploadFile();
+		if (!uploadFile.isEmpty()) {
+			String ubd_file = uploadFile.getOriginalFilename();
+			uploadFile.transferTo(new File(uploadFolder + ubd_file));
+			board.setUbd_file(ubd_file);
+		}		
 		boardService.insertBoard(board);
 		model.addAttribute("msg","글이 정상적으로 등록되었습니다.");
-		model.addAttribute("url","../user_board_list.do");
-		return "../view/comunity/alert.jsp";
+		model.addAttribute("url","user_board_list.do");
+		return "view/comunity/alert.jsp";
 	}
 	
 }

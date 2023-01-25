@@ -1,6 +1,6 @@
 package com.lec.amigo.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +36,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess) {
-				
+			
 		UserVO user = userDAO.getUser(userVO.getUser_email());
 
 		if(user == null) {
@@ -74,7 +74,7 @@ public class LoginController {
 	}
 	
 	// 로그아웃
-	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+	@RequestMapping(value ="/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession sess) {
 		sess.invalidate();
 		return "home.jsp";
@@ -159,5 +159,7 @@ public class LoginController {
 	public String main_tour() {
 		return "view/main_tour.jsp"; 
 	}
+	
+	
 	
 }

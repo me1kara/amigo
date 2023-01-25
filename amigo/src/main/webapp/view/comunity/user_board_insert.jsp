@@ -27,36 +27,36 @@
 	</div>		
 
 	<div class="container mt-3" align="center">
-		<form action="../user_board_insert.do" method="post">
+		<form action="user_board_insert.do" method="post" enctype="multipart/form-data">
 			<input name="user_no" type="hidden" value="${user.user_no}" />
 			<div class="input-group mb-3">
-  			 <b>글제목</b> <input type="text" class="form-control" name="ubd_title" value="${ board.ubd_title }">
+  			 <b>글제목</b> <input type="text" class="form-control" name="ubd_title">
 			</div>
 			<div class="input-group mb-3">
   			 <b>말머리</b> 
-  			 	<select class="form-select" id="searchCategory" name="ubd_cate" value="${ board.ubd_cate }">							
+  			 	<select class="form-select" id="searchCategory" name="ubd_cate">							
 				    <option value="자랑글">자랑글</option>						
 				    <option value="자유글">자유글</option>							
 				    <option value="Q&A">Q&A</option>										
 				</select>
 			</div>
 			<div class="input-group mb-3">
-			 <b>견종</b> <input type="text" class="form-control" name="dog_kind" value="${ board.dog_kind }">
+			 <b>견종</b> <input type="text" class="form-control" name="dog_kind">
 			</div>
 			<div class="input-group mb-3">
 			 <b>작성자</b> <input type="text" class="form-control"  name="user_nick" value="${ user.getUser_nick() }" readonly> 
 			</div>
 			<div class="input-group mb-3">
-			  <b>글내용</b> <textarea class="form-control"  name="ubd_cont" rows="15" >${ board.ubd_cont }</textarea>
+			  <b>글내용</b> <textarea class="form-control"  name="ubd_cont" rows="15" ></textarea>
 			</div>	
 			<div class="input-group mb-3">
-			  <b>사진업로드</b> <input type="file" class="form-control"  name="ubd_file" rows="15" >${ board.ubd_file }
+			  <b>사진업로드</b><input type="file" class="form-control" name="uploadFile" id="uploadFile" aria-describedby="uploadFile" aria-label="Upload" />
 			</div>	
 			
-			
+			<input type="hidden" name="ubd_file" value=""/>	
 			<div class="container" align="center">
 				<input type="submit" class="btn btn-primary mt-3" value="등록완료"/>
-				<input type="button" class="btn btn-primary mt-3" value="취소" onclick="location.href='user_board_list.do'"/>
+				<input type="button" class="btn btn-primary mt-3" value="취소" onclick="history.go(-1)"/>
 			</div>
 		</form>			
 	</div>

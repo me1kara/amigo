@@ -2,6 +2,7 @@ package com.lec.amigo.vo;
 
 import java.util.Date;
 
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class BoardVO {

@@ -36,10 +36,11 @@ public class UserDAO {
 	
 	@PostConstruct
 	public void getSqlPropeties() {
-		updatePw   = environment.getProperty("updatePw");
-		insertUser = environment.getProperty("insertUser");
-		emailCheck = environment.getProperty("emailCheck");
-		nickCheck = environment.getProperty("nickCheck");
+		updatePw      = environment.getProperty("updatePw");
+		insertUser    = environment.getProperty("insertUser");
+		emailCheck    = environment.getProperty("emailCheck");
+		nickCheck     = environment.getProperty("nickCheck");
+		selectByEmail = environment.getProperty("selectByEmail");
 	}
 	
 	private Connection conn = null;
@@ -73,8 +74,9 @@ public class UserDAO {
 		} finally {
 			JDBCUtility.close(conn, rs, stmt);
 		}
+	
+	return user;
 		
-		return user;
 	}
 
 	public int updatePw(UserVO vo) {
