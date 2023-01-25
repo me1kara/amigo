@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-import javax.inject.Qualifier;
 import javax.websocket.Session;
 
 import org.json.simple.JSONObject;
@@ -19,6 +19,7 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.BinaryMessage;
@@ -38,16 +39,70 @@ import lombok.RequiredArgsConstructor;
 public class ChatHandler extends TextWebSocketHandler{
 	
 	private static HashMap<String, WebSocketSession> sessions = new HashMap<>();
+	private static final String FILE_UPLOAD_PATH = "C:/test/websocket/";
 	//세션구별용	
 //	private Map<String, WebSocketSession> userSessions = new HashMap();
 	
 	//private Map<ChatRoom, WebSocketSession> indexSessions = new HashMap();
 	
-	ChatDAO chatDao = new ChatDAO();
+	@Autowired
+	@Qualifier("chatDAO")
+	ChatDAO chatDao;
 	
 	//private static final Logger logger = LoggerFactory.getLogger(ChatServer.class);
 	//ChatDAO chatDao = new ChatDAO();
 	
+	
+	
+	@Override
+	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
+		String curWorkingDir = System.getProperty("user.dir");
+		System.out.println("현재 작업 폴더 : " + curWorkingDir);
+		ByteBuffer byteBuffer = message.getPayload();
+		
+		UUID uuid = UUID.randomUUID();
+		String[] uuids = uuid.toString().split("-");
+		
+		String fileName = uuids[0];
+		File dir = new File(FILE_UPLOAD_PATH);
+		
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+		File file = new File(FILE_UPLOAD_PATH, fileName);
+		FileOutputStream out = null;
+		FileChannel outChannel = null;
+		try {
+			byteBuffer.flip(); //byteBuffer를 읽기 위해 세팅
+			out = new FileOutputStream(file, true); //생성을 위해 OutputStream을 연다.
+			outChannel = out.getChannel(); //채널을 열고
+			byteBuffer.compact(); //파일을 복사한다.
+			outChannel.write(byteBuffer); //파일을 쓴다.
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(out != null) {
+					out.close();
+				}
+				if(outChannel != null) {
+					outChannel.close();
+				}
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		byteBuffer.position(0); 
+		
+		try {
+			session.sendMessage(new BinaryMessage(byteBuffer));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+	}
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -92,7 +147,6 @@ public class ChatHandler extends TextWebSocketHandler{
 		}else if(jms!=null && jms.size()==5) {
 				no = (String) jms.get("no");
 				sendUser =(String)jms.get("userName");
-				text = (String)jms.get("msg");
 				roomIndex = Integer.parseInt((String)jms.get("roomIndex"));
 				type = (String) jms.get("type");
 		}		
@@ -139,7 +193,7 @@ public class ChatHandler extends TextWebSocketHandler{
 				
 			
 		} else if (no.equals("2") && type.equals("message")) {
-			
+			text = (String)jms.get("msg");
 			int a = chatDao.insertChat(roomIndex, user_no, text);
 			int chat_no=0;
 			if(a>0) {
@@ -176,7 +230,11 @@ public class ChatHandler extends TextWebSocketHandler{
 				
 			//}
 			}
-		} else if (no.equals("3")) {
+		} else if(no.equals("2") && type.equals("fileUpload")){
+			String fileName = (String)jms.get("file");
+			chatDao.insertFile(roomIndex, user_no, fileName);
+			
+		} if (no.equals("3")) {
 			
 			System.out.println("호히히히");
 			//for(String id:idList) {
@@ -240,8 +298,6 @@ public class ChatHandler extends TextWebSocketHandler{
 				
 				
 			}
-			
-		
 			
 			
 	

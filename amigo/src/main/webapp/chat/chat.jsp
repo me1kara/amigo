@@ -1,3 +1,4 @@
+<%@page import="org.springframework.beans.factory.annotation.Autowired"%>
 <%@page import="com.lec.amigo.vo.UserVO"%>
 <%@page import="com.lec.amigo.vo.ChatRoom"%>
 <%@page import="org.springframework.web.servlet.tags.Param"%>
@@ -28,8 +29,8 @@
 		System.out.println(index+"로그인실패!");
 	}
 */
+	ChatDAO dao = (ChatDAO) request.getAttribute("chatDAO");	
 
-	ChatDAO dao = new ChatDAO();
 	check = dao.checkRoomIndex(user_no, index);
 	
 	if(!check){
@@ -65,16 +66,23 @@
   </style>
 	<script>
 
-    $(document).ready(function () {
-    	/*
-		$('#chat_no_'+${chat.getChat_no() }).click(function(){
-			console.log('하이하이');
-			$('.chat_option_item').toggle();
-
-		});
-    	*/
-    });
-    
+  	  function previewFile() {
+		  var preview = document.querySelector('img');
+		  var file = document.querySelector('input[type=file]').files[0];
+		  var reader = new FileReader();
+		
+		  reader.addEventListener(
+		    'load',
+		    function () {
+		      preview.src = reader.result;
+		    },
+		    false
+		  );
+		
+		  if (file) {
+		    reader.readAsDataURL(file);
+		  }
+		}
 
 	</script>
 </head>
@@ -82,7 +90,8 @@
 	<c:set var="user" value="<%=user %>"/>
 	<div class="container">
 		<h1 class="page-header">채팅방</h1>		
-	
+	     
+	    
 		<table class="table table-bordered" style="background: #81DAF5;">
 		
 		<!-- 
@@ -129,6 +138,12 @@
 		<tr class="table-borderless">
 			<td colspan="5"><input type="text" name="msg" id="msg" placeholder="대화 내용을 입력하세요." class="form-control"></td>
 			<td colspan="1" style="text-align: rigth;"><button class="btn btn-success" style="width: 100px;" id="chat_submit_btn">보내기</button></td>
+		</tr>
+		<tr>
+			<th>파일업로드</th>
+			<th><input type="file" id="fileUpload" onchange="previewFile()"></th>
+			<td><img src="" height="200" alt="파일 미리보기..." /></td> 
+			<th><button id="sendFileBtn">파일올리기</button></th>
 		</tr>
 		</table>
 		
@@ -304,7 +319,6 @@
   	  	  		$('#msg').focus();
   	  	  	}
   	  	  	);
-  	  	  
   	  	  $('#msg').keydown(function() {
   	  	  	if (event.keyCode == 13) {	
   	  	  		//서버에게 메시지 전달
@@ -329,7 +343,26 @@
 	  		ws.send(JSON.stringify(option));
 	  		
   		  }
-  	  	  
+  		$('#sendFileBtn').click(function(){
+  			var file = document.querySelector("#fileUpload").files[0];
+  			var fileReader = new FileReader();
+  			
+  			fileReader.onload = function(e) {
+  				let param = {
+  					no : "2",
+  					type: "fileUpload",
+  					file: file.name,
+  					roomIndex: index,
+  					userName : user_name
+  				}
+  				console.log(param);
+  				ws.send(JSON.stringify(param)); //파일 보내기전 메시지를 보내서 파일을 보냄을 명시한다.
+  			    rawData = e.target.result;
+  				ws.send(rawData); //파일 소켓 전송
+  			};
+  			fileReader.readAsArrayBuffer(file);
+  		}
+  		)
   	    	
   		};
           

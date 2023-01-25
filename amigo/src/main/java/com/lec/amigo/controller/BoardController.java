@@ -95,13 +95,13 @@ public class BoardController {
 			@RequestParam(defaultValue="") String searchWord) 
 			{
 		
-		searchVO.setTotalRowCount(boardService.getTotalRowCount(searchVO));
 		searchVO.setCurPage(curPage);
 		searchVO.setRowSizePerPage(rowSizePerPage);
 		searchVO.setSearchCategory(searchCategory);
 		searchVO.setSearchType(searchType);
 		searchVO.setSearchWord(searchWord);
 		searchVO.pageSetting();
+		searchVO.setTotalRowCount(boardService.getTotalRowCount(searchVO));
 		
 		List<BoardVO> boardList = boardService.selectCate(board);
 		model.addAttribute("searchVO", searchVO);
