@@ -1,4 +1,4 @@
-package com.lec.amigo.chat;
+package com.lec.amigo.chat.JDBCUtility;
 
 import java.io.File;
 import java.io.FileOutputStream;
