@@ -20,8 +20,7 @@
 </head>
 <body>
 <%@include file="/includes/header.jsp" %>
-	
-	<h1>${boardList.size() }</h1>
+
 	<div class="container" align="center">
 		<div class="mt-4 p-5 bg-primary text-white rounded">
 			<h3>유저 커뮤니티</h3>
@@ -99,7 +98,6 @@
 						<th scope="col" class="col-1 text-center">추천수</th>									
 					</thead>
 					<tbody>
-								
 					<c:forEach  var="board" items="${ boardList }">
 						<tr>
 							<td>${ board.getUbd_cate()}</td>
@@ -127,7 +125,7 @@
 				<c:set var="sc" value="${searchVO.getSearchCategory()}"/>
 				<c:set var="st" value="${searchVO.getSearchType()}"/>
 				<c:set var="sw" value="${searchVO.getSearchWord()}"/>
-								
+																
 				<c:if test="${ fp != 1 }">
 					<li class="page-item"><a href="user_board_list.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
 					<li class="page-item"><a href="user_board_list.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-backward"></i></a></li>				
