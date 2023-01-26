@@ -150,7 +150,7 @@
 	</div>
 	<script>
 //채팅 서버 주소
-  var url = "ws://localhost:8088/amigo/chatHandler.do";
+  var url = "ws://localhost:8088/amigo/chatHandler.do?<%=index%>";
   var index = "<%=index%>";
   // 웹 소켓
   var ws = new WebSocket(url);
@@ -358,7 +358,8 @@
   				console.log(param);
   				ws.send(JSON.stringify(param)); //파일 보내기전 메시지를 보내서 파일을 보냄을 명시한다.
   			    rawData = e.target.result;
-  				ws.send(rawData); //파일 소켓 전송
+  			  	setTimeout(() => ws.send(rawData), 500);
+  				 //파일 소켓 전송
   			};
   			fileReader.readAsArrayBuffer(file);
   		}

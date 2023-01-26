@@ -468,25 +468,41 @@ public class ChatDAO {
 
 	public void insertFile(int roomIndex, int user_no, String fileName) {
 		
-		String selectEqualsFile = "select count(sitt_chat_file) from sit_chat where sitt_chat_file=?";
+		String fileType = fileName.substring(fileName.lastIndexOf("."),fileName.length());
+		
+		System.out.println(fileType);
+		fileName = fileName.split(fileType)[0];
+		System.out.println(fileName);
+		
+		String selectEqualsFile = "select count(sitt_chat_file) from sit_chat where sitt_chat_file like '?%'";
 		Object[] args = {fileName};
 		
 		int a = 0;
 		a = jdbcTemplate.queryForObject(selectEqualsFile,args, Integer.class);
 		
 		if(a!=0) {
-			fileName = fileName+"("+a+")";
-		}
+			fileName = fileName+"("+a+").";
+		}		
+		fileName = fileName+fileType;
 		
 		String insertSql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,SYSDATE(),0,?,?)";	
 		try {
-			jdbcTemplate.update(insertSql, roomIndex, user_no,null, fileName, null);
+			System.out.println("그래서 됨?");
+			jdbcTemplate.update(insertSql, roomIndex, user_no,"file", fileName, null);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		
 		
+	}
+
+
+	public int getLastMyChat(int user_no) {
+		
+		String sql = "select sitt_chat_no from sit_chat where user_no=?";
+		
+		return 0;
 	}
 	
 	

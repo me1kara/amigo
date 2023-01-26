@@ -53,12 +53,43 @@ public class ChatHandler extends TextWebSocketHandler{
 	//ChatDAO chatDao = new ChatDAO();
 	
 	
+
+	
+	@Override
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		System.out.println("서버연결"+session.getId());	
+		//세션리스트에 세션저장
+		//유저-세션 저장
+		sessions.put(session.getId(), session);
+		
+		/*
+		ChatRoom ch = getRoomUser(session);
+		if(ch!=null) {
+			boolean chat_room_is = chatDao.getRoom(ch);		
+			if(!chat_room_is)chatDao.setRoom(ch);
+		};
+		*/
+		
+	
+	}
 	
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 		String curWorkingDir = System.getProperty("user.dir");
 		System.out.println("현재 작업 폴더 : " + curWorkingDir);
-		ByteBuffer byteBuffer = message.getPayload();
+		
+
+		ByteBuffer byteBuffer = message.getPayload();		
+		String url = session.getUri().toString();
+		System.out.println("url:"+url);
+		
+		String roomIndex = url.split("/chatHandler.do?")[1].substring(1);
+		UserVO user = getUser(session);
+		int user_no = user.getUser_no();
+		
+		int chat_no = chatDao.getLastMyChat(user_no);
+		
+		
 		
 		UUID uuid = UUID.randomUUID();
 		String[] uuids = uuid.toString().split("-");
@@ -69,7 +100,7 @@ public class ChatHandler extends TextWebSocketHandler{
 		if(!dir.exists()) {
 			dir.mkdirs();
 		}
-		File file = new File(FILE_UPLOAD_PATH, fileName);
+		File file = new File(FILE_UPLOAD_PATH, fileName+".png");
 		FileOutputStream out = null;
 		FileChannel outChannel = null;
 		try {
@@ -102,24 +133,6 @@ public class ChatHandler extends TextWebSocketHandler{
 		}
 	
 		
-	}
-	
-	@Override
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("서버연결"+session.getId());	
-		//세션리스트에 세션저장
-		//유저-세션 저장
-		sessions.put(session.getId(), session);
-		
-		/*
-		ChatRoom ch = getRoomUser(session);
-		if(ch!=null) {
-			boolean chat_room_is = chatDao.getRoom(ch);		
-			if(!chat_room_is)chatDao.setRoom(ch);
-		};
-		*/
-		
-	
 	}
 
 	@Override
@@ -156,7 +169,6 @@ public class ChatHandler extends TextWebSocketHandler{
 	
 		int user_no = getUser(session).getUser_no();
 		
-		System.out.println();
 		
 		if (no.equals("1")) {
 			// 누군가 접속 > 1#아무개
@@ -230,11 +242,16 @@ public class ChatHandler extends TextWebSocketHandler{
 				
 			//}
 			}
-		} else if(no.equals("2") && type.equals("fileUpload")){
+		}else if(no.equals("2") && type.equals("fileUpload")){
+			
+			System.out.println("들어와짐?");
 			String fileName = (String)jms.get("file");
+			System.out.println(fileName);
 			chatDao.insertFile(roomIndex, user_no, fileName);
 			
-		} if (no.equals("3")) {
+			
+			
+		}else if (no.equals("3")) {
 			
 			System.out.println("호히히히");
 			//for(String id:idList) {
