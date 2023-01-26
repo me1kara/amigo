@@ -20,11 +20,129 @@
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-		<div class="container">
-		My18_계정관리~My19
-		</div>
-	<%@include file="/includes/footer.jsp" %>
-
 	
+		<!--  My18_계정관리~My19 -->
+	 <div class="container">
+      <!-- myAccount header -->
+      <h4>계정관리</h4>
+      <!-- end -->
+      <br />
+      <!-- Menu -->
+      <div>
+        <!-- 회원 로그아웃 버튼-->
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          로그아웃
+        </button>
+        <!-- end -->
+        <!-- 회원 로그아웃 모달 -->
+        <div
+          class="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                  로그아웃
+                </h1>
+                <button
+                  type="button"
+                  onclick="location.href='';" 
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"              
+                ></button>
+              </div>
+              <div class="modal-body">
+                로그아웃을 하여도 데이터는 보존되며 로그인 할 시 <br />다시
+                접속할 수 있습니다. 정말 로그아웃 하시겠습니까?
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  onclick="location.href='';"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  취소
+                </button>
+                <button type="button" onclick="location.href='logout.do';"  class="btn btn-primary">로그아웃</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 회원 로그아웃 모달 end -->
+      </div>
+      <hr />
+      <br />
+      <div>
+        <!-- 회원 탈퇴 버튼-->
+        <button
+          type="button"
+          onclick="location.href=';" 
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop1"
+        >
+          탈퇴하기
+        </button>
+        <!-- end -->
+        <!-- 회원 탈퇴 모달 -->
+        <div
+          class="modal fade"
+          id="staticBackdrop1"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel1"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel1">
+                  이별 준비중
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  onclick="location.href='';" 
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                정말 당신의 AM!GO와 이별하시겠습니까?
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"                  
+                  class="btn btn-secondary"
+                  onclick="location.href='';" 
+                  data-bs-dismiss="modal"
+                >
+                  머물기
+                </button>
+                <button type="button" class="btn btn-primary" onclick="location.href='';" >이별하기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 회원 로그아웃 탈퇴 end -->
+      </div>
+      <!-- end -->
+      <hr />
+    </div>
+    <%@include file="/includes/footer.jsp" %>
 </body>
 </html>
