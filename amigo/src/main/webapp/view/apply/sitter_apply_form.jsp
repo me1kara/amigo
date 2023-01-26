@@ -102,7 +102,7 @@
 					var othersInput = document.getElementById("sitter_others_input");   //id가 sitter~~와 같은 인풋 받고
 			        var othersRadio = document.getElementById("flexRadioDefault6");     // 6번 라디오박스 받고
 			        if (othersRadio.checked && othersInput.value === "") {              // 6번박스가 체크됐는데 인풋이 공백이면, 경고창이 뜨도록함.
-			            alert("상세내용을 입력해주세요");								// 현재 하는일에서 직접 입력을 체크하면 input을 꼭 쓰도록 함.
+			            alert("현재 하시는 일을 입력해주세요");								// 현재 하는일에서 직접 입력을 체크하면 input을 꼭 쓰도록 함.
 			        	return false;   // alert 기능 확인함(230125)
 			        }
 				}

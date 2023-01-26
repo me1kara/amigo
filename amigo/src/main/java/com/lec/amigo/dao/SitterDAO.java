@@ -33,14 +33,51 @@ public class SitterDAO {
 	@Autowired
 	Environment environment;
 	
+	private String sitterInfo   = "select * from petsitter where sit_no = ?";
 	private String insertSitter = "";
+	private String selectSitterList = "select * from petsitter where user_no = ? ";
 	
 	@PostConstruct
 	public void getSqlProperties() {
 		
 		insertSitter = environment.getProperty("insertSitter");
+		sitterInfo   = environment.getProperty("sitterInfo");
+		selectSitterList = environment.getProperty("selectSitterList");
 	}
 	
+	private Connection conn = null;
+	private PreparedStatement stmt = null;
+	private ResultSet rs = null;
+	SitterVO sit = null;
+	
+	public SitterVO sitterInfo (int sit_no) {
+		try {
+			conn = JDBCUtility.getConnection();
+			stmt = conn.prepareStatement(sitterInfo);
+			stmt.setInt(1, sit_no);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				sit = new SitterVO();
+				sit.setUser_no(rs.getInt("user_no"));
+				sit.setSit_gender(rs.getString("sit_gender"));
+				sit.setSit_birth(rs.getDate("sit_birth"));
+				sit.setSit_smoking(rs.getBoolean("sit_smoking"));
+				sit.setSit_job(rs.getString("sit_job"));
+				sit.setSit_days(rs.getString("sit_days"));
+				sit.setSit_time(rs.getString("sit_time"));
+				sit.setSit_exp(rs.getBoolean("sit_exp"));
+				sit.setSit_care_exp(rs.getString("sit_care_exp"));
+				sit.setSit_intro(rs.getString("sit_intro"));
+				sit.setSit_photo(rs.getString("sit_photo"));
+				sit.setSit_auth_is(rs.getBoolean("sit_auth_is"));
+			}
+		} catch (Exception e) {
+			System.out.println("접속실패 " + e.getMessage());
+		} finally {
+			JDBCUtility.close(conn, rs, stmt);
+		}
+		return sit;
+	}
 	//private String insertSitter = "INSERT INTO pet_sitter (user_no, sit_gender, sit_birth, sit_smoking, sit_job, sit_days, "
 	//		+ "sit_time, sit_exp, sit_care_exp, sit_intro, sit_photo) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	// 23/01/19 : JDBC템플릿이,,,즉,,property 가 안먹힌다면, 주석을 푼다. 23/01/19
@@ -54,7 +91,7 @@ public class SitterDAO {
         		svo.getSit_birth(), svo.isSit_smoking(),
         		svo.getSit_job(), svo.getSit_days(), svo.getSit_time(), 
         		svo.isSit_exp(), svo.getSit_care_exp(), svo.getSit_intro(),
-        		svo.getSit_photo());
+        		svo.getSit_photo(), svo.isSit_auth_is());
    
         return svo;
         
@@ -64,16 +101,6 @@ public class SitterDAO {
 		
 		
 	}
-	
-
-
-
-
-
-
-
-
-
 
 
 

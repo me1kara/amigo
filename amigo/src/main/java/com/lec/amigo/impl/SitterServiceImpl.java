@@ -31,4 +31,10 @@ public class SitterServiceImpl implements SitterService {
 		return null;
 	}
 
+	@Override
+	public SitterVO sitterInfo(int sit_no) {
+		
+		return sitterDAO.sitterInfo(sit_no);
+	}
+
 }

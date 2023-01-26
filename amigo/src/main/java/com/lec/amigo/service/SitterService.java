@@ -10,13 +10,17 @@ import com.lec.amigo.vo.SitterVO;
 
 public interface SitterService {
 
-	static SitPageInfo getSitPageInfo(int p, int perPage) {
+	
+	
+	/*static SitPageInfo getSitPageInfo(int p, int perPage) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 	int insertSitter(SitterVO svo);
 	List<SitterVO> getSitList(SitterVO svo);
+
+	SitterVO sitterInfo(int sit_no);
 	
 	
 	

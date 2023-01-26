@@ -20,9 +20,17 @@
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-		<div class="container">
-			
-		</div>
+		<h2> 시터 프로필 정보</h2>
+			<form action="sitter_profile.do">
+			<div class="form-control text-center">
+				<img class="profile-user-img img-fluid img-circle"
+					src="${path}/dist/img/profile/${login.userImg}"
+					alt="User profile picture">
+					<!-- 여기는 시터에 맞는걸로 바꿀 것.  -->
+			</div>
+			<div class="form-control text-center">
+				<h4></h4>
+			</form>			
 	<%@include file="/includes/footer.jsp" %>
 
 	
