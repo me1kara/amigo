@@ -59,8 +59,8 @@
 					<c:choose>	
 					<c:when test="${!chatList.isEmpty() }">		
 						<c:forEach var="chat" items="${chatList }">
-						<tr class="btn btn-outline-dark" onclick="location.href='/amigo/chat/chat.jsp?index=${chat.getIndex()}&name=${chat.getUser_nick()}'">
-<!-- 						<a href="/amigo/chat/chat.jsp?index=${chat.getIndex()}&name=${chat.getUser_nick()}"> -->
+						<tr class="btn btn-outline-dark" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
+
 							<td><b>이름 ${chat.getUser_nick()}</b></td>
 							<td style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">${chat.getContent() }</td>				
 							<c:if test="${!chat.isRead_is() }"> 
@@ -72,7 +72,7 @@
 					</c:when>
 					<c:when test="${chatList.isEmpty() }">
 						<tr>
-							<td><a href="/amigo/chat/chat.jsp?index=<%=checkRoom.getUser_no() %>&name=${user.getUser_nick()}">방번호:<%=checkRoom.getChat_index() %></a></td>
+							<td><a href="/amigo/chatList.do?index=<%=checkRoom.getChat_index() %>">방번호:<%=checkRoom.getChat_index() %></a></td>
 						</tr>
 					</c:when>
 					</c:choose>

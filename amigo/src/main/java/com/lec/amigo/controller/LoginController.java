@@ -1,5 +1,8 @@
 package com.lec.amigo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lec.amigo.dao.ChatDAO;
 import com.lec.amigo.dao.UserDAO;
 import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.vo.UserVO;
@@ -49,6 +53,13 @@ public class LoginController {
 		
 		if(user.getUser_email().equals(userVO.getUser_email())) {
 			sess.setAttribute("user", user);
+			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요!
+			ChatDAO chat_dao = new ChatDAO();
+			List<Integer> room_list = chat_dao.getRoomList(user.getUser_no());
+			if(!room_list.isEmpty()) {
+				sess.setAttribute("chat_room_list", room_list);
+			}
+			
 			if(user.getUser_type().equals("A")) {
 				sess.setAttribute("isAdmin", true);
 			} else {
@@ -119,11 +130,23 @@ public class LoginController {
 		return "view/signup/sign_up_alert.jsp";
 	}
 	
-	// 아이디중복체크
+	// 이메일 중복체크
 	@PostMapping("emailCheck.do")
 	@ResponseBody
 	public String emailCheck(@RequestParam("user_email") String user_email){
 		int cnt = userService.emailCheck(user_email);
+		if (cnt != 0) {
+			return "fail";
+		} else {
+			return "success";
+		}
+	}
+	
+	// 닉네임 중복체크
+	@PostMapping("nickCheck.do")
+	@ResponseBody
+	public String nickCheck(@RequestParam("user_nick") String user_nick){
+		int cnt = userService.nickCheck(user_nick);
 		if (cnt != 0) {
 			return "fail";
 		} else {

@@ -45,18 +45,18 @@ $(".navbar-toggler").click(function () {
   });
 });
 
-// --------------add active class-on another-page move----------
+// --------------다른 페이지 움직이게 해주자 ----------
 jQuery(document).ready(function ($) {
-  // Get current path and find target link
+  // 타겟 찾아주기
   var path = window.location.pathname.split("/").pop();
 
-  // Account for home page with empty path
+  // 홈페이지나 엠티 부분
   if (path == "") {
     path = "index.html";
   }
 
   var target = $('#navbarSupportedContent ul li a[href="' + path + '"]');
-  // Add active class to target link
+  // 추가된 타겟 링크
   target.parent().addClass("active");
 });
 
@@ -70,6 +70,26 @@ function selectAll(selectAll) {
     checkbox.checked = selectAll.checked;
   });
 }
+
+/* myprofile 사진업로드 */
+$(document).ready(function () {
+  // Prepare the preview for profile picture
+  $("#wizard-picture").change(function () {
+    readURL(this);
+  });
+});
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $("#wizardPicturePreview").attr("src", e.target.result).fadeIn("slow");
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+/* 좋아요 버튼*/
 
 // Add active class on another page linked
 // ==========================================
