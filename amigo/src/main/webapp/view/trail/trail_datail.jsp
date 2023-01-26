@@ -10,6 +10,7 @@
   crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="http://map.vworld.kr/js/vworldMapInit.js.do?apiKey=85B876E5-60D4-3B93-AC83-EEBC5A1B07DB&domain=http://localhost:8088"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>산책08_공원산책로정보</title>
@@ -21,6 +22,9 @@
 	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
+
+
+	
 
 		</div>
 	<%@include file="/includes/footer.jsp" %>

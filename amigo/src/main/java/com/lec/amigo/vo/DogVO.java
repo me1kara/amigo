@@ -1,6 +1,6 @@
 package com.lec.amigo.vo;
 
-import java.util.Date;
+
 
 public class DogVO {
 
@@ -10,7 +10,7 @@ public class DogVO {
 	private String dog_name;
 	private String dog_gender;
 	private String dog_breeds;
-	private Date dog_birth;
+	private String dog_birth;
 	private double dog_weight;
 	private boolean dog_neutered;
 	private boolean dog_rabies_vacc;
@@ -49,10 +49,10 @@ public class DogVO {
 	public void setDog_breeds(String dog_breeds) {
 		this.dog_breeds = dog_breeds;
 	}
-	public Date getDog_birth() {
+	public String getDog_birth() {
 		return dog_birth;
 	}
-	public void setDog_birth(Date dog_birth) {
+	public void setDog_birth(String dog_birth) {
 		this.dog_birth = dog_birth;
 	}
 	public double getDog_weight() {
@@ -95,9 +95,11 @@ public class DogVO {
 	public String toString() {
 		return "DogVO [dog_no=" + dog_no + ", user_no=" + user_no + ", dog_name=" + dog_name + ", dog_gender="
 				+ dog_gender + ", dog_breeds=" + dog_breeds + ", dog_birth=" + dog_birth + ", dog_weight=" + dog_weight
-				+ ", dog_neutered=" + dog_neutered + ", dog_rabies_vacc=" + dog_rabies_vacc + ", dog_notice="
-				+ dog_notice + "]";
+				+ ", dog_neutered=" + dog_neutered + ", dog_rabies_vacc=" + dog_rabies_vacc + ", dog_image_url="
+				+ dog_image_url + ", dog_notice=" + dog_notice + ", dog_terms=" + dog_terms + "]";
 	}
+
+	
 	
 	
 }

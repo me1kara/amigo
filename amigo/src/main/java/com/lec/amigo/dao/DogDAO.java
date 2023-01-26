@@ -40,33 +40,27 @@ public class DogDAO {
 			
 	}
 	
-	public List<DogVO> getDogList(DogVO dog) {
-		
-		//select * from dog where user_no = ?
-		
-		Object[] args = {};
-		
+	public List<DogVO> getDogList(int user_no) {
+		Object[] args = {user_no};		
 		return jdbcTemplate.query(selectDogListByUserNo, args, new DogRowMapper());
 	}
 	
-	public DogVO getDog(DogVO dog) {
-		Object[] args = { dog.getDog_no() };
-		return (DogVO) jdbcTemplate.queryForObject(selectDog, args, new DogRowMapper());
+	public DogVO getDog(int dog_no) {
+		Object[] args = {dog_no};
+		return (DogVO)jdbcTemplate.queryForObject(selectDog, args, new DogRowMapper());
 	}
 	
-	public void insertDog(DogVO dog) {
-		
-		//jdbcTemplate.update(sql, user.getId(), user.getPassword(), user.getName(), role);
+	public DogVO insertDog(DogVO dog) {
+		jdbcTemplate.update(insertDog,dog.getUser_no(),dog.getDog_name(),dog.getDog_gender(),dog.getDog_breeds(),dog.getDog_birth(),dog.getDog_weight(),dog.isDog_neutered(),dog.isDog_rabies_vacc(),dog.getDog_image_url(),dog.getDog_notice(),dog.isDog_terms());
+		return dog;
 	}
 	
+	public int updateDog(DogVO dog) {
+		return jdbcTemplate.update(updateDog,dog.getDog_name(),dog.getDog_gender(),dog.getDog_breeds(),dog.getDog_birth(),dog.getDog_weight(),dog.isDog_neutered(),dog.isDog_rabies_vacc(),dog.getDog_image_url(),dog.getDog_notice(),dog.getDog_no());
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	public int deleteDog(int dog_no) {
+		return  jdbcTemplate.update(deleteDog, dog_no);
+	}
 	
 }
