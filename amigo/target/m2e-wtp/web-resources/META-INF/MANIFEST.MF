@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: zxpo8
-=======
-Built-By: ￭ﾕﾜ￬ﾤﾀ￭ﾘﾸ
->>>>>>> 7182dc0c26565c61f75e4f1e4dabb7c44bb62434
-Build-Jdk: 11.0.16.1
-Created-By: Maven Integration for Eclipse
-
