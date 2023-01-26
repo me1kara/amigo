@@ -95,70 +95,20 @@
 				function checkData(){
 					var smokingYes = document.getElementById('sit_smoking_yes');
 					if (smokingYes.checked){
-						alert("흡연자는 반려동물에게 피해를 줄 수 있어 가입이 제한됩니다");
-						return false;   // alert 기능 확인함(230125)
+						alert("흡연자는 반려동물에게 피해를 줄 수 있어 가입이 제한됩니다");  // 흡연자의 펫시터 신청을 차단함.
+						return false;   // alert 기능 확인함(230125) 단, 다른 JS 함수가 들어가면 안먹힘.
 					}
 					
 					var othersInput = document.getElementById("sitter_others_input");   //id가 sitter~~와 같은 인풋 받고
 			        var othersRadio = document.getElementById("flexRadioDefault6");     // 6번 라디오박스 받고
 			        if (othersRadio.checked && othersInput.value === "") {              // 6번박스가 체크됐는데 인풋이 공백이면, 경고창이 뜨도록함.
-			            alert("상세내용을 입력해주세요");
+			            alert("상세내용을 입력해주세요");								// 현재 하는일에서 직접 입력을 체크하면 input을 꼭 쓰도록 함.
 			        	return false;   // alert 기능 확인함(230125)
 			        }
-			        
-			 //  아래는 boolean을 int 값으로 바꾸는 함수인데 안 먹힘.       
-			        
-			        // querySelector('input[name="sit_smoking"]:checked').value;
-			        // querySelector('input[name="sit_exp"]:checked').value;
-			        // querySelector('input[name="sit_auth_is"]').value;
-			        
-			    /*    var smokingValue = document.getElementByName("sit_smoking").value;
-			        var expValue = document.getElementByName("sit_exp").value;
-			        var authValue = document.getElementByName("sit_auth_is").value;
-
-			        var smokingIntegerValue;
-			        var expIntegerValue;
-			        var authIntegerValue;
-
-			        if (smokingValue === "1") {
-			            smokingIntegerValue = 1;
-			        } else {
-			            smokingIntegerValue = 0;
-			        }
-
-			        if (expValue === "1") {
-			            expIntegerValue = 1;
-			        } else {
-			            expIntegerValue = 0;
-			        }
-
-			        if (authValue === "1") {
-			            authIntegerValue = 1;
-			        } else {
-			            authIntegerValue = 0;
-			        }*/
-			        
-			        
-			       /* var sitBirth  = document.getElementById('sit_birth_8digit');
-			        var birth_pattern = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]))/
-			            if(!birth_pattern.test(sitBirth.value)){
-			            	alert('생년월일 8자리를 입력해주세요'); 
-			                // sitBirth.value=''; 괜히 인풋에 있는거 지우지 말고 남겨 놓기.
-			            sitBirth.focus(); 
-			            return false;    //  이거 테스트해봤는데 안먹힘. ; 를 써야되나..
-			            }*/
-					return true;
 				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				</script>
+				
+		
 				
 				
 				<div class="form-group">
