@@ -11,13 +11,17 @@ public class ChatRowMapper implements RowMapper<ChatVO>{
 
 	@Override
 	public ChatVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		ChatVO chat = new ChatVO();
+		System.out.println("확인용");
 		
+		ChatVO chat = new ChatVO();
 		chat.setIndex(rs.getInt("sitt_chat_index"));
-		chat.setUser_no(rs.getInt("user_no"));
+		chat.setUser_nick(rs.getString("user_nick"));
 		chat.setContent(rs.getString("sitt_chat_content"));
 		chat.setDate(rs.getDate("sitt_chat_regdate"));
 		chat.setRead_is(rs.getBoolean("sitt_chat_readis"));
+		
+		if(rs.getString("sitt_chat_file")!=null)chat.setFile(rs.getString("sitt_chat_file"));
+		if(rs.getString("sitt_chat_emo")!=null)chat.setEmo(rs.getString("sitt_chat_emo"));
 		
 		return chat;
 	}

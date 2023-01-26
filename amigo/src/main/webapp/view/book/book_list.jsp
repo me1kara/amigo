@@ -1,3 +1,4 @@
+<%@page import="com.lec.amigo.vo.ChatRoom"%>
 <%@page import="com.lec.amigo.vo.UserVO"%>
 <%@page import="com.lec.amigo.dao.UserDAO"%>
 <%@page import="com.lec.amigo.vo.ChatVO"%>
@@ -11,15 +12,14 @@
 <head>
 	<%
 		ChatDAO dao = new ChatDAO();
-		
-		
 		UserVO user = (UserVO)session.getAttribute("user");
 		
-		user.getUser_no();
-	
-		List<ChatVO> chatList = dao.getMyChatList(1);
-		
-		
+		List<ChatVO> chatList = null;
+		ChatRoom checkRoom = null;
+		if(user!=null){
+			checkRoom = dao.getRoom(user.getUser_no());
+			if(checkRoom!=null)chatList = dao.getMyChatList(user.getUser_no());
+		}
 		
 	%>
 	
@@ -49,26 +49,40 @@
 			<hr>
 			<div style="text-align: center">
 			
-			<c:set var="chatList" value="<%=chatList %>"></c:set>		
-			<c:if test="${chatList.isEmpty()}">	
+			<c:set var="chatList" value="<%=chatList %>"></c:set>
+			
+			<c:choose>
+			<c:when test="<%=checkRoom==null %>">	
 			<p><b>선호 및 예약 펫시터가 없습니다</b></p>
 				<button type="button" class="btn btn-secondary">펫시터보기</button>
 			</div>
-			</c:if>
-			<c:if test="${!chatList.isEmpty() }">
-			<table>		
-			<c:forEach var="chat" items="${chatList }">
-			<tr>
-				<td><a href="/amigo/chat/chat.jsp?index=${chat.getIndex()}&name=${chat.getUser_no()}&user_no=5">방번호:${chat.getIndex() }</a></td>
-				<td>마지막작성자:${chat.getUser_no()}</td>
-				<td>내용:${chat.getContent() }</td>				
-				<c:if test="${!chat.isRead_is() }"> <!--  -->
-					<td>안 읽었음!</td>
-				</c:if>
-			</tr>
-			</c:forEach>
-			</c:if>
-		</table>
+			</c:when>
+			
+			<c:when test="<%=checkRoom!=null %>">
+				<table>
+					<c:choose>	
+					<c:when test="${!chatList.isEmpty() }">		
+						<c:forEach var="chat" items="${chatList }">
+						<tr>
+						<td><a href="/amigo/chat/chat.jsp?index=${chat.getIndex()}&name=${chat.getUser_nick()}">방번호:${chat.getIndex() }</a></td>
+						<td>마지막작성자:${chat.getUser_nick()}</td>
+						<td>내용:${chat.getContent() }</td>				
+						<c:if test="${!chat.isRead_is() }"> <!--  -->
+						<td>new</td>
+						</c:if>
+						</tr>
+						</c:forEach>
+					</c:when>
+					<c:when test="${chatList.isEmpty() }">
+						<tr>
+							<td><a href="/amigo/chat/chat.jsp?index=<%=checkRoom.getUser_no() %>&name=${user.getUser_nick()}">방번호:<%=checkRoom.getChat_index() %></a></td>
+						</tr>
+					</c:when>
+					</c:choose>
+					</table>
+				</c:when>
+			</c:choose>
+			
 			
 	
 		</div>
