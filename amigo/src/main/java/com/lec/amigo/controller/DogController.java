@@ -24,12 +24,10 @@ public class DogController {
 	@Autowired
 	DogServiceImpl dogService;
 	
-	//
 	@RequestMapping("/view/mypage/getDogList.do")
 	public String getDogList(HttpSession sess, Model model,DogVO dog) {
-	//UserVO user = (UserVO)sess.getAttribute("user");
-	//int user_no = user.getUser_no();
-	int user_no = 3;   // 일단 임의로 넣음.
+	UserVO user = (UserVO)sess.getAttribute("user");
+	int user_no = user.getUser_no();
 	List<DogVO> dogList = dogService.getDogList(user_no);
 	model.addAttribute("dogList", dogList);
 	return "amigo_profile.jsp";
@@ -38,9 +36,8 @@ public class DogController {
 	@RequestMapping(value="/view/mypage/insertDog.do", method = RequestMethod.POST)
 	public String insertDog(HttpSession sess,Model model,DogVO dog) {	
 	dogService.insertDog(dog);
-	//UserVO user = (UserVO)sess.getAttribute("user");
-	//int user_no = user.getUser_no();
-	int user_no = 3;   // 일단 임의로 넣음.
+	UserVO user = (UserVO)sess.getAttribute("user");
+	int user_no = user.getUser_no();
 	List<DogVO> dogList = dogService.getDogList(user_no);
 	model.addAttribute("dogList", dogList);
 	return "amigo_profile.jsp";
@@ -56,9 +53,8 @@ public class DogController {
 	@RequestMapping(value="/view/mypage/updateDog.do", method = RequestMethod.POST)
 	public String updateDog(HttpSession sess,Model model,DogVO dog) {
 	dogService.updateDog(dog);
-	//UserVO user = (UserVO)sess.getAttribute("user");
-	//int user_no = user.getUser_no();
-	int user_no = 3;   // 일단 임의로 넣음.
+	UserVO user = (UserVO)sess.getAttribute("user");
+	int user_no = user.getUser_no();
 	List<DogVO> dogList = dogService.getDogList(user_no);
 	model.addAttribute("dogList", dogList);
 	return "amigo_profile.jsp";
@@ -68,9 +64,8 @@ public class DogController {
 	public String deleteDog(HttpServletRequest req,HttpSession sess,Model model) {
 	int dog_no = Integer.parseInt(req.getParameter("dog_no"));
 	dogService.deleteDog(dog_no);
-	//UserVO user = (UserVO)sess.getAttribute("user");
-	//int user_no = user.getUser_no();
-	int user_no = 3;   // 일단 임의로 넣음.
+	UserVO user = (UserVO)sess.getAttribute("user");
+	int user_no = user.getUser_no();
 	List<DogVO> dogList = dogService.getDogList(user_no);
 	model.addAttribute("dogList", dogList);
 	return "amigo_profile.jsp";

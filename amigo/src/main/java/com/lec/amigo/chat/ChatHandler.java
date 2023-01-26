@@ -57,7 +57,7 @@ public class ChatHandler extends TextWebSocketHandler{
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("서버연결"+session.getId());	
+			
 		//세션리스트에 세션저장
 		//유저-세션 저장
 		sessions.put(session.getId(), session);
@@ -76,12 +76,12 @@ public class ChatHandler extends TextWebSocketHandler{
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 		String curWorkingDir = System.getProperty("user.dir");
-		System.out.println("현재 작업 폴더 : " + curWorkingDir);
+
 		
 
 		ByteBuffer byteBuffer = message.getPayload();		
 		String url = session.getUri().toString();
-		System.out.println("url:"+url);
+
 		
 		String roomIndex = url.split("/chatHandler.do?")[1].substring(1);
 		UserVO user = getUser(session);
@@ -185,7 +185,7 @@ public class ChatHandler extends TextWebSocketHandler{
 									boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
 									
 									//해당 
-									System.out.println("작성자인덱스:"+roomIndex+"다른방작성자:"+getUser(s).getUser_nick());				
+													
 									if(checkIndex) {
 										s.sendMessage(new TextMessage(jms.toJSONString()));
 									}	
@@ -211,7 +211,7 @@ public class ChatHandler extends TextWebSocketHandler{
 			if(a>0) {
 			chat_no = chatDao.getLastChat(roomIndex).getChat_no();
 			}
-			System.out.println("챗넘버"+chat_no);
+			
 		//	for(String id:idList) {			
 			// 누군가 메세지를 전송
 			for (String key : sessions.keySet()) {
@@ -219,16 +219,16 @@ public class ChatHandler extends TextWebSocketHandler{
 
 					//if (s != session) { // 현재 접속자가 아닌 나머지 사람들							
 						try {
-							System.out.println("2#" + sendUser + ":" + text);
+							
 							//세션아이디로 인덱스를 구하고,
 							//해당인덱스와 일치하면 문자를 보내면됨
 							if(getUser(s)!=null) {				
 								boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
-								System.out.println("작성자인덱스:"+"다른방작성자:"+getUser(s).getUser_nick());
+								
 								
 								if(checkIndex) {
 									jms.put("chatNo", chat_no);
-									System.out.println(jms);
+									
 									s.sendMessage(new TextMessage(jms.toJSONString()));							
 								}
 							}
@@ -244,16 +244,16 @@ public class ChatHandler extends TextWebSocketHandler{
 			}
 		}else if(no.equals("2") && type.equals("fileUpload")){
 			
-			System.out.println("들어와짐?");
+			
 			String fileName = (String)jms.get("file");
-			System.out.println(fileName);
+			
 			chatDao.insertFile(roomIndex, user_no, fileName);
 			
 			
 			
 		}else if (no.equals("3")) {
 			
-			System.out.println("호히히히");
+			
 			//for(String id:idList) {
 			// 누군가 접속 > 3#아무개
 					for (String key : sessions.keySet()) {
@@ -266,7 +266,7 @@ public class ChatHandler extends TextWebSocketHandler{
 								if(getUser(s)!=null) {
 									boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
 									
-									System.out.println("작성자인덱스:"+roomIndex+"다른방작성자:"+getUser(s).getUser_nick());
+									
 								
 									if(checkIndex) {
 									s.sendMessage(new TextMessage(jms.toJSONString()));
@@ -282,9 +282,9 @@ public class ChatHandler extends TextWebSocketHandler{
 				}
 				sessions.remove(session.getId());
 			}else if(no.equals("4")) {
-				System.out.println(jms.get("chatNo")+"삭제 확인용");
+				
 				String ab = (String)jms.get("chatNo");
-				System.out.println(ab);
+				
 				int chat_no = Integer.parseInt(ab);
 				chatDao.delete(chat_no);
 					for (String key : sessions.keySet()) {
@@ -296,10 +296,10 @@ public class ChatHandler extends TextWebSocketHandler{
 					
 									boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
 									
-									System.out.println("작성자인덱스:"+roomIndex+"다른방작성자:"+getUser(s).getUser_nick());
+									
 								
 									if(checkIndex) {
-										System.out.println(chat_no+"방번호입니다");
+										
 										s.sendMessage(new TextMessage(jms.toJSONString()));
 									}
 								}
@@ -331,8 +331,8 @@ public class ChatHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessions.remove(session.getId());
-		System.out.println(status.toString());
-		System.out.println("닫혀용!");
+		
+		
 		
 	}
 	
@@ -343,7 +343,7 @@ public class ChatHandler extends TextWebSocketHandler{
 		if(room.getChat_index()>0) {
 			return room;
 		}else {
-			System.out.println("인덱스 조회 실패!");
+			
 			return null;
 			
 		}	
