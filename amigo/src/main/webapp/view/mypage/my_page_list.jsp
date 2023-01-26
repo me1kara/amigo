@@ -2,15 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="kr">
   <head>
     <meta charset="UTF-8" />
-=======
-<html>
-<head>
-<meta charset="UTF-8" />
->>>>>>> 7182dc0c26565c61f75e4f1e4dabb7c44bb62434
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script
@@ -26,7 +20,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>main</title>
-<<<<<<< HEAD
   </head>
   <body>
     <!-- css를 적용하지 않았기 때문에 차후에 적용해줘야합니다. -->
@@ -84,31 +77,14 @@
     <!-- 네비바 종료 -->
 
     <!-- 마이페이지 시작 -->
-=======
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <![endif]-->
-</head>
-<body>
-	
-	<%@include file="/includes/header.jsp" %>
-	 <!-- 마이페이지 시작 -->
->>>>>>> 7182dc0c26565c61f75e4f1e4dabb7c44bb62434
     <div class="container" align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
         <li class="list-group-item">
           <a href="user_Profil.jsp" class="mypage_link">내 프로필 관리</a>
-<<<<<<< HEAD
           <img src="../images/codeit.png" alt="코드잇 이미지" />
         </li>
         <li class="list-group-item">
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>
-=======
-          <img src="../images/codeit.png" alt="코드잇 이미지" /><!-- 프로필 넣어주는게 가능? -->
-        </li>
-        <li class="list-group-item">
-          <a href="dog_Profil.jsp" class="mypage_link">반려동물 프로필</a>
->>>>>>> 7182dc0c26565c61f75e4f1e4dabb7c44bb62434
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">찜 목록 & 예약 확인</a>
@@ -120,11 +96,7 @@
           <a href="#" class="mypage_link">공지사항</a>
         </li>
         <li class="list-group-item">
-<<<<<<< HEAD
           <a href="#" class="mypage_link">환경설정</a>
-=======
-          <a href="account_controll.jsp" class="mypage_link">계정관리</a>
->>>>>>> 7182dc0c26565c61f75e4f1e4dabb7c44bb62434
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">펫시터 지원하기</a>
@@ -134,7 +106,6 @@
         </li>
       </ul>
     </div>
-<<<<<<< HEAD
     <!-- Footer -->
     <footer class="bg-primary text-center text-white">
       <!-- Copyright -->
@@ -155,14 +126,3 @@
     <![endif]-->
   </body>
 </html>
-=======
-    
-	<%@include file="/includes/footer.jsp" %>
- <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="../resources/js/script.js"></script>
-	
-</body>
-</html>
->>>>>>> 7182dc0c26565c61f75e4f1e4dabb7c44bb62434
