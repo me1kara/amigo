@@ -18,16 +18,9 @@
     <![endif]-->
 </head>
 <body>
-<<<<<<< HEAD
 	
 	<%@include file="/includes/header.jsp" %>
-=======
-	<!-- 로그인 화면에서는 네비바가 필요 없을거 같습니다. --> 
-	<!-- <@include file="/includes/header.jsp" %> -->
-	 
-	 <!--  
-	     과거 코드
->>>>>>> 7182dc0c26565c61f75e4f1e4dabb7c44bb62434
+
 		<div class="container">
 		
 		<br>
