@@ -16,7 +16,9 @@
 
 <%
 	UserVO user = new UserVO();
-	user.setUser_name("홍길동");  // 일단 이곳은 유저 VO를 가져오도록 동작->유저네임 임의 세팅 후 동작 시켜봄, 즉 더미
+	user.setUser_name("운영자");  // 일단 이곳은 유저 VO를 가져오도록 동작->유저네임 임의 세팅 후 동작 시켜봄, 즉 더미
+	user.setUser_phone("010-1234-5678");
+	user.setUser_addr("인천시 연수구 랜드마크로160");
 	session.setAttribute("user", user);
 	System.out.println("안녕?"); // 일단 데이
 
@@ -43,7 +45,7 @@
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
 		
-			<form role="form" action="sitter_apply_form.do" method="post" onSubmit="return checkData();">
+			<form action="sitter_apply_form2.do" method="get" onSubmit="return checkData();">
 			<div class="row">
 			
 				<input type="hidden" class="form-control" name="user_no" value="1">
@@ -105,6 +107,7 @@
 			            alert("현재 하시는 일을 입력해주세요");								// 현재 하는일에서 직접 입력을 체크하면 input을 꼭 쓰도록 함.
 			        	return false;   // alert 기능 확인함(230125)
 			        }
+			        return true;
 				}
 				</script>
 				
@@ -114,7 +117,7 @@
 				<div class="form-group">
 					<label for="sit_birth">생년월일*</label>
 					<div class="birth_input_box">
-					<input class="form-control" name="sit_birth" id="sit_birth_8digit" required>
+					<input class="form-control" name="sit_birth" id="sit_birth_8digit" type="date" required>
 					</div>
 					<span>04년생부터(만 18세 이상) 지원이 가능합니다.</span>
 				</div><br>

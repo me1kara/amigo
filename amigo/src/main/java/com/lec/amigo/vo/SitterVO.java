@@ -9,7 +9,7 @@ public class SitterVO {
 
 private int user_no;
 private String sit_gender;
-private Date sit_birth;
+private String sit_birth;
 private boolean sit_smoking;
 private String sit_job;
 private String sit_days;
@@ -32,10 +32,10 @@ return sit_gender;
 public void setSit_gender(String sit_gender) {
 this.sit_gender = sit_gender;
 }
-public Date getSit_birth() {
+public String getSit_birth() {
 return sit_birth;
 }
-public void setSit_birth(Date sit_birth) {
+public void setSit_birth(String sit_birth) {
 this.sit_birth = sit_birth;
 }
 public boolean isSit_smoking() {

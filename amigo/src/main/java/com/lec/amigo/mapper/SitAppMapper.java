@@ -19,7 +19,7 @@ public class SitAppMapper implements RowMapper<SitterVO>{
                       
 		sit.setUser_no(rs.getInt("user_no"));                       
 		sit.setSit_gender(rs.getString("sit_gender"));      
-		sit.setSit_birth(rs.getDate("sit_birth"));        
+		sit.setSit_birth(rs.getString("sit_birth"));        
 		sit.setSit_smoking(rs.getBoolean("sit_smoking"));   
 		sit.setSit_job(rs.getString("sit_job"));            
 		sit.setSit_days(rs.getString("sit_days"));          
@@ -27,7 +27,8 @@ public class SitAppMapper implements RowMapper<SitterVO>{
 		sit.setSit_exp(rs.getBoolean("sit_exp"));           
 		sit.setSit_care_exp(rs.getString("sit_care_exp"));  
 		sit.setSit_intro(rs.getString("sit_intro"));        
-		sit.setSit_photo(rs.getString("sit_photo"));        
+		sit.setSit_photo(rs.getString("sit_photo"));
+		sit.setSit_auth_is(rs.getBoolean("sit_auth_is"));
 		
 		
 		

@@ -18,6 +18,11 @@ public class SitterServiceImpl implements SitterService {
 	@Autowired
 	SitterDAO sitterDAO;
 	
+	@Override
+	public SitterVO sitterInfo(int sit_no) {
+		
+		return sitterDAO.sitterInfo(sit_no);
+	}
 
 	@Override
 	public int insertSitter(SitterVO svo) {
@@ -26,15 +31,10 @@ public class SitterServiceImpl implements SitterService {
 	}
 
 	@Override
-	public List<SitterVO> getSitList(SitterVO svo) {
+	public List<SitterVO> getSitList(int user_no) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public SitterVO sitterInfo(int sit_no) {
-		
-		return sitterDAO.sitterInfo(sit_no);
-	}
 
 }

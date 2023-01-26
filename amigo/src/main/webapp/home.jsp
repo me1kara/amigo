@@ -18,11 +18,10 @@
     <![endif]-->
 </head>
 <body>
-<<<<<<< HEAD
 	
 	<%@include file="/includes/header.jsp" %>
 
-=======
+
 	<!-- 로그인 화면에서는 네비바가 필요 없을거 같습니다. --> 
 	<!-- <@include file="/includes/header.jsp" %> -->
 	 
@@ -44,7 +43,6 @@
 		
 =======
 		-->
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
 		
 		 <!-- 메인 화면-->
     <!-- icon -->

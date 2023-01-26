@@ -2,15 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="kr">
   <head>
     <meta charset="UTF-8" />
-=======
+
 <html>
 <head>
 <meta charset="UTF-8" />
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script
@@ -26,7 +24,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>main</title>
-<<<<<<< HEAD
   </head>
   <body>
     <!-- css를 적용하지 않았기 때문에 차후에 적용해줘야합니다. -->
@@ -93,22 +90,22 @@
 	
 	<%@include file="/includes/header.jsp" %>
 	 <!-- 마이페이지 시작 -->
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
+
     <div class="container" align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
         <li class="list-group-item">
           <a href="user_Profil.jsp" class="mypage_link">내 프로필 관리</a>
-<<<<<<< HEAD
+
           <img src="../images/codeit.png" alt="코드잇 이미지" />
         </li>
         <li class="list-group-item">
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>
-=======
+
           <img src="../images/codeit.png" alt="코드잇 이미지" /><!-- 프로필 넣어주는게 가능? -->
         </li>
         <li class="list-group-item">
           <a href="dog_Profil.jsp" class="mypage_link">반려동물 프로필</a>
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
+
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">찜 목록 & 예약 확인</a>
@@ -120,21 +117,21 @@
           <a href="#" class="mypage_link">공지사항</a>
         </li>
         <li class="list-group-item">
-<<<<<<< HEAD
+
           <a href="#" class="mypage_link">환경설정</a>
-=======
+
           <a href="account_controll.jsp" class="mypage_link">계정관리</a>
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
+
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">펫시터 지원하기</a>
+          <a href="../sitter_apply_form.do" class="mypage_link">펫시터 지원하기</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">펫시터모드로 전환</a>
         </li>
       </ul>
     </div>
-<<<<<<< HEAD
+
     <!-- Footer -->
     <footer class="bg-primary text-center text-white">
       <!-- Copyright -->
@@ -155,7 +152,7 @@
     <![endif]-->
   </body>
 </html>
-=======
+
     
 	<%@include file="/includes/footer.jsp" %>
  <!-- Bootstrap core JS-->
@@ -165,4 +162,4 @@
 	
 </body>
 </html>
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
+

@@ -18,8 +18,7 @@ public interface SitterService {
 	}*/
 
 	int insertSitter(SitterVO svo);
-	List<SitterVO> getSitList(SitterVO svo);
-
+	List<SitterVO> getSitList(int user_no);
 	SitterVO sitterInfo(int sit_no);
 	
 	
