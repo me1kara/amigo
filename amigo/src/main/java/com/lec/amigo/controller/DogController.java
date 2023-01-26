@@ -37,7 +37,7 @@ public class DogController {
 	}
 	
 	
-	@RequestMapping(value="view/mypage/insertDog.do", method=RequestMethod.POST)
+	@RequestMapping(value="/insertDog.do", method=RequestMethod.POST)
 	public String insertDog(DogVO dog) {
 		System.out.println("dsad");
 		

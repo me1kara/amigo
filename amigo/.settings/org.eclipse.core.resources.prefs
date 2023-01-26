@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//src/main/java/com/lec/amigo/chat/ChatHandler.java=UTF-8
+=======
+encoding/<project>=UTF-8
+>>>>>>> e77bbd4558ffe14921e3ceb90c3f41e30343f44f
