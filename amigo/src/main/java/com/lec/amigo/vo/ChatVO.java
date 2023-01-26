@@ -4,9 +4,8 @@ import java.util.Date;
 
 public class ChatVO {
 	
-	private int chat_no;
 	private int index;
-	private String user_nick;
+	private int user_no;
 	private String content;
 	private Date date;
 	private boolean read_is;
@@ -18,12 +17,11 @@ public class ChatVO {
 	public void setIndex(int index) {
 		this.index = index;
 	}
-
-	public String getUser_nick() {
-		return user_nick;
+	public int getUser_no() {
+		return user_no;
 	}
-	public void setUser_nick(String user_nick) {
-		this.user_nick = user_nick;
+	public void setUser_no(int user_no) {
+		this.user_no = user_no;
 	}
 	public String getContent() {
 		return content;
@@ -55,23 +53,6 @@ public class ChatVO {
 	public void setEmo(String emo) {
 		this.emo = emo;
 	}
-	public int getChat_no() {
-		return chat_no;
-	}
-	public void setChat_no(int chat_no) {
-		this.chat_no = chat_no;
-	}
-	
-	@Override
-	public String toString() {
-		return "ChatVO [index=" + index + ", user_nick=" + user_nick + ", content=" + content + ", date=" + date
-				+ ", read_is=" + read_is + ", file=" + file + ", emo=" + emo + "]";
-	}
-	
-	
-
-	
-	
 	
 	
 	

@@ -2,7 +2,6 @@ package com.lec.amigo.dao;
 
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -32,14 +31,12 @@ public class UserDAO {
 	private String updatePw = "";
 	private String insertUser = "";
 	private String emailCheck = "";
-	private String nickCheck = "";
 	
 	@PostConstruct
 	public void getSqlPropeties() {
 		updatePw   = environment.getProperty("updatePw");
 		insertUser = environment.getProperty("insertUser");
 		emailCheck = environment.getProperty("emailCheck");
-		nickCheck = environment.getProperty("nickCheck");
 	}
 	
 	private Connection conn = null;
@@ -91,11 +88,5 @@ public class UserDAO {
 		int cnt = jdbcTemplate.queryForObject(emailCheck, Integer.class, user_email);
 		return cnt;
 	}
-
-	public int nickCheck(String user_nick) {
-		int cnt = jdbcTemplate.queryForObject(nickCheck, Integer.class, user_nick);
-		return cnt;
-	}
-	
 
 }
