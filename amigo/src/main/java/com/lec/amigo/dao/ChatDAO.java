@@ -443,7 +443,7 @@ public class ChatDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				System.out.println("챗 인덱스 확인용"+rs.getInt("chat_index"));
+				
 				room_list.add(rs.getInt("chat_index"));
 			}
 			return room_list;		
