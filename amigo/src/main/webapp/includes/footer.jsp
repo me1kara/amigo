@@ -27,7 +27,7 @@
 		console.log(user);
 		$('#notification_text').html('<span style="color:red;">new</span>'+user+' '+txt);
 		
-		let temp = '<%=request.getContextPath()%>/chat/chat.jsp?index='+roomIndex;
+		let temp = '<%=request.getContextPath()%>/chatList.do?index='+roomIndex;
 		$('#notification_text').attr("href", temp);
 		$('#notification-container').addClass('showChatMessage');
 		

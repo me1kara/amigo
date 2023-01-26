@@ -10,6 +10,7 @@ import java.util.List;
 import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.socket.WebSocketSession;
@@ -22,14 +23,11 @@ import com.lec.amigo.vo.UserVO;
 
 
 
-@Repository("chatdao")
+@Repository("chatDAO")
 public class ChatDAO {
-	
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	
 	
 	public int idCheck(int no) {
 		boolean check = false;
@@ -75,16 +73,20 @@ public class ChatDAO {
 	
 	
 	public List<ChatVO> getChatList(int index){
-		List<ChatVO> chatList = new ArrayList<ChatVO>();
+		//List<ChatVO> chatList = new ArrayList<ChatVO>();
 		String sql = "SELECT sitt_chat_no, sitt_chat_index,user_nick, sitt_chat_content, sitt_chat_regdate,sitt_chat_readis,sitt_chat_file,sitt_chat_emo "
 				+ "FROM sit_chat s, user u where sitt_chat_index=? and u.user_no=s.user_no order by s.sitt_chat_no";
 		
+		Object[] args = {index};
 		
-		//Object[] args = {index};
-		//chatList = (List<ChatVO>)jdbcTemplate.query(sql, args, new ChatRowMapper());
+		try {		
+			return jdbcTemplate.query(sql, args, new ChatRowMapper());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 		
-		
-
+		/*
 		Connection conn = JDBCUtility.getConnection();
 
 		ResultSet rs =null;
@@ -114,16 +116,18 @@ public class ChatDAO {
 		}finally {
 			JDBCUtility.close(conn, rs, pstmt);
 		}
-
+		*/
 		
-		return chatList;
+
 	}
 	
 	public int insertChat(int index, int user_no, String content) {
+
 		
-		Connection conn = JDBCUtility.getConnection();
+		
+		//Connection conn = JDBCUtility.getConnection();
 		String sql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,SYSDATE(),0,?,?)";
-		
+		/*
 		try {
 		//	jdbcTemplate.update(sql, index, user, content, null, null);
 		} catch (Exception e) {
@@ -158,13 +162,18 @@ public class ChatDAO {
 		}finally {
 			JDBCUtility.close(conn, null, pstmt);
 		}
+		*/
 		
-		return 0;
+		try {
+			return jdbcTemplate.update(sql, index, user_no, content, null, null);
+		} catch (Exception e) {
+			e.getMessage();
+			return 0;
+		}
 		
 	}
 	
-	
-	
+
 	public void setRoom(ChatRoom ch){
 		String sql = "insert into chat_room values(?,?)";
 				
@@ -173,14 +182,14 @@ public class ChatDAO {
 		
 		System.out.println(chat_index+""+user_no);
 		
-		
-		
+			
 		try {
-			//jdbcTemplate.update(sql, chat_index, user_no);
+			jdbcTemplate.update(sql, chat_index, user_no);
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 		
+		/*
 		Connection conn = JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
 		
@@ -201,8 +210,6 @@ public class ChatDAO {
 		} catch (SQLException e) {
 			System.out.println("실패");
 			
-			
-			/*
 			sql = "update chat_room set chat_index=?, user_no=?";
 			try {
 				pstmt = conn.prepareStatement(sql);
@@ -213,13 +220,13 @@ public class ChatDAO {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			*/
+			
 			
 			//e.printStackTrace();
 		}finally {
 			JDBCUtility.close(conn, null, pstmt);
 		}
-		
+		*/
 		
 	}
 	
@@ -298,8 +305,7 @@ public class ChatDAO {
 	public List<ChatVO> getMyChatList(int user_no){			
 		String sql = "select distinct sitt_chat_index from sit_chat where user_no=?";
 		//Object[] args = {sql, name};
-		
-		
+				
 		Connection conn = JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -449,6 +455,54 @@ public class ChatDAO {
 		}
 				
 		return null;
+	}
+	
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+
+	public void insertFile(int roomIndex, int user_no, String fileName) {
+		
+		String fileType = fileName.substring(fileName.lastIndexOf("."),fileName.length());
+		
+		System.out.println(fileType);
+		fileName = fileName.split(fileType)[0];
+		System.out.println(fileName);
+		
+		String selectEqualsFile = "select count(sitt_chat_file) from sit_chat where sitt_chat_file like '?%'";
+		Object[] args = {fileName};
+		
+		int a = 0;
+		a = jdbcTemplate.queryForObject(selectEqualsFile,args, Integer.class);
+		
+		if(a!=0) {
+			fileName = fileName+"("+a+").";
+		}		
+		fileName = fileName+fileType;
+		
+		String insertSql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,SYSDATE(),0,?,?)";	
+		try {
+			System.out.println("그래서 됨?");
+			jdbcTemplate.update(insertSql, roomIndex, user_no,"file", fileName, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+
+	public int getLastMyChat(int user_no) {
+		
+		String sql = "select sitt_chat_no from sit_chat where user_no=?";
+		
+		return 0;
 	}
 	
 	
