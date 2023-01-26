@@ -35,8 +35,8 @@
 			<input type="hidden" id="rowSizePerPage" name="rowSizePerPage" value="${searchVO.getRowSizePerPage()}">
 	   		<div class="row mt-3 justify-content-center">
 	   			<div class="col-auto">
-					<a href="#">전체글</a> ㅣ
-	   				<a href="">인기글</a> ㅣ
+					<a href="user_board_list.do">전체글</a> ㅣ
+	   				<a href="user_board_list_Like.do">인기글</a> ㅣ
 	   				<a href="">펫시터 커뮤니티</a>
 	   			</div>
 	   			<div class="col-auto">

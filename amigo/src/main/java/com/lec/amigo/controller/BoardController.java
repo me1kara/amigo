@@ -1,8 +1,10 @@
 package com.lec.amigo.controller;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.service.BoardService;
+import com.lec.amigo.service.ReplyService;
 import com.lec.amigo.vo.BoardVO;
+import com.lec.amigo.vo.ReplyVO;
 
 
 
@@ -30,6 +34,9 @@ public class BoardController {
 
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	ReplyService replyService;
 	
 	@Autowired
 	Environment environment;
@@ -62,15 +69,42 @@ public class BoardController {
 			model.addAttribute("boardList", boardList);		
 			return "view/comunity/user_board_list.jsp";
 	}
+	
+	@RequestMapping("/user_board_list_Like.do")
+	public String getBoardListLike (Model model, SearchVO searchVO,
+			@RequestParam(defaultValue="1") int curPage,
+			@RequestParam(defaultValue="10") int rowSizePerPage,
+			@RequestParam(defaultValue="") String searchCategory,
+			@RequestParam(defaultValue="") String searchType,
+			@RequestParam(defaultValue="") String searchWord) {
+		
+		searchVO.setTotalRowCount(boardService.getTotalRowCount(searchVO));
+		searchVO.setCurPage(curPage);
+		searchVO.setRowSizePerPage(rowSizePerPage);
+		searchVO.setSearchCategory(searchCategory);
+		searchVO.setSearchType(searchType);
+		searchVO.setSearchWord(searchWord);
+		searchVO.pageSetting();
+		
+		List<BoardVO> boardList = boardService.getBoardListLike(searchVO);
+		model.addAttribute("searchVO", searchVO);
+		model.addAttribute("boardList", boardList);		
+		return "view/comunity/user_board_list.jsp";
+	}
 			
 	
 	@RequestMapping(value= "/user_board_detail.do", method=RequestMethod.GET)
-	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, @RequestParam int ubd_no, HttpServletRequest req) {
+	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, @RequestParam int ubd_no, HttpServletRequest req, ReplyVO replyVO) {
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
 		if(req.getAttribute("updateCount_is")==null) {
 			boardService.updateCount(ubd_no);
 		}
+		
+			List<ReplyVO> replyList = null;
+			replyList = replyService.getReplyList(replyVO.getUbd_no());
+			model.addAttribute("replyList", replyList);
+		
 		return "view/comunity/user_board_detail.jsp";
 	}
 	
@@ -90,7 +124,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/user_board_delete.do", method=RequestMethod.GET)
-	public String user_board_delete(Model model, BoardVO board) {
+	public String user_board_delete(BoardVO board) {
 		boardService.deleteBoard(board);
 		return "user_board_list.do";
 	}
@@ -124,13 +158,26 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/user_board_insert.do", method=RequestMethod.POST)
-	public String user_board_insert(Model model, BoardVO board) throws IOException {
+	public String user_board_insert(Model model, BoardVO board) {
 		MultipartFile uploadFile = board.getUploadFile();
 		if (!uploadFile.isEmpty()) {
-			String ubd_file = uploadFile.getOriginalFilename();
-			uploadFile.transferTo(new File(uploadFolder + ubd_file));
-			board.setUbd_file(ubd_file);
+			String fileRealName = uploadFile.getOriginalFilename();
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+			
+			UUID uuid = UUID.randomUUID();
+			System.out.println(uuid.toString());
+			String[] uuids = uuid.toString().split("-");
+			String uniqueName = uuids[0];
+			
+			File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
+			try {
+				uploadFile.transferTo(saveFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+			board.setUbd_file(fileRealName);
 		}		
+		
 		boardService.insertBoard(board);
 		model.addAttribute("msg","글이 정상적으로 등록되었습니다.");
 		model.addAttribute("url","user_board_list.do");

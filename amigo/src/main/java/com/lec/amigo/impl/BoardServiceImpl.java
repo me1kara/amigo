@@ -57,6 +57,11 @@ public class BoardServiceImpl implements BoardService{
 		return boardDAO.insertBoard(board);
 	}
 
+	@Override
+	public List<BoardVO> getBoardListLike(SearchVO searchVO) {
+		return boardDAO.getBoardListLike(searchVO);
+	}
+
 
 	
 	
