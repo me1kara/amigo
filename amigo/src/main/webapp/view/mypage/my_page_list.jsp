@@ -31,11 +31,11 @@
     <div class="container" align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
         <li class="list-group-item">
-          <a href="user_Profil.jsp" class="mypage_link">내 프로필 관리</a>
+          <a href="my_profile.jsp" class="mypage_link">내 프로필 관리</a>
           <img src="../images/codeit.png" alt="코드잇 이미지" /><!-- 프로필 넣어주는게 가능? -->
         </li>
         <li class="list-group-item">
-          <a href="dog_Profil.jsp" class="mypage_link">반려동물 프로필</a>
+          <a href="amigo_profile_insert.jsp" class="mypage_link">반려동물 프로필</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">찜 목록 & 예약 확인</a>
@@ -44,7 +44,7 @@
           <a href="#" class="mypage_link">고객센터</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">공지사항</a>
+          <a href="<%=request.getContextPath() %>/view/mypage/notice.jsp" class="mypage_link">공지사항</a>
         </li>
         <li class="list-group-item">
           <a href="account_controll.jsp" class="mypage_link">계정관리</a>

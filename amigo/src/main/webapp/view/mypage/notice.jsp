@@ -18,7 +18,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/style.css" />
     <title>Document</title>
 <title>Insert title here</title>
     <!--[if lt IE 9]>
@@ -74,7 +74,11 @@
     <!-- end -->
     <hr />
 	<%@include file="/includes/footer.jsp" %>
-
+<!-- 네비바 종료 -->
+	<!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="./resources/js/script.js"></script>
 	
 </body>
 </html>

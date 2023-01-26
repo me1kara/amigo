@@ -25,7 +25,7 @@
         <input type="text" name="user_email" class="form-control" id="user_email" placeholder="아이디(이메일)">
        	<br>
         
-        <input type="password" name="user_pw" class="form-control" id="user_pw" placeholder="비밀번호"> 
+        <input type="password" name="user_pw" class="form-control" id="user_pw" placeholder="비밀번호" autoComplete="off"> 
         <br>
 		
        	<c:if test="${ !sessionScope.isLoginSuccess && sessionScope.isLoginSuccess != null && sessionScope.matchedPassword != null && !sessionScope.matchedPassword}">
