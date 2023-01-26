@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" />
+   <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script
@@ -19,6 +19,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+     <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="resources/js/script.js"></script>
     <title>main</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -32,7 +36,7 @@
       <ul class="list-group list-group-flush" align="left">
         <li class="list-group-item">
           <a href="my_profile.jsp" class="mypage_link">내 프로필 관리</a>
-          <img src="../images/codeit.png" alt="코드잇 이미지" /><!-- 프로필 넣어주는게 가능? -->
+          <img src="#" alt="코드잇 이미지" /><!-- 프로필 넣어주는게 가능? -->
         </li>
         <li class="list-group-item">
           <a href="amigo_profile_insert.jsp" class="mypage_link">반려동물 프로필</a>
@@ -41,7 +45,7 @@
           <a href="#" class="mypage_link">찜 목록 & 예약 확인</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">고객센터</a>
+          <a href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp" class="mypage_link">고객센터</a>
         </li>
         <li class="list-group-item">
           <a href="<%=request.getContextPath() %>/view/mypage/notice.jsp" class="mypage_link">공지사항</a>
@@ -59,10 +63,6 @@
     </div>
     
 	<%@include file="/includes/footer.jsp" %>
- <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="../resources/js/script.js"></script>
 	
 </body>
 </html>
