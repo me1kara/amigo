@@ -12,23 +12,23 @@
   crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
 
 
 <%
 	UserVO user = new UserVO();
-	user.setUser_name("운영자");  // 일단 이곳은 유저 VO를 가져오도록 동작->유저네임 임의 세팅 후 동작 시켜봄, 즉 더미
-	user.setUser_phone("010-1234-5678");
-	user.setUser_addr("인천시 연수구 랜드마크로160");
+	user.setUser_name(user.getUser_name());  // 일단 이곳은 유저 VO를 가져오도록 동작->유저네임 임의 세팅 후 동작 시켜봄, 즉 더미
+	user.setUser_phone(user.getUser_phone());
+	user.setUser_addr(user.getUser_addr());
 	session.setAttribute("user", user);
 	System.out.println("안녕?"); // 일단 데이
 
-%><!-- 스크립트는 상단에 작성하였습니다 먼저 '현재 하는일'에서 직접 입력 선택 시 내용 무조건 입력하기 -->
+%><!-- 스크립트는 중간에 작성하였습니다 230127 현재 흡연여부, 현재직종만 적용. -->
 
 
 
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta charset="UTF-8">
 <title>My22_펫시터지원폼</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -45,7 +45,7 @@
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
 		
-			<form action="sitter_apply_form2.do" method="get" onSubmit="return checkData();">
+			<form action="sitter_apply_form.do" method="post" onSubmit="return checkData();">
 			<div class="row">
 			
 				<input type="hidden" class="form-control" name="user_no" value="1">
@@ -60,20 +60,20 @@
 				<h4>1. 기본정보</h4>
 					<h4>프로필사진*</h4>
 				</div>
-					
-					<div class="form-group text-center">
-					<img class="profile-user-img img-fluid img-circle"
-					src="${path}/dist/img/profile/${login.userImg}"
-					alt="User profile picture">
-					<input class="form-control" name="sit_photo" value="이미지없어" required> 
-					</div>
-				<br>
+				<!-- 프로필 사진 업로드 -->
 				<div class="form-group text-center">
-					<a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
-					data-target="#userPhotoModal"> <i class="fa fa-photo">
-					업로드</i>
-					</a>
+					<div class="picture">
+						<img class="profile-user-img img-fluid img-circle"
+						src="https://lh3.googleusercontent.com/LfmMVU71g-HKXTCP_QWlDOemmWg4Dn1rJjxeEsZKMNaQprgunDTtEuzmcwUBgupKQVTuP0vczT9bH32ywaF7h68mF-osUSBAeM6MxyhvJhG6HKZMTYjgEv3WkWCfLB7czfODidNQPdja99HMb4qhCY1uFS8X0OQOVGeuhdHy8ln7eyr-6MnkCcy64wl6S_S6ep9j7aJIIopZ9wxk7Iqm-gFjmBtg6KJVkBD0IA6BnS-XlIVpbqL5LYi62elCrbDgiaD6Oe8uluucbYeL1i9kgr4c1b_NBSNe6zFwj7vrju4Zdbax-GPHmiuirf2h86eKdRl7A5h8PXGrCDNIYMID-J7_KuHKqaM-I7W5yI00QDpG9x5q5xOQMgCy1bbu3St1paqt9KHrvNS_SCx-QJgBTOIWW6T0DHVlvV_9YF5UZpN7aV5a79xvN1Gdrc7spvSs82v6gta8AJHCgzNSWQw5QUR8EN_-cTPF6S-vifLa2KtRdRAV7q-CQvhMrbBCaEYY73bQcPZFd9XE7HIbHXwXYA=s200-no"
+               			class="picture-src"
+           	    		id="wizardPicturePreview"
+                	    title=""
+                	    name="sit_photo"
+						alt="User profile picture">
+					<input type="file" class="form-control" name="sit_photo" value="이미지없어" required> 
+					</div>
 				</div>
+				<br>
 				
 				<div class="form-group">
 					<label for="user_name">지원자 성명</label> <!-- 사용자 편의를 위해 자동으로 뜨게 하나 disabled은 값이 안넘어가니 상단에 hidden처리. -->

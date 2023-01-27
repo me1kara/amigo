@@ -7,8 +7,8 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.lec.amigo.vo.UserVO;         // 펫시터 정보가 row단위로 db에 쌓이도록??
 import com.lec.amigo.vo.SitterVO;
-											// JDBC 템플릿이  있어야 됨.
-public class SitAppMapper implements RowMapper<SitterVO>{
+											
+public class SitRowMapper implements RowMapper<SitterVO>{
 
 	@Override
 	public SitterVO mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -12,15 +12,15 @@ public interface SitterService {
 
 	
 	
-	/*static SitPageInfo getSitPageInfo(int p, int perPage) {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
-
-	int insertSitter(SitterVO svo);
-	List<SitterVO> getSitList(int user_no);
-	SitterVO sitterInfo(int sit_no);
 	
+
+	SitterVO getSitter(int sit_no);
+	List<SitterVO> getSitList(int user_no);
+	SitterVO insertSitter(SitterVO svo);
+/*
+	int deleteSitter(int sit_no);
+	int updateSitter(SitterVO svo);
+*/
 	
 	
 }

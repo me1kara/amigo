@@ -31,15 +31,92 @@ public class SitterController {
 	@Autowired
 	private SitterServiceImpl sitterService;
 	
-	@RequestMapping("sitter_profile.do")
-	
-	public String sitterInfo(@PathVariable int sit_no, Model model) {
-		SitterVO svo = sitterService.sitterInfo(sit_no);
-		model.addAttribute("svo", svo);
-		return null;
+	@RequestMapping("/view/apply/getSitter.do")
+	public String getSitter(HttpSession sess, Model model, int sit_no) {
+		System.out.println("시터의 상세 프로필");
+		sitterService.getSitter(sit_no);
+		return "sitter_profile.jsp";
+		
 	}
 	
-	@RequestMapping("/view/mypage/getSitterList.do")
+	@RequestMapping("sitter_profile.do")
+	public String getSitList(HttpSession sess, Model model, SitterVO svo) {
+		
+		int user_no = 4; // 임시로
+		List<SitterVO> sitList = sitterService.getSitList(user_no);  // 유저번호에 근거해서 시터 리스트를 가져온다.
+		model.addAttribute("sitList", sitList);						// DB에서 가져와 모델에 sitList에 저장해주고 아래 페이지 리턴.
+		return "sitter_list.jsp";
+	}  //이건 관리자가 승인하기 위해 볼 페이지로 만들어야 할 듯.
+	
+	@RequestMapping(value="view/apply/sitter_apply_form.do", method=RequestMethod.GET) 
+	public String insertSitter() {
+		return "apply/sitter_apply_form.jsp";
+	}
+	
+	@RequestMapping(value="/view/apply/sitter_apply_form.do", method=RequestMethod.POST) //펫시터 개인정보가 있어 패킷을 숨겨 전송하고 싶어 post씀
+	public String insertSitter(HttpSession sess, Model model, SitterVO svo) {				// 도메인에 데이터 등을 노출시키지 않으려고.
+		System.out.println("시터등록");
+		System.out.println(svo.toString());													// VO 에 데이터가 제대로 담겼는지 테스트 해봄
+		sitterService.insertSitter(svo);
+		
+		int user_no = 4;   // 임시
+		List<SitterVO> sitList = sitterService.getSitList(user_no);
+		model.addAttribute("sitList", sitList);
+		return "my_page_list.jsp";
+	}
+/*
+    230127부터 사진업로드 구현하고, 로그인한 회원의 세션을 지원 페이지에 받아서 값은 admin에게 넘겨주고 유저의 페이지는 마이페이지 리스트로 리다이렉트 시키기.
+    admin 이 승인하게 되면 유저에게 알림이 오고, 다시 로그인하면 파트너로 접속할 수 있도록 해주기
+    시터를 누르면 시터에 대한 상세 프로필정보가 뜨도록 한다.
+ */
+	
+	
+	
+	
+	
+	
+	
+/*	
+  	230127 : 아래 코드는 펫시터 삭제 또는 수정이 필요하다면 이용할 예정.
+ 
+	@RequestMapping(value="/view/apply/sitter_apply_form.do", method=RequestMethod.POST) 
+	public String updateSitter(HttpSession sess, Model model, SitterVO svo) {
+		System.out.println("시터수정");
+		System.out.println(svo.toString());
+		sitterService.updateSitter(svo);
+		
+		int user_no = 4;   // 임시
+		List<SitterVO> sitList = sitterService.getSitList(user_no);
+		model.addAttribute("sitList", sitList);
+		return "my_page_list.jsp";
+	}
+	
+	@RequestMapping(value="/view/apply/sitter_apply_form.do", method=RequestMethod.GET) 
+	public String deleteSitter(HttpServletRequest req, HttpSession sess, Model model) {
+		//int sit_no = Integer.parseInt(sit_no);
+		int sit_no = Integer.parseInt(req.getParameter("sit_no"));
+		System.out.println("시터삭제");
+		
+		sitterService.deleteSitter(sit_no);
+		
+		int user_no = 4;   // 임시
+		List<SitterVO> sitList = sitterService.getSitList(user_no);
+		model.addAttribute("sitList", sitList);
+		return "my_page_list.jsp";
+	}
+*/	
+	
+	
+
+}
+	
+/*	int sit_smoking = request.getParameter("sit_smoking").equals("true") ? 1 : 0;
+		int sit_exp = request.getParameter("sit_exp").equals("true") ? 1 : 0;
+		int sit_auth_is = request.getParameter("sit_auth_is").equals("true") ? 1 : 0;
+		 sittervo.setSit_smoking(sit_smoking);
+		 sittervo.setSit_exp(sit_exp);
+		 sittervo.setSit_auth_is(sit_auth_is);*/
+/*@RequestMapping("/view/mypage/getSitterList.do")
 	
 	public String getSitList (HttpSession sess, Model model, SitterVO sittervo) {
 		   
@@ -51,33 +128,4 @@ public class SitterController {
 		System.out.println("gggggggggggggggggggggggggggggggggggg");
 			
 		return "my_page_list.jsp";
-	}
-	
-	@RequestMapping(value="view/sitter_apply_form.do", method=RequestMethod.GET) 
-	public String insertSitter() {
-		return "apply/sitter_apply_form.jsp";
-	}
-	
-	
-	@RequestMapping(value="view/apply/sitter_apply_form2.do", method=RequestMethod.GET) 
-	public String insertSitter(HttpSession sess, Model model, SitterVO sittervo) {
-		System.out.println("시터등록");
-		System.out.println(sittervo.toString());
-		sitterService.insertSitter(sittervo);
-		
-		int user_no = 4;   // 임시
-		List<SitterVO> sitList = sitterService.getSitList(user_no);
-		model.addAttribute("sitList", sitList);
-		
-		return "my_page_list.jsp";
-	}
-	
-
-}
-	
-/*	int sit_smoking = request.getParameter("sit_smoking").equals("true") ? 1 : 0;
-		int sit_exp = request.getParameter("sit_exp").equals("true") ? 1 : 0;
-		int sit_auth_is = request.getParameter("sit_auth_is").equals("true") ? 1 : 0;
-		 sittervo.setSit_smoking(sit_smoking);
-		 sittervo.setSit_exp(sit_exp);
-		 sittervo.setSit_auth_is(sit_auth_is);*/
+	}*/
