@@ -69,7 +69,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="far fa-copy"></i>고객센터</a>
+            <a class="nav-link" href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"><i class="far fa-copy"></i>고객센터</a>
           </li>
         </ul>
       </div>

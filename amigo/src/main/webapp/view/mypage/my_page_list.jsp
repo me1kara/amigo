@@ -91,9 +91,11 @@
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">고객센터</a>
+          <a href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp" class="mypage_link">고객센터</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">공지사항</a>
+          <a href="<%=request.getContextPath() %>/view/mypage/notice.jsp" class="mypage_link">공지사항</a>
         </li>
         <li class="list-group-item">
           <a href="account_controll.jsp" class="mypage_link">계정관리</a>
