@@ -91,9 +91,11 @@
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">고객센터</a>
+          <a href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp" class="mypage_link">고객센터</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">공지사항</a>
+          <a href="<%=request.getContextPath() %>/view/mypage/notice.jsp" class="mypage_link">공지사항</a>
         </li>
         <li class="list-group-item">
           <a href="account_controll.jsp" class="mypage_link">계정관리</a>
@@ -126,3 +128,14 @@
     <![endif]-->
   </body>
 </html>
+=======
+    
+	<%@include file="/includes/footer.jsp" %>
+ <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="../resources/js/script.js"></script>
+	
+</body>
+</html>
+>>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf

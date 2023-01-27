@@ -27,7 +27,9 @@
  <a class="logo" href="#home.jsp"
  ><img alt="AmigoLogo" src="img/logo1.png"
 /></a>
+<div class="text-end mb-5">
 <button type="button" class="btn-close" aria-label="Close"></button>
+</div>
 </div>
  <!-- header end  -->
 
