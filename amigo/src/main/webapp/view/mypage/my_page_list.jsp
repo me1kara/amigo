@@ -5,10 +5,6 @@
 <html lang="kr">
   <head>
     <meta charset="UTF-8" />
-
-<html>
-<head>
-<meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script
@@ -81,57 +77,37 @@
     <!-- 네비바 종료 -->
 
     <!-- 마이페이지 시작 -->
-=======
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <![endif]-->
-</head>
-<body>
-	
-	<%@include file="/includes/header.jsp" %>
-	 <!-- 마이페이지 시작 -->
-
     <div class="container" align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
         <li class="list-group-item">
           <a href="user_Profil.jsp" class="mypage_link">내 프로필 관리</a>
-
           <img src="../images/codeit.png" alt="코드잇 이미지" />
         </li>
         <li class="list-group-item">
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>
-
-          <img src="../images/codeit.png" alt="코드잇 이미지" /><!-- 프로필 넣어주는게 가능? -->
-        </li>
-        <li class="list-group-item">
-          <a href="dog_Profil.jsp" class="mypage_link">반려동물 프로필</a>
-
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">찜 목록 & 예약 확인</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">고객센터</a>
+          <a href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp" class="mypage_link">고객센터</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">공지사항</a>
+          <a href="<%=request.getContextPath() %>/view/mypage/notice.jsp" class="mypage_link">공지사항</a>
         </li>
         <li class="list-group-item">
-
-          <a href="#" class="mypage_link">환경설정</a>
-
           <a href="account_controll.jsp" class="mypage_link">계정관리</a>
-
         </li>
         <li class="list-group-item">
-          <a href="../apply/sitter_apply_form.do" class="mypage_link">펫시터 지원하기</a>
+          <a href="#" class="mypage_link">펫시터 지원하기</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">펫시터모드로 전환</a>
         </li>
       </ul>
     </div>
-
     <!-- Footer -->
     <footer class="bg-primary text-center text-white">
       <!-- Copyright -->
@@ -152,14 +128,3 @@
     <![endif]-->
   </body>
 </html>
-
-    
-	<%@include file="/includes/footer.jsp" %>
- <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="../resources/js/script.js"></script>
-	
-</body>
-</html>
-
