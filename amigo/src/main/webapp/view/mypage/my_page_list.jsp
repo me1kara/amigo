@@ -128,14 +128,3 @@
     <![endif]-->
   </body>
 </html>
-=======
-    
-	<%@include file="/includes/footer.jsp" %>
- <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="../resources/js/script.js"></script>
-	
-</body>
-</html>
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
