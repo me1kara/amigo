@@ -24,7 +24,7 @@ public class DogController {
 	@Autowired
 	DogServiceImpl dogService;
 	
-	@RequestMapping("/view/mypage/getDogList.do")
+	@RequestMapping("view/mypage/getDogList.do")
 	public String getDogList(HttpSession sess, Model model,DogVO dog) {
 	UserVO user = (UserVO)sess.getAttribute("user");
 	int user_no = user.getUser_no();
