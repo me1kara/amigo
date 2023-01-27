@@ -18,17 +18,11 @@
     <![endif]-->
 </head>
 <body>
-<<<<<<< HEAD
-	
-	<%@include file="/includes/header.jsp" %>
-
-=======
 	<!-- 로그인 화면에서는 네비바가 필요 없을거 같습니다. --> 
 	<!-- <@include file="/includes/header.jsp" %> -->
 	 
 	 <!--  
 	     과거 코드
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
 		<div class="container">
 		
 		<a href="login.do">이메일 로그인</a>
@@ -40,11 +34,7 @@
 		<a href="main_tour.do">둘러보기</a>
 		
 		</div>
-<<<<<<< HEAD
-		
-=======
 		-->
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
 		
 		 <!-- 메인 화면-->
     <!-- icon -->
@@ -107,10 +97,6 @@
   </body>
 	
   	<!--  	<@include file="/includes/footer.jsp" %> -->
-<<<<<<< HEAD
-
-=======
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
 
 	
 </body>

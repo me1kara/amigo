@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.lec.amigo.impl.DogServiceImpl;
 import com.lec.amigo.vo.DogVO;
-import com.lec.amigo.vo.UserVO;
 
 @Controller
 //@RequestMapping("/view/mypage")
@@ -46,24 +45,12 @@ public class DogController {
 	return "amigo_profile.jsp";
 	}
 	
-<<<<<<< HEAD
+
 	@RequestMapping(value="/view/mypage/updateDog.do", method = RequestMethod.GET)
 	public String updateDog(HttpServletRequest req,Model model,DogVO dog) {
 	int dog_no = Integer.parseInt(req.getParameter("dog_no"));
 	model.addAttribute("dog", dogService.getDog(dog_no));
 	return "amigo_profile_update.jsp";
-=======
-	
-	@RequestMapping(value="view/mypage/insertDog.do", method=RequestMethod.POST)
-	public String insertDog(DogVO dog) {
-		System.out.println("dsad");
-		
-		System.out.println(dog.toString());
-		dogService.insertDog(dog);
-		
-		
-		return "amigo_profile.jsp";
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
 	}
 	
 	@RequestMapping(value="/view/mypage/updateDog.do", method = RequestMethod.POST)

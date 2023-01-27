@@ -118,6 +118,7 @@ public class ChatController {
 	public String getChatList(HttpServletRequest req) {
 		
 		req.setAttribute("chatDAO", chatDao);
+		System.out.println("갑자기 머임?");
 		
 		return "chat/chat.jsp";
 	}
