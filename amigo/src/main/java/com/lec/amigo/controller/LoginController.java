@@ -55,7 +55,7 @@ public class LoginController {
 			sess.setAttribute("user", user);
 			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요!
 			ChatDAO chat_dao = new ChatDAO();
-			List<Integer> room_list = chat_dao.getRoomList(user.getUser_no());
+			List<Integer> room_list = chat_dao.getRoomIndexList(user.getUser_no());
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);
 			}
