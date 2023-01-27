@@ -27,7 +27,7 @@
 	</div>		
 
 	<div class="container mt-3" align="center">
-		<form action="user_board_update.do" method="post">
+		<form action="user_board_update.do" method="post" enctype="multipart/form-data">
 			<input name="ubd_no" type="hidden" value="${board.ubd_no}" />
 			<div class="input-group mb-3">
   			 <b>글제목</b> <input type="text" class="form-control" name="ubd_title" value="${ board.ubd_title }">
@@ -50,8 +50,32 @@
 			  <b>글내용</b> <textarea class="form-control"  name="ubd_cont" rows="15" >${ board.ubd_cont }</textarea>
 			</div>	
 			<div class="input-group mb-3">
-			  <b>사진업로드</b> <input type="file" class="form-control"  name="ubd_file" rows="15" >${ board.ubd_file }
+			  <b>사진업로드</b><input type="button" value="파일 추가(최대 5개)" id="add" onclick="fn_addFile()" /><br>
+			  <input type="button" value="파일삭제" id="remove" onclick="fn_removeFile()"/><br>
 			</div>	
+			  <div id="d_file">
+			  </div>
+			<script>
+		    var cnt = 1;
+		    var maxAppend = 1;
+		    function fn_addFile(){
+		    	if(maxAppend > 5) return;
+		        $("#d_file").append("<br>" + "<input type='file' name='uploadFile' multiple id='uploadFile' aria-describedby='uploadFile' aria-label='Upload'" + cnt + " />");
+		        cnt++;
+		    	maxAppend++;
+		    }
+		    
+			function fn_removeFile() {
+				$("#uploadFile").remove();
+				maxAppend--;
+				cnt--;
+				if(maxAppend==1){
+					$("#d_file *").remove();
+				}
+			}
+			</script>
+			
+			<input type="hidden" name="ubd_file" value=""/>	
 			
 			
 			<div class="container" align="center">

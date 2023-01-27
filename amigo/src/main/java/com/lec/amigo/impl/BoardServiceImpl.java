@@ -62,7 +62,9 @@ public class BoardServiceImpl implements BoardService{
 		return boardDAO.getBoardListLike(searchVO);
 	}
 
-
-	
+	@Override
+	public int ReplyCount(int ubd_no) {
+		return boardDAO.ReplyCount(ubd_no);
+	}	
 	
 }

@@ -1,7 +1,7 @@
 package com.lec.amigo.vo;
 
 import java.util.Date;
-
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +17,7 @@ public class BoardVO {
 	private String ubd_cate;
 	private int user_no;
 	private String dog_kind;
-	private MultipartFile uploadFile;
+	private List<MultipartFile> uploadFile;
 	private String user_nick;
 	
 	public int getUbd_no() {
@@ -80,12 +80,6 @@ public class BoardVO {
 	public void setDog_kind(String dog_kind) {
 		this.dog_kind = dog_kind;
 	}
-	public MultipartFile getUploadFile() {
-		return uploadFile;
-	}
-	public void setUploadFile(MultipartFile uploadFile) {
-		this.uploadFile = uploadFile;
-	}
 	
 	public String getUser_nick() {
 		return user_nick;
@@ -94,7 +88,12 @@ public class BoardVO {
 		this.user_nick = user_nick;
 	}
 	
-	
+	public List<MultipartFile> getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(List<MultipartFile> uploadFile) {
+		this.uploadFile = uploadFile;
+	}
 	@Override
 	public String toString() {
 		return "BoardVO [ubd_no=" + ubd_no + ", ubd_title=" + ubd_title + ", ubd_cont=" + ubd_cont + ", ubd_cate="

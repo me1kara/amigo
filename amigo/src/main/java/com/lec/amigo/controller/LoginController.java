@@ -37,7 +37,7 @@ public class LoginController {
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess) {
 			
-		UserVO user = userDAO.getUser(userVO.getUser_email());
+		UserVO user = userDAO.getUser(userVO.getUser_email()); // 사용자가 입력한 이메일을 getUser메서드로 DB 있는지 찾기
 
 		if(user == null) {
 			sess.setAttribute("isLoginSuccess", false);

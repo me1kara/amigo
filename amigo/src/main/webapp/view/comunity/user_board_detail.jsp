@@ -48,18 +48,20 @@
 						<tr>
 						<th>사진</th>
 						<td>
-							<c:if test="${board.getUbd_file()!=null}">
-								<img src="/img/${board.getUbd_file()}" width="250px" height="250px">
+							<c:if test="${board.getUbd_file()!=null and board.getUbd_file()!=''}">
+								<c:forEach items="${fileSplit}" var="file">
+								<img src="/img/${file}" width="300px" height="300px"><br><br>
+								</c:forEach>
 							</c:if>
 						</td>
 						</tr>	
 			
 			</table>
-
+			<br>
 			<a href="like.do?ubd_no=${ board.getUbd_no() }">추천</a>
 			
 			<div align="left">
-				댓글 <hr>
+				댓글(${ ReplyCount }) <hr> 
 				<ul>
 					<c:forEach items="${replyList}" var="reply">
 								<script>
@@ -107,9 +109,17 @@
 			
 			
 			<div class="container" align="center">
+			
+				<c:if test="${board.getUser_nick() == user.getUser_nick()}">
 				<a href="user_board_update.do?ubd_no=${board.getUbd_no()}" class="btn btn-warning mt-3">게시글수정</a>
+				</c:if>
+				
 				<a href="user_board_list.do" class="btn btn-primary mt-3">게시글목록</a>	
+				
+				<c:if test="${board.getUser_nick() == user.getUser_nick() || user.getUser_type() == 'A'}">
 				<a href="#" onclick="deleteBoard()" class="btn btn-danger mt-3">게시글삭제</a>
+				</c:if>
+				
 			</div>
 		
 	</div>

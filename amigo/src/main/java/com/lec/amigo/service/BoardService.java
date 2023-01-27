@@ -34,4 +34,7 @@ public interface BoardService {
 	// 카테고리별 리스트
 	List<BoardVO> selectCate(BoardVO board);
 	
+	// 댓글 수
+	int ReplyCount(int ubd_no);
+	
 }

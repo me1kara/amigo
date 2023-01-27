@@ -16,6 +16,8 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
+    
+    
 </head>
 <body>
 	
@@ -50,8 +52,32 @@
 			  <b>글내용</b> <textarea class="form-control"  name="ubd_cont" rows="15" ></textarea>
 			</div>	
 			<div class="input-group mb-3">
-			  <b>사진업로드</b><input type="file" class="form-control" name="uploadFile" id="uploadFile" aria-describedby="uploadFile" aria-label="Upload" />
+			  <b>사진업로드</b>
+			  <input type="button" value="파일 추가(최대 5개)" id="add" onclick="fn_addFile()" /><br>
+			  <input type="button" value="파일삭제" id="remove" onclick="fn_removeFile()"/><br>
 			</div>	
+				<input type="file" name="uploadFile" multiple id="uploadFile" aria-describedby="uploadFile" aria-label="Upload"/>
+			  <div id="d_file">
+			  </div>
+		    <script>
+		    var cnt = 1;
+		    var maxAppend = 1;
+		    function fn_addFile(){
+		    	if(maxAppend > 4) return;
+		        $("#d_file").append("<br>" + "<input type='file' name='uploadFile' multiple id='uploadFile' aria-describedby='uploadFile' aria-label='Upload'" + cnt + " />");
+		        cnt++;
+		    	maxAppend++;
+		    }
+		    
+			function fn_removeFile() {
+				$("#uploadFile").remove();
+				maxAppend--;
+				cnt--;
+				if(maxAppend==0){
+					$("#d_file *").remove();
+				}
+			}
+			</script>
 			
 			<input type="hidden" name="ubd_file" value=""/>	
 			<div class="container" align="center">

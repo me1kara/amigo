@@ -41,6 +41,7 @@ public class BoardDAO {
 	private String deleteBoard = "";
 	private String selectCate = "";
 	private String insertBoard = "";
+	private String ReplyCount = "";
 	
 	@PostConstruct
 	public void getSqlPropeties() {
@@ -57,6 +58,7 @@ public class BoardDAO {
 		deleteBoard               = environment.getProperty("deleteBoard");
 		selectCate                = environment.getProperty("selectCate");
 		insertBoard               = environment.getProperty("insertBoard");
+		ReplyCount                = environment.getProperty("ReplyCount");
 	}
 	
 
@@ -146,6 +148,10 @@ public class BoardDAO {
 	public BoardVO insertBoard(BoardVO board) {
 		jdbcTemplate.update(insertBoard, board.getUbd_title(), board.getUbd_file(), board.getUbd_cont(), board.getUbd_cate(), board.getUser_no(), board.getDog_kind());
 		return board;	
+	}
+	
+	public int ReplyCount(int ubd_no) {
+		return jdbcTemplate.queryForObject(ReplyCount, Integer.class, ubd_no);
 	}
 	
 }
