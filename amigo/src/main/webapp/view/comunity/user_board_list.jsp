@@ -1,6 +1,3 @@
-Test 
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
@@ -80,9 +77,8 @@ Test
 			<!-- 상단 메뉴 -->
 	   		<div class="row mt-3 justify-content-end">
 	   			<div class="col-auto">
-
-					<a href="user_board_list.do">전체글</a> ㅣ
-	   				<a href="user_board_list_Like.do">인기글</a> ㅣ
+					<a href="user_board_list.do">전체글</a> 
+	   				<a href="user_board_list_Like.do">인기글</a> 
 	   				<a href="">펫시터 커뮤니티</a>
 	   			</div>
 	   		<div class="row mt-3 justify-content-end">
@@ -119,12 +115,9 @@ Test
 			</div>
 		</form> <!-- getBoardList.do -->
 
-					
-
-		</div> <!-- 게시판 -->
-
+		<div class="container">					
+					<c:forEach  var="board" items="${ boardList }">
                     <div class="container">
-		<c:forEach  var="board" items="${ boardList }">
             <!-- Forum List -->
             <div class="inner-main-body p-2 p-sm-3 forum-content show">
               <div class="card mb-2">
@@ -145,7 +138,7 @@ Test
                       <!-- 말머리/ -->
                       <!-- 제목 -->
                       <h6>
-                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}">${board.getUbd_title()}</a> [${ board.getReply_cnt() }]
+                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}">${board.getUbd_title()}</a> [${board.getReply_cnt()}]
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
@@ -159,7 +152,7 @@ Test
                       </p>
                     </div>
                     <div class="text-muted small text-center align-self-center">
-                      <span class=""><i class="fa fa-eye"></i>${ board.ubd_getCnt() }</span>
+                      <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>
                       <span><ii class="fa fa-heart" aria-hidden="true"></i>${ board.getLike_cnt() }</span>
                     	</div>
                  		</div>
@@ -200,9 +193,8 @@ Test
 		</div> <!-- 페이징 -->
 		
 		<div class="col-2 btn-group">
-
 			    <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
-		</div>					
+		</div>
 		<!-- 하단 검색 시스템 -->
 		<form action="user_board_list.do" method="post" id="boardForm">   
 				    	<div class="col-3 me-1">
@@ -219,9 +211,9 @@ Test
 				<div class="col-3 btn-group">
 			    	<input type="submit" class="col-1 btn btn-primary me-2" value="검색">
 	        	</div>
-	     </form>		
-	</div> <!-- main  -->
-	
+	     </form>
+							
+	</div> <!— main  —>
 	    
 	    
 <%@include file="/includes/footer.jsp" %>

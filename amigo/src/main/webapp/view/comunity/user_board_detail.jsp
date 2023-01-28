@@ -162,7 +162,7 @@
 	    $.ajax({
 	    	url :'heart.do',
 	        type :'POST',
-	        data : {'ubd_no':${board.getUbd_no()}, 'user_no':${user.getUser_no()}},
+	        data : {'user_no':${user.getUser_no()}, 'ubd_no':${board.getUbd_no()}},
 	    	success : function(data){
 	    		that.prop('name', data);
 	        	if(data==1) {
