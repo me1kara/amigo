@@ -19,16 +19,21 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.service.BoardService;
 import com.lec.amigo.service.ReplyService;
 import com.lec.amigo.vo.BoardVO;
+import com.lec.amigo.vo.HeartVO;
 import com.lec.amigo.vo.ReplyVO;
+import com.lec.amigo.vo.UserVO;
 
 
 
@@ -98,28 +103,33 @@ public class BoardController {
 			
 	
 	@RequestMapping(value= "/user_board_detail.do", method=RequestMethod.GET)
-	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, @RequestParam int ubd_no, HttpServletRequest req, ReplyVO replyVO) {
+	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, 
+			                        @RequestParam int ubd_no, HttpServletRequest req, 
+			                        ReplyVO replyVO, UserVO userVO) {
 			
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
-		model.addAttribute("ReplyCount", boardService.ReplyCount(ubd_no));
 
-		if(req.getAttribute("updateCount_is")==null) { // 조회수 올리는 로직
+		// 조회수 올리는 로직
+		if(req.getAttribute("updateCount_is")==null) { 
 			boardService.updateCount(ubd_no);
 		}
 		
+		// 파일 가져오는 로직
 		BoardVO boardUser = boardService.getBoard(board);  // 파일명 가져오기 위해 boardUser에 담아줌
-		
 		if(boardUser.getUbd_file()!=null) {
 		String[] fileSplit = boardUser.getUbd_file().split(","); // ,를 기준으로 파일명 나눠서 배열에 담음
 		
 		model.addAttribute("fileSplit", fileSplit); // jsp 파일에 파일 보냄
 		} 
 		
-			List<ReplyVO> replyList = null; // 댓글 리스트 가져오기 위해 객체생성
-			replyList = replyService.getReplyList(replyVO.getUbd_no()); // 게시글 번호에 맞는 댓글 리스트 가져옴
-			model.addAttribute("replyList", replyList); // jsp 파일에 댓글 보냄
-			
+		// 댓글 가져오는 로직
+		List<ReplyVO> replyList = null; // 댓글 리스트 가져오기 위해 객체생성
+		replyList = replyService.getReplyList(replyVO.getUbd_no()); // 게시글 번호에 맞는 댓글 리스트 가져옴
+		model.addAttribute("replyList", replyList); // jsp 파일에 댓글 보냄
+		
+		// 이미 좋아요했는지 확인하는 로직
+		model.addAttribute("findHeart", boardService.findHeart(userVO.getUser_no(), ubd_no));
 		
 		return "view/comunity/user_board_detail.jsp";
 	}
@@ -162,7 +172,7 @@ public class BoardController {
 					File saveFile = new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName"));
 					uploadFile.get(i).transferTo(saveFile);
 				}
-				System.out.println("------------------------> 다중 파일 업로드 성공");
+
 				
 			} catch (Exception e) {
 				System.out.println("------------------------> 다중 파일 업로드 실패");
@@ -243,6 +253,7 @@ public class BoardController {
 			map.put("fileRealName", fileRealName);
 			map.put("uniqueName", uniqueName);
 			
+			
 			uploadFileList.add(map);
 				}
 			}
@@ -273,6 +284,14 @@ public class BoardController {
 		model.addAttribute("msg","글이 정상적으로 등록되었습니다.");
 		model.addAttribute("url","user_board_list.do");
 		return "view/comunity/alert.jsp";
+	}
+	
+	@PostMapping("heart.do")
+	@ResponseBody 
+	public int heart(@ModelAttribute HeartVO heart) {
+		int data = boardService.insertHeart(heart);
+		return data;
+		
 	}
 	
 }

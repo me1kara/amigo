@@ -10,7 +10,6 @@ public class BoardVO {
 	private int ubd_no;
 	private String ubd_title;
 	private Date ubd_date;
-	private int ubd_likecnt;
 	private String ubd_file;
 	private String ubd_cont;
 	private int ubd_cnt;
@@ -19,6 +18,8 @@ public class BoardVO {
 	private String dog_kind;
 	private List<MultipartFile> uploadFile;
 	private String user_nick;
+	private int like_cnt;
+	private int reply_cnt;
 	
 	public int getUbd_no() {
 		return ubd_no;
@@ -37,12 +38,6 @@ public class BoardVO {
 	}
 	public void setUbd_date(Date ubd_date) {
 		this.ubd_date = ubd_date;
-	}
-	public int getUbd_likecnt() {
-		return ubd_likecnt;
-	}
-	public void setUbd_likecnt(int ubd_likecnt) {
-		this.ubd_likecnt = ubd_likecnt;
 	}
 	public String getUbd_file() {
 		return ubd_file;
@@ -93,6 +88,18 @@ public class BoardVO {
 	}
 	public void setUploadFile(List<MultipartFile> uploadFile) {
 		this.uploadFile = uploadFile;
+	}
+	public int getLike_cnt() {
+		return like_cnt;
+	}
+	public void setLike_cnt(int like_cnt) {
+		this.like_cnt = like_cnt;
+	}
+	public int getReply_cnt() {
+		return reply_cnt;
+	}
+	public void setReply_cnt(int reply_cnt) {
+		this.reply_cnt = reply_cnt;
 	}
 	@Override
 	public String toString() {

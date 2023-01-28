@@ -101,11 +101,11 @@
 					<c:forEach  var="board" items="${ boardList }">
 						<tr>
 							<td>${ board.getUbd_cate()}</td>
-							<td><a href="user_board_detail.do?ubd_no=${board.getUbd_no()}">${board.getUbd_title()}</a></td>
+							<td><a href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}">${board.getUbd_title()}</a> [${ board.getReply_cnt() }]</td>
 							<td>${ board.getUser_nick() }</td>
 							<td><fmt:formatDate value="${board.ubd_date}" pattern="yyyy-MM-dd"/></td>
 							<td>${ board.ubd_cnt }</td>
-							<td>${ board.ubd_likecnt }</td>
+							<td>${ board.getLike_cnt() }</td>
 						</tr>
 					</c:forEach>									
 					</tbody>
