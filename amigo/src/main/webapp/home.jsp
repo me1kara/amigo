@@ -46,7 +46,7 @@
 		
 		 <!-- 메인 화면-->
     <!-- icon -->
-    <div class="text-center">
+    <div class="contaier mt-5 text-center">
       <img
         class="img-responsive"
         src="resources/img/logo2.png"
@@ -55,16 +55,19 @@
         height="440"
       />
     </div>
+    <br/>
     <!-- icon end-->
     <hr />
+    <div class="container mt-2">
     <div class="loginLogo2 text-center" width="90">
       <img src="resources/img/logo1.png" alt="logo1" />
+    </div>
     </div>
     <!-- 로그인 폼 -->
     <!-- Submit button -->
     <section class="vh-100">
       <form>
-        <div class="container py-5 h-100" align="center">
+        <div class="container mt-3 mb-5 py-5 h-100" align="center">
           <!-- 이메일 로그인 -->
           <button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='login.do';">
             이메일 로그인
@@ -90,7 +93,7 @@
           카카오, 지메일 end -->
         </div>
         <hr />
-        <div class="container text-center">
+        <div class="container text-center mt-2">
           <div class="row justify-content-between">
             <div class="col-4"><a href="#">가입/로그인이 안되요</a></div>
             <div class="col-4"><a href="main_tour.do">둘러보기</a></div>
@@ -101,7 +104,22 @@
     <!-- 로그인 end -->
     <!-- 하단 -->
     <!-- 메인 화면 종료 -->
-  	<!--  	<@include file="/includes/footer.jsp" %> -->	
-  </body>
+  	 <!-- Footer -->
+    <footer class="bg-primary text-center text-white">
+      <!-- Grid container -->
+      <div class="container">
+        <!-- Section: Social media -->
+        <section class="mb-4"></section>
+        <!-- Section: Form -->
+      </div>
+      <!-- Grid container -->
+      <!-- Copyright -->
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        © 2022 Copyright:
+        <a class="text-white" href="#">amigo.com</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer 끝 -->
 </body>
 </html>

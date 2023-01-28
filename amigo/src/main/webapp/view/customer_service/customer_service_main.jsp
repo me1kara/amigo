@@ -21,7 +21,9 @@
 	
 	<%@include file="/includes/header.jsp" %>
 		   <!-- 타이틀 -->
+		   <div class="container">
 <div class="container text-center" id="csHeader">
+    <h3>AM!GO입니다.</h3>
     <h4>무엇을 도와드릴까요?</h4>
 </div>
 <!-- 타이틀 end-->
@@ -65,6 +67,7 @@
       </div>
     </div>
   </div>
+  </div>
 <!-- 메뉴내용 end -->
 
 <hr class="pill">
@@ -73,7 +76,7 @@
   <button type="button" class="btn btn-secondary btn-lg" onclick="#"> 게시판 문의</button>
   <button type="button" class="btn btn-secondary btn-lg" onclick="#">채팅 문의</button>
 </div>
-</div>
+
 <!-- 상담 end -->
        <!-- Footer -->
        <footer class="bg-primary  text-center text-white">
