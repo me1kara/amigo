@@ -18,6 +18,7 @@
 	  transform: translateY(-100px);
 	}
   </style>
+  
   <div class="notification-container" id="notification-container">
     <a ref="" id="notification_text" style="color: white;"></a>
   </div>
