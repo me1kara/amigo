@@ -42,6 +42,12 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
+    
+    <style>
+    	.RL_item{
+    		width:66%;
+    	}
+    </style>
 </head>
 <body>
 	
@@ -61,7 +67,7 @@
 			</c:when>
 			
 			<c:when test="<%=checkRoom!=null %>">
-				<table>
+				<ul style="list-style: none;">
 					<!-- 
 					<c:choose>	
 					<c:when test="${!chatList.isEmpty() }">			
@@ -89,29 +95,48 @@
 				<c:forEach var="chat" items="${chatList }">
 					<c:choose>
 						<c:when test="${chat.getIndex()==room.getChat_index() }">
-							<tr class="btn btn-outline-dark" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
-							<td><b>마지막글 ${chat.getUser_nick()}</b></td>
-							<td style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">${chat.getContent() }</td>
+							<li class="btn btn-outline-dark RL_item" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
 							
-							<!-- 				
+								<table>
+									<tr>
+										<td>
+											<img src="#" >	
+										</td>
+										<td>
+											<ul style="list-style: none;" >
+											<li><b>${chat.getUser_nick()}</b></li>
+											<c:choose>									
+												<c:when test="${chat.getContent()=='file' }">
+													<li style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">&nbsp;이미지..</li>
+												</c:when>
+												<c:otherwise>
+													<li style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis;"> ${chat.getContent() }</li>
+												</c:otherwise>
+												
+											</c:choose>
+											</ul>
+										</td>
+									</tr>
+								</table>	
+						<!-- 				
 							<c:if test="${!chat.isRead_is() }"> 
 							<td>new</td>
 							</c:if>
 							 -->
-							</tr>
+							</li>
 							<br/>
 						</c:when>
 						<c:otherwise>
 							<br/>
-							<tr>
-								<td class="btn btn-outline-dark" onclick="location.href='/amigo/chatList.do?index=${room.getChat_index() }'">${room.getChat_index() }번방, 등록된 글이 없습니다!</td>
-							</tr>
+							<li style="text-overflow: ellipsis;" class="btn btn-outline-dark RL_item" onclick="location.href='/amigo/chatList.do?index=${room.getChat_index() }'">환영합니다!!
+							</li>
 						</c:otherwise>
 					</c:choose>
-				</c:forEach>		
+				</c:forEach>
+				<hr>		
 			</c:forEach>
-					</table>
-				</c:when>
+			</ul>
+			</c:when>
 			</c:choose>
 			
 			
