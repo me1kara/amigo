@@ -1,6 +1,3 @@
-Test 
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
@@ -80,8 +77,8 @@ Test
 			<!-- 상단 메뉴 -->
 	   		<div class="row mt-3 justify-content-end">
 	   			<div class="col-auto">
-					<a href="#">전체글</a> 
-	   				<a href="">인기글</a> 
+					<a href="user_board_list.do">전체글</a> 
+	   				<a href="user_board_list_Like.do">인기글</a> 
 	   				<a href="">펫시터 커뮤니티</a>
 	   			</div>
 	   		<div class="row mt-3 justify-content-end">
@@ -141,7 +138,7 @@ Test
                       <!-- 말머리/ -->
                       <!-- 제목 -->
                       <h6>
-                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}">${board.getUbd_title()}</a>
+                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}">${board.getUbd_title()}</a> [${board.getReply_cnt()}]
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
@@ -156,7 +153,7 @@ Test
                     </div>
                     <div class="text-muted small text-center align-self-center">
                       <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>
-                      <span><ii class="fa fa-heart" aria-hidden="true"></i>${ board.ubd_likecnt }</span>
+                      <span><ii class="fa fa-heart" aria-hidden="true"></i>${ board.getLike_cnt() }</span>
                     	</div>
                  		</div>
                 		</div>
@@ -196,7 +193,7 @@ Test
 		</div> <!-- 페이징 -->
 		
 		<div class="col-2 btn-group">
-			    <a href="board/insertBoard.jsp" class="col-1 btn btn-primary me-2">글등록</a>
+			    <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
 		</div>
 		<!-- 하단 검색 시스템 -->
 		<form action="user_board_list.do" method="post" id="boardForm">   
@@ -216,19 +213,7 @@ Test
 	        	</div>
 	     </form>
 							
-	</div> <!-- main  -->
-	
-	<script>
-		$(function() {
-			// 목록 갯수 변경
-			$('#rowPerPage').change(function(e) {
-				$('#curPage').val(1);
-				$('#rowSizePerPage').val($(this).val());
-				$('#boardForm').submit();
-			});	//#rowPerPage		
-			
-		})
-	</script>
+	</div> <!— main  —>
 	    
 	    
 <%@include file="/includes/footer.jsp" %>

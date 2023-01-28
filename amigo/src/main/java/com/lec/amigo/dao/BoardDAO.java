@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.mapper.BoardRowMapper;
 import com.lec.amigo.vo.BoardVO;
+import com.lec.amigo.vo.HeartVO;
 
 
 
@@ -31,16 +32,25 @@ public class BoardDAO {
 	private String selectBoardListByUbdTitle = "";
 	private String selectBoardListByUserNick = "";
 	private String selectBoardListByUbdCont = "";
+	private String selectBoardListByUbdTitleLike = "";
+	private String selectBoardListByUserNickLike = "";
+	private String selectBoardListByUbdContLike = "";
 	private String boardTotalRowCount = "";
 	private String selectByUbdNo = "";
 	private String updateCount = "";
 	private String updateBoard = "";
 	private String deleteBoard = "";
 	private String selectCate = "";
-	private String boardCateRowCount = "";
+	private String insertBoard = "";
+	private String findHeart = "";
+	private String insertHeart = "";
+	private String deleteHeart = "";
 	
 	@PostConstruct
 	public void getSqlPropeties() {
+		selectBoardListByUbdTitleLike = environment.getProperty("selectBoardListByUbdTitleLike");
+		selectBoardListByUserNickLike = environment.getProperty("selectBoardListByUserNickLike");
+		selectBoardListByUbdContLike  = environment.getProperty("selectBoardListByUbdContLike");
 		selectBoardListByUbdTitle = environment.getProperty("selectBoardListByUbdTitle");
 		selectBoardListByUserNick = environment.getProperty("selectBoardListByUserNick");
 		selectBoardListByUbdCont  = environment.getProperty("selectBoardListByUbdCont");
@@ -50,7 +60,10 @@ public class BoardDAO {
 		updateBoard               = environment.getProperty("updateBoard");
 		deleteBoard               = environment.getProperty("deleteBoard");
 		selectCate                = environment.getProperty("selectCate");
-		boardCateRowCount         = environment.getProperty("boardCateRowCount");
+		insertBoard               = environment.getProperty("insertBoard");
+		findHeart                 = environment.getProperty("findHeart");
+		insertHeart               = environment.getProperty("insertHeart");
+		deleteHeart               = environment.getProperty("deleteHeart");
 	}
 	
 
@@ -66,6 +79,26 @@ public class BoardDAO {
 				sql = selectBoardListByUserNick;
 			} else if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) {
 				sql = selectBoardListByUbdCont;
+			} 					
+		}
+		
+		String searchWord = "%" + searchVO.getSearchWord() + "%";					
+		Object[] args = {searchWord, searchVO.getFirstRow(), searchVO.getRowSizePerPage()};
+		return jdbcTemplate.query(sql, args, new BoardRowMapper());
+	}
+	
+	public List<BoardVO> getBoardListLike(SearchVO searchVO) {
+		if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
+				searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) {
+			sql = selectBoardListByUbdTitleLike;
+			searchVO.setSearchType("ubd_title");
+		} else {
+			if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) {
+				sql = selectBoardListByUbdTitleLike;
+			} else if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) {
+				sql = selectBoardListByUserNickLike;
+			} else if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) {
+				sql = selectBoardListByUbdContLike;
 			} 					
 		}
 		
@@ -116,7 +149,26 @@ public class BoardDAO {
 		Object[] args = { board.getUbd_cate() };
 		return jdbcTemplate.query(selectCate, args, new BoardRowMapper());
 	}
-	
+
+	public BoardVO insertBoard(BoardVO board) {
+		jdbcTemplate.update(insertBoard, board.getUbd_title(), board.getUbd_file(), board.getUbd_cont(), board.getUbd_cate(), board.getUser_no(), board.getDog_kind());
+		return board;	
+	}
+
+
+	public int findHeart(int user_no, int ubd_no) {
+		return jdbcTemplate.queryForObject(findHeart, Integer.class, user_no, ubd_no);
+	}
+
+
+	public int insertHeart(HeartVO heart) {
+		return jdbcTemplate.update(insertHeart, heart.getUser_no(), heart.getUbd_no());
+	}
+
+
+	public void deleteHeart(HeartVO heart) {
+		jdbcTemplate.update(deleteHeart, heart.getUser_no(), heart.getUbd_no());
+	}
 	
 	
 }

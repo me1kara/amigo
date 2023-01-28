@@ -14,6 +14,13 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>	
+	
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.8.9</version> 
+		</dependency>
+	
 		<!-- 롬복 -->
 		<dependency>
             <groupId>org.projectlombok</groupId>
@@ -55,12 +62,14 @@
 	    	<artifactId>spring-jdbc</artifactId>
 	    	<version>4.3.4.RELEASE</version>
 		</dependency>
+		
 		<!-- FileUpload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.4</version>
 		</dependency>
+		
 		<!-- FileUpload2 -->
 		<dependency>
 		    <groupId>commons-io</groupId>
