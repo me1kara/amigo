@@ -37,9 +37,9 @@
     <div class="container text-center" id="AmigoTop">
       <div class="row">
         <img
-          src="https://via.placeholder.com/500x300"
+          src="resources/img/pet-care.png"
           class="img-fluid"
-          alt="..."
+          alt="amigoPet"
         />
       </div>
     </div>

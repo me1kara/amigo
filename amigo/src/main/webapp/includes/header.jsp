@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
     <style>
     	.container {
-    		margin-bottom:100px;
+    		margin-bottom:20px;
     	}
     </style>
 </head>
@@ -40,8 +40,7 @@
         <span class="navbar-toggler-icon"></span>
         <!-- 햄버거/ -->
       </button>
-      <a class="logo" href="#home.jsp"
-        ><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
+      <a class="logo" href="<%=request.getContextPath() %>/view/main.jsp"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
       /></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
@@ -50,7 +49,7 @@
             <div class="right"></div>
           </div>
           <li class="nav-nickName">
-          	<a class="nickName">님</a>
+          	<a hraf="#">회님</a>
           </li>
           <hr/>
           <li class="nav-item">
