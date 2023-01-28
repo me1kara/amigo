@@ -12,21 +12,23 @@
   crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
 
 
 <%
 	UserVO user = new UserVO();
-	user.setUser_name("홍길동");  // 일단 이곳은 유저 VO를 가져오도록 동작->유저네임 임의 세팅 후 동작 시켜봄, 즉 더미
+	user.setUser_name(user.getUser_name());  // 일단 이곳은 유저 VO를 가져오도록 동작->유저네임 임의 세팅 후 동작 시켜봄, 즉 더미
+	user.setUser_phone(user.getUser_phone());
+	user.setUser_addr(user.getUser_addr());
 	session.setAttribute("user", user);
 	System.out.println("안녕?"); // 일단 데이
 
-%><!-- 스크립트는 상단에 작성하였습니다 먼저 '현재 하는일'에서 직접 입력 선택 시 내용 무조건 입력하기 -->
+%><!-- 스크립트는 중간에 작성하였습니다 230127 현재 흡연여부, 현재직종만 적용. -->
 
 
 
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta charset="UTF-8">
 <title>My22_펫시터지원폼</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -43,7 +45,7 @@
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
 		
-			<form role="form" action="sitter_apply_form.do" method="post" onSubmit="return checkData();">
+			<form action="sitter_apply_form.do" method="post" onSubmit="return checkData();">
 			<div class="row">
 			
 				<input type="hidden" class="form-control" name="user_no" value="1">
@@ -58,20 +60,20 @@
 				<h4>1. 기본정보</h4>
 					<h4>프로필사진*</h4>
 				</div>
-					
-					<div class="form-group text-center">
-					<img class="profile-user-img img-fluid img-circle"
-					src="${path}/dist/img/profile/${login.userImg}"
-					alt="User profile picture">
-					<input class="form-control" name="sit_photo" value="이미지없어" required> 
-					</div>
-				<br>
+				<!-- 프로필 사진 업로드 -->
 				<div class="form-group text-center">
-					<a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
-					data-target="#userPhotoModal"> <i class="fa fa-photo">
-					업로드</i>
-					</a>
+					<div class="picture">
+						<img class="profile-user-img img-fluid img-circle"
+						src="https://lh3.googleusercontent.com/LfmMVU71g-HKXTCP_QWlDOemmWg4Dn1rJjxeEsZKMNaQprgunDTtEuzmcwUBgupKQVTuP0vczT9bH32ywaF7h68mF-osUSBAeM6MxyhvJhG6HKZMTYjgEv3WkWCfLB7czfODidNQPdja99HMb4qhCY1uFS8X0OQOVGeuhdHy8ln7eyr-6MnkCcy64wl6S_S6ep9j7aJIIopZ9wxk7Iqm-gFjmBtg6KJVkBD0IA6BnS-XlIVpbqL5LYi62elCrbDgiaD6Oe8uluucbYeL1i9kgr4c1b_NBSNe6zFwj7vrju4Zdbax-GPHmiuirf2h86eKdRl7A5h8PXGrCDNIYMID-J7_KuHKqaM-I7W5yI00QDpG9x5q5xOQMgCy1bbu3St1paqt9KHrvNS_SCx-QJgBTOIWW6T0DHVlvV_9YF5UZpN7aV5a79xvN1Gdrc7spvSs82v6gta8AJHCgzNSWQw5QUR8EN_-cTPF6S-vifLa2KtRdRAV7q-CQvhMrbBCaEYY73bQcPZFd9XE7HIbHXwXYA=s200-no"
+               			class="picture-src"
+           	    		id="wizardPicturePreview"
+                	    title=""
+                	    name="sit_photo"
+						alt="User profile picture">
+					<input type="file" class="form-control" name="sit_photo" value="이미지없어" required> 
+					</div>
 				</div>
+				<br>
 				
 				<div class="form-group">
 					<label for="user_name">지원자 성명</label> <!-- 사용자 편의를 위해 자동으로 뜨게 하나 disabled은 값이 안넘어가니 상단에 hidden처리. -->
@@ -95,76 +97,27 @@
 				function checkData(){
 					var smokingYes = document.getElementById('sit_smoking_yes');
 					if (smokingYes.checked){
-						alert("흡연자는 반려동물에게 피해를 줄 수 있어 가입이 제한됩니다");
-						return false;   // alert 기능 확인함(230125)
+						alert("흡연자는 반려동물에게 피해를 줄 수 있어 가입이 제한됩니다");  // 흡연자의 펫시터 신청을 차단함.
+						return false;   // alert 기능 확인함(230125) 단, 다른 JS 함수가 들어가면 안먹힘.
 					}
 					
 					var othersInput = document.getElementById("sitter_others_input");   //id가 sitter~~와 같은 인풋 받고
 			        var othersRadio = document.getElementById("flexRadioDefault6");     // 6번 라디오박스 받고
 			        if (othersRadio.checked && othersInput.value === "") {              // 6번박스가 체크됐는데 인풋이 공백이면, 경고창이 뜨도록함.
-			            alert("상세내용을 입력해주세요");
+			            alert("현재 하시는 일을 입력해주세요");								// 현재 하는일에서 직접 입력을 체크하면 input을 꼭 쓰도록 함.
 			        	return false;   // alert 기능 확인함(230125)
 			        }
-			        
-			 //  아래는 boolean을 int 값으로 바꾸는 함수인데 안 먹힘.       
-			        
-			        // querySelector('input[name="sit_smoking"]:checked').value;
-			        // querySelector('input[name="sit_exp"]:checked').value;
-			        // querySelector('input[name="sit_auth_is"]').value;
-			        
-			    /*    var smokingValue = document.getElementByName("sit_smoking").value;
-			        var expValue = document.getElementByName("sit_exp").value;
-			        var authValue = document.getElementByName("sit_auth_is").value;
-
-			        var smokingIntegerValue;
-			        var expIntegerValue;
-			        var authIntegerValue;
-
-			        if (smokingValue === "1") {
-			            smokingIntegerValue = 1;
-			        } else {
-			            smokingIntegerValue = 0;
-			        }
-
-			        if (expValue === "1") {
-			            expIntegerValue = 1;
-			        } else {
-			            expIntegerValue = 0;
-			        }
-
-			        if (authValue === "1") {
-			            authIntegerValue = 1;
-			        } else {
-			            authIntegerValue = 0;
-			        }*/
-			        
-			        
-			       /* var sitBirth  = document.getElementById('sit_birth_8digit');
-			        var birth_pattern = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]))/
-			            if(!birth_pattern.test(sitBirth.value)){
-			            	alert('생년월일 8자리를 입력해주세요'); 
-			                // sitBirth.value=''; 괜히 인풋에 있는거 지우지 말고 남겨 놓기.
-			            sitBirth.focus(); 
-			            return false;    //  이거 테스트해봤는데 안먹힘. ; 를 써야되나..
-			            }*/
-					return true;
+			        return true;
 				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				</script>
+				
+		
 				
 				
 				<div class="form-group">
 					<label for="sit_birth">생년월일*</label>
 					<div class="birth_input_box">
-					<input class="form-control" name="sit_birth" id="sit_birth_8digit" required>
+					<input class="form-control" name="sit_birth" id="sit_birth_8digit" type="date" required>
 					</div>
 					<span>04년생부터(만 18세 이상) 지원이 가능합니다.</span>
 				</div><br>
@@ -307,4 +260,3 @@
 	
 </body>
 </html>
-

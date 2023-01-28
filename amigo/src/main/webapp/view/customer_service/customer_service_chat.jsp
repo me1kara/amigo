@@ -14,12 +14,17 @@
 		ChatDAO dao = new ChatDAO();
 		UserVO user = (UserVO)session.getAttribute("user");
 		
+		List<ChatRoom> roomList = dao.getRoomList(user.getUser_no());
+		
 		List<ChatVO> chatList = null;
 		ChatRoom checkRoom = null;
 		if(user!=null){
 			checkRoom = dao.getRoom(user.getUser_no());
+		
 			if(checkRoom!=null)chatList = dao.getMyChatList(user.getUser_no());
 		}
+		
+		
 		
 	%>
 	
@@ -47,6 +52,7 @@
 			<div style="text-align: center">
 			
 			<c:set var="chatList" value="<%=chatList %>"></c:set>
+			<c:set var="roomList" value="<%=roomList %>"></c:set>
 			
 			<c:choose>
 			<c:when test="<%=checkRoom==null %>">	
@@ -56,29 +62,61 @@
 			
 			<c:when test="<%=checkRoom!=null %>">
 				<table>
+					<!-- 
 					<c:choose>	
-					<c:when test="${!chatList.isEmpty() }">		
+					<c:when test="${!chatList.isEmpty() }">			
 						<c:forEach var="chat" items="${chatList }">
-						<tr class="btn btn-outline-dark" onclick="location.href='/amigo/chat/chat.jsp?index=${chat.getIndex()}'">
-
+							<tr class="btn btn-outline-dark" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
 							<td><b>이름 ${chat.getUser_nick()}</b></td>
 							<td style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">${chat.getContent() }</td>				
 							<c:if test="${!chat.isRead_is() }"> 
 							<td>new</td>
 							</c:if>
-						</tr>
-						<br/>
+							</tr>
+							<br/>						
 						</c:forEach>
 					</c:when>
 					<c:when test="${chatList.isEmpty() }">
 						<tr>
-							<td><a href="/amigo/chat/chat.jsp?index=<%=checkRoom.getChat_index() %>">방번호:<%=checkRoom.getChat_index() %></a></td>
+							<td><a href="/amigo/chatList.do?index=<%=checkRoom.getChat_index() %>">방번호:<%=checkRoom.getChat_index() %></a></td>
 						</tr>
 					</c:when>
 					</c:choose>
+					 -->
+					 
+					 
+			<c:forEach var="room"  items="${roomList }">
+				<c:forEach var="chat" items="${chatList }">
+					<c:choose>
+						<c:when test="${chat.getIndex()==room.getChat_index() }">
+							<tr class="btn btn-outline-dark" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
+							<td><b>마지막글 ${chat.getUser_nick()}</b></td>
+							<td style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">${chat.getContent() }</td>
+							
+							<!-- 				
+							<c:if test="${!chat.isRead_is() }"> 
+							<td>new</td>
+							</c:if>
+							 -->
+							</tr>
+							<br/>
+						</c:when>
+						<c:otherwise>
+							<br/>
+							<tr>
+								<td class="btn btn-outline-dark" onclick="location.href='/amigo/chatList.do?index=${room.getChat_index() }'">${room.getChat_index() }번방, 등록된 글이 없습니다!</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>		
+			</c:forEach>
 					</table>
 				</c:when>
 			</c:choose>
+			
+			
+
+			
 			
 			
 	

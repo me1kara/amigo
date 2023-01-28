@@ -294,6 +294,21 @@
         </div>
  
     </article>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+</body>
+</html>
+	
+=======
+>>>>>>> 2dd76ba6ad68137bfddd05b3805d2ca031773f20
+=======
+</body>
+</html>
+
+>>>>>>> e77bbd4558ffe14921e3ceb90c3f41e30343f44f
+=======
+>>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

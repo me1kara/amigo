@@ -12,41 +12,43 @@ import com.lec.amigo.service.SitterService;
 import com.lec.amigo.vo.SitterVO;
 
 
+@Service("sitterService")
+public class SitterServiceImpl implements SitterService {
+	
+	@Autowired
+	SitterDAO sitterDAO;
+	
+	@Override
+	public SitterVO getSitter(int sit_no) {
+		// TODO Auto-generated method stub
+		return sitterDAO.getSitter(sit_no);
+	}
 
-
-	@Service("sitterService")
-	public class SitterServiceImpl implements SitterService {
+	@Override
+	public List<SitterVO> getSitList(int user_no) {
+		return sitterDAO.getSitList(user_no);
+	}
+	
+	@Override
+	public SitterVO insertSitter(SitterVO svo) {
+		return sitterDAO.insertSitter(svo);
+	}
+/*
+	@Override
+	public int updateSitter(SitterVO svo) {
 		
-		@Autowired
-		SitterDAO sitterDAO;
-		
+		return sitterDAO.updateSitter(svo);
+	}
+	
+	@Override
+	public int deleteSitter(int sit_no) {
+		// TODO Auto-generated method stub
+		return sitterDAO.deleteSitter(sit_no);
+	}
+*/
 
-		@Override
-		public SitterVO insertSitter(SitterVO svo) {
-			return null;
-			//return SitterDAO.insertSitter(svo);
-			
-		}
+	
 
-		@Override
-		public List<SitterVO> getSitList(SitterVO svo) {
-			// 펫시터 리스트를 여기서 사용할 건가요?
-			return null;
-		}
-
-		@Override
-		public SitterVO sitterInfo(int sitno) {
-			// 펫시터에 대한 상세정보
-			return null;
-		}
-
-		@Override
-		public SitterVO getSitter(String birth) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
-		
 
 
 }

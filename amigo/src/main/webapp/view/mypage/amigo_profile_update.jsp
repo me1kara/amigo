@@ -24,30 +24,30 @@
 	<%@include file="/includes/header.jsp" %>
 			<div class="container col-md-6">
 	  <hr>
-			<form role="form" action="insertDog.do" method="post">
+			<form role="form" action="updateDog.do" method="post">
 		     
 			 <div class="form-group">
-					<label for="dog_image_url">사진등록</label>
-					<input type="file" name="dog_image_url" id="dog_image_url">
+					<label for="dog_image_url">사진등록</label>    <!--  ${dog.getDog_image_url()}   -->
+					<input type="file" name="dog_image_url" id="dog_image_url" >
              </div>	
 	  <hr>
 	         <div class="page-header">
-	            <h3>기본사항</h3>	            
+	            <h3>업데이트</h3>	            
 	         </div>
 
 			
 					<div class="form-group">
 						<label for="dog_name">이름</label>
-						<input type="text" name="dog_name" id="dog_name" class="form-control" required placeholder="예) 댕댕이">
+						<input type="text" name="dog_name" id="dog_name" class="form-control" value="${dog.getDog_name()}" required>
 					</div>
 						
 					
 					<div class="form-group">
-					   <label>성별</label>
+					   <label for="female">성별</label>
 							<div>
-							  <input class="form-check-input" type="radio" name="dog_gender" id="female" value="f" checked>
+							  <input class="form-check-input" type="radio" name="dog_gender" id="female" value="f" ${dog.getDog_gender()=="f" ? "checked" : "" }>
 							  <label class="form-check-label" for="female">여자아이</label>
-							  <input class="form-check-input" type="radio" name="dog_gender" id="male" value="m" >
+							  <input class="form-check-input" type="radio" name="dog_gender" id="male" value="m" ${dog.getDog_gender()=="m" ? "checked" : "" }>
 							  <label class="form-check-label" for="male">남자아이</label>
 						    </div>
 					 </div>
@@ -55,58 +55,51 @@
 						
 					<div class="form-group">
 						<label for="dog_breeds">품종</label>
-						<input type="text" name="dog_breeds" id="dog_breeds" class="form-control" required>
+						<input type="text" name="dog_breeds" id="dog_breeds" class="form-control" value="${dog.getDog_breeds()}" required>
 					</div>
 						
 					<div class="form-group">
 						<label for="dog_birth">생일</label>
-						<input type="date" name="dog_birth" id="dog_birth" class="form-control" required>
+						<input type="date" name="dog_birth" id="dog_birth" class="form-control" value="${dog.getDog_birth()}" required>
 					</div>
 						
 					<div class="form-group">
 						<label for="dog_weight">몸무게(kg)</label>
-						<input type="text" pattern="(^\d+$)|(^\d+\.\d{0,2}$)" name="dog_weight" id="dog_weight" class="form-control" placeholder="소수점두자리 숫자로 입력해주세요. 예) 6.01 / 7 / 3.4 등 " required>
+						<input type="text" pattern="(^\d+$)|(^\d+\.\d{0,2}$)" name="dog_weight" id="dog_weight" class="form-control" value="${dog.getDog_weight()}" required>
 					</div>
 						
 					<div class="form-group">
-					   <label>중성화</label>
+					   <label for="dog_neutered_yes">중성화</label>
 						<div>
-							 <input class="form-check-input" type="radio" name="dog_neutered" id="dog_neutered_yes" value="1" checked>
+							 <input class="form-check-input" type="radio" name="dog_neutered" id="dog_neutered_yes" value="1" ${dog.isDog_neutered() == true ? "checked" : "" }>
 							 <label class="form-check-label" for="dog_neutered_yes">했어요</label>
-							 <input class="form-check-input" type="radio" name="dog_neutered" id="dog_neutered_no" value="0">
+							 <input class="form-check-input" type="radio" name="dog_neutered" id="dog_neutered_no" value="0" ${dog.isDog_neutered() == false ? "checked" : "" }>
 							 <label class="form-check-label" for="dog_neutered_no">안했어요</label>
 						</div>
 					</div>
 					 
 					<div class="form-group">
-					   <label>광견병 접종여부</label>
+					   <label for="dog_rabies_vacc_yes">광견병 접종여부</label>
 							<div>
-							  <input class="form-check-input" type="radio" name="dog_rabies_vacc" id="dog_rabies_vacc_yes" value="1" checked>
+							  <input class="form-check-input" type="radio" name="dog_rabies_vacc" id="dog_rabies_vacc_yes" value="1" ${dog.isDog_rabies_vacc() == true ? "checked" : "" }>
 							  <label class="form-check-label" for="dog_rabies_vacc_yes">했어요</label>
-							  <input class="form-check-input" type="radio" name="dog_rabies_vacc" id="dog_rabies_vacc_no" value="0">
+							  <input class="form-check-input" type="radio" name="dog_rabies_vacc" id="dog_rabies_vacc_no" value="0" ${dog.isDog_rabies_vacc() == false ? "checked" : "" }>
 							  <label class="form-check-label" for="dog_rabies_vacc_no">안했어요</label>
 						    </div>
 					</div>
 	  <hr> 
 					<div class="form-group">
 					  <label for="dog_notice">우리강아지(성격 및 건강상태 등..)</label>
-					  <textarea class="form-control" id="dog_notice" rows="5" name="dog_notice" 
-					   placeholder="펫시터에게 알려줘야할 사항들을 나열해주세요. 성격 및 건상상태를 알려주시면 됩니다." required></textarea>
+					  <textarea class="form-control" id="dog_notice" rows="5" name="dog_notice" required>${dog.getDog_notice()}</textarea>
 					</div>
-      <hr>
+ 
 				
-					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" name="dog_terms" id="terms" value="1" required>
-					  <label class="form-check-label" for="terms">아래 내용을 확인하였습니다.</label>
-					  <p>위 내용(예. 몸무게, 마킹 등)을 사실과 다르게 기재한 경우, 약관에 따라 서비스 이용이 거부될 수 있습니다.</p>
-					</div>
-					
-					 
-		<!-- user_no 벨류값 받아서 폼에 기입-->
-		<input class="form-control" type="hidden" name="user_no" value="${ sessionScope.user.getUser_no()}">
+			 
+		<!-- dog_no 벨류값 받아서 폼에 기입해야함-->
+		<input class="form-control" type="hidden" name="dog_no" value="${dog.getDog_no()}">
 				    
 				<div class="col-md-6 text-center">           
-				<button type="submit" class="btn btn-primary text-center">등록완료</button>
+				<button type="submit" class="btn btn-primary text-center">수정완료</button>
 			    </div>
 		</form>
 	 </div>

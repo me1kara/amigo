@@ -1,6 +1,20 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,100);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+/* 리뷰 import */
+
+/* 글씨체 전체 */
+body {
+	
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  color: black;
+  font-family: "Jalnan";
+  font-size: 90%;
+  
+}
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
 
 #AmigoTop {
   padding-top: 120px;
@@ -40,10 +54,9 @@ i {
 
 /*
 .fonts {
- font-family: 'Josefin Slab', serif;
+  font-family: "Josefin Slab", serif;
 }
 */
-
 p {
   margin-bottom: 0.5em;
 }
@@ -88,7 +101,6 @@ p {
 .container {
   padding-top: 1em;
   margin-top: 1em;
-  border-top: solid 1px #ccc;
 }
 
 a.button {
@@ -126,15 +138,6 @@ a.button {
 }
 
 @media (max-width: 720px) {
-  body {
-    font-family: "Roboto", sans-serif;
-
-    /* 글씨체
-  text-decoration: none;
-  color: black;
-  font-family: "Jalnan";
-  font-size: 90%; */
-  }
   * {
     margin: 0;
     padding: 0;
@@ -173,6 +176,10 @@ a.button {
     padding-top: 150px;
   }
   /*----------bootstrap-navbar-css------------*/
+  .mainLogo {
+    margin-right: 150px;
+  }
+
   .navbar-logo {
     padding: 15px;
     color: #fff;
@@ -307,15 +314,15 @@ a.button {
     outline: none !important;
     box-shadow: none !important;
   }
-
-  /*  
+}
+/*  
    Main css
 */
 
-  /*
+/*
 글씨체
 */
-  /* .mypage_link {
+/* .mypage_link {
     text-decoration: none;
     color: black;
     font-family: "Jalnan";
@@ -325,73 +332,230 @@ a.button {
     font-family: "Jalnan", sans-serif;
     font-size: 150%;
   } */
-  /* 버튼 */
-  .divider:after,
-  .divider:before {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: #eee;
-  }
-
-  /* hr */
-  hr {
-    height: 0px;
-    border-radius: 2px;
-    $color: teal;
-    color: $color;
-    border: 2px solid currentColor;
-    width: 100%;
-  }
-
-  /* 마이페이지 프로필  */
-  /*Profile Pic Start*/
-  .picture-container {
-    position: relative;
-    cursor: pointer;
-    text-align: center;
-  }
-
-  .picture {
-    width: 106px;
-    height: 106px;
-    background-color: #999999;
-    border: 4px solid #cccccc;
-    color: #ffffff;
-    border-radius: 50%;
-    margin: 0px auto;
-    overflow: hidden;
-    transition: all 0.2s;
-    -webkit-transition: all 0.2s;
-  }
-  .picture:hover {
-    border-color: #2ca8ff;
-  }
-  .content.ct-wizard-green .picture:hover {
-    border-color: #05ae0e;
-  }
-  .content.ct-wizard-blue .picture:hover {
-    border-color: #3472f7;
-  }
-  .content.ct-wizard-orange .picture:hover {
-    border-color: #ff9500;
-  }
-  .content.ct-wizard-red .picture:hover {
-    border-color: #ff3b30;
-  }
-  .picture input[type="file"] {
-    cursor: pointer;
-    display: block;
-    height: 100%;
-    left: 0;
-    opacity: 0 !important;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-
-  .picture-src {
-    width: 100%;
-  }
-  /*Profile Pic End*/
+/* 버튼 */
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
 }
+
+/* hr */
+hr {
+  height: 0px;
+  border-radius: 2px;
+  color: teal;
+  border: 2px solid currentColor;
+  width: 100%;
+}
+
+/* 마이페이지 프로필  */
+/*Profile Pic Start*/
+.picture-container {
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+}
+
+.picture {
+  width: 106px;
+  height: 106px;
+  background-color: #999999;
+  border: 4px solid #cccccc;
+  color: #ffffff;
+  border-radius: 50%;
+  margin: 0px auto;
+  overflow: hidden;
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+}
+.picture:hover {
+  border-color: #2ca8ff;
+}
+.content.ct-wizard-green .picture:hover {
+  border-color: #05ae0e;
+}
+.content.ct-wizard-blue .picture:hover {
+  border-color: #3472f7;
+}
+.content.ct-wizard-orange .picture:hover {
+  border-color: #ff9500;
+}
+.content.ct-wizard-red .picture:hover {
+  border-color: #ff3b30;
+}
+.picture input[type="file"] {
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  left: 0;
+  opacity: 0 !important;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.picture-src {
+  width: 100%;
+}
+/*Profile Pic End*/
+
+/* 리뷰 별점  */
+/*
+body {
+  background: #f9f9f9;
+  font-family: "roboto", sans-serif;
+}
+*/
+
+.main-content {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.m-b-30 {
+  margin-bottom: 30px;
+}
+
+.rating-card {
+  background-color: rgb(239, 239, 239);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.rating-number {
+  font-size: 50px;
+  font-weight: 600;
+}
+.rating-number small {
+  font-size: 16px;
+}
+
+.rating-stars:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #eee;
+}
+
+.rating-stars .filled-star {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffc107;
+}
+
+.rating-stars img {
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.rating-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rating-progress .rating-grade {
+  padding: 3px 20px 3px 0;
+  float: left;
+  width: 50px;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.rating-progress .rating-grade img {
+  height: 15px;
+  margin-left: 3px;
+}
+.rating-progress .progress {
+  float: left;
+  width: calc(100% - 110px);
+  border-radius: 10px;
+}
+.rating-progress .progress .bg-warning {
+  background-color: #ffc107 !important;
+  border-radius: 10px;
+}
+.rating-progress .rating-value {
+  padding: 3px 0 3px 20px;
+  float: left;
+  width: 60px;
+}
+.rating-progress:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* 실시간 유저 리뷰창 */
+.review-user-card {
+  background-color: rgb(239, 239, 239);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 10%;
+}
+
+.review-user-profile {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+/* 별 모양 */
+.star-rating {
+  width: 304px;
+}
+.star-rating,
+.star-rating span {
+  display: inline-block;
+  height: 55px;
+  overflow: hidden;
+  background: url(../img/star.png) no-repeat;
+}
+.star-rating span {
+  background-position: left bottom;
+  line-height: 0;
+  vertical-align: top;
+}
+/* 
+.star-ratings {
+  color: #aaa9a9;
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) 
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+} 
+
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+}
+*/
+a { text-decoration:none }
+

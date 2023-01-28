@@ -231,11 +231,13 @@
     </div>
     <br />
     <!-- Q&A 종료 -->
-	
+
 	
 		</div>
 	<%@include file="/includes/footer.jsp" %>
 
+	    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	
 </body>
 </html>
