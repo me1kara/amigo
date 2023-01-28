@@ -55,7 +55,7 @@
       <!-- 펫시터 -->
         <div class="col-6">
           <div class="p-3 border bg-light">
-          <a href="sitter/sitter_service_main.jsp">
+          <a href="/amigo/view/sitter/sitter_service_main.jsp">
             <img
               src="https://via.placeholder.com/150x100"
               class="img-fluid"

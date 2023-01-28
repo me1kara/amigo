@@ -4,7 +4,6 @@
 <%@page import="org.springframework.web.servlet.tags.Param"%>
 <%@page import="com.lec.amigo.vo.ChatVO"%>
 <%@page import="java.util.List"%>
-<%@page import="com.lec.amigo.dao.ChatDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -29,16 +28,15 @@ boolean check = false;
 		System.out.println(index+"로그인실패!");
 	}
 */
-ChatDAO dao = (ChatDAO) request.getAttribute("chatDAO");
 
-check = dao.checkRoomIndex(user_no, index);
+check = (Boolean)request.getAttribute("checkRoom");
 
 if (!check) {
 %>
 <script>alert('잘못된 접근입니다!'); history.go(-3);</script>
 <%
 }
-List<ChatVO> chatList = dao.getChatList(index);
+List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 %>
 
 
