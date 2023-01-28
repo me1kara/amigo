@@ -46,7 +46,7 @@
 		 		   <tr>
     			  <td></td>
     			  <td>
-    			    <c:out value="${user.name}"/> 펫시터
+    			    <c:out value="${user.user_name;}"/> 펫시터
      			 </td>
   			  </tr>
 			

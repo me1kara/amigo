@@ -41,7 +41,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="logo" href="#home.jsp"
-        ><img alt="AmigoLogo" src="resources/img/logo1.png"
+        ><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
       /></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
@@ -79,7 +79,7 @@
 	<!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="resources/js/script.js"></script>
+    <script src="/amigo/resources/js/script.js"></script>
 	
 </body>
 </html>

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.lec.amigo.vo.UserVO;
+
 @Controller
 public class BookController {
 	
@@ -18,7 +20,8 @@ public class BookController {
 	
 	
 	@RequestMapping(value = "/view/book/sitter_profile.do", method = { RequestMethod.GET })
-	public String getSitterProfile (HttpServletRequest req, HttpServletResponse resp) {
+	public String getSitterProfile (HttpServletRequest req, HttpServletResponse resp, UserVO userVO) {
+		
 		System.out.println("예약폼");	
 		return "/view/sitter/sitter_profile.jsp";
 	}
