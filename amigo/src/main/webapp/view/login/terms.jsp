@@ -20,16 +20,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>main</title>
+    <style>
+    a { text-decoration:none }
+    </style>
   </head>
   <body>
  <!-- header -->
- <div class="container text-center">
+ <div class="container text-center mb-5">
  <a class="logo" href="#home.jsp"
  ><img alt="AmigoLogo" src="img/logo1.png"
 /></a>
-<div class="text-end mb-5">
+<!-- 제거해도 될거라고 판단 --> 
+ <!-- <div class="text-end ">
 <button type="button" class="btn-close" aria-label="Close"></button>
-</div>
+</div> -->
 </div>
  <!-- header end  -->
 
@@ -67,14 +71,15 @@
        value='check4'
        required /> <a href="#">펫시터약관동의</a>
     </div>
-    <div>
+    <div class="container text-center">
         <img
               src="https://via.placeholder.com/300x150"
               class="img-fluid"
               alt="..."
             />
     </div>
-    <div>
+    <br/>
+    <div class="container text-center">
         <button type="submit" class="btn btn-primary btn-lg" >다음으로</button>
     </div>
 </div>
