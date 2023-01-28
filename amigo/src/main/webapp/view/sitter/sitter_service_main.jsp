@@ -35,46 +35,46 @@
 			<img src="https://via.placeholder.com/150x100"" alt="케어" class="sitt_action_image"/>
 			
 			<p>대표펫시터사진들</p>
-<div id="demo" class="carousel slide" data-bs-ride="carousel">
-
-  <!-- Indicators/dots -->
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
-  </div>
-
-  <!-- The slideshow/carousel -->
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://via.placeholder.com/250x100" alt="시터1" >
-      <img src="https://via.placeholder.com/250x100" alt="시터2" >
-    </div>
-    <div class="carousel-item">
-      <img src="https://via.placeholder.com/250x100" alt="시터3">
-      <img src="https://via.placeholder.com/250x100" alt="시터4">
-    </div>
-    <div class="carousel-item">
-      <img src="https://via.placeholder.com/250x100" alt="시터5">
-      <img src="https://via.placeholder.com/250x100" alt="시터6">
-    </div>
-     <div class="carousel-item">
-      <img src="https://via.placeholder.com/250x100" alt="시터7">
-      <img src="https://via.placeholder.com/250x100" alt="시터8">
-    </div>
-  </div>
-
-  <!-- Left and right controls/icons -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div>
+			<div id="demo" class="carousel slide" data-bs-ride="carousel">
 			
-			<button type="button" class="btn btn-primary"><a href="../book/book_sitter_form.jsp">신청하기</a></button>
+			  <!-- Indicators/dots -->
+			  <div class="carousel-indicators">
+			    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+			    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+			    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+			    <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
+			  </div>
+			
+			  <!-- The slideshow/carousel -->
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="https://via.placeholder.com/250x100" alt="시터1" >
+			      <img src="https://via.placeholder.com/250x100" alt="시터2" >
+			    </div>
+			    <div class="carousel-item">
+			      <img src="https://via.placeholder.com/250x100" alt="시터3">
+			      <img src="https://via.placeholder.com/250x100" alt="시터4">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="https://via.placeholder.com/250x100" alt="시터5">
+			      <img src="https://via.placeholder.com/250x100" alt="시터6">
+			    </div>
+			     <div class="carousel-item">
+			      <img src="https://via.placeholder.com/250x100" alt="시터7">
+			      <img src="https://via.placeholder.com/250x100" alt="시터8">
+			    </div>
+			  </div>
+			
+			  <!-- Left and right controls/icons -->
+			  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+			    <span class="carousel-control-prev-icon"></span>
+			  </button>
+			  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+			    <span class="carousel-control-next-icon"></span>
+			  </button>
+			</div>
+			
+			<button type="button" class="btn btn-primary"><a href="/amigo/view/book/book_sitter_form.jsp">신청하기</a></button>
 			
 			
 			
