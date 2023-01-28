@@ -19,7 +19,7 @@
 	}
   </style>
   <div class="notification-container" id="notification-container">
-    <a ref="" id="notification_text" style="color: white;">히히</a>
+    <a ref="" id="notification_text" style="color: white;"></a>
   </div>
 
 <script>
@@ -27,7 +27,7 @@
 		console.log(user);
 		$('#notification_text').html('<span style="color:red;">new</span>'+user+' '+txt);
 		
-		let temp = '<%=request.getContextPath()%>/chat/chat.jsp?index='+roomIndex;
+		let temp = '<%=request.getContextPath()%>/chatList.do?index='+roomIndex;
 		$('#notification_text').attr("href", temp);
 		$('#notification-container').addClass('showChatMessage');
 		
@@ -50,7 +50,10 @@
 	
 	ws.onopen = function(){
 	ws.onmessage = function(evt){
-		let msg = evt.data.split("#");
+		
+		let msg = evt.data;
+		var jd = JSON.parse(msg);
+		
 		let no;
 		let user;
 		let txt;
@@ -58,23 +61,30 @@
 		let chat_no;
 		let index;
 		
-		if(msg.length==5){
-			no = msg[0]; 
-			user = msg[1];
-			txt = msg[2];
-			roomIndex = msg[3];
-			chat_no = msg[4];
-			if(no == '2'){
-				<% for(Integer index:room_list){
-				%>
-					index = '<%=index.intValue()%>';
-					if(parseInt(roomIndex)==index){
+		if(jd.no=='2'){
+			no = jd.no;
+			user = jd.userName;
+			type= jd.type;
+			roomIndex = jd.roomIndex;			
+			chat_no = jd.chatNo;
+			msg = jd.msg;
+			
+			<% for(Integer index:room_list){
+			%>
+				index = '<%=index.intValue()%>';
+				if(parseInt(roomIndex)==index){
+					if(msg!=null){
 						showNotification(user, txt, roomIndex);
+					}else{
+						showNotification(user, "이미지가 도착했습니다!", roomIndex);
 					}
+			
+					
+				}
 				<%
 				}%>
 
-			}
+			
 		}
 	}
 	}

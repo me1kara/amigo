@@ -19,7 +19,7 @@ public class ChatRowMapper implements RowMapper<ChatVO>{
 		chat.setContent(rs.getString("sitt_chat_content"));
 		chat.setDate(rs.getDate("sitt_chat_regdate"));
 		chat.setRead_is(rs.getBoolean("sitt_chat_readis"));
-		
+		chat.setChat_no(rs.getInt("sitt_chat_no"));
 		if(rs.getString("sitt_chat_file")!=null)chat.setFile(rs.getString("sitt_chat_file"));
 		if(rs.getString("sitt_chat_emo")!=null)chat.setEmo(rs.getString("sitt_chat_emo"));
 		

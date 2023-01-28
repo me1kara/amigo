@@ -15,7 +15,7 @@
 <title>후기01_실시간 후기</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
-    <![endif]-->
+    <![endif]-->	
 </head>
 <body>
 	
