@@ -22,17 +22,83 @@
 <meta charset="UTF-8">
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link  rel="stylesheet" href="/amigo/resources/css/calendar.css" type="text/css">
+<script type="text/javascript" src="/amigo/resources/js/calendar.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src='<%=request.getContextPath() %>/resources/fullcalendar-6.0.3/dist/index.global.js'></script>
     <script>
     
       document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');0
+        var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
-          contentHeight: 300
-   
+          contentHeight: 300,
+          selectable: true,
+          editable: true,
+          droppable: true,
+          eventDrop: function (info){
+              console.log(info);
+              if(confirm("'"+ info.event.title +"'수정하시겠습니까 ?")){
+              }
+              var events = new Array(); // Json 데이터를 받기 위한 배열 선언
+              var obj = new Object();
+
+              obj.title = info.event._def.title;
+              obj.start = info.event._instance.range.start;
+              obj.end = info.event._instance.range.end;
+              events.push(obj);
+
+              console.log(events);
+              $(function deleteData() {
+                  $.ajax({
+                      url: "/full-calendar/calendar-admin-update",
+                      method: "PATCH",
+                      dataType: "json",
+                      data: JSON.stringify(events),
+                      contentType: 'application/json',
+                  })
+              })
+          },
+			
+          events: [
+        	    {
+        	      title: 'Event1',
+        	      start: '2023-01-07'
+        	    },
+        	    {
+        	      id : 'hello',
+        	      className : 'he',
+        	      title: 'gg',
+        	      start: '2023-01-05',
+              	  color: 'yellow',   // an option!
+                  textColor: 'black'
+        	    }
+           ],
+          select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+              var title = prompt('일정 입력');
+              if (title) {
+                  calendar.addEvent({
+                  title: title,
+                  start: arg.start,
+                  end: arg.end,
+                  allDay: arg.allDay
+                })
+              }
+              calendar.unselect()
+            }
+        
+          /*
+          dateClick: function(info) {
+        	  
+      	    alert('Clicked on: ' + info.dateStr);
+      	  	alert('Clicked on: ' + info.dayEl);
+      	  	alert('Clicked on: ' + info.view);
+      	  	
+      	  	
+      	    // change the day's background color just for fun
+      	    info.dayEl.style.backgroundColor = 'blue';
+        }*/
         });
         calendar.render();
       });
@@ -43,7 +109,7 @@
     <script src="js/html5shiv.js"></script>
     <![endif]-->
     
-        
+      
     <style>
     	td{
     		width:100px;heigth:500px;
@@ -57,23 +123,69 @@
 		.select input[type=radio]+label{
 		    display: inline-block;
 		    cursor: pointer;
-		    height: 24px;
+		    height: 36px;
 		    width: 90px;
 		    border: 1px solid #333;
-		    line-height: 24px;
+		    line-height: 36px;
 		    text-align: center;
 		    font-weight:bold;
-		    font-size:13px;
+		    font-size:16px;
+		    width:150px;
+		    border-radius: 5px;
 		}
 		.select input[type=radio]+label{
 		    background-color: #fff;
 		    color: #333;
+		    width:150px; 
 		}
 		.select input[type=radio]:checked+label{
 		    background-color: #333;
 		    color: #fff;
 		}
+		.etc_content{
+			width: 100%;
+			height: 80px;
+			padding: 10px;
+			box-sizing: border-box;
+			border: solid 2px gray;
+			border-radius: 5px;
+			font-size: 16px;
+			resize: both;
+		}
+		#address{
+			border-radius: 5px;
+			border: solid 2px gray;
+		}
+		.item_change{
+			background: #d2d2d2;
+			border-radius: 5px;
+			border: none;	
+			margin-left: 5px;
+			height: 30px;
+		}
+		.select input{
+			border-radius: 5px;
+			width:150px;
+		}
+		.ctn_btn{
+			width:150px;
+		}
+		.inline_box{
+			text-align: center;
+		}
+		.term_css {
+  			display: block;
+		}
     </style>
+    
+    <script>   
+    	$(document).ready(function(){ 
+    		$('.term_text').hide();    		
+    	});
+    	function term_text_toggle(){
+    		$('.term_text').toggle();
+    	}
+    </script>
 </head>
 
 <% UserVO user=(UserVO)session.getAttribute("user");%>
@@ -81,38 +193,78 @@
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-		<div class="container">
+		<div class="container-sm" style="width:480px;">
 			
 			
-			
+		
 			<form action="book.do">
-			<div class="select">
-     			<input type="radio" id="select1" name="shop" value="visit"><label for="select1">방문</label>
-     			<input type="radio" id="select2" name="shop" value="consign"><label for="select2">위탁</label>
+			<div class="select" style="display:flex; justify-content: space-between;">
+     			<input type="radio" id="select1" name="shop" value="visit"><label class="ctn_btn" for="select1">방문</label>
+     			<input type="radio" id="select2" name="shop" value="consign"><label class="ctn_btn" for="select2">위탁</label>
 			</div>
 					
-
+			<!-- 
 			<br>
 			<b>예약날짜</b>
 			<br>
+			<div class="sec_cal">
+			  <div class="cal_nav">
+			    <a href="javascript:;" class="nav-btn go-prev">prev</a>
+			    <div class="year-month"></div>
+			    <a href="javascript:;" class="nav-btn go-next">next</a>
+			  </div>
+			  <div class="cal_wrap">
+			    <div class="days">
+			      <div class="day">월</div>
+			      <div class="day">화</div>
+			      <div class="day">수</div>
+			      <div class="day">목</div>
+			      <div class="day">금</div>
+			      <div class="day">토</div>
+			      <div class="day">일</div>
+			    </div>
+			    <div class="dates"></div>
+			  </div>
+			</div>
+			 -->
+			
 		  	<div id='calendar-container'>
     			<div id='calendar'></div>
   			</div>
+  			
+  			<br>
+			<b>이용주소</b> <input type="text" name="address" id="address" /><button type="button" class="item_change" data-bs-toggle="modal" data-bs-target="#address_modal">변경</button><br>
 			
-			이용주소 <input type="text" name="address" id="address" /><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#address_modal">변경</button><br>
-			
+			<br>
 			<b>특이사항</b><br>
-			<textarea></textarea><br>
+			<textarea class="etc_content" name="etc_content" rows="5" cols="16" placeholder="펫시터분이 알아야 할 우리 아이에 대한 특이사항을 적어주세요!"></textarea><br>
 			
-			<b>비용:30000원</b><br>
 			
-			<input type="checkbox" name="term" value="true"/><b>개인정보이용동의</b><br>		
-			<button type="button" class="btn" data-bs-toggle="collapse" data-bs-target="#term">더보기</button><br>
+			<div class="inline_box">
+				<b style="margin: 0 auto;">비용</b>
+			</div>
 			
-			<div id="term" class="collapse">얼마나 튼튼하며 그들의 피부가 얼마나ㅁㄴㅇㅁㄴㅇㄴㅁㅇ</div>
+			<br>
 			
-			<button class="btn btn-primary" onclick="history.back(-1)">이전</button>
-			<button type="submit" class="btn btn-primary">확인</button>
+			<label for="term" class="term_css">
+  				<input type="checkbox" name="term" value="3">
+  				<span>개인정보 이용 동의<strong>(필수)</strong></span>
+			</label>
+      		
+			<button type="button" class="btn" onclick="term_text_toggle()">더보기</button><br>
+			<div class="term_text" style="height: 100px; overflow: auto;">
+                여러분을 환영합니다. amigo 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 amigo
+                서비스의 이용과 관련하여 amigo 서비스를 제공하는 amigo 주식회사(이하 ‘JUN’)와 이를 이용하는 JUN 서비스
+                회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 JUN 서비스 이용에 도움이 될 수 있는
+                유익한 정보를 포함하고 있습니다. JUN 서비스를 이용하시거나 JUN 서비스 회원으로 가입하실 경우 여러분은 본
+                약관 및 관련 운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기
+                바랍니다.
+             </div>
+			<br>
+			<div style="display:flex; justify-content: space-between;">
+				<button class="btn btn-primary ctn_btn" onclick="history.back(-1)">이전</button>
+				<button type="submit" class="btn btn-primary ctn_btn">확인</button>
+			</div>
 			</form>
 			
 			
@@ -162,7 +314,7 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">주소변경 모달창</h4>
+        <h4 class="modal-title">주소</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         
       </div>
