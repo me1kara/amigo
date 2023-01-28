@@ -4,13 +4,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script
-  src="https://code.jquery.com/jquery-3.6.3.min.js"
-  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-  crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
 <meta charset="UTF-8">
 <title>로그인전01_처음화면</title>
     <!--[if lt IE 9]>
@@ -49,7 +57,7 @@
             이메일 가입
           </button>
           <!-- 이메일 로그인 end -->
-          <!-- 카카오, 지메일 -->
+          <!-- 카카오, 지메일 
           <div class="container py-5 h-100" align="center">
             <a class="kakaoLogin" href="#" alt="kakao">
               <img src="resources/img/kakao.png" alt="kakaoButton" width="242" />
@@ -63,8 +71,9 @@
               />
             </a>
           </div>
-          <!-- 카카오, 지메일 end -->
+          카카오, 지메일 end -->
         </div>
+        <hr />
         <div class="container text-center">
           <div class="row justify-content-between">
             <div class="col-4"><a href="#">가입/로그인이 안되요</a></div>
@@ -73,14 +82,9 @@
         </div>
       </form>
     </section>
-    
-    
     <!-- 로그인 end -->
     <!-- 하단 -->
     <!-- 메인 화면 종료 -->
-  </body>
-	
-  	<!--  	<@include file="/includes/footer.jsp" %> -->
-	
+  	<!--  	<@include file="/includes/footer.jsp" %> -->	
 </body>
 </html>

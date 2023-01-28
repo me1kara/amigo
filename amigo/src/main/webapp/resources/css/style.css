@@ -7,13 +7,11 @@
 body {
 	
   font-family: "Roboto", sans-serif;
-
- /*
   text-decoration: none;
   color: black;
   font-family: "Jalnan";
   font-size: 90%;
-  */
+  
 }
 
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
@@ -182,6 +180,8 @@ a.button {
     margin-right: 150px;
   }
 
+  
+
   .navbar-logo {
     padding: 15px;
     color: #fff;
@@ -343,7 +343,14 @@ a.button {
   background: #eee;
 }
 
-
+/* hr */
+hr {
+  height: 0px;
+  border-radius: 2px;
+  color: teal;
+  border: 2px solid currentColor;
+  width: 100%;
+}
 
 /* 마이페이지 프로필  */
 /*Profile Pic Start*/
@@ -551,13 +558,7 @@ body {
   z-index: 0;
   padding: 0;
 }
-*/
 
-/* hr */
-hr {
-  height: 0px;
-  border-radius: 2px;
-  color: teal;
-  border: 2px solid currentColor;
-  width: 100%;
-}
+
+*/
+a { text-decoration:none }
