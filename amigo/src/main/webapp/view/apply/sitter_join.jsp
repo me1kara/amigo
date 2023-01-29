@@ -14,7 +14,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
 
 <%
 	UserVO user = new UserVO();
@@ -25,6 +26,11 @@
 	System.out.println("안녕?"); // 일단 데이
 
 %><!-- 스크립트는 중간에 작성하였습니다 230127 현재 흡연여부, 현재직종만 적용. -->
+	      <!-- input : 테이블의 not null 부분에 Required 작성, 유저가 시터 지원정보를 입력하면 관리자에게 전송하는 폼 -->
+	        <!-- sit_auth_is 는 boolean이고, false인 0을 디폴트값으로 넘기고, 관리자가 승인하면 올리도록 처리하려 함 -->
+	      <!-- 아래 폼에서 입력받지 않을 정보(유저명, 유저주소, 연락처)는 disabled 처리 + submit을 위해 hidden도 같이쓸것.  -->
+	      <!-- 흡연  을 체크하면 '흡연자는 신청이 불가능합니다' 가 뜨게 하고, 직접 입력을 입력하면 Textarea에 현재직종 입력하고 
+	            생년월일은 "YYYYMMDD"  타입으로만 받도록 할 것임 23/01/23-->
 
 
 
@@ -35,20 +41,15 @@
     <![endif]-->	
 </head>
 <body>
-	      <!-- input : 테이블의 not null 부분에 Required 작성, 유저가 시터 지원정보를 입력하면 관리자에게 전송하는 폼 -->
-	        <!-- sit_auth_is 는 boolean이고, false인 0을 디폴트값으로 넘기고, 관리자가 승인하면 올리도록 처리하려 함 -->
-	      <!-- 아래 폼에서 입력받지 않을 정보(유저명, 유저주소, 연락처)는 disabled 처리 + submit을 위해 hidden도 같이쓸것.  -->
-	      <!-- 흡연  을 체크하면 '흡연자는 신청이 불가능합니다' 가 뜨게 하고, 직접 입력을 입력하면 Textarea에 현재직종 입력하고 
-	            생년월일은 "YYYYMMDD"  타입으로만 받도록 할 것임 23/01/23-->
 	      
 	      
 	<%@include file="/includes/header.jsp" %>
-		<div class="container">
+		<div class="container col-md-6">
 		
-			<form action="sitter_apply_form.do" method="post" onSubmit="return checkData();">
-			<div class="row">
+			<hr>
+			<form role="form" action="sitter_join.do" method="post" onSubmit="return checkData();">
 			
-				<input type="hidden" class="form-control" name="user_no" value="1">
+				<input type="hidden" class="form-control" name="user_no" value="${ sessionScope.user.getUser_no() }">
 				<input type="hidden" class="form-control" name="user_name" value="${ sessionScope.user.getUser_name() }" >
 				<input type="hidden" class="form-control" name="user_phone" value="${ sessionScope.user.getUser_phone() }">
 				<input type="hidden" class="form-control" name="user_addr" value="${ sessionScope.user.getUser_addr() }" >
@@ -56,13 +57,13 @@
 				<!-- 히든타입. disabled는 값 전달이 안돼서 히든을 사용하여 세션에서 값을 받은 것. -->
 				<!-- sit_auth_is 는 승인여부로 기본값은 0, 즉 false 로 관리자에게 넘길 것. -->
 			
-				<div class="form-group">
+				<div class="page-header">
 				<h4>1. 기본정보</h4>
-					<h4>프로필사진*</h4>
 				</div>
+				
 				<!-- 프로필 사진 업로드 -->
 				<div class="form-group text-center">
-					<div class="picture">
+						<label for="sit_photo"></label>
 						<img class="profile-user-img img-fluid img-circle"
 						src="https://lh3.googleusercontent.com/LfmMVU71g-HKXTCP_QWlDOemmWg4Dn1rJjxeEsZKMNaQprgunDTtEuzmcwUBgupKQVTuP0vczT9bH32ywaF7h68mF-osUSBAeM6MxyhvJhG6HKZMTYjgEv3WkWCfLB7czfODidNQPdja99HMb4qhCY1uFS8X0OQOVGeuhdHy8ln7eyr-6MnkCcy64wl6S_S6ep9j7aJIIopZ9wxk7Iqm-gFjmBtg6KJVkBD0IA6BnS-XlIVpbqL5LYi62elCrbDgiaD6Oe8uluucbYeL1i9kgr4c1b_NBSNe6zFwj7vrju4Zdbax-GPHmiuirf2h86eKdRl7A5h8PXGrCDNIYMID-J7_KuHKqaM-I7W5yI00QDpG9x5q5xOQMgCy1bbu3St1paqt9KHrvNS_SCx-QJgBTOIWW6T0DHVlvV_9YF5UZpN7aV5a79xvN1Gdrc7spvSs82v6gta8AJHCgzNSWQw5QUR8EN_-cTPF6S-vifLa2KtRdRAV7q-CQvhMrbBCaEYY73bQcPZFd9XE7HIbHXwXYA=s200-no"
                			class="picture-src"
@@ -71,7 +72,6 @@
                 	    name="sit_photo"
 						alt="User profile picture">
 					<input type="file" class="form-control" name="sit_photo" value="이미지없어" required> 
-					</div>
 				</div>
 				<br>
 				
@@ -85,10 +85,10 @@
 				<div class="form-group">
 					<label for="sit_gender">성별*</label>
 					<div class="gender_input_box">
-					<input type="radio"  class="btn-check" name="sit_gender" id="male" value="m" autocomplete="off">
-					<label class="btn btn-secondary" for="male">남성</label>
-					<input type="radio"  class="btn-check" name="sit_gender" id="female" value="f" autocomplete="off" required>
-					<label class="btn btn-secondary" for="female">여성</label>
+					<input type="radio"  class="form-check-input" name="sit_gender" id="male" value="m" autocomplete="off">
+					<label class="form-check-label" for="male">남성</label>
+					<input type="radio"  class="form-check-input" name="sit_gender" id="female" value="f" autocomplete="off" required>
+					<label class="form-check-label" for="female">여성</label>
 					</div>             <!-- 밸류값은 m 과 f 로 넘길 것 -->
 				</div><br><br> 
 
@@ -107,6 +107,7 @@
 			            alert("현재 하시는 일을 입력해주세요");								// 현재 하는일에서 직접 입력을 체크하면 input을 꼭 쓰도록 함.
 			        	return false;   // alert 기능 확인함(230125)
 			        }
+			        alert("펫시터 지원 신청이 접수되었습니다.")
 			        return true;
 				}
 				</script>
@@ -142,19 +143,19 @@
 				<div class="form-group">
 					<label for="sit_smoking">흡연여부*</label>
 					<div class="smoking_input_box">
-					<input type="radio"  class="btn-check" name="sit_smoking" id="sit_smoking_yes" value="1">
-					<label class="btn btn-secondary" for="sit_smoking_yes">흡연</label>
-					<input type="radio"  class="btn-check" name="sit_smoking" id="sit_smoking_no" value="0" required>
-					<label class="btn btn-secondary" for="sit_smoking_no">비흡연</label>
+					<input type="radio"  class="form-check-input" name="sit_smoking" id="sit_smoking_yes" value="1">
+					<label class="form-check-label" for="sit_smoking_yes">흡연</label>
+					<input type="radio"  class="form-check-input" name="sit_smoking" id="sit_smoking_no" value="0" required>
+					<label class="form-check-label" for="sit_smoking_no">비흡연</label>
 					</div>
 				</div>  <br><br>    
 				<div class="form-group">
 					<label for="sit_exp">시터 경험여부*</label>
 					<div class="exp_input_box">
-					<input type="radio"  class="btn-check" name="sit_exp" id="sit_exp_yes" value="1" required>
-					<label class="btn btn-secondary" for="sit_exp_yes">경험자</label>
-					<input type="radio"  class="btn-check" name="sit_exp" id="sit_exp_no" value="0">
-					<label class="btn btn-secondary" for="sit_exp_no">비경험자</label>
+					<input type="radio"  class="form-check-input" name="sit_exp" id="sit_exp_yes" value="1" required>
+					<label class="form-check-label" for="sit_exp_yes">경험자</label>
+					<input type="radio"  class="form-check-input" name="sit_exp" id="sit_exp_no" value="0">
+					<label class="form-check-label" for="sit_exp_no">비경험자</label>
 					</div>
 				</div> 
 				
@@ -249,7 +250,7 @@
 				
 				<button type="submit" class="btn btn-primary btn-lg btn-block">보내기</button>
 				
-			</div>
+		
 		</form>
 	</div>					
 			
