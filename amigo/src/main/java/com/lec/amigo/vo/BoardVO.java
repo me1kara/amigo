@@ -1,6 +1,7 @@
 package com.lec.amigo.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,15 +10,16 @@ public class BoardVO {
 	private int ubd_no;
 	private String ubd_title;
 	private Date ubd_date;
-	private int ubd_likecnt;
 	private String ubd_file;
 	private String ubd_cont;
 	private int ubd_cnt;
 	private String ubd_cate;
 	private int user_no;
 	private String dog_kind;
-	private MultipartFile uploadFile;
+	private List<MultipartFile> uploadFile;
 	private String user_nick;
+	private int like_cnt;
+	private int reply_cnt;
 	
 	public int getUbd_no() {
 		return ubd_no;
@@ -36,12 +38,6 @@ public class BoardVO {
 	}
 	public void setUbd_date(Date ubd_date) {
 		this.ubd_date = ubd_date;
-	}
-	public int getUbd_likecnt() {
-		return ubd_likecnt;
-	}
-	public void setUbd_likecnt(int ubd_likecnt) {
-		this.ubd_likecnt = ubd_likecnt;
 	}
 	public String getUbd_file() {
 		return ubd_file;
@@ -79,12 +75,6 @@ public class BoardVO {
 	public void setDog_kind(String dog_kind) {
 		this.dog_kind = dog_kind;
 	}
-	public MultipartFile getUploadFile() {
-		return uploadFile;
-	}
-	public void setUploadFile(MultipartFile uploadFile) {
-		this.uploadFile = uploadFile;
-	}
 	
 	public String getUser_nick() {
 		return user_nick;
@@ -93,7 +83,24 @@ public class BoardVO {
 		this.user_nick = user_nick;
 	}
 	
-	
+	public List<MultipartFile> getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(List<MultipartFile> uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+	public int getLike_cnt() {
+		return like_cnt;
+	}
+	public void setLike_cnt(int like_cnt) {
+		this.like_cnt = like_cnt;
+	}
+	public int getReply_cnt() {
+		return reply_cnt;
+	}
+	public void setReply_cnt(int reply_cnt) {
+		this.reply_cnt = reply_cnt;
+	}
 	@Override
 	public String toString() {
 		return "BoardVO [ubd_no=" + ubd_no + ", ubd_title=" + ubd_title + ", ubd_cont=" + ubd_cont + ", ubd_cate="

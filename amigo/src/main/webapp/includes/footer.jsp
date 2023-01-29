@@ -1,3 +1,5 @@
+<%@page import="com.lec.amigo.vo.ChatRoom"%>
+<%@page import="com.lec.amigo.vo.ChatVO"%>
 <%@page import="com.lec.amigo.vo.UserVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -18,16 +20,12 @@
 	  transform: translateY(-100px);
 	}
   </style>
-  <div class="notification-container" id="notification-container">
-    <a ref="" id="notification_text" style="color: white;"></a>
-  </div>
-
-<script>
+  <script>
 	const showNotification = (user, txt, roomIndex) =>{
 		console.log(user);
 		$('#notification_text').html('<span style="color:red;">new</span>'+user+' '+txt);
 		
-		let temp = '<%=request.getContextPath()%>/chatList.do?index='+roomIndex;
+		let temp = '/amigo/chatList.do?index='+roomIndex;
 		$('#notification_text').attr("href", temp);
 		$('#notification-container').addClass('showChatMessage');
 		
@@ -41,8 +39,8 @@
 <script>
 <% if(session.getAttribute("user")!=null){
 	
-	List<Integer> room_list = (List)session.getAttribute("chat_room_list");
-	if(room_list!=null){
+	List<ChatRoom> room_list = (List)session.getAttribute("chat_room_list");
+	if(!room_list.isEmpty() && room_list!=null){
 	%>
 	
 	var url = "ws://localhost:8088/amigo/chatHandler.do";
@@ -69,9 +67,9 @@
 			chat_no = jd.chatNo;
 			msg = jd.msg;
 			
-			<% for(Integer index:room_list){
+			<% for(ChatRoom room:room_list){
 			%>
-				index = '<%=index.intValue()%>';
+				index = '<%=room.getChat_index()%>';
 				if(parseInt(roomIndex)==index){
 					if(msg!=null){
 						showNotification(user, txt, roomIndex);
@@ -92,9 +90,12 @@
 	<%
 	}
 }%>
-
-
 </script>
+ 
+  <div class="notification-container" id="notification-container">
+    <a ref="" id="notification_text" style="color: white;"></a>
+  </div>
+
 
 	
 	

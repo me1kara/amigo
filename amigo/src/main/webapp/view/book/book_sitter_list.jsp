@@ -43,11 +43,11 @@
 					<p>경력사항,특기</p>
 				</div>
 				<div class="col-sm-4">
-					<button class="btn btn-secondary"  onclick="location.href='sitter_profile.do?name=최성형'">자세히보기</button>
+					<button class="btn btn-secondary"  onclick="location.href='sitter_profile.do?user_name=최성형'">자세히보기</button>
 					
 				</div>
 			</div>
-			
+			<br>
 			<div class="row">
 			<img src="https://via.placeholder.com/100x100"" class="col-sm-4"/>
 				<div class="col-sm-4">
@@ -55,10 +55,22 @@
 					<p>경력사항,특기</p>
 				</div>
 				<div class="col-sm-4">
-					<button class="btn btn-secondary" onclick="location.href='sitter_profile.do?name=최성형'">자세히보기</button>
+					<button class="btn btn-secondary" onclick="location.href='sitter_profile.do?user_name=최성형'">자세히보기</button>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+			<img src="https://via.placeholder.com/100x100"" class="col-sm-4"/>
+				<div class="col-sm-4">
+					<h4>시터이름</h4>
+					<p>경력사항,특기</p>
+				</div>
+				<div class="col-sm-4">
+					<button class="btn btn-secondary" onclick="location.href='sitter_profile.do?user_name=최성형'">자세히보기</button>
 				</div>
 			
 			</div>
+			<br>
 			<div class="row">
 			<img src="https://via.placeholder.com/100x100"" class="col-sm-4"/>
 				<div class="col-sm-4">
@@ -66,18 +78,7 @@
 					<p>경력사항,특기</p>
 				</div>
 				<div class="col-sm-4">
-					<button class="btn btn-secondary" onclick="location.href='sitter_profile.do?name=최성형'">자세히보기</button>
-				</div>
-			
-			</div>
-			<div class="row">
-			<img src="https://via.placeholder.com/100x100"" class="col-sm-4"/>
-				<div class="col-sm-4">
-					<h4>시터이름</h4>
-					<p>경력사항,특기</p>
-				</div>
-				<div class="col-sm-4">
-					<button class="btn btn-secondary" onclick="location.href='sitter_profile.do?name=최성형'">자세히보기</button>
+					<button class="btn btn-secondary" onclick="location.href='sitter_profile.do?user_name=최성형'">자세히보기</button>
 				</div>
 			
 			</div>

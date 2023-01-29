@@ -9,6 +9,7 @@ import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.dao.BoardDAO;
 import com.lec.amigo.service.BoardService;
 import com.lec.amigo.vo.BoardVO;
+import com.lec.amigo.vo.HeartVO;
 
 
 @Service("boardService")
@@ -52,7 +53,32 @@ public class BoardServiceImpl implements BoardService{
 		return boardDAO.selectCate(board);
 	}
 
+	@Override
+	public BoardVO insertBoard(BoardVO board) {
+		return boardDAO.insertBoard(board);
+	}
 
-	
+	@Override
+	public List<BoardVO> getBoardListLike(SearchVO searchVO) {
+		return boardDAO.getBoardListLike(searchVO);
+	}
+
+	@Override
+	public int findHeart(int user_no, int ubd_no) {
+		return boardDAO.findHeart(user_no, ubd_no);
+	}
+
+	@Override
+	public int insertHeart(HeartVO heart) {
+		int result = 0;
+		int find = findHeart(heart.getUser_no(), heart.getUbd_no());
+		
+		if(find==0) {
+			result = boardDAO.insertHeart(heart);
+		} else {
+			boardDAO.deleteHeart(heart);
+		}
+		return result;
+	}
 	
 }

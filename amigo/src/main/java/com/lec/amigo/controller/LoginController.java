@@ -1,6 +1,6 @@
 package com.lec.amigo.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lec.amigo.dao.ChatDAO;
 import com.lec.amigo.dao.UserDAO;
 import com.lec.amigo.impl.UserServiceImpl;
+import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
@@ -36,8 +37,8 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess) {
-				
-		UserVO user = userDAO.getUser(userVO.getUser_email());
+			
+		UserVO user = userDAO.getUser(userVO.getUser_email()); // 사용자가 입력한 이메일을 getUser메서드로 DB 있는지 찾기
 
 		if(user == null) {
 			sess.setAttribute("isLoginSuccess", false);
@@ -53,9 +54,9 @@ public class LoginController {
 		
 		if(user.getUser_email().equals(userVO.getUser_email())) {
 			sess.setAttribute("user", user);
-			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요!
+			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요! 싫은데용
 			ChatDAO chat_dao = new ChatDAO();
-			List<Integer> room_list = chat_dao.getRoomIndexList(user.getUser_no());
+			List<ChatRoom> room_list = chat_dao.getRoomList(user.getUser_no());
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);
 			}
@@ -74,7 +75,7 @@ public class LoginController {
 	}
 	
 	// 로그아웃
-	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+	@RequestMapping(value ="/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession sess) {
 		sess.invalidate();
 		return "home.jsp";
@@ -159,5 +160,7 @@ public class LoginController {
 	public String main_tour() {
 		return "view/main_tour.jsp"; 
 	}
+	
+	
 	
 }

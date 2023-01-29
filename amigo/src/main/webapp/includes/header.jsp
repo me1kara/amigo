@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
     <style>
     	.container {
-    		margin-bottom:100px;
+    		margin-bottom:20px;
     	}
     </style>
 </head>
@@ -40,8 +40,7 @@
         <span class="navbar-toggler-icon"></span>
         <!-- 햄버거/ -->
       </button>
-      <a class="logo" href="#home.jsp"
-        ><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
+      <a class="logo" href="<%=request.getContextPath() %>/view/main.jsp"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
       /></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
@@ -50,7 +49,7 @@
             <div class="right"></div>
           </div>
           <li class="nav-nickName">
-          	<a class="nickName">님</a>
+          	<a hraf="#">회님</a>
           </li>
           <hr/>
           <li class="nav-item">
@@ -62,10 +61,10 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/view/customer_service/customer_service_chat.jsp"><i class="amigo-chating"></i>채팅</a>
+            <a class="nav-link" href="/amigo/myChatList.do"><i class="amigo-chating"></i>채팅</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/view/comunity/user_board_list.jsp"><i class="far fa-calendar-alt"></i>커뮤니티</a>
+            <a class="nav-link" href="<%=request.getContextPath() %>/user_board_list.do"><i class="far fa-calendar-alt"></i>커뮤니티</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"
