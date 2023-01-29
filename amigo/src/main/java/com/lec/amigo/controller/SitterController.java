@@ -31,7 +31,7 @@ public class SitterController {
 	@Autowired
 	private SitterServiceImpl sitterService;
 	
-	@RequestMapping("/view/apply/getSitter.do")
+	@RequestMapping("/view/apply/getSitter.do")                    // 유저가 보는 시터정보(승인된시터만 get)
 	public String getSitter(HttpSession sess, Model model, int sit_no) {
 		System.out.println("시터의 상세 프로필");
 		sitterService.getSitter(sit_no);
@@ -42,27 +42,28 @@ public class SitterController {
 	@RequestMapping("sitter_profile.do")
 	public String getSitList(HttpSession sess, Model model, SitterVO svo) {
 		
-		int user_no = 4; // 임시로
-		List<SitterVO> sitList = sitterService.getSitList(user_no);  // 유저번호에 근거해서 시터 리스트를 가져온다.
+		int user_no = 4;
+		List<SitterVO> sitList = sitterService.getSitList(user_no);  // 유저타입에 근거해서 시터 리스트를 가져온다.
 		model.addAttribute("sitList", sitList);						// DB에서 가져와 모델에 sitList에 저장해주고 아래 페이지 리턴.
 		return "sitter_list.jsp";
 	}  //이건 관리자가 승인하기 위해 볼 페이지로 만들어야 할 듯.
 	
-	@RequestMapping(value="view/apply/sitter_apply_form.do", method=RequestMethod.GET) 
+	@RequestMapping(value="view/apply/sitter_join.do", method=RequestMethod.GET) 
 	public String insertSitter() {
-		return "apply/sitter_apply_form.jsp";
+		return "apply/sitter_join.jsp";
 	}
 	
-	@RequestMapping(value="/view/apply/sitter_apply_form.do", method=RequestMethod.POST) //펫시터 개인정보가 있어 패킷을 숨겨 전송하고 싶어 post씀
+	@RequestMapping(value="/view/apply/sitter_join.do", method=RequestMethod.POST) //펫시터 개인정보가 있어 패킷을 숨겨 전송하고 싶어 post씀
 	public String insertSitter(HttpSession sess, Model model, SitterVO svo) {				// 도메인에 데이터 등을 노출시키지 않으려고.
 		System.out.println("시터등록");
 		System.out.println(svo.toString());													// VO 에 데이터가 제대로 담겼는지 테스트 해봄
 		sitterService.insertSitter(svo);
-		
-		int user_no = 4;   // 임시
+		UserVO user = (UserVO)sess.getAttribute("user");
+		int user_no = user.getUser_no();
 		List<SitterVO> sitList = sitterService.getSitList(user_no);
+		System.out.println("시터 리스트를 가져옵니다");                                 // 기능확인콘솔
 		model.addAttribute("sitList", sitList);
-		return "my_page_list.jsp";
+		return "amigo_profile.jsp";
 	}
 /*
     230127부터 사진업로드 구현하고, 로그인한 회원의 세션을 지원 페이지에 받아서 값은 admin에게 넘겨주고 유저의 페이지는 마이페이지 리스트로 리다이렉트 시키기.

@@ -55,7 +55,7 @@ prefix="c"%>
           <a href="account_controll.jsp" class="mypage_link">계정관리</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">펫시터 지원하기</a>
+          <a href="../apply/insertSitter.do" class="mypage_link">펫시터 지원하기</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">펫시터모드로 전환</a>
