@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.vo.BoardVO;
+import com.lec.amigo.vo.HeartVO;
 
 public interface BoardService {
 
@@ -34,7 +35,12 @@ public interface BoardService {
 	// 카테고리별 리스트
 	List<BoardVO> selectCate(BoardVO board);
 	
-	// 댓글 수
-	int ReplyCount(int ubd_no);
+	// 좋아요 했는지 찾기
+	int findHeart(int user_no, int ubd_no);
+
+	// 좋아요 등록
+	int insertHeart(HeartVO heart);
+
 	
+
 }

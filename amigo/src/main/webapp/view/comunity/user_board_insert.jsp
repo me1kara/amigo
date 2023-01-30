@@ -32,7 +32,7 @@
 		<form action="user_board_insert.do" method="post" enctype="multipart/form-data">
 			<input name="user_no" type="hidden" value="${user.user_no}" />
 			<div class="input-group mb-3">
-  			 <b>글제목</b> <input type="text" class="form-control" name="ubd_title">
+  			 <b>글제목</b> <input type="text" class="form-control" name="ubd_title" required>
 			</div>
 			<div class="input-group mb-3">
   			 <b>말머리</b> 
@@ -49,7 +49,7 @@
 			 <b>작성자</b> <input type="text" class="form-control"  name="user_nick" value="${ user.getUser_nick() }" readonly> 
 			</div>
 			<div class="input-group mb-3">
-			  <b>글내용</b> <textarea class="form-control"  name="ubd_cont" rows="15" ></textarea>
+			  <b>글내용</b> <textarea class="form-control"  name="ubd_cont" rows="15" required></textarea>
 			</div>	
 			<div class="input-group mb-3">
 			  <b>사진업로드</b>

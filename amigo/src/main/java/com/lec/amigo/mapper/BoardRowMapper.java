@@ -13,7 +13,6 @@ public class BoardRowMapper implements RowMapper<BoardVO>{
 		board.setUbd_no(rs.getInt("ubd_no"));
 		board.setUbd_title(rs.getString("ubd_title"));
 		board.setUbd_date(rs.getDate("ubd_date"));
-		board.setUbd_likecnt(rs.getInt("ubd_likecnt"));
 		board.setUbd_file(rs.getString("ubd_file"));
 		board.setUbd_cont(rs.getString("ubd_cont"));
 		board.setUbd_cnt(rs.getInt("ubd_cnt"));
@@ -21,6 +20,8 @@ public class BoardRowMapper implements RowMapper<BoardVO>{
 		board.setUser_no(rs.getInt("user_no"));
 		board.setDog_kind(rs.getString("dog_kind"));
 		board.setUser_nick(rs.getString("user_nick"));
+		board.setLike_cnt(rs.getInt("like_cnt"));
+		board.setReply_cnt(rs.getInt("reply_cnt"));
 		return board;
 	}
 

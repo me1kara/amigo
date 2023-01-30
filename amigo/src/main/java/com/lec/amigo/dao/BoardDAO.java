@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.mapper.BoardRowMapper;
 import com.lec.amigo.vo.BoardVO;
+import com.lec.amigo.vo.HeartVO;
 
 
 
@@ -41,7 +42,9 @@ public class BoardDAO {
 	private String deleteBoard = "";
 	private String selectCate = "";
 	private String insertBoard = "";
-	private String ReplyCount = "";
+	private String findHeart = "";
+	private String insertHeart = "";
+	private String deleteHeart = "";
 	
 	@PostConstruct
 	public void getSqlPropeties() {
@@ -58,7 +61,9 @@ public class BoardDAO {
 		deleteBoard               = environment.getProperty("deleteBoard");
 		selectCate                = environment.getProperty("selectCate");
 		insertBoard               = environment.getProperty("insertBoard");
-		ReplyCount                = environment.getProperty("ReplyCount");
+		findHeart                 = environment.getProperty("findHeart");
+		insertHeart               = environment.getProperty("insertHeart");
+		deleteHeart               = environment.getProperty("deleteHeart");
 	}
 	
 
@@ -149,9 +154,21 @@ public class BoardDAO {
 		jdbcTemplate.update(insertBoard, board.getUbd_title(), board.getUbd_file(), board.getUbd_cont(), board.getUbd_cate(), board.getUser_no(), board.getDog_kind());
 		return board;	
 	}
-	
-	public int ReplyCount(int ubd_no) {
-		return jdbcTemplate.queryForObject(ReplyCount, Integer.class, ubd_no);
+
+
+	public int findHeart(int user_no, int ubd_no) {
+		return jdbcTemplate.queryForObject(findHeart, Integer.class, user_no, ubd_no);
 	}
+
+
+	public int insertHeart(HeartVO heart) {
+		return jdbcTemplate.update(insertHeart, heart.getUser_no(), heart.getUbd_no());
+	}
+
+
+	public void deleteHeart(HeartVO heart) {
+		jdbcTemplate.update(deleteHeart, heart.getUser_no(), heart.getUbd_no());
+	}
+	
 	
 }

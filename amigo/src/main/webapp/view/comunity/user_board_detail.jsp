@@ -25,7 +25,7 @@
 
 			<table>
 						<tr>
-						<th>제목(추천 ${ board.getUbd_likecnt()} )</th>
+						<th>제목</th>
 						<td>${ board.getUbd_title() }</td>
 						</tr>
 						<tr>
@@ -58,10 +58,15 @@
 			
 			</table>
 			<br>
-			<a href="like.do?ubd_no=${ board.getUbd_no() }">추천</a>
+			<div>
+				<a class="heart" style="text-decoration-line: none;">
+					<img id="heart" src="resources/img/heart.svg">
+					좋아요( ${board.getLike_cnt()} )
+				</a>
+			</div>
 			
 			<div align="left">
-				댓글(${ ReplyCount }) <hr> 
+				댓글(${ board.getReply_cnt() }) <hr> 
 				<ul>
 					<c:forEach items="${replyList}" var="reply">
 								<script>
@@ -132,8 +137,42 @@
 		    }
 		}
 	</script>
-	
-
-	
 </body>
+<script>
+    $(document).ready(function () {
+	// 좋아요가 있는지 확인한 값을 findLike에 저장
+        var findHeart = ${findHeart};
+        // findHeart이 1이면 좋아요가 이미 되있는것이므로 heart-fill.svg를 출력하는 코드
+        if(findHeart>0) {
+        	console.log(findHeart);
+            $("#heart").prop("src", "resources/img/heart_fill.svg");
+            $(".heart").prop('name', findHeart)
+        }
+        else {
+        	console.log(findHeart);
+            $("#heart").prop("src", "resources/img/heart.svg");
+            $(".heart").prop('name', findHeart)
+        }
+    });
+	</script>
+	<script>
+	// 좋아요 버튼을 클릭 시 실행되는 코드
+        $(".heart").click(function() { 
+           var that = $(".heart");
+	    $.ajax({
+	    	url :'heart.do',
+	        type :'POST',
+	        data : {'user_no':${user.getUser_no()}, 'ubd_no':${board.getUbd_no()}},
+	    	success : function(data){
+	    		that.prop('name', data);
+	        	if(data==1) {
+	            	     $('#heart').prop("src","resources/img/heart_fill.svg");
+	        	} else {
+                   	     $('#heart').prop("src","resources/img/heart.svg");
+	        	}
+            	}
+	    });
+       });
+</script>
+
 </html>

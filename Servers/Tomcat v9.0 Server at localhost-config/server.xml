@@ -154,6 +154,7 @@
 
       <Context docBase="amigo" path="/amigo" reloadable="true" source="org.eclipse.jst.jee.server:amigo"/>
       <Context docBase="C:\spring\upload" path="/img/" reloadable="true"/></Host>
+      <Context docBase="C:/spring/upload" path="/img/" reloadable="true"/></Host>
     </Engine>
   </Service>
 </Server>

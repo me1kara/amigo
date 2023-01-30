@@ -1,5 +1,7 @@
 package com.lec.amigo.vo;
 
+import java.util.Date;
+
 public class SitterVO {
 
 	// 여러개 쓸수 있을지?  예)  insertSitter(SittereVO svo , UserVO uvo)  이렇게..
