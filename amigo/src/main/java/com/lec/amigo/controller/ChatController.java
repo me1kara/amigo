@@ -65,13 +65,13 @@ public class ChatController {
 		UserVO user = (UserVO)session.getAttribute("user");
 		int user_no = user.getUser_no();
 		
-		List<ChatRoom> roomList = chatService.getRoomList(user_no);
+		List<ChatRoom> elseRoomList = chatService.getElseRoomList(user_no);
 		ChatRoom checkRoom = chatService.getRoom(user_no);
-		List<ChatVO> chatList = chatService.getMyChatList(user_no);
+		List<ChatVO> myChatList = chatService.getMyChatList(user_no);
 		
-		req.setAttribute("roomList", roomList);
+		req.setAttribute("elseRoomList", elseRoomList);
 		req.setAttribute("checkRoom", checkRoom);
-		req.setAttribute("myChatList", chatList);
+		req.setAttribute("myChatList", myChatList);
 		
 		return "/view/customer_service/customer_service_chat.jsp";
 	}	

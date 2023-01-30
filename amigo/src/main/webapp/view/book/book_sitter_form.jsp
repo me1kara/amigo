@@ -34,56 +34,54 @@
 <script
 	src='<%=request.getContextPath() %>/resources/fullcalendar-6.0.3/dist/index.global.js'></script>
 <script>
-    
       var calendar = null;
+      var g_info = null;
       $(document).ready(function(){
         var calendarEl = document.getElementById('calendar');
         calendar = new FullCalendar.Calendar(calendarEl, {
+          locale: "ko",
           initialView: 'dayGridMonth',
           contentHeight: 300,
           selectable: true,
           editable: true,
           droppable: true,
-          eventDrop: function (info){
-              console.log(info);
-              if(confirm("'"+ info.event.title +"'수정하시겠습니까 ?")){
-              }
-              var events = new Array(); // Json 데이터를 받기 위한 배열 선언
-              var obj = new Object();
-
-              obj.title = info.event._def.title;
-              obj.start = info.event._instance.range.start;
-              obj.end = info.event._instance.range.end;
-              events.push(obj);
-
-              console.log(events);
-              $(function deleteData() {
-                  $.ajax({
-                      url: "/full-calendar/calendar-admin-update",
-                      method: "PATCH",
-                      dataType: "json",
-                      data: JSON.stringify(events),
-                      contentType: 'application/json',
-                  })
-              })
-          },
-			
-          events: [
+          firstDay : 1,
+		
+/*           events: [
         	    {
         	      title: 'Event1',
         	      start: '2023-01-07'
         	    },
         	    {
-        	      id : 'hello',
-        	      className : 'he',
         	      title: 'gg',
         	      start: '2023-01-05',
               	  color: 'yellow',   // an option!
                   textColor: 'black'
         	    }
-           ],
+           ], */
+          eventClick:function(info) {
+        	  modalOpen('modify',info);
+        	  
+/*     		  $('#modifyEvent').click(function(){ 			  
+    			console.log(info.event);
+    			let title ="";
+    			title = $('#eventDog').val() + $('#eventTime').val();
+    			console.log(title+"타이틀입니다");
+      		  	info.event.setProp('title', title);
+      		  	modalClose();
+    		  });
+    		  $('#deleteEvent').click(function(){
+    			info.event.remove();
+    			modalClose();
+      		  });
+    		  
+    		  $('#eventDog').val('');
+      		  $('#eventTime').val(''); */
+          },
+
           select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-              var title = prompt('시간입력', '13:20~15:00');
+        	  modalOpen('insert',arg);
+              /* var title = prompt('시간입력', '13:20~15:00');
               if (title) {
                   calendar.addEvent({
                   title: title,
@@ -92,7 +90,7 @@
                   allDay: arg.allDay
                 })
               }
-              calendar.unselect()
+              calendar.unselect(); */
             }
         
           /*
@@ -126,6 +124,41 @@
     	  console.log(bookDate)
     	  $('#reciveBookData').val(bookDate);
       }
+      
+      function modifyEvent(g_info){
+			console.log(g_info.event);
+			let title ="";
+			title = $('#eventDog').val() + $('#eventStartTime').val() + $('#eventEndTime').val();
+			console.log(title+"타이틀입니다");
+  		  	g_info.event.setProp('title', title);
+  		  	modalClose();
+	  		$('#eventDog').val('');
+	  		$('#eventStartTime').val('');
+			$('#eventEndTime').val('');
+      }
+      
+      function deleteEvent(g_info){
+			g_info.event.remove();
+			modalClose();
+			$('#eventDog').val('');
+			$('#eventStartTime').val('');
+			$('#eventEndTime').val('');
+      }
+      
+      function addEvent(g_info){
+    	  	let title = $('#eventDog').val() + $('#eventStartTime').val() + $('#eventEndTime').val();
+            calendar.addEvent({
+            title: title,
+            start: g_info.start,
+            end: g_info.end,
+            allDay: g_info.allDay
+            })
+            calendar.unselect();
+            modalClose();
+			$('#eventDog').val('');
+			$('#eventStartTime').val('');
+			$('#eventEndTime').val('');
+     }
       
 
 
@@ -215,13 +248,68 @@ td {
 .term_css {
 	display: block;
 }
+
+.modal{
+	position:absolute;
+	top:0; left:0;
+	dispaly:none;
+	background: rgba(0,0,0,0.8);
+	}
+
+.fc-col-header-cell a {
+	color: black;
+	text-decoration: none;
+}
+.fc-day{
+	width:61.92px;
+	hieght:25.61px;
+	text-overflow:ellipsis;
+}
+.fc-day a{
+	color : black;
+}
+.fc-day-sun a {
+  color: red;
+  text-decoration: none;
+}
+.fc-day-sat a {
+  color: blue;
+  text-decoration: none;
+}
+
+
+
+
+
+
+
 </style>
 
 <script>   
     	function term_text_toggle(){
     		$('.term_text').toggle();
     	}
-    </script>
+    	function modalOpen(path ,info){
+    		g_info = info;
+    		console.log(path);
+    		if(path == 'modify'){
+    			$('#eventModifyForm').fadeIn();
+    			$('#modifyEvent').fadeIn();
+    			$('#deleteEvent').fadeIn();
+    		}else if(path == 'insert'){
+    			$('#eventModifyForm').fadeIn();
+    			$('#addEvent').fadeIn();
+    		}
+    		
+    	}
+    	
+    	function modalClose(){
+			$('#addEvent').fadeOut();
+			$('#modifyEvent').fadeOut();
+			$('#deleteEvent').fadeOut();
+    		$("#eventModifyForm").fadeOut();	
+    	}
+</script>
 </head>
 
 <% UserVO user=(UserVO)session.getAttribute("user");%>
@@ -311,9 +399,33 @@ td {
 
 
 	</div>
+	
+	<script>
+		function eventModifyForm(){
+			
+		}		
+	</script>
 
 	<%@include file="/includes/footer.jsp"%>
-
+	
+	<div class="modal" id="eventModifyForm" style="display: none;">
+		<div class="modal-content">
+			<div>
+				<p>강아지</p>
+				<select name="selectDog" id="eventDog">
+					<option value="푸들">푸들</option>
+					<option value="백구">백구</option>
+				</select>
+				<p>시간선택</p>
+				<input type="time" id="eventStartTime" value=""/>~<input type="time" id="eventEndTime" value=""/>
+				<button type="button" id="modifyEvent" style="display: none; " onclick="modifyEvent(g_info)">수정</button>
+				<button type="button" id="deleteEvent" style="display: none; "onclick="deleteEvent(g_info)">삭제</button>
+				<button type="button" id="addEvent" style="display: none; "onclick="addEvent(g_info)">입력</button>
+				<button type="button" onclick="modalClose()">닫기</button>
+			</div>
+			
+		</div>
+	</div>
 
 	<!-- 모달창 -->
 

@@ -82,4 +82,8 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.getFileName(chat_no); 
 	}
 	
+	public List<ChatRoom> getElseRoomList(int chat_no) {
+		return chatDao.getElseRoomList(chat_no);
+	}
+	
 }
