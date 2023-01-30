@@ -19,9 +19,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
     <style>
-    	.container {
-    		margin-bottom:20px;
-    	}
+    	body {
+  padding-top: 50px;
+  /* 생략 */
+}
+    	
+    	li {
+	
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  color: black;
+  font-family: "Jalnan";
+  font-size: 90%;
+  
+}
     </style>
 </head>
 <body>
@@ -48,8 +59,9 @@
             <div class="left"></div>
             <div class="right"></div>
           </div>
+          <hr/>
           <li class="nav-nickName">
-          	<a hraf="#">회님</a>
+          	<a hraf="#">회원님</a>
           </li>
           <hr/>
           <li class="nav-item">
