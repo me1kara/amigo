@@ -4,13 +4,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script
-  src="https://code.jquery.com/jquery-3.6.3.min.js"
-  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-  crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
 <meta charset="UTF-8">
+<style>
+   /* aimgo 메인 사진들 css */
+	.img-fluid{
+		border-radius: 20px;
+		border:2px outset rgba(44, 134, 204, 0.67);
+		cursor:pointer;
+		
+	}
+	
+	
+	.img-fluid needYou {
+		
+		
+	}
+	
+	/* 폰트 적용(여기어때 폰트)*/
+	h4 {
+	
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  color: black;
+  font-family: "Jalnan";
+  font-size: 90%;
+  
+	}
+
+</style>
 <title>메인홈</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -35,9 +71,9 @@
 		
 	    <!-- Am!go 소개 -->
     <div class="container text-center" id="AmigoTop">
-      <div class="row">
+      <div class="amigoMainImg">
         <img
-          src="resources/img/pet-care.png"
+          src="/amigo/resources/img/amigoLoginImg.png"
           class="img-fluid"
           alt="amigoPet"
         />
@@ -54,10 +90,10 @@
       <div class="row gy-5">
       <!-- 펫시터 -->
         <div class="col-6">
-          <div class="p-3 border bg-light">
+          <div class="p-3">
           <a href="sitter/sitter_service_main.jsp">
             <img
-              src="https://via.placeholder.com/150x100"
+              src="/amigo/resources/img/petsitter.png"
               class="img-fluid"
               alt="..."
             />
@@ -66,10 +102,10 @@
         </div> <!-- 펫시터 end -->
         <!-- 추천산책루트  -->
         <div class="col-6">
-          <div class="p-3 border bg-light">
+          <div class="p-3">
              <a href="#">
             <img
-              src="https://via.placeholder.com/150x100"
+              src="/amigo/resources/img/walking.png"
               class="img-fluid"
               alt="..."
             />
@@ -78,10 +114,10 @@
         </div> <!-- 추천산책루트 end -->
         <!-- 병원 -->
         <div class="col-6">
-          <div class="p-3 border bg-light">
+          <div class="p-3">
             <a href="#">
             <img
-              src="https://via.placeholder.com/150x100"
+              src="/amigo/resources/img/hp.png"
               class="img-fluid"
               alt="..."
             />
@@ -90,10 +126,10 @@
         </div> <!-- 병원 end -->
         <!-- 고객센터 -->
         <div class="col-6">
-          <div class="p-3 border bg-light">
-            <a href="#">
+          <div class="p-3">
+            <a href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp">
             <img
-              src="https://via.placeholder.com/150x100"
+              src="/amigo/resources/img/cs.png"
               class="img-fluid"
               alt="..."
             />
@@ -112,9 +148,9 @@
       <div class="row text-center">
         <a href="#">
           <img
-            src="https://via.placeholder.com/500x300"
+            src="/amigo/resources/img/community.png"
             class="img-fluid"
-            alt="..."
+            alt="community"
           />
         </a>
       </div>
@@ -122,9 +158,10 @@
       <div class="row text-center">
         <a href="#">
           <img
-            src="https://via.placeholder.com/400x100"
+            src="/amigo/resources/img/needYou.png"
             class="img-fluid"
-            alt="..."
+            alt="needYou"
+           
           />
         </a>
       </div>

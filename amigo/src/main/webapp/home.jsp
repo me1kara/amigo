@@ -20,6 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
 <meta charset="UTF-8">
+<style></style>
 <title>로그인전01_처음화면</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>

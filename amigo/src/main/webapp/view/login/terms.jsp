@@ -22,6 +22,14 @@
     <title>main</title>
     <style>
     a { text-decoration:none }
+    
+    .img-fluid {
+    	margin-top:20px;
+    	border-radius: 50px;
+    	height: 326px;
+    	weith:352px;
+    
+    }
     </style>
   </head>
   <body>
@@ -71,13 +79,13 @@
        value='check4'
        required /> <a href="#">펫시터약관동의</a>
     </div>
-    <div class="container text-center">
+    	<div class="container text-center" id="terms-photo">
         <img
-              src="https://via.placeholder.com/300x150"
+              src="/amigo/resources/img/amigoLoginImg.png"
               class="img-fluid"
-              alt="..."
+              alt="amigoTermsLogo"
             />
-    </div>
+   	 	</div>
     <br/>
     <div class="container text-center">
         <button type="submit" class="btn btn-primary btn-lg" >다음으로</button>

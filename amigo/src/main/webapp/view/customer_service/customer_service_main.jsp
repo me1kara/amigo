@@ -23,7 +23,7 @@
 		   <!-- 타이틀 -->
 		   <div class="container">
 <div class="container text-center" id="csHeader">
-    <h3>AM!GO입니다.</h3>
+    <h1>AM!GO입니다.</h1>
     <h4>무엇을 도와드릴까요?</h4>
 </div>
 <!-- 타이틀 end-->
