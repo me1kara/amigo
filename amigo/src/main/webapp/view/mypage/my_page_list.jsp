@@ -23,11 +23,12 @@ prefix="c"%>
   </head>
   <body>
    <%@include file="/includes/header.jsp" %>
+
     <!-- 마이페이지 시작 -->
     <div class="container" align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
         <li class="list-group-item">
-          <a href="my_profile.jsp" class="mypage_link">내 프로필 관리</a>
+          <a href="<%=request.getContextPath() %>/view/mypage/my_profile.jsp" class="mypage_link">내 프로필 관리</a>
           <img src="../images/codeit.png" alt="코드잇 이미지" />
         </li>
         <li class="list-group-item">
@@ -37,7 +38,6 @@ prefix="c"%>
           <a href="#" class="mypage_link">찜 목록 & 예약 확인</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">고객센터</a>
           <a
             href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"
             class="mypage_link"
@@ -45,7 +45,6 @@ prefix="c"%>
           >
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">공지사항</a>
           <a
             href="<%=request.getContextPath() %>/view/mypage/notice.jsp"
             class="mypage_link"
@@ -56,7 +55,7 @@ prefix="c"%>
           <a href="account_controll.jsp" class="mypage_link">계정관리</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">펫시터 지원하기</a>
+          <a href="../apply/insertSitter.do" class="mypage_link">펫시터 지원하기</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">펫시터모드로 전환</a>

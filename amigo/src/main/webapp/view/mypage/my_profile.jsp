@@ -27,7 +27,7 @@
     <form action="#">
     <div class="myProfileMainBox">
       <div class="profileNav">
-        <h4>이진주님,</h4>
+       	<a href="#">회원이름</a>
         <!-- 이곳에 유저의 이름이 들어와야합니다. -->
         <h4>안녕하세요!</h4>
         <!-- 프로필 사진 업로드 -->
@@ -53,7 +53,7 @@
       <!-- 이메일 // 이메일 정보가 가져와져야합니다. -->
       <label for="userEmail" class="form-label">이메일 아이디</label>
       <div class="input-group mb-3">
-        <input type="email" class="form-control" id="userEmail" placeholder="misty12024@gmail.com" aria-describedby="button-addon2" disabled>
+        <input type="email" class="form-control" id="userEmail" placeholder="userEmail" aria-describedby="button-addon2" disabled>
         <button class="btn btn-outline-secondary" type="submit" id="button-addon2">변경</button>
       </div>
       <!-- 이메일 end -->

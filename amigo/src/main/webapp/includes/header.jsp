@@ -17,11 +17,22 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="amigo/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
     <style>
-    	.container {
-    		margin-bottom:150px;
-    	}
+    	body {
+  padding-top: 50px;
+  /* 생략 */
+}
+    	
+    	li {
+	
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  color: black;
+  font-family: "Jalnan";
+  font-size: 90%;
+  
+}
     </style>
 </head>
 <body>
@@ -40,8 +51,7 @@
         <span class="navbar-toggler-icon"></span>
         <!-- 햄버거/ -->
       </button>
-      <a class="logo" href="#home.jsp"
-        ><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
+      <a class="logo" href="<%=request.getContextPath() %>/view/main.jsp"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
       /></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
@@ -49,8 +59,9 @@
             <div class="left"></div>
             <div class="right"></div>
           </div>
+          <hr/>
           <li class="nav-nickName">
-          	<a class="nickName">님</a>
+          	<a hraf="#">회원님</a>
           </li>
           <hr/>
           <li class="nav-item">
@@ -62,7 +73,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/view/customer_service/customer_service_chat.jsp"><i class="amigo-chating"></i>채팅</a>
+            <a class="nav-link" href="/amigo/myChatList.do"><i class="amigo-chating"></i>채팅</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="<%=request.getContextPath() %>/user_board_list.do"><i class="far fa-calendar-alt"></i>커뮤니티</a>

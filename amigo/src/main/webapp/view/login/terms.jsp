@@ -18,17 +18,25 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
     <title>main</title>
     <style>
     a { text-decoration:none }
+    
+    .img-fluid {
+    	margin-top:20px;
+    	border-radius: 50px;
+    	height: 326px;
+    	weith:352px;
+    
+    }
     </style>
   </head>
   <body>
  <!-- header -->
  <div class="container text-center mb-5">
  <a class="logo" href="#home.jsp"
- ><img alt="AmigoLogo" src="img/logo1.png"
+ ><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
 /></a>
 <!-- 제거해도 될거라고 판단 --> 
  <!-- <div class="text-end ">
@@ -71,13 +79,13 @@
        value='check4'
        required /> <a href="#">펫시터약관동의</a>
     </div>
-    <div class="container text-center">
+    	<div class="container text-center" id="terms-photo">
         <img
-              src="https://via.placeholder.com/300x150"
+              src="/amigo/resources/img/amigoLoginImg.png"
               class="img-fluid"
-              alt="..."
+              alt="amigoTermsLogo"
             />
-    </div>
+   	 	</div>
     <br/>
     <div class="container text-center">
         <button type="submit" class="btn btn-primary btn-lg" >다음으로</button>
@@ -130,7 +138,7 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/script.js"></script>
+    <script src="/amigo/resources/js/script.js"></script>
 
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>

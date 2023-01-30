@@ -30,6 +30,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.dao.ChatDAO;
+import com.lec.amigo.impl.ChatServiceImpl;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.UserVO;
 
@@ -46,21 +47,19 @@ public class ChatHandler extends TextWebSocketHandler{
 	//private Map<ChatRoom, WebSocketSession> indexSessions = new HashMap();
 	
 	@Autowired
-	@Qualifier("chatDAO")
-	ChatDAO chatDao;
+	@Qualifier("chatService")
+	ChatServiceImpl chatServiceImpl;
 	
-	//private static final Logger logger = LoggerFactory.getLogger(ChatServer.class);
+	private final Logger logger = LoggerFactory.getLogger(ChatHandler.class);
 	//ChatDAO chatDao = new ChatDAO();
 	
-	
-
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		//세션리스트에 세션저장
 		//유저-세션 저장
 		sessions.put(session.getId(), session);
-		
+	
 		/*
 		ChatRoom ch = getRoomUser(session);
 		if(ch!=null) {
@@ -75,22 +74,23 @@ public class ChatHandler extends TextWebSocketHandler{
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 		String curWorkingDir = System.getProperty("user.dir");
-		System.out.println("현재 작업 폴더 : " + curWorkingDir);
+		
 		ByteBuffer byteBuffer = message.getPayload();		
 		String url = session.getUri().toString();
-		System.out.println("url:"+url);
+		
 		
 		String room = url.split("/chatHandler.do?")[1].substring(1);
 		int roomIndex = Integer.parseInt(room);
 		UserVO user = getUser(session);
 		int user_no = user.getUser_no();
 		String sendUser = user.getUser_nick();
-		int chat_no = chatDao.getLastMyChat(user_no, roomIndex);
+		
+		int last_chat_no = chatServiceImpl.getLastMyChatNo(user_no, roomIndex);
 		
 		String fileName = null; 
 		
 		while(fileName == null) {
-			fileName = chatDao.getFileName(chat_no);
+			fileName = chatServiceImpl.getFileName(last_chat_no);
 		}
 		/*
 		UUID uuid = UUID.randomUUID();
@@ -136,9 +136,9 @@ public class ChatHandler extends TextWebSocketHandler{
 						try {
 							//세션아이디로 인덱스를 구하고,
 							//해당인덱스와 일치하면 문자를 보내면됨
-							if(getUser(s)!=null) {				
-								boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
-								System.out.println("작성자인덱스:"+"다른방작성자:"+getUser(s).getUser_nick());
+							if(getUser(s)!=null) {		
+								boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
+								
 								if(checkIndex) {
 									//s.sendMessage(new BinaryMessage(byteBuffer));
 									//이러면 모두에게 가겠지만 실시간삭제가 힘들겠지?
@@ -149,8 +149,8 @@ public class ChatHandler extends TextWebSocketHandler{
 									jms.put("fileName", fileName);
 									jms.put("roomIndex", roomIndex);
 									jms.put("userName", sendUser);
-									jms.put("chatNo", chat_no);
-									System.out.println(jms+"됨?");
+									jms.put("chatNo", last_chat_no);
+									
 									s.sendMessage(new TextMessage(jms.toJSONString()));
 								}
 							}
@@ -223,7 +223,7 @@ public class ChatHandler extends TextWebSocketHandler{
 								//세션의 로그인정보가 있으면
 								if(getUser(s)!=null) {
 									//해당 세션의 유저가 메세지의 룸번호를 가지고있는지 조회
-									boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
+									boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
 									
 									//해당 				
 									if(checkIndex) {
@@ -244,12 +244,12 @@ public class ChatHandler extends TextWebSocketHandler{
 		} else if (no.equals("2") && type.equals("message")) {
 			
 			text = (String)jms.get("msg");
-			int a = chatDao.insertChat(roomIndex, user_no, text);
+			int a = chatServiceImpl.insertChatMessage(roomIndex, user_no, text);
 			int chat_no=0;
 			if(a>0) {
-			chat_no = chatDao.getLastChat(roomIndex).getChat_no();
+			chat_no = chatServiceImpl.getLastChat(roomIndex).getChat_no();
 			}
-			System.out.println("챗넘버"+chat_no);
+			
 		//	for(String id:idList) {			
 			// 누군가 메세지를 전송
 			
@@ -259,16 +259,16 @@ public class ChatHandler extends TextWebSocketHandler{
 
 					//if (s != session) { // 현재 접속자가 아닌 나머지 사람들							
 						try {
-							System.out.println("2#" + sendUser + ":" + text);
+							
 							//세션아이디로 인덱스를 구하고,
 							//해당인덱스와 일치하면 문자를 보내면됨
 							if(getUser(s)!=null) {				
-								boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
-								System.out.println("작성자인덱스:"+"다른방작성자:"+getUser(s).getUser_nick());
+								boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
+								
 								
 								if(checkIndex) {
 									jms.put("chatNo", chat_no);
-									System.out.println(jms);
+							
 									s.sendMessage(new TextMessage(jms.toJSONString()));							
 								}
 							}
@@ -286,14 +286,14 @@ public class ChatHandler extends TextWebSocketHandler{
 		}else if(no.equals("2") && type.equals("fileUpload")){
 		
 			String fileName = (String)jms.get("file");
-			System.out.println(fileName);
-			chatDao.insertFile(roomIndex, user_no, fileName);
 			
+			
+			chatServiceImpl.insertFile(roomIndex, user_no, fileName);
 			
 			
 		}else if (no.equals("3")) {
 			
-			System.out.println("호히히히");
+			
 			//for(String id:idList) {
 			// 누군가 접속 > 3#아무개
 					for (String key : sessions.keySet()) {
@@ -304,9 +304,9 @@ public class ChatHandler extends TextWebSocketHandler{
 								
 								
 								if(getUser(s)!=null) {
-									boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
+									boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
 									
-									System.out.println("작성자인덱스:"+roomIndex+"다른방작성자:"+getUser(s).getUser_nick());
+									
 								
 									if(checkIndex) {
 									s.sendMessage(new TextMessage(jms.toJSONString()));
@@ -324,13 +324,13 @@ public class ChatHandler extends TextWebSocketHandler{
 			}else if(no.equals("4")) {
 				String ab = (String)jms.get("chatNo");
 				int chat_no = Integer.parseInt(ab);
-				String fileName = chatDao.getFileName(chat_no);
+				String fileName = chatServiceImpl.getFileName(chat_no);
 				
 				File deleteFile = new File("C:\\test\\websocket\\"+fileName);
 				if(deleteFile.exists()) {
 					deleteFile.delete();
 				}
-				chatDao.delete(chat_no);
+				chatServiceImpl.deleteChat(chat_no);
 				
 
 				
@@ -341,7 +341,7 @@ public class ChatHandler extends TextWebSocketHandler{
 							try {
 								if(getUser(s)!=null) {
 					
-									boolean checkIndex = chatDao.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
+									boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
 									
 				
 									if(checkIndex) {
@@ -387,7 +387,7 @@ public class ChatHandler extends TextWebSocketHandler{
 		if(room.getChat_index()>0) {
 			return room;
 		}else {
-			System.out.println("인덱스 조회 실패!");
+			
 			return null;
 			
 		}	

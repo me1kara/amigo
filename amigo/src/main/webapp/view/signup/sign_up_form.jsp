@@ -18,20 +18,46 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
     <title>main</title>
+    <style>
+    .page-header{
+    	margin-bottom:20px;
+    }
+    
+    /* 환영합니다 글씨 조절 */
+   	.page-header {
+   		text-align:center;
+   		margin-bottom:30px;
+   	}
+   	
+   	h4{
+   		color:rgb(89, 139, 198);
+   		margin-bottom:10px;
+   	}
+   	
+   	
+   	/* 인증번호 버튼,폼 */
+  	
+  	#email_auth_btn{
+
+  	}
+    
+    </style>
   </head>
   <body>
     <!-- header -->
-    <div class="container text-center">
-      <img alt="AmigoLogo" src="img/logo1.png" />
+    <div class="container text-center mb-5">
+      <img alt="AmigoLogo" src="/amigo/resources/img/logo1.png" />
     </div>
+    
     <!-- header end  -->
 
     <article class="container">
         <div class="page-header">
             <div class="col-md-6 col-md-offset-3">
-            <h3>이메일과 비밀번호를 입력하세요</h3>
+            <h4>AM!GO에 오신걸 환영합니다!</h4>
+            <h6>회원님의 정보를 입력해주세요.</h6>
             </div>
         </div>
         <div class="col-sm-6 col-md-offset-3">
@@ -41,6 +67,7 @@
                     <input type="email" class="form-control" id="user_email" name="user_email" placeholder="이메일 주소" onchange="checkEmail();" check_email="fail" required>
                     <span id="confirmEmail"></span>
                     <br>
+                    <!-- 인증 시스템 -->
                     <button type="button" id="email_auth_btn" class="email_auth_btn">인증번호 받기</button>
                     <input type="text" placeholder="인증번호 입력" id="email_auth_key" onchange="email_auth_Confirm();">
                     <script>
@@ -51,8 +78,9 @@
             				alert("인증번호 확인완료");
             			}
                     }
-                    </script>
-                </div>
+                    </script>                  
+               	 </div>
+                	<!-- 인증 시스템/ -->
                 <div class="form-group">
                     <label for="password">비밀번호*</label>
                     <input type="password" class="form-control" id="password" name="user_pw" placeholder="비밀번호" required>
@@ -172,10 +200,6 @@
 	              
 				};
 				</script>
-
-                <div class="col-md-6 col-md-offset-3">
-                    <h3>기본정보</h3>
-                    </div>
                 <div class="form-group">
                     <label for="user_name">이름*</label>
                     <input type="text" class="form-control" id="user_name" name="user_name" placeholder="이름" required>
@@ -281,24 +305,23 @@
                 }
                 
                 if($('#email_auth_key').val() == '' || $('#email_auth_key').val() != email_auth_cd){
-        			alert("이메일 인증을 완료해주세요.");
+        			alert("이메일 인증을 해주시기 바랍니다.");
         			$('#email_auth_key').focus();
         			return false;
         		}
                 
                 	return true;
                 }
-                </script>
-                
+                </script>                
 		</form>
         </div>
- 
     </article>
-    
+</body>
+</html>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="resources/js/script.js"></script>
+    
 
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>

@@ -1,82 +1,87 @@
 <%@page import="com.lec.amigo.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
+<link rel="stylesheet"
+	href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
 
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+	integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+	crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script
-  src="https://code.jquery.com/jquery-3.6.3.min.js"
-  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-  crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
 
 
 <!--한국어 달력 쓰려면 추가 로드-->
-<script src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>  
+<script
+	src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link  rel="stylesheet" href="/amigo/resources/css/calendar.css" type="text/css">
-<script type="text/javascript" src="/amigo/resources/js/calendar.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/amigo/resources/css/calendar.css"
+	type="text/css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <script src='<%=request.getContextPath() %>/resources/fullcalendar-6.0.3/dist/index.global.js'></script>
-    <script>
-    
-      document.addEventListener('DOMContentLoaded', function() {
+<script
+	src='<%=request.getContextPath() %>/resources/fullcalendar-6.0.3/dist/index.global.js'></script>
+<script>
+      var calendar = null;
+      var g_info = null;
+      $(document).ready(function(){
         var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
+        calendar = new FullCalendar.Calendar(calendarEl, {
+          locale: "ko",
           initialView: 'dayGridMonth',
           contentHeight: 300,
           selectable: true,
           editable: true,
           droppable: true,
-          eventDrop: function (info){
-              console.log(info);
-              if(confirm("'"+ info.event.title +"'수정하시겠습니까 ?")){
-              }
-              var events = new Array(); // Json 데이터를 받기 위한 배열 선언
-              var obj = new Object();
-
-              obj.title = info.event._def.title;
-              obj.start = info.event._instance.range.start;
-              obj.end = info.event._instance.range.end;
-              events.push(obj);
-
-              console.log(events);
-              $(function deleteData() {
-                  $.ajax({
-                      url: "/full-calendar/calendar-admin-update",
-                      method: "PATCH",
-                      dataType: "json",
-                      data: JSON.stringify(events),
-                      contentType: 'application/json',
-                  })
-              })
-          },
-			
-          events: [
+          firstDay : 1,
+		
+/*           events: [
         	    {
         	      title: 'Event1',
         	      start: '2023-01-07'
         	    },
         	    {
-        	      id : 'hello',
-        	      className : 'he',
         	      title: 'gg',
         	      start: '2023-01-05',
               	  color: 'yellow',   // an option!
                   textColor: 'black'
         	    }
-           ],
+           ], */
+          eventClick:function(info) {
+        	  modalOpen('modify',info);
+        	  
+/*     		  $('#modifyEvent').click(function(){ 			  
+    			console.log(info.event);
+    			let title ="";
+    			title = $('#eventDog').val() + $('#eventTime').val();
+    			console.log(title+"타이틀입니다");
+      		  	info.event.setProp('title', title);
+      		  	modalClose();
+    		  });
+    		  $('#deleteEvent').click(function(){
+    			info.event.remove();
+    			modalClose();
+      		  });
+    		  
+    		  $('#eventDog').val('');
+      		  $('#eventTime').val(''); */
+          },
+
           select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-              var title = prompt('일정 입력');
+        	  modalOpen('insert',arg);
+              /* var title = prompt('시간입력', '13:20~15:00');
               if (title) {
                   calendar.addEvent({
                   title: title,
@@ -85,7 +90,7 @@
                   allDay: arg.allDay
                 })
               }
-              calendar.unselect()
+              calendar.unselect(); */
             }
         
           /*
@@ -102,107 +107,228 @@
         });
         calendar.render();
       });
+      
+      function sendBookDate(){
+    	  var allEvent = calendar.getEvents();   	  
+    	  console.log(allEvent);
+    	  var events = new Array();
+    	  for(let i=0; i< allEvent.length; i++){
+    		  var obj = new Object();  		  
+    		  obj.title = allEvent[i]._def.title;
+    		  obj.allday = allEvent[i]._def.allDay;
+    		  obj.start = allEvent[i]._instance.range.start;
+    		  obj.end = allEvent[i]._instance.range.end;		  
+    		  events.push(obj);
+    	  }
+    	  let bookDate = JSON.stringify(events);
+    	  console.log(bookDate)
+    	  $('#reciveBookData').val(bookDate);
+      }
+      
+      function modifyEvent(g_info){
+			console.log(g_info.event);
+			let title ="";
+			title = $('#eventDog').val() + $('#eventStartTime').val() + $('#eventEndTime').val();
+			console.log(title+"타이틀입니다");
+  		  	g_info.event.setProp('title', title);
+  		  	modalClose();
+	  		$('#eventDog').val('');
+	  		$('#eventStartTime').val('');
+			$('#eventEndTime').val('');
+      }
+      
+      function deleteEvent(g_info){
+			g_info.event.remove();
+			modalClose();
+			$('#eventDog').val('');
+			$('#eventStartTime').val('');
+			$('#eventEndTime').val('');
+      }
+      
+      function addEvent(g_info){
+    	  	let title = $('#eventDog').val() + $('#eventStartTime').val() + $('#eventEndTime').val();
+            calendar.addEvent({
+            title: title,
+            start: g_info.start,
+            end: g_info.end,
+            allDay: g_info.allDay
+            })
+            calendar.unselect();
+            modalClose();
+			$('#eventDog').val('');
+			$('#eventStartTime').val('');
+			$('#eventEndTime').val('');
+     }
+      
+
 
     </script>
 <title>펫시터02_펫시터예약폼</title>
-    <!--[if lt IE 9]>
+<!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
-    
-      
-    <style>
-    	td{
-    		width:100px;heigth:500px;
-    	}
-		.select {
-		    padding: 15px 10px;
-		}
-		.select input[type=radio]{
-		    display: none;
-		}
-		.select input[type=radio]+label{
-		    display: inline-block;
-		    cursor: pointer;
-		    height: 36px;
-		    width: 90px;
-		    border: 1px solid #333;
-		    line-height: 36px;
-		    text-align: center;
-		    font-weight:bold;
-		    font-size:16px;
-		    width:150px;
-		    border-radius: 5px;
-		}
-		.select input[type=radio]+label{
-		    background-color: #fff;
-		    color: #333;
-		    width:150px; 
-		}
-		.select input[type=radio]:checked+label{
-		    background-color: #333;
-		    color: #fff;
-		}
-		.etc_content{
-			width: 100%;
-			height: 80px;
-			padding: 10px;
-			box-sizing: border-box;
-			border: solid 2px gray;
-			border-radius: 5px;
-			font-size: 16px;
-			resize: both;
-		}
-		#address{
-			border-radius: 5px;
-			border: solid 2px gray;
-		}
-		.item_change{
-			background: #d2d2d2;
-			border-radius: 5px;
-			border: none;	
-			margin-left: 5px;
-			height: 30px;
-		}
-		.select input{
-			border-radius: 5px;
-			width:150px;
-		}
-		.ctn_btn{
-			width:150px;
-		}
-		.inline_box{
-			text-align: center;
-		}
-		.term_css {
-  			display: block;
-		}
-    </style>
-    
-    <script>   
-    	$(document).ready(function(){ 
-    		$('.term_text').hide();    		
-    	});
+
+
+<style>
+td {
+	width: 100px;
+	heigth: 500px;
+}
+
+.select {
+	padding: 15px 10px;
+}
+
+.select input[type=radio] {
+	display: none;
+}
+
+.select input[type=radio]+label {
+	display: inline-block;
+	cursor: pointer;
+	height: 36px;
+	width: 90px;
+	border: 1px solid #333;
+	line-height: 36px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+	width: 150px;
+	border-radius: 5px;
+}
+
+.select input[type=radio]+label {
+	background-color: #fff;
+	color: #333;
+	width: 150px;
+}
+
+.select input[type=radio]:checked+label {
+	background-color: #333;
+	color: #fff;
+}
+
+.etc_content {
+	width: 100%;
+	height: 80px;
+	padding: 10px;
+	box-sizing: border-box;
+	border: solid 2px gray;
+	border-radius: 5px;
+	font-size: 16px;
+	resize: both;
+}
+
+#address {
+	border-radius: 5px;
+	border: solid 2px gray;
+}
+
+.item_change {
+	background: #d2d2d2;
+	border-radius: 5px;
+	border: none;
+	margin-left: 5px;
+	height: 30px;
+}
+
+.select input {
+	border-radius: 5px;
+	width: 150px;
+}
+
+.ctn_btn {
+	width: 150px;
+}
+
+.inline_box {
+	text-align: center;
+}
+
+.term_css {
+	display: block;
+}
+
+.modal{
+	position:absolute;
+	top:0; left:0;
+	dispaly:none;
+	background: rgba(0,0,0,0.8);
+	}
+
+.fc-col-header-cell a {
+	color: black;
+	text-decoration: none;
+}
+.fc-day{
+	width:61.92px;
+	hieght:25.61px;
+	text-overflow:ellipsis;
+}
+.fc-day a{
+	color : black;
+}
+.fc-day-sun a {
+  color: red;
+  text-decoration: none;
+}
+.fc-day-sat a {
+  color: blue;
+  text-decoration: none;
+}
+
+
+
+
+
+
+
+</style>
+
+<script>   
     	function term_text_toggle(){
     		$('.term_text').toggle();
     	}
-    </script>
+    	function modalOpen(path ,info){
+    		g_info = info;
+    		console.log(path);
+    		if(path == 'modify'){
+    			$('#eventModifyForm').fadeIn();
+    			$('#modifyEvent').fadeIn();
+    			$('#deleteEvent').fadeIn();
+    		}else if(path == 'insert'){
+    			$('#eventModifyForm').fadeIn();
+    			$('#addEvent').fadeIn();
+    		}
+    		
+    	}
+    	
+    	function modalClose(){
+			$('#addEvent').fadeOut();
+			$('#modifyEvent').fadeOut();
+			$('#deleteEvent').fadeOut();
+    		$("#eventModifyForm").fadeOut();	
+    	}
+</script>
 </head>
 
 <% UserVO user=(UserVO)session.getAttribute("user");%>
 
 <body>
-	
-	<%@include file="/includes/header.jsp" %>
-		<div class="container-sm" style="width:480px;">
-			
-			
-		
-			<form action="book.do">
-			<div class="select" style="display:flex; justify-content: space-between;">
-     			<input type="radio" id="select1" name="shop" value="visit"><label class="ctn_btn" for="select1">방문</label>
-     			<input type="radio" id="select2" name="shop" value="consign"><label class="ctn_btn" for="select2">위탁</label>
+
+	<%@include file="/includes/header.jsp"%>
+	<div class="container" style="width: 480px;">
+
+
+
+		<form action="book.do">
+			<div class="select" style="display: flex; justify-content: space-between; margin-top: 100px;">
+				<input type="radio" id="select1" name="shop" value="visit">
+				<label class="ctn_btn" for="select1">방문</label> 
+				<input type="radio" id="select2" name="shop" value="consign">
+				<label class="ctn_btn" for="select2">위탁</label>
 			</div>
-					
+
 			<!-- 
 			<br>
 			<b>예약날짜</b>
@@ -227,128 +353,158 @@
 			  </div>
 			</div>
 			 -->
-			
-		  	<div id='calendar-container'>
-    			<div id='calendar'></div>
-  			</div>
-  			
-  			<br>
-			<b>이용주소</b> <input type="text" name="address" id="address" /><button type="button" class="item_change" data-bs-toggle="modal" data-bs-target="#address_modal">변경</button><br>
-			
+
+			<div id='calendar-container'>
+				<div id='calendar' name="calendar"></div>
+			</div>
+
+			<br> <b>이용주소</b> <input type="text" name="address" id="address" />
+			<button type="button" class="item_change" data-bs-toggle="modal"
+				data-bs-target="#address_modal">변경</button>
+			<br> <br> <b>특이사항</b><br>
+			<textarea class="etc_content" name="etc_content" rows="5" cols="16"
+				placeholder="펫시터분이 알아야 할 우리 아이에 대한 특이사항을 적어주세요!"></textarea>
 			<br>
-			<b>특이사항</b><br>
-			<textarea class="etc_content" name="etc_content" rows="5" cols="16" placeholder="펫시터분이 알아야 할 우리 아이에 대한 특이사항을 적어주세요!"></textarea><br>
-			
-			
+
+
 			<div class="inline_box">
 				<b style="margin: 0 auto;">비용</b>
 			</div>
-			
-			<br>
-			
-			<label for="term" class="term_css">
-  				<input type="checkbox" name="term" value="3">
-  				<span>개인정보 이용 동의<strong>(필수)</strong></span>
+
+			<br> <label for="term" class="term_css"> <input
+				type="checkbox" name="term" value="3"> <span>개인정보 이용
+					동의<strong>(필수)</strong>
+			</span>
 			</label>
-      		
-			<button type="button" class="btn" onclick="term_text_toggle()">더보기</button><br>
-			<div class="term_text" style="height: 100px; overflow: auto;">
-                여러분을 환영합니다. amigo 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 amigo
-                서비스의 이용과 관련하여 amigo 서비스를 제공하는 amigo 주식회사(이하 ‘JUN’)와 이를 이용하는 JUN 서비스
-                회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 JUN 서비스 이용에 도움이 될 수 있는
-                유익한 정보를 포함하고 있습니다. JUN 서비스를 이용하시거나 JUN 서비스 회원으로 가입하실 경우 여러분은 본
-                약관 및 관련 운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기
-                바랍니다.
-             </div>
+
+			<button type="button" class="btn" onclick="term_text_toggle()">더보기</button>		
+			<input type="hidden" id="reciveBookData" name="bookDate">
 			<br>
-			<div style="display:flex; justify-content: space-between;">
+			<div class="term_text" style="height: 100px; overflow: auto; display: none;">
+				여러분을 환영합니다. amigo 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 amigo
+				서비스의 이용과 관련하여 amigo 서비스를 제공하는 amigo 주식회사(이하 ‘amigo’)와 이를 이용하는 amigo 서비스
+				회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 amigo 서비스 이용에 도움이 될 수 있는 유익한
+				정보를 포함하고 있습니다. amigo 서비스를 이용하시거나 amig 펫시터 서비스를 예약하실 경우 여러분은 본 약관 및 관련
+				운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.</div>
+			<br>
+			
+			<div style="display: flex; justify-content: space-between;">
 				<button class="btn btn-primary ctn_btn" onclick="history.back(-1)">이전</button>
-				<button type="submit" class="btn btn-primary ctn_btn">확인</button>
+				<button type="submit" class="btn btn-primary ctn_btn" onclick="sendBookDate()">확인</button>
 			</div>
-			</form>
-			
-			
-			
-			
+		</form>
 
+
+
+
+
+	</div>
+	
+	<script>
+		function eventModifyForm(){
+			
+		}		
+	</script>
+
+	<%@include file="/includes/footer.jsp"%>
+	
+	<div class="modal" id="eventModifyForm" style="display: none;">
+		<div class="modal-content">
+			<div>
+				<p>강아지</p>
+				<select name="selectDog" id="eventDog">
+					<option value="푸들">푸들</option>
+					<option value="백구">백구</option>
+				</select>
+				<p>시간선택</p>
+				<input type="time" id="eventStartTime" value=""/>~<input type="time" id="eventEndTime" value=""/>
+				<button type="button" id="modifyEvent" style="display: none; " onclick="modifyEvent(g_info)">수정</button>
+				<button type="button" id="deleteEvent" style="display: none; "onclick="deleteEvent(g_info)">삭제</button>
+				<button type="button" id="addEvent" style="display: none; "onclick="addEvent(g_info)">입력</button>
+				<button type="button" onclick="modalClose()">닫기</button>
+			</div>
+			
 		</div>
-		
-	<%@include file="/includes/footer.jsp" %>
-	
-	
-<!-- 모달창 -->
-	
-<div class="modal" id="calendar">
-  <div class="modal-dialog">
-    <div class="modal-content">
+	</div>
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">예약날짜 모달창</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        
-      </div>
+	<!-- 모달창 -->
 
-      <!-- Modal body -->
-      <div class="modal-body">
-		
-   <!-- 시작시 기본 날짜 설정은 value를 이용 -->
-   		
-   		<input type="text" id="datepicker" class="form-control"/>
-      	
-        
-      </div>
+	<div class="modal" id="calendar">
+		<div class="modal-dialog">
+			<div class="modal-content">
 
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-      </div>
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">예약날짜 모달창</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 
-    </div>
-  </div>
-</div>
+				</div>
 
-<div class="modal" id="address_modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+				<!-- Modal body -->
+				<div class="modal-body">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">주소</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        
-      </div>
+					<!-- 시작시 기본 날짜 설정은 value를 이용 -->
 
-      <!-- Modal body -->
-      <div class="modal-body">
-		
-
-   <!-- 시작시 기본 날짜 설정은 value를 이용 -->
-   		           <div class="form-group">
-               
-               <input type="text" id="sample4_postcode" placeholder="우편번호">
-               <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-               <input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" placeholder="도로명주소">
-               <input type="hidden" id="sample4_jibunAddress" class="form-control" placeholder="지번주소">
-               <span id="guide" style="color:#999;display:none"></span>
-               <input type="text" id="sample4_detailAddress" class="form-control" name="user_addr2" placeholder="상세주소">
-                </div>
-                
-        
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" id="address_submit" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-      </div>
-
-    </div>
-  </div>
-</div>
+					<input type="text" id="datepicker" class="form-control" />
 
 
-      	<script>
-   	$(function() {
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">확인</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="address_modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">주소</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+
+
+					<!-- 시작시 기본 날짜 설정은 value를 이용 -->
+					<div class="form-group">
+
+						<input type="text" id="sample4_postcode" placeholder="우편번호">
+						<input type="button" onclick="sample4_execDaumPostcode()"
+							value="우편번호 찾기"><br> <input type="text"
+							id="sample4_roadAddress" class="form-control" name="user_addr"
+							placeholder="도로명주소"> <input type="hidden"
+							id="sample4_jibunAddress" class="form-control" placeholder="지번주소">
+						<span id="guide" style="color: #999; display: none"></span> <input
+							type="text" id="sample4_detailAddress" class="form-control"
+							name="user_addr2" placeholder="상세주소">
+					</div>
+
+
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" id="address_submit" class="btn btn-secondary"
+						data-bs-dismiss="modal">확인</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+/*    	$(function() {
     	   //input을 datepicker로 선언
        $("#datepicker").datepicker({
            dateFormat: 'yy-mm-dd' //달력 날짜 형태
@@ -371,11 +527,12 @@
        
        //초기값을 오늘 날짜로 설정해줘야 합니다.
        $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
-   });
+   }); */
 </script>
 
-	 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-            <script>
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
             	$('#address_submit').click(function(){
             			$('#address').val($("#sample4_roadAddress").val() + $("#sample4_jibunAddress").val());
             		}

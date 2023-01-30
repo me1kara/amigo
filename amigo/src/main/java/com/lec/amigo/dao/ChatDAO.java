@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.websocket.Session;
 
@@ -64,10 +65,7 @@ public class ChatDAO {
 			e.printStackTrace();
 		}finally {
 			JDBCUtility.close(conn, rs, pstmt);
-		}
-		
-		
-			
+		}			
 		return idCount;
 	}
 	
@@ -181,7 +179,6 @@ public class ChatDAO {
 		int user_no = ch.getUser_no();
 		
 		System.out.println(chat_index+""+user_no);
-		
 			
 		try {
 			jdbcTemplate.update(sql, chat_index, user_no);
@@ -231,7 +228,6 @@ public class ChatDAO {
 	}
 	
 	public boolean checkRoomIndex(int user_no, int roomindex) {
-		
 		
 		String sql = "select distinct chat_index chat_index from chat_room where user_no=? and chat_index=?";
 		
@@ -286,7 +282,6 @@ public class ChatDAO {
 			
 			if(rs.next()) {
 				int user_no = rs.getInt(1);
-				System.out.println("user_no"+"아이디라ㅏ고"+user_no);
 				return user_no;
 		
 			}
@@ -297,8 +292,7 @@ public class ChatDAO {
 		}finally {
 			JDBCUtility.close(conn, rs, pstmt);
 		}
-		
-		
+
 		return 0;
 	}
 	
@@ -402,8 +396,7 @@ public class ChatDAO {
 	}
 
 
-	public boolean delete(int chat_no) {
-			
+	public boolean delete(int chat_no) {	
 			String sql = "delete from sit_chat where sitt_chat_no=?";
 			Connection conn = JDBCUtility.getConnection();
 			PreparedStatement pstmt = null;
@@ -428,6 +421,8 @@ public class ChatDAO {
 		
 		return false;
 	}
+	
+	
 
 
 	public List<ChatRoom> getRoomList(int user_no) {
@@ -460,20 +455,25 @@ public class ChatDAO {
 		return null;
 	}
 	
-	public List<Integer> getRoomIndexList(int user_no) {
-		
-		List<Integer> room_list = new ArrayList<Integer>();
-		String sql = "select chat_index from chat_room where user_no=?";
+	public List<ChatRoom> getElseRoomList(int user_no){
+		List<ChatRoom> room_list = new ArrayList<ChatRoom>();
+		String sql="select chat_index, r.user_no from chat_room r where r.user_no=? and r.chat_index not in"
+				+ "(select distinct sitt_chat_index from sit_chat s where s.user_no=?"
+				+ ")";
 		Connection conn = JDBCUtility.getConnection();
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, user_no);
+			pstmt.setInt(2, user_no);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				room_list.add(rs.getInt("chat_index"));
+				ChatRoom room = new ChatRoom();		
+				room.setChat_index(rs.getInt("chat_index"));
+				room.setUser_no(rs.getInt("user_no"));
+				room_list.add(room);
 			}
 			return room_list;		
 		} catch (SQLException e) {
@@ -484,37 +484,34 @@ public class ChatDAO {
 		}
 				
 		return null;
-	}
-	
-	public JdbcTemplate getJdbcTemplate() {
-		return jdbcTemplate;
+		
+		
+		
+		
+		
 	}
 
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
 
 
 	public void insertFile(int roomIndex, int user_no, String fileName) {
 		
 		String fileType = fileName.substring(fileName.lastIndexOf("."),fileName.length());
-		
-		System.out.println(fileType);
+			
+		fileName = UUID.randomUUID().toString();
+		/*
 		fileName = fileName.split(fileType)[0];
-		System.out.println(fileName);
-		
+		Object[] args = {param};
 		String selectEqualsFile = "select count(sitt_chat_file) from sit_chat where sitt_chat_file like ?";
 		String param = fileName+"%";
-		
-		System.out.println(param);
-		Object[] args = {param};
-		
+	
 		int a = 0;
 		a = jdbcTemplate.queryForObject(selectEqualsFile,args, Integer.class);
 		
 		if(a!=0) {
+		
 			fileName = fileName+"("+a+")";
-		}		
+		}
+		*/		
 		fileName = fileName+fileType;
 		
 		String insertSql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,SYSDATE(),0,?,?)";	
@@ -544,7 +541,6 @@ public class ChatDAO {
 		
 		return chat_no;
 	}
-
 
 	public String getFileName(int chat_no) {
 		String sql = "select sitt_chat_file from sit_chat where sitt_chat_no=?";
