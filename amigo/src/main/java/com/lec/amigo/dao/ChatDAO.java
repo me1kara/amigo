@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.websocket.Session;
 
@@ -420,6 +421,8 @@ public class ChatDAO {
 		
 		return false;
 	}
+	
+	
 
 
 	public List<ChatRoom> getRoomList(int user_no) {
@@ -451,26 +454,64 @@ public class ChatDAO {
 				
 		return null;
 	}
+	
+	public List<ChatRoom> getElseRoomList(int user_no){
+		List<ChatRoom> room_list = new ArrayList<ChatRoom>();
+		String sql="select chat_index, r.user_no from chat_room r where r.user_no=? and r.chat_index not in"
+				+ "(select distinct sitt_chat_index from sit_chat s where s.user_no=?"
+				+ ")";
+		Connection conn = JDBCUtility.getConnection();
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_no);
+			pstmt.setInt(2, user_no);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ChatRoom room = new ChatRoom();		
+				room.setChat_index(rs.getInt("chat_index"));
+				room.setUser_no(rs.getInt("user_no"));
+				room_list.add(room);
+			}
+			return room_list;		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCUtility.close(conn, rs, null);
+		}
+				
+		return null;
+		
+		
+		
+		
+		
+	}
 
 
 
 	public void insertFile(int roomIndex, int user_no, String fileName) {
 		
 		String fileType = fileName.substring(fileName.lastIndexOf("."),fileName.length());
-		
-		
+			
+		fileName = UUID.randomUUID().toString();
+		/*
 		fileName = fileName.split(fileType)[0];
+		Object[] args = {param};
 		String selectEqualsFile = "select count(sitt_chat_file) from sit_chat where sitt_chat_file like ?";
 		String param = fileName+"%";
-		
-		Object[] args = {param};
-		
+	
 		int a = 0;
 		a = jdbcTemplate.queryForObject(selectEqualsFile,args, Integer.class);
 		
 		if(a!=0) {
+		
 			fileName = fileName+"("+a+")";
-		}		
+		}
+		*/		
 		fileName = fileName+fileType;
 		
 		String insertSql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,SYSDATE(),0,?,?)";	
