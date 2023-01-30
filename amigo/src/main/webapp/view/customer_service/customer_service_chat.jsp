@@ -1,9 +1,7 @@
 <%@page import="com.lec.amigo.vo.ChatRoom"%>
 <%@page import="com.lec.amigo.vo.UserVO"%>
-<%@page import="com.lec.amigo.dao.UserDAO"%>
 <%@page import="com.lec.amigo.vo.ChatVO"%>
 <%@page import="java.util.List"%>
-<%@page import="com.lec.amigo.dao.ChatDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
@@ -11,17 +9,14 @@
 <html>
 <head>
 	<%
-		ChatDAO dao = new ChatDAO();
 		UserVO user = (UserVO)session.getAttribute("user");
-		
-		List<ChatRoom> roomList = dao.getRoomList(user.getUser_no());
-		
+		List<ChatRoom> roomList = (List<ChatRoom>)request.getAttribute("roomList");
 		List<ChatVO> chatList = null;
 		ChatRoom checkRoom = null;
 		if(user!=null){
-			checkRoom = dao.getRoom(user.getUser_no());
+			checkRoom = (ChatRoom)request.getAttribute("checkRoom");
 		
-			if(checkRoom!=null)chatList = dao.getMyChatList(user.getUser_no());
+			if(checkRoom!=null)chatList = (List<ChatVO>)request.getAttribute("myChatList");
 		}
 		
 		

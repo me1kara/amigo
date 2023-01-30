@@ -13,7 +13,8 @@ import org.springframework.web.socket.server.standard.ServletServerContainerFact
 public class ChatConfigurer implements WebSocketConfigurer{
 	
 	@Autowired
-	ChatHandler socketHandler; 
+	ChatHandler socketHandler;
+	
 	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {

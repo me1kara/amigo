@@ -64,10 +64,7 @@ public class ChatDAO {
 			e.printStackTrace();
 		}finally {
 			JDBCUtility.close(conn, rs, pstmt);
-		}
-		
-		
-			
+		}			
 		return idCount;
 	}
 	
@@ -181,7 +178,6 @@ public class ChatDAO {
 		int user_no = ch.getUser_no();
 		
 		System.out.println(chat_index+""+user_no);
-		
 			
 		try {
 			jdbcTemplate.update(sql, chat_index, user_no);
@@ -231,7 +227,6 @@ public class ChatDAO {
 	}
 	
 	public boolean checkRoomIndex(int user_no, int roomindex) {
-		
 		
 		String sql = "select distinct chat_index chat_index from chat_room where user_no=? and chat_index=?";
 		
@@ -286,7 +281,6 @@ public class ChatDAO {
 			
 			if(rs.next()) {
 				int user_no = rs.getInt(1);
-				System.out.println("user_no"+"아이디라ㅏ고"+user_no);
 				return user_no;
 		
 			}
@@ -297,8 +291,7 @@ public class ChatDAO {
 		}finally {
 			JDBCUtility.close(conn, rs, pstmt);
 		}
-		
-		
+
 		return 0;
 	}
 	
@@ -402,8 +395,7 @@ public class ChatDAO {
 	}
 
 
-	public boolean delete(int chat_no) {
-			
+	public boolean delete(int chat_no) {	
 			String sql = "delete from sit_chat where sitt_chat_no=?";
 			Connection conn = JDBCUtility.getConnection();
 			PreparedStatement pstmt = null;
@@ -459,54 +451,18 @@ public class ChatDAO {
 				
 		return null;
 	}
-	
-	public List<Integer> getRoomIndexList(int user_no) {
-		
-		List<Integer> room_list = new ArrayList<Integer>();
-		String sql = "select chat_index from chat_room where user_no=?";
-		Connection conn = JDBCUtility.getConnection();
-		ResultSet rs = null;
-		PreparedStatement pstmt = null;
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, user_no);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				room_list.add(rs.getInt("chat_index"));
-			}
-			return room_list;		
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			JDBCUtility.close(conn, rs, null);
-		}
-				
-		return null;
-	}
-	
-	public JdbcTemplate getJdbcTemplate() {
-		return jdbcTemplate;
-	}
 
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
 
 
 	public void insertFile(int roomIndex, int user_no, String fileName) {
 		
 		String fileType = fileName.substring(fileName.lastIndexOf("."),fileName.length());
 		
-		System.out.println(fileType);
-		fileName = fileName.split(fileType)[0];
-		System.out.println(fileName);
 		
+		fileName = fileName.split(fileType)[0];
 		String selectEqualsFile = "select count(sitt_chat_file) from sit_chat where sitt_chat_file like ?";
 		String param = fileName+"%";
 		
-		System.out.println(param);
 		Object[] args = {param};
 		
 		int a = 0;
@@ -544,7 +500,6 @@ public class ChatDAO {
 		
 		return chat_no;
 	}
-
 
 	public String getFileName(int chat_no) {
 		String sql = "select sitt_chat_file from sit_chat where sitt_chat_no=?";

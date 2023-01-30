@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.lec.amigo.vo.SitPageInfo;
 import com.lec.amigo.vo.SitterVO;
+import com.lec.amigo.vo.UserVO;
 
 
 public interface SitterService {
@@ -17,10 +18,10 @@ public interface SitterService {
 	SitterVO getSitter(int sit_no);
 	List<SitterVO> getSitList(int user_no);
 	SitterVO insertSitter(SitterVO svo);
-/*
+
 	int deleteSitter(int sit_no);
-	int updateSitter(SitterVO svo);
-*/
+	int updateSitter(SitterVO svo, boolean sit_auth_is);
+
 	
 	
 }

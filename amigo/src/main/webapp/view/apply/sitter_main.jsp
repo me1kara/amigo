@@ -107,7 +107,7 @@
       </button>
     </div>
     <div class="container text-center">
-     <a href="../sitter_apply_form.do" class="btn btn-primary">펫시터 지원하기</a>
+     <a href="../apply/sitter_join.do" class="btn btn-primary">펫시터 지원하기</a>
     </div>
 </div>
 	<%@include file="/includes/footer.jsp" %>

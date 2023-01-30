@@ -67,15 +67,19 @@ public class SitterDAO {
 		return svo;
 	}
 	
-/*	
-	public int updateSitter(SitterVO svo) {
-		return jdbcTemplate.update(updateSitter,svo.getSit_gender(),svo.getSit_birth(),svo.isSit_smoking(),svo.getSit_job(),svo.getSit_days(),svo.getSit_time(),svo.isSit_exp(),svo.getSit_care_exp(),svo.getSit_intro(),svo.getSit_photo(),svo.isSit_auth_is());
+	public int updateSitter(SitterVO svo, boolean sit_auth_is) {
+		return jdbcTemplate.update(updateSitter,svo.getUser_no(), "true");
 	}
+	
+	
+/*public int updateSitter(SitterVO svo) {
+		return jdbcTemplate.update(updateSitter,svo.getSit_gender(),svo.getSit_birth(),svo.isSit_smoking(),svo.getSit_job(),svo.getSit_days(),svo.getSit_time(),svo.isSit_exp(),svo.getSit_care_exp(),svo.getSit_intro(),svo.getSit_photo(),svo.isSit_auth_is());
+	}*/
 	
 	public int deleteSitter(int sit_no) {
 		return jdbcTemplate.update(deleteSitter, sit_no);
 	}
-*/	
+
 }	
 
 
