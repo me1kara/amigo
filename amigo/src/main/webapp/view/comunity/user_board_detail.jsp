@@ -91,6 +91,7 @@
 							<p>${reply.ubd_r_content}</p>
 						</div>
 					</li>
+					
 					</c:forEach>
 				</ul>
 				
@@ -138,7 +139,7 @@
 		}
 	</script>
 </body>
-<script>
+	<script>
     $(document).ready(function () {
 	// 좋아요가 있는지 확인한 값을 findLike에 저장
         var findHeart = ${findHeart};
@@ -155,6 +156,7 @@
         }
     });
 	</script>
+	
 	<script>
 	// 좋아요 버튼을 클릭 시 실행되는 코드
         $(".heart").click(function() { 

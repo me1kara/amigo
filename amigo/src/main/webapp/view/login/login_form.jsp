@@ -41,8 +41,8 @@
         <input type="password" name="user_pw" class="form-control" id="user_pw" placeholder="비밀번호" autoComplete="off"> 
         <br>
 		
-       	<c:if test="${ !sessionScope.isLoginSuccess && sessionScope.isLoginSuccess != null && sessionScope.matchedPassword != null && !sessionScope.matchedPassword}">
-         	<h5>아이디와 비밀번호를 확인해주세요.</h5>
+       	<c:if test="${ !sessionScope.isLoginSuccess and sessionScope.isLoginSuccess != null || sessionScope.matchedPassword != null and !sessionScope.matchedPassword}">
+         	<h6>아이디와 비밀번호를 확인해주세요.</h6>
         </c:if>
         <div class="text-end">
 		<a href="search_pwd.do">비밀번호를 잊으셨나요?</a>
