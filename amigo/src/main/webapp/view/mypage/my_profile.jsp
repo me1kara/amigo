@@ -11,7 +11,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
 	
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -108,7 +108,7 @@
     </footer>
     <!-- Footer 끝 -->
 
-    <script src="js/script.js"></script>
+    <script src="/amigo/resources/js/script.js"></script>
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
     <![endif]-->

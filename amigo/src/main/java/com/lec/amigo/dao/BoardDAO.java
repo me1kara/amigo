@@ -36,6 +36,7 @@ public class BoardDAO {
 	private String selectBoardListByUserNickLike = "";
 	private String selectBoardListByUbdContLike = "";
 	private String boardTotalRowCount = "";
+	private String boardCateRowCount = "";
 	private String selectByUbdNo = "";
 	private String updateCount = "";
 	private String updateBoard = "";
@@ -55,6 +56,7 @@ public class BoardDAO {
 		selectBoardListByUserNick = environment.getProperty("selectBoardListByUserNick");
 		selectBoardListByUbdCont  = environment.getProperty("selectBoardListByUbdCont");
 		boardTotalRowCount        = environment.getProperty("boardTotalRowCount");
+		boardCateRowCount         = environment.getProperty("boardCateRowCount");
 		selectByUbdNo             = environment.getProperty("selectByUbdNo");
 		updateCount               = environment.getProperty("updateCount");
 		updateBoard               = environment.getProperty("updateBoard");
@@ -124,6 +126,23 @@ public class BoardDAO {
 		}
 		return jdbcTemplate.queryForObject(sql, Integer.class);
 	}
+	
+	public int getCateRowCount (SearchVO searchVO, BoardVO board) {
+		if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
+				searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) {
+			sql = boardCateRowCount;
+			searchVO.setSearchType("ubd_title");
+		} else {			
+			if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) {
+				sql = boardCateRowCount + " and ubd_title like '%" + searchVO.getSearchWord() + "%'";
+			} else if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) {
+				sql = boardCateRowCount + " and user_nick like '%" + searchVO.getSearchWord() + "%'";
+			} else if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) {
+				sql = boardCateRowCount + " and ubd_cont like '%" + searchVO.getSearchWord() + "%'";
+			}	
+		}
+		return jdbcTemplate.queryForObject(sql, Integer.class, board.getUbd_cate());
+	}
 
 
 	public BoardVO getBoard(BoardVO board) {
@@ -145,8 +164,8 @@ public class BoardDAO {
 		return jdbcTemplate.update(deleteBoard, board.getUbd_no());
 	}
 
-	public List<BoardVO> selectCate(BoardVO board) {
-		Object[] args = { board.getUbd_cate() };
+	public List<BoardVO> selectCate(BoardVO board, SearchVO searchVO) {
+		Object[] args = { board.getUbd_cate(), searchVO.getFirstRow(), searchVO.getRowSizePerPage() };
 		return jdbcTemplate.query(selectCate, args, new BoardRowMapper());
 	}
 

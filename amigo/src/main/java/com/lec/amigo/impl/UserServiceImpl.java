@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService{
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
 		String hostSMTPid = "amigo931224";
-		String hostSMTPpwd = "12tjdgud24!";
+		String hostSMTPpwd = "XKWP4NLMMPK3";
 	
 		// 보내는 사람 Email, 제목, 내용
 		String fromEmail = "amigo931224@naver.com";

@@ -281,7 +281,7 @@
                 }
                 
                 if($('#email_auth_key').val() == '' || $('#email_auth_key').val() != email_auth_cd){
-        			alert("이메일 인증을 해주시기 바랍니다.");
+        			alert("이메일 인증을 완료해주세요.");
         			$('#email_auth_key').focus();
         			return false;
         		}
@@ -294,21 +294,7 @@
         </div>
  
     </article>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-</body>
-</html>
-	
-=======
->>>>>>> 2dd76ba6ad68137bfddd05b3805d2ca031773f20
-=======
-</body>
-</html>
-
->>>>>>> e77bbd4558ffe14921e3ceb90c3f41e30343f44f
-=======
->>>>>>> 0d5fd1fc39d213ce468323d5a84bf51159617ecf
+    
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

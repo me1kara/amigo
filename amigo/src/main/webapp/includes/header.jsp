@@ -17,10 +17,10 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="amigo/resources/css/style.css" />
     <style>
     	.container {
-    		margin-bottom:100px;
+    		margin-bottom:150px;
     	}
     </style>
 </head>

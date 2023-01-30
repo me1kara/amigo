@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -57,6 +58,7 @@ public class BoardController {
 		uploadFolder = environment.getProperty("uploadFolder");
 	}
 	
+	// 전체 글 목록
 	@RequestMapping("/user_board_list.do")
 	public String getBoardList (Model model, SearchVO searchVO,
 			@RequestParam(defaultValue="1") int curPage,
@@ -79,6 +81,8 @@ public class BoardController {
 			return "view/comunity/user_board_list.jsp";
 	}
 	
+	
+	// 인기글 목록
 	@RequestMapping("/user_board_list_Like.do")
 	public String getBoardListLike (Model model, SearchVO searchVO,
 			@RequestParam(defaultValue="1") int curPage,
@@ -98,7 +102,33 @@ public class BoardController {
 		List<BoardVO> boardList = boardService.getBoardListLike(searchVO);
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("boardList", boardList);		
-		return "view/comunity/user_board_list.jsp";
+		return "view/comunity/user_board_list_like.jsp";
+	}
+	
+	
+	//  카테고리별 목록
+	@RequestMapping("/user_board_cate.do")
+	public String user_board_cate(Model model, SearchVO searchVO, BoardVO board,
+			@RequestParam(defaultValue="1") int curPage,
+			@RequestParam(defaultValue="10") int rowSizePerPage,
+			@RequestParam(defaultValue="") String searchCategory,
+			@RequestParam(defaultValue="") String searchType,
+			@RequestParam(defaultValue="") String searchWord) 
+			{
+		
+		searchVO.setTotalRowCount(boardService.getCateRowCount(searchVO, board));
+		searchVO.setCurPage(curPage);
+		searchVO.setRowSizePerPage(rowSizePerPage);
+		searchVO.setSearchCategory(searchCategory);
+		searchVO.setSearchType(searchType);
+		searchVO.setSearchWord(searchWord);
+		searchVO.pageSetting();
+		
+		List<BoardVO> boardList = boardService.selectCate(board, searchVO);
+		model.addAttribute("searchVO", searchVO);
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("cate", board.getUbd_cate());
+		return "view/comunity/user_board_list_cate.jsp";
 	}
 			
 	
@@ -130,7 +160,7 @@ public class BoardController {
 		
 		// 이미 좋아요했는지 확인하는 로직
 		model.addAttribute("findHeart", boardService.findHeart(userVO.getUser_no(), ubd_no));
-		
+
 		return "view/comunity/user_board_detail.jsp";
 	}
 	
@@ -201,29 +231,7 @@ public class BoardController {
 		boardService.deleteBoard(board);
 		return "user_board_list.do";
 	}
-	
-	@RequestMapping(value="/user_board_cate.do", method=RequestMethod.GET)
-	public String user_board_cate(Model model, SearchVO searchVO, BoardVO board,
-			@RequestParam(defaultValue="1") int curPage,
-			@RequestParam(defaultValue="10") int rowSizePerPage,
-			@RequestParam(defaultValue="") String searchCategory,
-			@RequestParam(defaultValue="") String searchType,
-			@RequestParam(defaultValue="") String searchWord) 
-			{
-		
-		searchVO.setTotalRowCount(boardService.getTotalRowCount(searchVO));
-		searchVO.setCurPage(curPage);
-		searchVO.setRowSizePerPage(rowSizePerPage);
-		searchVO.setSearchCategory(searchCategory);
-		searchVO.setSearchType(searchType);
-		searchVO.setSearchWord(searchWord);
-		searchVO.pageSetting();
-		
-		List<BoardVO> boardList = boardService.selectCate(board);
-		model.addAttribute("searchVO", searchVO);
-		model.addAttribute("boardList", boardList);		
-		return "view/comunity/user_board_list.jsp";
-	}
+
 	
 	@RequestMapping(value="/user_board_insert.do", method=RequestMethod.GET)
 	public String user_board_insert() {
@@ -236,7 +244,7 @@ public class BoardController {
 		List<MultipartFile> uploadFile = board.getUploadFile();
 		
 		if (!uploadFile.isEmpty()) {
-			System.out.println(uploadFile.size());
+
 			List<Map<String, String>> uploadFileList = new ArrayList<>();
 
 			for(int i = 0; i < uploadFile.size(); i++) {
@@ -253,11 +261,15 @@ public class BoardController {
 			map.put("fileRealName", fileRealName);
 			map.put("uniqueName", uniqueName);
 			
-			
 			uploadFileList.add(map);
+			
 				}
 			}
-
+			
+			System.out.println(uploadFileList.size());
+			System.out.println(uploadFile.size());
+			
+				
 			try {
 				for(int i=0; i<uploadFileList.size(); i++) {
 					File saveFile = new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName"));
@@ -277,7 +289,7 @@ public class BoardController {
 				DBUpload.add(uploadFileList.get(i).get("uniqueName"));
 			}
 			String DBUploadFile = StringUtils.join(DBUpload, ",");  // 리스트 값들을 ,로 연결해주는 자바에 있는 메서드
-			board.setUbd_file(DBUploadFile); // 파일 이름을 ,로 연결해서 DB에 저장\
+			board.setUbd_file(DBUploadFile); // 파일 이름을 ,로 연결해서 DB에 저장
 		} 
 		
 		boardService.insertBoard(board);

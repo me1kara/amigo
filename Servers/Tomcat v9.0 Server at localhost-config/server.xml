@@ -153,8 +153,7 @@
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
       <Context docBase="amigo" path="/amigo" reloadable="true" source="org.eclipse.jst.jee.server:amigo"/>
-      <Context docBase="C:\spring\upload" path="/img/" reloadable="true"/></Host>
-      <Context docBase="C:/spring/upload" path="/img/" reloadable="true"/></Host>
+      <Context docBase="c:/spring/upload" path="/img/" reloadable="true" /></Host>
     </Engine>
   </Service>
 </Server>
