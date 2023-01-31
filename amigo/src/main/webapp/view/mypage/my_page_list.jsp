@@ -20,16 +20,33 @@ prefix="c"%>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>main</title>
+    
+    <!-- a href컬러 조절 -->
+    <style>
+    .mypage_link:link {
+   	color : black;
+    }
+	.mypage_link:visited {
+ 	 color : black;
+	}
+	.mypage_link:hover {
+ 	 color : #189cc4;
+	}
+	/* 글자색 */
+	.mypage_link{
+		 font-family: 'Jalnan'
+	}
+    </style>
   </head>
   <body>
    <%@include file="/includes/header.jsp" %>
 
     <!-- 마이페이지 시작 -->
-    <div class="container" align="center" id="myPageTop">
+    <div class="container mb-5" align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
         <li class="list-group-item">
           <a href="<%=request.getContextPath() %>/view/mypage/my_profile.jsp" class="mypage_link">내 프로필 관리</a>
-          <img src="../images/codeit.png" alt="코드잇 이미지" />
+          <img src="../imagescodeit.pngg" alt="코드잇 이미지" />
         </li>
         <li class="list-group-item">
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>
@@ -63,9 +80,9 @@ prefix="c"%>
       </ul>
     </div>
     <!-- Footer -->
-    <footer class="bg-primary text-center text-white">
+    <footer class="bg-primary text-center text-white mt-5">
       <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      <div class="text-center p-3 mt-5" style="background-color: #189cc4;">
         © 2022 Copyright:
         <a class="text-white" href="#">amigo.com</a>
       </div>

@@ -1,8 +1,29 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,100);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
-/* 리뷰 import */
+/* 네이버 글씨체 */
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+@import url(https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css);
+/* 프리텐다드 폰트 */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
 
+
+/* 프리텐다드 폰트 적용 */
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+body {
+	font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+	font-size:17px;
+	line-height:1.5;
+}
+
+
+
+/* 리뷰 import */
 /* 웹폰트 */
 @font-face {
     font-family: 'Jalnan';
@@ -16,23 +37,26 @@
     font-display: swap;
 }
 
-/* 글씨체 전체 
-body {
+/* 글씨체 전체 */
+/* 여기어때 글씨체*/
+/*
+ body {
 	
   font-family: "Roboto", sans-serif;
   text-decoration: none;
   color: black;
   font-family: "Jalnan";
-  font-size: 90%;
-  
+  font-size: 90%; 
 }
+*/
 
-/* 웹폰트2 */
+
+
+
+/* 웹폰트2 네이버 글씨체 */
 /* CSS스타일시트상에 적용방법 아래 두가지중 하나를 선택하여 사용하면 됩니다.  */
-
 @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 @import url(https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css);
-
 /*
 .선택자{
 font-famliy:'NanumSquare',san-serif;
@@ -42,14 +66,18 @@ line-height:1.5;
 */
 
 /* -또는 아래와 같은 적용이 가능합니다.- */
-
+/*
 body{
 font-famliy:'NanumSquare',san-serif;
 font-size:17px;
 line-height:1.5;
 }
-
+*/
 /* 위처럼 적용시 body에 속해 있는 모든 폰트가 나눔스퀘어로 적용됨을 알수 있습니다.*/
+
+
+/* backGroundColor*/
+
 
 
 
@@ -594,3 +622,4 @@ body {
 
 */
 a { text-decoration:none }
+

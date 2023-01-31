@@ -25,15 +25,15 @@ prefix="c"%>
     />
     <meta charset="UTF-8" />
     <style>
+    
       /* aimgo 메인 사진들 css */
       .img-fluid {
         border-radius: 20px;
-        border: 2px outset rgba(44, 134, 204, 0.67);
         cursor: pointer;
+        /* 그림자 */
+        box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
       }
 
-      .img-fluid needYou {
-      }
 
       /* 폰트 적용(여기어때 폰트)*/
       h4 {
@@ -43,7 +43,123 @@ prefix="c"%>
         font-family: "Jalnan";
         font-size: 90%;
       }
+      .all-view {
+      	font-family: "Roboto", sans-serif;
+        text-decoration: none;
+        color: gray;
+        font-family: "Jalnan";
+        font-size: 90%;
+      }
+      /* 폰트 적용 end */
+      
+      
+      
+      @import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
+      figure.snip0015 {
+        font-family: "Roboto", sans-serif;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        background: #000000;
+        text-align: center;
+        border-radius: 20px;
+        box-shadow: 5px 2px 20px rgba(0,0,0,0.2)
+      }
+      figure.snip0015 * {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      figure.snip0015 img {
+        opacity: 1;
+        width: 100%;
+        -webkit-transition: opacity 0.35s;
+        transition: opacity 0.35s;
+      }
+      figure.snip0015 figcaption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 3em 3em;
+        width: 100%;
+        height: 100%;
+      }
+      figure.snip0015 figcaption::before {
+        position: absolute;
+        top: 50%;
+        right: 30px;
+        bottom: 50%;
+        left: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.8);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+        content: "";
+        opacity: 0;
+        background-color: #ffffff;
+        -webkit-transition: all 0.4s;
+        transition: all 0.4s;
+        -webkit-transition-delay: 0.6s;
+        transition-delay: 0.6s;
+      }
+      figure.snip0015 h2,
+      figure.snip0015 p {
+        margin: 0 0 5px;
+        opacity: 0;
+        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+        transition: opacity 0.35s, -webkit-transform 0.35s, -moz-transform 0.35s,
+          -o-transform 0.35s, transform 0.35s;
+      }
+      figure.snip0015 h2 {
+        word-spacing: -0.15em;
+        font-weight: 300;
+        text-transform: uppercase;
+        -webkit-transform: translate3d(0%, 50%, 0);
+        transform: translate3d(0%, 50%, 0);
+        -webkit-transition-delay: 0.3s;
+        transition-delay: 0.3s;
+      }
+      figure.snip0015 h2 span {
+        font-weight: 800;
+      }
+      figure.snip0015 p {
+        font-weight: 200;
+        -webkit-transition-delay: 0s;
+        transition-delay: 0s;
+      }
+      figure.snip0015 a {
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        color: #ffffff;
+      }
+      figure.snip0015:hover img {
+        opacity: 0.35;
+      }
+      figure.snip0015:hover figcaption h2 {
+        opacity: 1;
+        -webkit-transform: translate3d(0%, 0%, 0);
+        transform: translate3d(0%, 0%, 0);
+        -webkit-transition-delay: 0.3s;
+        transition-delay: 0.3s;
+      }
+      figure.snip0015:hover figcaption p {
+        opacity: 0.9;
+        -webkit-transition-delay: 0.6s;
+        transition-delay: 0.6s;
+      }
+      figure.snip0015:hover figcaption::before {
+        background: rgba(255, 255, 255, 0);
+        top: 30px;
+        bottom: 30px;
+        opacity: 1;
+        -webkit-transition-delay: 0s;
+        transition-delay: 0s;
+      }
+      
     </style>
+    
+    
     <title>메인홈</title>
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
@@ -66,22 +182,27 @@ prefix="c"%>
 
       <!-- Am!go 소개 -->
       <div class="container text-center" id="AmigoTop">
-        <div class="amigoMainImg">
+        <figure class="snip0015">
           <img
-            src="/amigo/resources/img/amigoLoginImg.png"
+            src="/amigo/resources/img/MainPageImg.png"
             class="img-fluid"
             alt="amigoPet"
           />
-        </div>
+          <figcaption>
+        <h2>반가워요!! <span>AM!GO</span> 입니다!</h2>
+        <p>당신곁에 항상 있는 우리의 반려동물들 그들을 위해서 만들어진 곳이예요.</p>
+        <p>혹시 당신의 AM!GO가 집에 혼자 남겨져있나요?</p>
+        <p>걱정말고 AM!GO의 펫시터 앱을 이용해보세요 !</p>
+        <a href="#"></a>
+      </figcaption>
+    </figure>
       </div>
       <!--소개 종료-->
 
       <!-- AM!GO 서비스 -->
       <!-- 차후에 아이콘으로 대체할것임.-->
-      <div class="container overflow-hidden">
-        <div>
-          <h4>AM!GO서비스</h4>
-        </div>
+      <div class="container overflow-hidden mb-5 mt-5">
+          <h4>AM!GO서비스</h4>       
         <div class="row gy-5">
           <!-- 펫시터 -->
           <div class="col-6">
@@ -90,7 +211,7 @@ prefix="c"%>
                 <img
                   src="/amigo/resources/img/petsitter.png"
                   class="img-fluid"
-                  alt="..."
+                  alt="sitter"                 
                 />
               </a>
             </div>
@@ -103,7 +224,7 @@ prefix="c"%>
                 <img
                   src="/amigo/resources/img/walking.png"
                   class="img-fluid"
-                  alt="..."
+                  alt="trail"
                 />
               </a>
             </div>
@@ -116,7 +237,7 @@ prefix="c"%>
                 <img
                   src="/amigo/resources/img/hp.png"
                   class="img-fluid"
-                  alt="..."
+                  alt="hospital"
                 />
               </a>
             </div>
@@ -141,10 +262,14 @@ prefix="c"%>
       </div>
       <hr />
       <!-- 커뮤니티 -->
-      <div class="container">
-        <div>
-          <h4>커뮤니티</h4>
-          <a href="#">전체보기</a>
+      <div class="container mt-5">
+        <div class="row justify-content-between">
+        	<div class="col-4">
+        	  <h4>커뮤니티</h4>
+        	</div>
+        	<div class="col-4 text-end">
+         	  <a href="#" class="all-view">전체보기</a>
+         	</div>
         </div>
         <div class="row text-center">
           <a href="#">
@@ -169,9 +294,13 @@ prefix="c"%>
       <!-- 커뮤니티 종료-->
       <br />
       <!-- 실시간 후기 -->
-      <div>
+      <div class="row justify-content-between mt-5">
+      <div class="col-4">
         <h4>실시간 후기</h4>
-        <a href="#">전체보기</a>
+       </div>
+       <div class="col-4 text-end">
+        <a href="#" class="all-view">전체보기</a>
+        </div>
       </div>
       <div id="carouselExampleDark" class="carousel carousel-dark slide">
         <div class="carousel-indicators">
@@ -259,11 +388,15 @@ prefix="c"%>
       <!-- 후기 종료 -->
       <br />
       <!-- Q&A -->
-      <div>
-        <h4>Q&A</h4>
-        <a href="#">전체보기</a>
+      <div class="row justify-content-between mt-5">    
+       <div class="col-4">
+      	  	<h4>Q&A</h4>
+       </div>
+       <div class="col-4 text-end">
+       	    <a href="#" class="all-view">전체보기</a>
+       </div>
       </div>
-      <div class="card text-center" style="width: 18rem">
+      <div class="container card text-center" style="width: 18rem">
         <img class="card-img-top" src="" alt="Card image cap" />
         <div class="card-body">
           <p class="card-text">

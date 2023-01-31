@@ -28,8 +28,7 @@
     <![endif]-->
       <style>
       .card {
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
-          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+       box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
       }
 
       .card {
@@ -49,6 +48,9 @@
         min-height: 1px;
         padding: 1rem;
       }
+      
+      
+      
     </style>
 </head>
 <body>
@@ -80,6 +82,8 @@
 					<a href="user_board_list.do">전체글</a> 
 	   				<a href="user_board_list_Like.do">인기글</a> 
 	   				<a href="">펫시터 커뮤니티</a>
+	   			</div>
+	   			
 	   			</div>
 	   		<div class="row mt-3 justify-content-end">
 	   			<div class="col-auto">
@@ -143,7 +147,7 @@
                       <!-- 제목/ -->
                       <p class="text-muted">
                       <!-- 작성자 -->
-                        <a class="nickName">${ board.getUser_nick() }</a>
+                        <a class="nickName">${ board.getUser_nick() }</a>&nbsp;
                        <!-- 작성자/ -->
                        <!-- 작성일 -->
                         <span class="text-secondary font-weight-bold">
@@ -152,8 +156,8 @@
                       </p>
                     </div>
                     <div class="text-muted small text-center align-self-center">
-                      <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>
-                      <span><ii class="fa fa-heart" aria-hidden="true"></i>${ board.getLike_cnt() }</span>
+                      <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>&nbsp;&nbsp;
+                      <span><ii class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;${ board.getLike_cnt() }</span>
                     	</div>
                  		</div>
                 		</div>

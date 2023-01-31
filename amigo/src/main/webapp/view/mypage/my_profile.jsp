@@ -11,8 +11,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-	
+    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
+   
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <!--[if lt IE 9]>
@@ -20,14 +20,14 @@
     <![endif]-->
 </head>
 <body>
-	
-	<%@include file="/includes/header.jsp" %>
-		 <!-- Profile nav -->
+   
+   <%@include file="/includes/header.jsp" %>
+       <!-- Profile nav -->
     <!-- user의 프로필 정보를 가져와야합니다. -->
     <form action="#">
     <div class="myProfileMainBox">
       <div class="profileNav">
-       	<a href="#">회원이름</a>
+          <a href="#"> ${ user.getUser_name() } </a>
         <!-- 이곳에 유저의 이름이 들어와야합니다. -->
         <h4>안녕하세요!</h4>
         <!-- 프로필 사진 업로드 -->
@@ -53,14 +53,14 @@
       <!-- 이메일 // 이메일 정보가 가져와져야합니다. -->
       <label for="userEmail" class="form-label">이메일 아이디</label>
       <div class="input-group mb-3">
-        <input type="email" class="form-control" id="userEmail" placeholder="userEmail" aria-describedby="button-addon2" disabled>
+        <input type="email" class="form-control" id="userEmail" value="${ user.getUser_email() }" aria-describedby="button-addon2" disabled>
         <button class="btn btn-outline-secondary" type="submit" id="button-addon2">변경</button>
       </div>
       <!-- 이메일 end -->
       <!-- 닉네임 변경 // 유저의 닉네임을 불러와줘야합니다. -->
-      <label for="userEmail" class="form-label">닉네임 변경</label>
+      <label for="userNickname" class="form-label">닉네임 변경</label>
       <div class="input-group mb-3">
-        <input type="nickname" class="form-control" id="userNickname" aria-describedby="button-addon2" required>
+        <input type="nickname" class="form-control" id="userNickname" aria-describedby="button-addon2" value="${ user.getUser_nick() }">
         <button class="btn btn-outline-secondary" type="submit" id="button-addon2">변경</button>
       </div>
       <!-- 닉네임 변경 end -->
@@ -74,7 +74,7 @@
       <!-- 후대폰 번호 변경 -->
       <label for="userPhone" class="form-label">핸드폰 번호</label>
       <div class="input-group mb-3">
-        <input type="tel" class="form-control" id="phone">
+        <input type="tel" class="form-control" id="phone" value="${ user.getUser_phone() }">
         <button class="btn btn-outline-secondary" type="submit" id="button-addon2">변경</button>
       </div>
        <!-- 후대폰 번호 변경 end -->
@@ -82,22 +82,20 @@
        <!-- 다음 api 적용예정 -->
        <label for="addr" class="form-label">내 주소</label>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" id="addr">
+        <input type="text" class="form-control" id="addr" value="${ user.getUser_addr() }">
         <button class="btn btn-outline-secondary" type="submit" id="button-addon2">주소변경</button>  
+      </div>
       </div>    
       
       <!-- 주소 변경 end -->
     <!-- 프로필 상세 end-->
   </form>
+  
+  
     <!-- profile page 종료 -->
     <!-- Footer -->
     <footer class="bg-primary text-center text-white">
       <!-- Grid container -->
-      <div class="container">
-        <!-- Section: Social media -->
-        <section class="mb-4"></section>
-        <!-- Section: Form -->
-      </div>
       <!-- Grid container -->
       <!-- Copyright -->
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
@@ -108,14 +106,14 @@
     </footer>
     <!-- Footer 끝 -->
 
-    <script src="js/script.js"></script>
+   
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
     <![endif]-->
     
     <!-- 이곳은 푸터가 조금 다르기 때문에 직접 적용해줬음
-	<@include file="/includes/footer.jsp" %>
-	-->
-	
+   <@include file="/includes/footer.jsp" %>
+   -->
+   
 </body>
 </html>
