@@ -1,6 +1,6 @@
 package com.lec.amigo.vo;
 
-
+import org.springframework.web.multipart.MultipartFile;
 
 public class DogVO {
 
@@ -14,11 +14,10 @@ public class DogVO {
 	private double dog_weight;
 	private boolean dog_neutered;
 	private boolean dog_rabies_vacc;
-	private String dog_image_url;
+	private String dog_image_file;
 	private String dog_notice;
 	private boolean dog_terms;
-	
-	
+	private MultipartFile uploadFile;
 	public int getDog_no() {
 		return dog_no;
 	}
@@ -73,11 +72,11 @@ public class DogVO {
 	public void setDog_rabies_vacc(boolean dog_rabies_vacc) {
 		this.dog_rabies_vacc = dog_rabies_vacc;
 	}
-	public String getDog_image_url() {
-		return dog_image_url;
+	public String getDog_image_file() {
+		return dog_image_file;
 	}
-	public void setDog_image_url(String dog_image_url) {
-		this.dog_image_url = dog_image_url;
+	public void setDog_image_file(String dog_image_file) {
+		this.dog_image_file = dog_image_file;
 	}
 	public String getDog_notice() {
 		return dog_notice;
@@ -91,15 +90,20 @@ public class DogVO {
 	public void setDog_terms(boolean dog_terms) {
 		this.dog_terms = dog_terms;
 	}
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
 	@Override
 	public String toString() {
 		return "DogVO [dog_no=" + dog_no + ", user_no=" + user_no + ", dog_name=" + dog_name + ", dog_gender="
 				+ dog_gender + ", dog_breeds=" + dog_breeds + ", dog_birth=" + dog_birth + ", dog_weight=" + dog_weight
-				+ ", dog_neutered=" + dog_neutered + ", dog_rabies_vacc=" + dog_rabies_vacc + ", dog_image_url="
-				+ dog_image_url + ", dog_notice=" + dog_notice + ", dog_terms=" + dog_terms + "]";
+				+ ", dog_neutered=" + dog_neutered + ", dog_rabies_vacc=" + dog_rabies_vacc + ", dog_image_file="
+				+ dog_image_file + ", dog_notice=" + dog_notice + ", dog_terms=" + dog_terms + ", uploadFile="
+				+ uploadFile + "]";
 	}
-
-	
 	
 	
 }

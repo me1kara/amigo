@@ -22,7 +22,7 @@ public class DogRowMapper implements RowMapper<DogVO> {
 		dog.setDog_weight(rs.getDouble("dog_weight"));
 		dog.setDog_neutered(rs.getBoolean("dog_neutered"));
 		dog.setDog_rabies_vacc(rs.getBoolean("dog_rabies_vacc"));
-		dog.setDog_image_url(rs.getString("dog_image_url"));
+		dog.setDog_image_file(rs.getString("dog_image_file"));
 		dog.setDog_notice(rs.getString("dog_notice"));
 		dog.setDog_terms(rs.getBoolean("dog_terms"));
 		return dog;
