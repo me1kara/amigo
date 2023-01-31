@@ -50,6 +50,28 @@
       }
       
       
+      .udb-header-menu {
+      font-family: "Jalnan";
+      	padding:15px;	
+      }
+      
+      .ubd-header-title{
+       font-family: "Jalnan";
+       font-size:40px;
+       
+      }
+      
+       .ubd-header-menu:link {
+        color: gray;
+      }
+      .ubd-header-menu:visited {
+        color: gray;
+      }
+      .ubd-header-menu:hover {
+        color: #189cc4;
+      }
+      
+      
       
     </style>
 </head>
@@ -65,7 +87,7 @@
 
 	<div class="container" align="left">
 		<div class="mt-4 p-5">
-			<h3>유저 커뮤니티</h3>
+			<p class="ubd-header-title">유저 커뮤니티</p>
 			<c:if test="${ boardList.isEmpty() }">
 				<h5><p class="bg-danger text-white">등록된 게시판 정보가 존재하지 않습니다!!</p></h5>
 			</c:if>
@@ -80,22 +102,22 @@
 				
 				
 			<!-- 상단 메뉴 -->
-	   		<div class="row mt-3 justify-content-end">
+	   		<div class="row justify-content-between">
 	   			<div class="col-auto">
-					<a href="user_board_list.do">전체글</a> 
-	   				<a href="user_board_list_Like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a> 
-	   				<a href="">펫시터 커뮤니티</a>
+					<a class="ubd-header-menu" href="user_board_list.do">전체글</a>&nbsp;&nbsp;
+	   				<a class="ubd-header-menu" href="user_board_list_Like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a>&nbsp;&nbsp;
+	   				<a class="ubd-header-menu" href="">펫시터커뮤니티</a>
 	   			</div>
-	   			
-	   			</div>
-	   		<div class="row mt-3 justify-content-end">
-	   			<div class="col-auto">
+	   			   	<div class="col-auto">
 					<select class="form-select" id="searchCategory" name="searchCategory" onchange="chageSelect()">
 				    	<option value="말머리">말머리</option>							
 				    	<option value="자랑글">자랑글</option>						
 				    	<option value="자유글">자유글</option>							
 				    	<option value="질문">질문</option>										
 					</select>
+	   			  </div>
+	   		
+	
 					
 					<script type="text/javascript">
 					
@@ -118,7 +140,7 @@
 					}
 					</script>
 					
-				</div> 
+				
 			</div>
 		</form> <!-- getBoardList.do -->
 
@@ -126,7 +148,8 @@
 					<c:forEach  var="board" items="${ boardList }">
                     <div class="container">
             <!-- Forum List -->
-            <div class="inner-main-body p-2 p-sm-3 forum-content show">
+            <!-- div를 눌러서 접속 될수 있게 만듦 -->
+            <div class="inner-main-body p-2 p-sm-3 forum-content show"  style="cursor: pointer;" onclick="location.href='user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}'">
               <div class="card mb-2">
                 <div class="card-body p-2 p-sm-3">
                   <div class="media forum-item">

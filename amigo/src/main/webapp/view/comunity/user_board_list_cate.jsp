@@ -28,8 +28,8 @@
     <![endif]-->
       <style>
       .card {
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
-          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+       .card {
+       box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
       }
 
       .card {
@@ -48,6 +48,11 @@
         flex: 1 1 auto;
         min-height: 1px;
         padding: 1rem;
+      }
+      
+      .text-body {
+     
+      }
       }
     </style>
 </head>
@@ -120,7 +125,7 @@
 					<c:forEach  var="board" items="${ boardList }">
                     <div class="container">
             <!-- Forum List -->
-            <div class="inner-main-body p-2 p-sm-3 forum-content show">
+         <div class="inner-main-body p-2 p-sm-3 forum-content show"  style="cursor: pointer;" onclick="location.href='user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}'">
               <div class="card mb-2">
                 <div class="card-body p-2 p-sm-3">
                   <div class="media forum-item">
@@ -153,8 +158,8 @@
                       </p>
                     </div>
                     <div class="text-muted small text-center align-self-center">
-                      <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>
-                      <span><ii class="fa fa-heart" aria-hidden="true"></i>${ board.getLike_cnt() }</span>
+                     <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>&nbsp;&nbsp;
+                      <span><ii class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;${ board.getLike_cnt() }</span>
                     	</div>
                  		</div>
                 		</div>

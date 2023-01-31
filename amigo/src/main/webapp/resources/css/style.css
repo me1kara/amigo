@@ -15,7 +15,7 @@
   font-family: "Jalnan";
   font-weight: normal;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot");ㅌ
   src: url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot?#iefix")
       format("embedded-opentype"),
     url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff2")
@@ -227,7 +227,7 @@ a.button {
   box-shadow: 0px 0px 0px 0px #1e8185;
 }
 
-@media (max-width: 720px) {
+
   * {
     margin: 0;
     padding: 0;
@@ -404,7 +404,6 @@ a.button {
     outline: none !important;
     box-shadow: none !important;
   }
-}
 /*  
    Main css
 */
