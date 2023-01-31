@@ -2,8 +2,35 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,100);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 /* 리뷰 import */
+/* 웹폰트 */
 
-/* 글씨체 전체 */
+@font-face {
+    font-family: 'Jalnan';
+    font-weight: normal;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.ttf') format("truetype");
+    font-display: swap;
+}
+
+
+/* 웹폰트 */
+@font-face {
+    font-family: 'Jalnan';
+    font-weight: normal;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.ttf') format("truetype");
+    font-display: swap;
+}
+
+/* 글씨체 전체 
 body {
 	
   font-family: "Roboto", sans-serif;
@@ -13,7 +40,32 @@ body {
   font-size: 90%;
   
 }
-/* 글씨체 전체/ */
+
+/* 웹폰트2 */
+/* CSS스타일시트상에 적용방법 아래 두가지중 하나를 선택하여 사용하면 됩니다.  */
+
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+@import url(https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css);
+
+/*
+.선택자{
+font-famliy:'NanumSquare',san-serif;
+font-size:17px;
+line-height:1.5;
+}
+*/
+
+/* -또는 아래와 같은 적용이 가능합니다.- */
+
+body{
+font-famliy:'NanumSquare',san-serif;
+font-size:17px;
+line-height:1.5;
+}
+
+/* 위처럼 적용시 body에 속해 있는 모든 폰트가 나눔스퀘어로 적용됨을 알수 있습니다.*/
+
+
 
 /* main 사진들 */
 
@@ -328,19 +380,6 @@ a.button {
    Main css
 */
 
-/*
-글씨체
-*/
-/* .mypage_link {
-    text-decoration: none;
-    color: black;
-    font-family: "Jalnan";
-    font-size: 100%;
-  }
-  h3 {
-    font-family: "Jalnan", sans-serif;
-    font-size: 150%;
-  } */
 /* 버튼 */
 .divider:after,
 .divider:before {

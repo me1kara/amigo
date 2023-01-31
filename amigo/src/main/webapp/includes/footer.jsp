@@ -39,11 +39,7 @@
 <script>
 <% if(session.getAttribute("user")!=null){
 	
-	List<ChatRoom> room_list = null;
-	if((List)session.getAttribute("chat_room_list")!=null){	
-	room_list = (List)session.getAttribute("chat_room_list"); 
-	}
-			
+	List<ChatRoom> room_list = (List)session.getAttribute("chat_room_list");
 	if(room_list!=null){
 	%>
 	

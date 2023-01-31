@@ -100,16 +100,16 @@
 						var selectList = document.getElementById("searchCategory")
 						
 						if(selectList.options[selectList.selectedIndex].value == "말머리"){
-							location.href = "user_board_list.do?";
+							location.href = "user_board_list.do";
 						}
 						if(selectList.options[selectList.selectedIndex].value == "자랑글"){
-							location.href = "user_board_cate.do?ubd_cate=자랑글&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}";
+							location.href = "user_board_cate.do?ubd_cate=자랑글";
 						}
 						if(selectList.options[selectList.selectedIndex].value == "자유글"){
-							location.href = "user_board_cate.do?ubd_cate=자유글&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}";
+							location.href = "user_board_cate.do?ubd_cate=자유글";
 						}
 						if(selectList.options[selectList.selectedIndex].value == "질문"){
-							location.href = "user_board_cate.do?ubd_cate=질문&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}";
+							location.href = "user_board_cate.do?ubd_cate=질문";
 						}
 					}
 					</script>
@@ -179,17 +179,17 @@
 				<c:set var="sw" value="${searchVO.getSearchWord()}"/>
 																
 				<c:if test="${ fp != 1 }">
-					<li class="page-item"><a href="user_board_list.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
-					<li class="page-item"><a href="user_board_list.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-backward"></i></a></li>				
+					<li class="page-item"><a href="user_board_list_Like.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
+					<li class="page-item"><a href="user_board_list_Like.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-backward"></i></a></li>				
 				</c:if>
 			
 				<c:forEach var="page" begin="${fp}" end="${lp}">
-					<li class="page-item ${cp==page ? 'active' : ''}"><a href="user_board_list.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link">${page}</a></li>
+					<li class="page-item ${cp==page ? 'active' : ''}"><a href="user_board_list_Like.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link">${page}</a></li>
 				</c:forEach>
 				
 				<c:if test="${ lp < tp }">
-					<li class="page-item "><a href="user_board_list.do?curPage=${lp+ps}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-forward"></i></a></li>				
-					<li class="page-item"><a href="user_board_list.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>				
+					<li class="page-item "><a href="user_board_list_Like.do?curPage=${lp+ps}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-forward"></i></a></li>				
+					<li class="page-item"><a href="user_board_list_Like.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>				
 				</c:if>
 			</ul> <!-- pagination -->	
 	

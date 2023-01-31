@@ -16,6 +16,7 @@ public interface BoardService {
 	
 	// 페이징 관련
 	int getTotalRowCount(SearchVO searchVO);
+	int getCateRowCount(SearchVO searchVO, BoardVO board);
 	
 	// 조회수
 	void updateCount(int ubd_no);
@@ -33,13 +34,14 @@ public interface BoardService {
 	BoardVO insertBoard(BoardVO board);
 	
 	// 카테고리별 리스트
-	List<BoardVO> selectCate(BoardVO board);
+	List<BoardVO> selectCate(BoardVO board, SearchVO searchVO);
 	
 	// 좋아요 했는지 찾기
 	int findHeart(int user_no, int ubd_no);
 
 	// 좋아요 등록
 	int insertHeart(HeartVO heart);
+
 
 	
 
