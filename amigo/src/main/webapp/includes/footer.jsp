@@ -39,8 +39,12 @@
 <script>
 <% if(session.getAttribute("user")!=null){
 	
-	List<ChatRoom> room_list = (List)session.getAttribute("chat_room_list");
-	if(!room_list.isEmpty() && room_list!=null){
+	List<ChatRoom> room_list = null;
+	if((List)session.getAttribute("chat_room_list")!=null){	
+	room_list = (List)session.getAttribute("chat_room_list"); 
+	}
+			
+	if(room_list!=null){
 	%>
 	
 	var url = "ws://localhost:8088/amigo/chatHandler.do";

@@ -51,9 +51,9 @@ public class SitterDAO {
 	
 
 	
-	public List<SitterVO> getSitList(int user_no) {
-		Object[] args = {user_no};
-		return jdbcTemplate.query(selectSitListByUserNo, args, new SitRowMapper());
+	public List<SitterVO> getSitList(SitterVO svo) {
+		
+		return jdbcTemplate.query(selectSitter, new SitRowMapper());
 	}
 	
 	public SitterVO getSitter(int sit_no) {

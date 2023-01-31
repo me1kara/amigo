@@ -18,11 +18,12 @@
 <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
 
 <%
-	UserVO user = new UserVO();
+	UserVO user = (UserVO)session.getAttribute("user");
+
 	user.setUser_name(user.getUser_name());  // 일단 이곳은 유저 VO를 가져오도록 동작->유저네임 임의 세팅 후 동작 시켜봄, 즉 더미
 	user.setUser_phone(user.getUser_phone());
 	user.setUser_addr(user.getUser_addr());
-	session.setAttribute("user", user);
+
 	System.out.println("안녕?"); // 일단 데이
 
 %><!-- 스크립트는 중간에 작성하였습니다 230127 현재 흡연여부, 현재직종만 적용. -->
@@ -47,7 +48,7 @@
 		<div class="container col-md-6">
 		
 			<hr>
-			<form role="form" action="sitter_join.do" method="post" onSubmit="return checkData();">
+			<form role="form" action="/amigo/view/apply/sitter_join.do" method="post" onSubmit="return checkData();">
 			
 				<input type="hidden" class="form-control" name="user_no" value="${ sessionScope.user.getUser_no() }">
 				<input type="hidden" class="form-control" name="user_name" value="${ sessionScope.user.getUser_name() }" >
@@ -64,13 +65,13 @@
 				<!-- 프로필 사진 업로드 -->
 				<div class="form-group text-center">
 						<label for="sit_photo"></label>
-						<img class="profile-user-img img-fluid img-circle"
-						src="https://lh3.googleusercontent.com/LfmMVU71g-HKXTCP_QWlDOemmWg4Dn1rJjxeEsZKMNaQprgunDTtEuzmcwUBgupKQVTuP0vczT9bH32ywaF7h68mF-osUSBAeM6MxyhvJhG6HKZMTYjgEv3WkWCfLB7czfODidNQPdja99HMb4qhCY1uFS8X0OQOVGeuhdHy8ln7eyr-6MnkCcy64wl6S_S6ep9j7aJIIopZ9wxk7Iqm-gFjmBtg6KJVkBD0IA6BnS-XlIVpbqL5LYi62elCrbDgiaD6Oe8uluucbYeL1i9kgr4c1b_NBSNe6zFwj7vrju4Zdbax-GPHmiuirf2h86eKdRl7A5h8PXGrCDNIYMID-J7_KuHKqaM-I7W5yI00QDpG9x5q5xOQMgCy1bbu3St1paqt9KHrvNS_SCx-QJgBTOIWW6T0DHVlvV_9YF5UZpN7aV5a79xvN1Gdrc7spvSs82v6gta8AJHCgzNSWQw5QUR8EN_-cTPF6S-vifLa2KtRdRAV7q-CQvhMrbBCaEYY73bQcPZFd9XE7HIbHXwXYA=s200-no"
-               			class="picture-src"
-           	    		id="wizardPicturePreview"
-                	    title=""
-                	    name="sit_photo"
-						alt="User profile picture">
+						<img
+                src="https://lh3.googleusercontent.com/LfmMVU71g-HKXTCP_QWlDOemmWg4Dn1rJjxeEsZKMNaQprgunDTtEuzmcwUBgupKQVTuP0vczT9bH32ywaF7h68mF-osUSBAeM6MxyhvJhG6HKZMTYjgEv3WkWCfLB7czfODidNQPdja99HMb4qhCY1uFS8X0OQOVGeuhdHy8ln7eyr-6MnkCcy64wl6S_S6ep9j7aJIIopZ9wxk7Iqm-gFjmBtg6KJVkBD0IA6BnS-XlIVpbqL5LYi62elCrbDgiaD6Oe8uluucbYeL1i9kgr4c1b_NBSNe6zFwj7vrju4Zdbax-GPHmiuirf2h86eKdRl7A5h8PXGrCDNIYMID-J7_KuHKqaM-I7W5yI00QDpG9x5q5xOQMgCy1bbu3St1paqt9KHrvNS_SCx-QJgBTOIWW6T0DHVlvV_9YF5UZpN7aV5a79xvN1Gdrc7spvSs82v6gta8AJHCgzNSWQw5QUR8EN_-cTPF6S-vifLa2KtRdRAV7q-CQvhMrbBCaEYY73bQcPZFd9XE7HIbHXwXYA=s200-no"
+                class="picture-src"
+                id="wizardPicturePreview"
+                name="sit_photo"
+                title=""
+              />
 					<input type="file" class="form-control" name="sit_photo" value="이미지없어" required> 
 				</div>
 				<br>
@@ -107,7 +108,7 @@
 			            alert("현재 하시는 일을 입력해주세요");								// 현재 하는일에서 직접 입력을 체크하면 input을 꼭 쓰도록 함.
 			        	return false;   // alert 기능 확인함(230125)
 			        }
-			        alert("펫시터 지원 신청이 접수되었습니다.")
+			        alert("펫시터 지원 신청이 접수되었습니다. 신청결과는 개별 통보합니다.")
 			        return true;
 				}
 				</script>

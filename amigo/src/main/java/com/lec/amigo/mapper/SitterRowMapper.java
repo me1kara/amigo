@@ -13,7 +13,8 @@ public class SitterRowMapper implements RowMapper<SitterVO>{
 	// Sitter 테이블에 Sit_no 인 시터번호는 Auto-Increment로 자동증가 시퀀스임. 그래서 추가안함
 	@Override
 	public SitterVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		SitterVO sit = new SitterVO();          
+		SitterVO sit = new SitterVO();  
+		sit.setSit_no(rs.getInt("sit_no"));
 		sit.setUser_no(rs.getInt("user_no"));                       
 		sit.setSit_gender(rs.getString("sit_gender"));      
 		sit.setSit_birth(rs.getString("sit_birth"));        
