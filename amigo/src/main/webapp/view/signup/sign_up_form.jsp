@@ -153,11 +153,11 @@
 			            type:'post', //POST 방식으로 전달
 			            data:{user_email:user_email},
 			            success:function(result){ //컨트롤러에서 넘어온 값을 받는다 
-			                if(result != "fail"){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 이메일
+			                if(result != "fail"){ //result가 'fail'이 아니면 -> 사용 가능한 이메일
 			                	confirmEmail.style.color = correctColor;
 			                	confirmEmail.innerHTML = "사용 가능한 이메일입니다.";
 			                	$('#user_email').attr("check_email", "success");
-			                } else { // cnt가 1일 경우 -> 이미 존재하는 이메일
+			                } else { // fail리면 -> 이미 존재하는 이메일
 			                	confirmEmail.style.color = wrongColor;
 			                	confirmEmail.innerHTML = "이미 존재하는 이메일입니다.";
 			                	$('#user_email').attr("check_email", "fail");

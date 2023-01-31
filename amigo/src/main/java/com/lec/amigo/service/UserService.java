@@ -7,6 +7,8 @@ public interface UserService {
 
 	UserVO getUser(String email);
 	UserVO insertUser(UserVO userVO);
+	UserVO updateUser(UserVO userVO);
+	void revokeUser(int user_no);
 
 	public void sendEmail(UserVO vo, String div);
 	public int searchPw(UserVO vo);

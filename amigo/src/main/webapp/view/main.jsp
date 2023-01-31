@@ -144,10 +144,10 @@ prefix="c"%>
       <div class="container">
         <div>
           <h4>커뮤니티</h4>
-          <a href="#">전체보기</a>
+          <a href="user_board_list.do">전체보기</a>
         </div>
         <div class="row text-center">
-          <a href="#">
+          <a href="user_board_list.do">
             <img
               src="/amigo/resources/img/community.png"
               class="img-fluid"

@@ -28,7 +28,7 @@ prefix="c"%>
     <div class="container" align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
         <li class="list-group-item">
-          <a href="<%=request.getContextPath() %>/view/mypage/my_profile.jsp" class="mypage_link">내 프로필 관리</a>
+          <a href="<%=request.getContextPath() %>/my_profile.do" class="mypage_link">내 프로필 관리</a>
           <img src="../images/codeit.png" alt="코드잇 이미지" />
         </li>
         <li class="list-group-item">

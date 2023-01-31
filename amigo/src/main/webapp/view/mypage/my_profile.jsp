@@ -24,10 +24,10 @@
 	<%@include file="/includes/header.jsp" %>
 		 <!-- Profile nav -->
     <!-- user의 프로필 정보를 가져와야합니다. -->
-    <form action="#">
+    <form action="updateUser.do" method="post" enctype="multipart/form-data">
     <div class="myProfileMainBox">
       <div class="profileNav">
-       	<a href="#">회원이름</a>
+       	<a href="#"> ${ user.getUser_name() } </a>
         <!-- 이곳에 유저의 이름이 들어와야합니다. -->
         <h4>안녕하세요!</h4>
         <!-- 프로필 사진 업로드 -->
@@ -40,7 +40,7 @@
                 id="wizardPicturePreview"
                 title=""
               />
-              <input type="file" id="wizard-picture" class="" />
+              <input type="file" name="uploadFile" id="wizard-picture" class="" aria-describedby="uploadFile" aria-label="Upload"/>
             </div>
             <h6 class="">사진업로드</h6>
           </div>
@@ -53,51 +53,46 @@
       <!-- 이메일 // 이메일 정보가 가져와져야합니다. -->
       <label for="userEmail" class="form-label">이메일 아이디</label>
       <div class="input-group mb-3">
-        <input type="email" class="form-control" id="userEmail" placeholder="userEmail" aria-describedby="button-addon2" disabled>
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">변경</button>
+        <input type="email" class="form-control" id="userEmail" value="${ user.getUser_email() }" disabled>
       </div>
       <!-- 이메일 end -->
       <!-- 닉네임 변경 // 유저의 닉네임을 불러와줘야합니다. -->
-      <label for="userEmail" class="form-label">닉네임 변경</label>
+      <label for="userNickname" class="form-label">닉네임 변경</label>
       <div class="input-group mb-3">
-        <input type="nickname" class="form-control" id="userNickname" aria-describedby="button-addon2" required>
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">변경</button>
+        <input type="text" class="form-control" id="userNickname" value="${ user.getUser_nick() }">
       </div>
       <!-- 닉네임 변경 end -->
       <!-- 비밀번호 변경 -->
       <label for="userPassword" class="form-label">비밀번호 변경</label>
       <div class="input-group mb-3">
-        <input type="password" class="form-control" id="userPassword" aria-describedby="button-addon2" >
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">변경</button>
+        <input type="password" class="form-control" id="userPassword" value="${ user.getUser_pw() }">
       </div>
       <!-- 비밀번호 변경 end -->
       <!-- 후대폰 번호 변경 -->
       <label for="userPhone" class="form-label">핸드폰 번호</label>
       <div class="input-group mb-3">
-        <input type="tel" class="form-control" id="phone">
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">변경</button>
+        <input type="tel" class="form-control" id="phone" value="${ user.getUser_phone() }">
       </div>
        <!-- 후대폰 번호 변경 end -->
        <!-- 주소 변경 -->
        <!-- 다음 api 적용예정 -->
        <label for="addr" class="form-label">내 주소</label>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" id="addr">
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">주소변경</button>  
+        <input type="text" class="form-control" id="addr" value="${ user.getUser_addr() }">
+      </div>
       </div>    
       
       <!-- 주소 변경 end -->
     <!-- 프로필 상세 end-->
+        <button class="btn btn-outline-secondary" type="submit">변경 완료</button>  
+        <input type="hidden" name="user_no" value="${ user.getUser_no()}">
   </form>
+  
+  
     <!-- profile page 종료 -->
     <!-- Footer -->
     <footer class="bg-primary text-center text-white">
       <!-- Grid container -->
-      <div class="container">
-        <!-- Section: Social media -->
-        <section class="mb-4"></section>
-        <!-- Section: Form -->
-      </div>
       <!-- Grid container -->
       <!-- Copyright -->
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
@@ -108,7 +103,7 @@
     </footer>
     <!-- Footer 끝 -->
 
-    <script src="/amigo/resources/js/script.js"></script>
+   
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
     <![endif]-->
