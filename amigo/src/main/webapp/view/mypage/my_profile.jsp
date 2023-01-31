@@ -14,6 +14,13 @@
     <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
    
 <meta charset="UTF-8">
+<style>
+ .user-name {
+ 	  font-family: "Jalnan";
+ 	  font-size:20px;
+ 	  color:rgb(87, 160, 227);
+  }
+</style>
 <title>Insert title here</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -26,10 +33,12 @@
     <!-- user의 프로필 정보를 가져와야합니다. -->
     <form action="updateUser.do" method="post" enctype="multipart/form-data">
     <div class="myProfileMainBox">
-      <div class="profileNav">
-          <a href="#"> ${ user.getUser_name() } </a>
+      
+      <div class="container text-center">
+          <a class="user-name"> ${ user.getUser_name() } </a> 님
         <!-- 이곳에 유저의 이름이 들어와야합니다. -->
         <h4>안녕하세요!</h4>
+        </div>
         <!-- 프로필 사진 업로드 -->
         <div class="container">
           <div class="picture-container">
@@ -47,45 +56,47 @@
         </div>
         <!-- 프로필 사진 업로드 종료 -->
         <!-- profile nav end -->
-      </div>
+      
 
       <!-- 프로필 상세 -->     
       <!-- 이메일 // 이메일 정보가 가져와져야합니다. -->
       <label for="userEmail" class="form-label">이메일 아이디</label>
       <div class="input-group mb-3">
-        <input type="email" class="form-control" id="userEmail" value="${ user.getUser_email() }" disabled>
+        <input type="email" class="form-control" id="userEmail" name="user_email" value="${ user.getUser_email() }" disabled>
       </div>
       <!-- 이메일 end -->
       <!-- 닉네임 변경 // 유저의 닉네임을 불러와줘야합니다. -->
       <label for="userNickname" class="form-label">닉네임 변경</label>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" id="userNickname" value="${ user.getUser_nick() }">
+        <input type="text" class="form-control" id="userNickname" name="user_nick" value="${ user.getUser_nick() }">
       </div>
       <!-- 닉네임 변경 end -->
       <!-- 비밀번호 변경 -->
       <label for="userPassword" class="form-label">비밀번호 변경</label>
       <div class="input-group mb-3">
-        <input type="password" class="form-control" id="userPassword" value="${ user.getUser_pw() }">
+        <input type="password" class="form-control" id="userPassword" name="user_pw" value="${ user.getUser_pw() }">
       </div>
       <!-- 비밀번호 변경 end -->
       <!-- 후대폰 번호 변경 -->
       <label for="userPhone" class="form-label">핸드폰 번호</label>
       <div class="input-group mb-3">
-        <input type="tel" class="form-control" id="phone" value="${ user.getUser_phone() }">
+        <input type="tel" class="form-control" id="phone" name="user_phone" value="${ user.getUser_phone() }">
       </div>
        <!-- 후대폰 번호 변경 end -->
        <!-- 주소 변경 -->
        <!-- 다음 api 적용예정 -->
        <label for="addr" class="form-label">내 주소</label>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" id="addr" value="${ user.getUser_addr() }">
+        <input type="text" class="form-control" id="addr" name="user_addr" value="${ user.getUser_addr() }">
       </div>
       </div>    
       
       <!-- 주소 변경 end -->
     <!-- 프로필 상세 end-->
+    <div class="container text-center mb-5">
         <button class="btn btn-outline-secondary" type="submit">변경 완료</button>  
         <input type="hidden" name="user_no" value="${ user.getUser_no()}">
+        </div>
   </form>
   
   
