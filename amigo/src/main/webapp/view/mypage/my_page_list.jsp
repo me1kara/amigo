@@ -27,6 +27,11 @@ prefix="c"%>
     <!-- 마이페이지 시작 -->
     <div class="container" align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
+        <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
+       		<li class="list-group-item">
+       		   <a>관리자 ** ${ user.getUser_name() } ** 입니다</a>
+     	    </li>
+        </c:if>
         <li class="list-group-item">
           <a href="<%=request.getContextPath() %>/my_profile.do" class="mypage_link">내 프로필 관리</a>
           <img src="../images/codeit.png" alt="코드잇 이미지" />
@@ -54,8 +59,13 @@ prefix="c"%>
         <li class="list-group-item">
           <a href="account_controll.jsp" class="mypage_link">계정관리</a>
         </li>
+        <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
+       		<li class="list-group-item">
+       		   <a href="<%=request.getContextPath() %>/view/admin/admin_sitList.jsp" class="mypage_link">펫시터 회원관리</a>
+     	    </li>
+        </c:if>
         <li class="list-group-item">
-          <a href="../apply/insertSitter.do" class="mypage_link">펫시터 지원하기</a>
+          <a href="apply/sitter_join.do" class="mypage_link">펫시터 지원하기</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">펫시터모드로 전환</a>

@@ -16,7 +16,7 @@ public interface SitterService {
 	
 
 	SitterVO getSitter(int sit_no);
-	List<SitterVO> getSitList(int user_no);
+	List<SitterVO> getSitList(SitterVO svo);
 	SitterVO insertSitter(SitterVO svo);
 
 	int deleteSitter(int sit_no);
