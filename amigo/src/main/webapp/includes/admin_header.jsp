@@ -13,9 +13,7 @@
 
 <meta charset="UTF-8">
 <title>관리자 헤더</title>
-</head>
-
-	
+</head>	
 	
 		<div class="container">
 
