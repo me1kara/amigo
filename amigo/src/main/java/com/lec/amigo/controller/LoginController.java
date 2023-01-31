@@ -182,7 +182,7 @@ public class LoginController {
 	
 	// 회원 정보 수정
 	@RequestMapping(value="/updateUser.do", method = RequestMethod.POST)
-	public String updateUser(Model model, UserVO userVO) throws IOException {
+	public String updateUser(Model model, UserVO userVO, HttpSession sess) throws IOException {
 		
 		MultipartFile uploadFile = userVO.getUploadFile();
 		
@@ -196,7 +196,8 @@ public class LoginController {
 			userVO.setUser_photo(fileName+uniqueName);
 		}
 		
-		userService.updateUser(userVO);
+		// 바뀐 정보로 세션 정보 업데이트!
+		sess.setAttribute("user", userService.updateUser(userVO));
 		model.addAttribute("msg","정보가 정상적으로 수정되었습니다.");
 		model.addAttribute("url","my_profile.do");
 		

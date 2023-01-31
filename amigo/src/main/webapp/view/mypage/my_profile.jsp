@@ -24,10 +24,10 @@
 	<%@include file="/includes/header.jsp" %>
 		 <!-- Profile nav -->
     <!-- user의 프로필 정보를 가져와야합니다. -->
-    <form action="updateUser.do" method="post" enctype="multipart/form-data">
+    <form action="updateUser.do" method="post" enctype="multipart/form-data" onSubmit="return checkResult();">
     <div class="myProfileMainBox">
       <div class="profileNav">
-       	<a href="#"> ${ user.getUser_name() } </a>
+       	<a href="#"> ${ user.getUser_name() }님 </a>
         <!-- 이곳에 유저의 이름이 들어와야합니다. -->
         <h4>안녕하세요!</h4>
         <!-- 프로필 사진 업로드 -->
@@ -53,42 +53,86 @@
       <!-- 이메일 // 이메일 정보가 가져와져야합니다. -->
       <label for="userEmail" class="form-label">이메일 아이디</label>
       <div class="input-group mb-3">
-        <input type="email" class="form-control" id="userEmail" value="${ user.getUser_email() }" disabled>
+        <input type="email" class="form-control" id="userEmail" name="user_email" value="${ user.getUser_email() }" disabled>
       </div>
       <!-- 이메일 end -->
       <!-- 닉네임 변경 // 유저의 닉네임을 불러와줘야합니다. -->
       <label for="userNickname" class="form-label">닉네임 변경</label>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" id="userNickname" value="${ user.getUser_nick() }">
+        <input type="text" class="form-control" id="userNickname" name="user_nick" value="${ user.getUser_nick() }" onchange="checkNick();" check_nick="fail">
       </div>
+        <span id="confirmNick"></span><br>
       <!-- 닉네임 변경 end -->
       <!-- 비밀번호 변경 -->
       <label for="userPassword" class="form-label">비밀번호 변경</label>
       <div class="input-group mb-3">
-        <input type="password" class="form-control" id="userPassword" value="${ user.getUser_pw() }">
+        <input type="password" class="form-control" id="userPassword" name="user_pw" value="${ user.getUser_pw() }">
       </div>
       <!-- 비밀번호 변경 end -->
       <!-- 후대폰 번호 변경 -->
       <label for="userPhone" class="form-label">핸드폰 번호</label>
       <div class="input-group mb-3">
-        <input type="tel" class="form-control" id="phone" value="${ user.getUser_phone() }">
+        <input type="tel" class="form-control" id="phone" name="user_phone" value="${ user.getUser_phone() }">
       </div>
        <!-- 후대폰 번호 변경 end -->
        <!-- 주소 변경 -->
        <!-- 다음 api 적용예정 -->
        <label for="addr" class="form-label">내 주소</label>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" id="addr" value="${ user.getUser_addr() }">
+        <input type="text" class="form-control" id="addr" name="user_addr" value="${ user.getUser_addr() }">
       </div>
       </div>    
       
       <!-- 주소 변경 end -->
     <!-- 프로필 상세 end-->
         <button class="btn btn-outline-secondary" type="submit">변경 완료</button>  
-        <input type="hidden" name="user_no" value="${ user.getUser_no()}">
+        <input type="hidden" name="user_no" value="${ user.getUser_no()}"/>
+        <input type="hidden" name="user_email" value="${ user.getUser_email()}"/>
   </form>
   
-  
+			     <script type="text/javascript">
+			     function checkResult() {
+			     if ($('#userNickname').attr("check_nick") == "fail"){
+							    alert("사용중인 닉네임입니다. 다른 닉네임을 입력하세요.");
+							    $('#userNickname').focus();
+							    return false;
+			        } 
+			     	return true;
+			     }
+			     </script>
+			     
+			     
+  				<script>
+				// 닉네임 중복체크
+				function checkNick() {
+					var user_nick = $('#userNickname').val();
+					var confirmNick = document.getElementById('confirmNick');
+					var correctColor = "#69abce";	//맞았을 때 출력되는 색깔.
+					var wrongColor ="#ff0000";	    //틀렸을 때 출력되는 색깔
+					$.ajax({
+			            url:'nickCheck.do',       //Controller에서 요청 받을 주소
+			            type:'post',              //POST 방식으로 전달
+			            data:{user_nick:user_nick},
+			            success:function(result){ //컨트롤러에서 넘어온 값을 받는다 
+			                if(result != "fail"){ //result가 fail이 아니면 -> 사용 가능한 이메일
+			                	confirmNick.style.color = correctColor;
+			                	confirmNick.innerHTML = "사용 가능한 닉네임입니다.";
+			                	$('#userNickname').attr("check_nick", "success");
+			                } else { 
+			                	confirmNick.style.color = wrongColor;
+			                	confirmNick.innerHTML = "이미 존재하는 닉네임입니다.";
+			                	$('#userNickname').attr("check_nick", "fail");
+			                }
+			            },
+			            error:function(){
+			                alert("에러입니다");
+			            }
+			        });
+	              
+				};
+				</script>
+    
+    
     <!-- profile page 종료 -->
     <!-- Footer -->
     <footer class="bg-primary text-center text-white">

@@ -66,7 +66,7 @@
                     <label for="user_email">이메일주소*</label>
                     <input type="email" class="form-control" id="user_email" name="user_email" placeholder="이메일 주소" onchange="checkEmail();" check_email="fail" required>
                     <span id="confirmEmail"></span>
-                    <br>
+               	 </div>
                     <!-- 인증 시스템 -->
                     <button type="button" id="email_auth_btn" class="email_auth_btn">인증번호 받기</button>
                     <input type="text" placeholder="인증번호 입력" id="email_auth_key" onchange="email_auth_Confirm();">
@@ -79,7 +79,6 @@
             			}
                     }
                     </script>                  
-               	 </div>
                 	<!-- 인증 시스템/ -->
                 <div class="form-group">
                     <label for="password">비밀번호*</label>

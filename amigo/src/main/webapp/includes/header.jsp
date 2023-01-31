@@ -61,7 +61,7 @@
           </div>
           <hr/>
           <li class="nav-nickName">
-          	<a hraf="#">회원님</a>
+          	<a hraf="#">${ user.getUser_name() } 회원님</a>
           </li>
           <hr/>
           <li class="nav-item">
