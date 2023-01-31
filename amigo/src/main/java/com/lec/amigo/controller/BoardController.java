@@ -2,12 +2,11 @@ package com.lec.amigo.controller;
 
 import java.io.File;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -168,80 +167,14 @@ public class BoardController {
 	public String user_board_update(Model model, BoardVO board, SearchVO searchVO) {
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
-		return "view/comunity/user_board_update_form.jsp";
+		return "view/comunity/user_board_update.jsp";
 	}
 	
 	@RequestMapping(value="/user_board_update.do", method=RequestMethod.POST)
 	public String user_board_update(Model model, BoardVO board) {	
 		
-		List<MultipartFile> uploadFile = board.getUploadFile();
-		if (!uploadFile.isEmpty()) {
-			
-			List<Map<String, String>> uploadFileList = new ArrayList<>();
-
-			for(int i = 0; i < uploadFile.size(); i++) {
-			String fileRealName = uploadFile.get(i).getOriginalFilename(); // 파일 진짜 이름 가져오기
-				if(fileRealName != "") { 
-
-			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length()); // 확장자명 구하기
-			
-			UUID uuid = UUID.randomUUID();
-			String[] uuids = uuid.toString().split("-");
-			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
-			
-			Map<String, String> map = new HashMap<>();
-			map.put("fileRealName", fileRealName);
-			map.put("uniqueName", uniqueName);
-			
-			uploadFileList.add(map);
-				}
-			}
-
-			try {
-				for(int i=0; i<uploadFileList.size(); i++) {
-					File saveFile = new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName"));
-					uploadFile.get(i).transferTo(saveFile);
-				}
-
-				
-			} catch (Exception e) {
-				System.out.println("------------------------> 다중 파일 업로드 실패");
-				for(int i=0; i<uploadFile.size(); i++) {
-					new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName")).delete();
-				}
-				e.printStackTrace();
-			} 
-			ArrayList<String> DBUpload = new ArrayList<>();
-			for(int i=0; i<uploadFileList.size(); i++) {
-				DBUpload.add(uploadFileList.get(i).get("uniqueName"));
-			}
-			String DBUploadFile = StringUtils.join(DBUpload, ",");  // 리스트 값들을 ,로 연결해주는 자바에 있는 메서드
-			board.setUbd_file(DBUploadFile); // 파일 이름을 ,로 연결해서 DB에 저장\
-			
-		}	
-		
-		boardService.updateBoard(board);
-		model.addAttribute("msg","글이 정상적으로 수정되었습니다.");
-		model.addAttribute("url","user_board_list.do");
-		return "view/comunity/alert.jsp";
-	}
-	
-	@RequestMapping(value="/user_board_delete.do", method=RequestMethod.GET)
-	public String user_board_delete(BoardVO board) {
-		boardService.deleteBoard(board);
-		return "user_board_list.do";
-	}
-
-	
-	@RequestMapping(value="/user_board_insert.do", method=RequestMethod.GET)
-	public String user_board_insert() {
-		return "view/comunity/user_board_insert.jsp";
-	}
-	
-	@RequestMapping(value="/user_board_insert.do", method=RequestMethod.POST)
-	public String user_board_insert(Model model, BoardVO board) {
-		
-		List<MultipartFile> uploadFile = board.getUploadFile();
+		if(board.getUploadFile() != null) {
+		List<MultipartFile> uploadFile = board.getUploadFile(); 
 		
 		if (!uploadFile.isEmpty()) {
 
@@ -264,18 +197,13 @@ public class BoardController {
 			uploadFileList.add(map);
 			
 				}
-			}
-			
-			System.out.println(uploadFileList.size());
-			System.out.println(uploadFile.size());
-			
+			}			
 				
 			try {
 				for(int i=0; i<uploadFileList.size(); i++) {
 					File saveFile = new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName"));
 					uploadFile.get(i).transferTo(saveFile);
 				}
-				System.out.println("------------------------> 다중 파일 업로드 성공");
 				
 			} catch (Exception e) {
 				System.out.println("------------------------> 다중 파일 업로드 실패");
@@ -288,15 +216,87 @@ public class BoardController {
 			for(int i=0; i<uploadFileList.size(); i++) {
 				DBUpload.add(uploadFileList.get(i).get("uniqueName"));
 			}
+		
 			String DBUploadFile = StringUtils.join(DBUpload, ",");  // 리스트 값들을 ,로 연결해주는 자바에 있는 메서드
 			board.setUbd_file(DBUploadFile); // 파일 이름을 ,로 연결해서 DB에 저장
 		} 
+		}
 		
+		boardService.updateBoard(board);
+		model.addAttribute("msg","글이 정상적으로 수정되었습니다.");
+		model.addAttribute("url","user_board_list.do");
+		return "view/comunity/alert.jsp";
+	}
+	
+	@RequestMapping(value="/user_board_delete.do", method=RequestMethod.GET)
+	public String user_board_delete(BoardVO board) {
+		boardService.deleteBoard(board);
+		return "user_board_list.do";
+	}
+
+	
+	@RequestMapping(value="/user_board_insert.do", method=RequestMethod.GET)
+	public String user_board_insert() {
+		return "view/comunity/user_board_insert.jsp";
+	}
+	
+	@RequestMapping(value="/user_board_insert.do", method=RequestMethod.POST)
+	public String user_board_insert(Model model, BoardVO board) {
+		
+		if(board.getUploadFile() != null) {
+		List<MultipartFile> uploadFile = board.getUploadFile(); 
+		
+		if (!uploadFile.isEmpty()) {
+
+			List<Map<String, String>> uploadFileList = new ArrayList<>();
+
+			for(int i = 0; i < uploadFile.size(); i++) {
+			String fileRealName = uploadFile.get(i).getOriginalFilename(); // 파일 진짜 이름 가져오기
+				if(fileRealName != "") {
+
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length()); // 확장자명 구하기
+			
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
+			
+			Map<String, String> map = new HashMap<>();
+			map.put("fileRealName", fileRealName);
+			map.put("uniqueName", uniqueName);
+			
+			uploadFileList.add(map);
+			
+				}
+			}			
+				
+			try {
+				for(int i=0; i<uploadFileList.size(); i++) {
+					File saveFile = new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName"));
+					uploadFile.get(i).transferTo(saveFile);
+				}
+				
+			} catch (Exception e) {
+				System.out.println("------------------------> 다중 파일 업로드 실패");
+				for(int i=0; i<uploadFile.size(); i++) {
+					new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName")).delete();
+				}
+				e.printStackTrace();
+			} 
+			ArrayList<String> DBUpload = new ArrayList<>();
+			for(int i=0; i<uploadFileList.size(); i++) {
+				DBUpload.add(uploadFileList.get(i).get("uniqueName"));
+			}
+		
+			String DBUploadFile = StringUtils.join(DBUpload, ",");  // 리스트 값들을 ,로 연결해주는 자바에 있는 메서드
+			board.setUbd_file(DBUploadFile); // 파일 이름을 ,로 연결해서 DB에 저장
+		} 
+		}
 		boardService.insertBoard(board);
 		model.addAttribute("msg","글이 정상적으로 등록되었습니다.");
 		model.addAttribute("url","user_board_list.do");
 		return "view/comunity/alert.jsp";
 	}
+	
 	
 	@PostMapping("heart.do")
 	@ResponseBody 

@@ -22,14 +22,15 @@
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-			<div class="container col-md-6">
+			<div class="container mt-5">
 	  <hr>
-			<form role="form" action="insertDog.do" method="post">
+			<form role="form" action="insertDog.do" method="post" enctype="multipart/form-data">
 		     
-			 <div class="form-group">
-					<label for="dog_image_url">사진등록</label>
-					<input type="file" name="dog_image_url" id="dog_image_url">
-             </div>	
+		                  
+             <div class="form-group" style="width:90px; margin: 0 auto;" >
+			        <label class="input-group-text" for="dog_image_file">사진등록</label>
+				    <input type="file" style="display:none" class="form-control" name="uploadFile" id="dog_image_file" aria-describedby="uploadFile" aria-label="Upload">
+			 </div>
 	  <hr>
 	         <div class="page-header">
 	            <h3>기본사항</h3>	            
@@ -105,13 +106,12 @@
 		<!-- user_no 벨류값 받아서 폼에 기입-->
 		<input class="form-control" type="hidden" name="user_no" value="${ sessionScope.user.getUser_no()}">
 				    
-				<div class="col-md-6 text-center">           
+				<div class="col-md-6 text-center" style="width:100px; margin: 0 auto;">           
 				<button type="submit" class="btn btn-primary text-center">등록완료</button>
 			    </div>
 		</form>
 	 </div>
 	<%@include file="/includes/footer.jsp" %>
-
 	
 </body>
 </html>

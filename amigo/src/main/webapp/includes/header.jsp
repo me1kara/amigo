@@ -24,7 +24,7 @@
   /* 생략 */
 }
     	
-    	li {
+    	.nav-link {
 	
   font-family: "Roboto", sans-serif;
   text-decoration: none;
@@ -61,7 +61,7 @@
           </div>
           <hr/>
           <li class="nav-nickName">
-          	<a hraf="#">회원님</a>
+          	<a class="nav-link" hraf="<%=request.getContextPath() %>/my_profile.do">${ user.getUser_nick() }</a>
           </li>
           <hr/>
           <li class="nav-item">

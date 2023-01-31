@@ -51,12 +51,12 @@ public class DogDAO {
 	}
 	
 	public DogVO insertDog(DogVO dog) {
-		jdbcTemplate.update(insertDog,dog.getUser_no(),dog.getDog_name(),dog.getDog_gender(),dog.getDog_breeds(),dog.getDog_birth(),dog.getDog_weight(),dog.isDog_neutered(),dog.isDog_rabies_vacc(),dog.getDog_image_url(),dog.getDog_notice(),dog.isDog_terms());
+		jdbcTemplate.update(insertDog,dog.getUser_no(),dog.getDog_name(),dog.getDog_gender(),dog.getDog_breeds(),dog.getDog_birth(),dog.getDog_weight(),dog.isDog_neutered(),dog.isDog_rabies_vacc(),dog.getDog_image_file(),dog.getDog_notice(),dog.isDog_terms());
 		return dog;
 	}
 	
 	public int updateDog(DogVO dog) {
-		return jdbcTemplate.update(updateDog,dog.getDog_name(),dog.getDog_gender(),dog.getDog_breeds(),dog.getDog_birth(),dog.getDog_weight(),dog.isDog_neutered(),dog.isDog_rabies_vacc(),dog.getDog_image_url(),dog.getDog_notice(),dog.getDog_no());
+		return jdbcTemplate.update(updateDog,dog.getDog_name(),dog.getDog_gender(),dog.getDog_breeds(),dog.getDog_birth(),dog.getDog_weight(),dog.isDog_neutered(),dog.isDog_rabies_vacc(),dog.getDog_image_file(),dog.getDog_notice(),dog.getDog_no());
 	}
 	
 	public int deleteDog(int dog_no) {

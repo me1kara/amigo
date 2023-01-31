@@ -77,13 +77,13 @@
               <div class="modal-footer">
                 <button
                   type="button"
-                  onclick="location.href='';"
+                  onclick="location.href='logout.do';"
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
                   취소
                 </button>
-                <button type="button" onclick="location.href='logout.do';"  class="btn btn-primary">로그아웃</button>
+                <button type="button" onclick="location.href='../../logout.do';"  class="btn btn-primary">로그아웃</button>
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@
                 >
                   머물기
                 </button>
-                <button type="button" class="btn btn-primary" onclick="location.href='';" >이별하기</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='../../revoke.do?user_no=${user.getUser_no()}';" >이별하기</button>
               </div>
             </div>
           </div>

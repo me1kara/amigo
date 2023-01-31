@@ -1,40 +1,61 @@
 package com.lec.amigo.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
-
-import com.lec.amigo.impl.DogServiceImpl;
+import com.lec.amigo.service.DogService;
 import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
-//@RequestMapping("/view/mypage")
-//@ComponentScan(basePackages = {"com.lec.amigo", "com.lec.amigo.controller"})
+@PropertySource("classpath:config/uploadpath.properties")
 public class DogController {
 
 	@Autowired
-	DogServiceImpl dogService;
+	DogService dogService;
+	
+	@Autowired
+	Environment environment;
+	
+	private String uploadFolder = "";
+	
+	@PostConstruct
+	public void getUploadPathPropeties() {
+		uploadFolder = environment.getProperty("uploadFolder");
+	}
 	
 	@RequestMapping("view/mypage/getDogList.do")
 	public String getDogList(HttpSession sess, Model model,DogVO dog) {
 	UserVO user = (UserVO)sess.getAttribute("user");
 	int user_no = user.getUser_no();
 	List<DogVO> dogList = dogService.getDogList(user_no);
+	System.out.println(dogList.toString());
 	model.addAttribute("dogList", dogList);
 	return "amigo_profile.jsp";
 	}
 		
 	@RequestMapping(value="/view/mypage/insertDog.do", method = RequestMethod.POST)
-	public String insertDog(HttpSession sess,Model model,DogVO dog) {	
+	public String insertDog(HttpSession sess,Model model,DogVO dog) throws IOException {	
+		MultipartFile uploadFile = dog.getUploadFile();
+		if (!uploadFile.isEmpty()) {
+			String fileName = uploadFile.getOriginalFilename();
+			uploadFile.transferTo(new File(uploadFolder + fileName));
+			dog.setDog_image_file(fileName);
+		}
 	dogService.insertDog(dog);
 	UserVO user = (UserVO)sess.getAttribute("user");
 	int user_no = user.getUser_no();
@@ -51,7 +72,13 @@ public class DogController {
 	}
 	
 	@RequestMapping(value="/view/mypage/updateDog.do", method = RequestMethod.POST)
-	public String updateDog(HttpSession sess,Model model,DogVO dog) {
+	public String updateDog(HttpSession sess,Model model,DogVO dog) throws IOException {
+		MultipartFile uploadFile = dog.getUploadFile();
+		if (!uploadFile.isEmpty()) {
+			String fileName = uploadFile.getOriginalFilename();
+			uploadFile.transferTo(new File(uploadFolder + fileName));
+			dog.setDog_image_file(fileName);
+		}
 	dogService.updateDog(dog);
 	UserVO user = (UserVO)sess.getAttribute("user");
 	int user_no = user.getUser_no();
