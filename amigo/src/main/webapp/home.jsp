@@ -37,7 +37,7 @@
 		<a href="login.do">이메일 로그인</a>
 		<br>
 		<a href="terms.do">이메일 가입</a>
-		<br>
+		<br> 
 		
 		<br><br>
 		<a href="main_tour.do">둘러보기</a>

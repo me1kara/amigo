@@ -35,8 +35,12 @@ public class BookController {
 		for(int i=0; i< jms.size(); i++) {
 			 JSONObject jsonObj = (JSONObject)jms.get(i);
 			 System.out.println(jsonObj.get("title"));
+			 System.out.println(jsonObj.get("start"));
+			 System.out.println(jsonObj.get("end"));
 		}
 		
+		
+		//해당날짜,
 		
 		
 		

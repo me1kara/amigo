@@ -6,7 +6,7 @@ public class SitterVO {
 
 	// 여러개 쓸수 있을지?  예)  insertSitter(SittereVO svo , UserVO uvo)  이렇게..
 	
-
+private int sit_no;
 private int user_no;
 private String sit_gender;
 private String sit_birth;
@@ -20,6 +20,12 @@ private String sit_intro;
 private String sit_photo;
 private boolean sit_auth_is;
 
+public int getSit_no() {
+	return sit_no;
+}
+public void setSit_no(int sit_no) {
+	this.sit_no = sit_no;
+}
 public int getUser_no() {
 return user_no;
 }
@@ -92,13 +98,17 @@ return sit_auth_is;
 public void setSit_auth_is(boolean sit_auth_is) {
 this.sit_auth_is = sit_auth_is;
 }
+
 @Override
 public String toString() {
-	return "SitterVO [user_no=" + user_no + ", sit_gender=" + sit_gender + ", sit_birth=" + sit_birth + ", sit_smoking="
-			+ sit_smoking + ", sit_job=" + sit_job + ", sit_days=" + sit_days + ", sit_time=" + sit_time + ", sit_exp="
-			+ sit_exp + ", sit_care_exp=" + sit_care_exp + ", sit_intro=" + sit_intro + ", sit_photo=" + sit_photo
-			+ ", sit_auth_is=" + sit_auth_is + "]";
+	return "SitterVO [sit_no=" + sit_no + ", user_no=" + user_no + ", sit_gender=" + sit_gender + ", sit_birth="
+			+ sit_birth + ", sit_smoking=" + sit_smoking + ", sit_job=" + sit_job + ", sit_days=" + sit_days
+			+ ", sit_time=" + sit_time + ", sit_exp=" + sit_exp + ", sit_care_exp=" + sit_care_exp + ", sit_intro="
+			+ sit_intro + ", sit_photo=" + sit_photo + ", sit_auth_is=" + sit_auth_is + "]";
 }
+
+
+
 
 
 

@@ -24,12 +24,15 @@
 	<%@include file="/includes/header.jsp" %>
 			<div class="container col-md-6">
 	  <hr>
-			<form role="form" action="updateDog.do" method="post">
+			<form role="form" action="updateDog.do" method="post" enctype="multipart/form-data">
 		     
-			 <div class="form-group">
-					<label for="dog_image_url">사진등록</label>    <!--  ${dog.getDog_image_url()}   -->
-					<input type="file" name="dog_image_url" id="dog_image_url" >
-             </div>	
+		    <c:if test="${dog.getDog_image_file()!=null and dog.getDog_image_file()!=''}">
+				<img src="/img/${dog.getDog_image_file()}" width="20px" height="20px"></c:if>
+            
+             <div class="form-group" style="width:90px; margin: 0 auto;" >
+			        <label class="input-group-text" for="dog_image_file">사진등록</label>
+				    <input type="file" style="display:none" class="form-control" name="uploadFile" id="dog_image_file" aria-describedby="uploadFile" aria-label="Upload">
+			 </div>
 	  <hr>
 	         <div class="page-header">
 	            <h3>업데이트</h3>	            

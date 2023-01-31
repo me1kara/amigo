@@ -27,6 +27,11 @@ public class BoardServiceImpl implements BoardService{
 	public int getTotalRowCount(SearchVO searchVO) {
 		return boardDAO.getTotalRowCount(searchVO);
 	}
+	
+	@Override
+	public int getCateRowCount(SearchVO searchVO, BoardVO board) {
+		return boardDAO.getCateRowCount(searchVO, board);
+	}
 
 	@Override
 	public BoardVO getBoard(BoardVO board) {
@@ -49,8 +54,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardVO> selectCate(BoardVO board) {
-		return boardDAO.selectCate(board);
+	public List<BoardVO> selectCate(BoardVO board, SearchVO searchVO) {
+		return boardDAO.selectCate(board, searchVO);
 	}
 
 	@Override
@@ -80,5 +85,6 @@ public class BoardServiceImpl implements BoardService{
 		}
 		return result;
 	}
+
 	
 }

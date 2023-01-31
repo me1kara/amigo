@@ -34,7 +34,7 @@
 		
 	   <c:otherwise>
 		<p>반려동물 프로필</p>
-			<div class="row mt-4">
+			<div class="mt-4">
 				<table class="table table-hover table-bordered">
 					<thead class="table-dark text-center">					
 						<th scope="col" class="col-1 text-center">사진경로</th>
@@ -50,10 +50,11 @@
 						<th scope="col" class="col-0.5 text-center">수정</th>							
 						<th scope="col" class="col-0.5 text-center">삭제</th>							
 					</thead>
-					 <tbody>
+					 <tbody>	
 						<c:forEach var="dog" items="${ dogList }">
-						 <tr>
-								<td align="center">${ dog.getDog_image_url()}</td>
+						 <tr>			 
+							 	<td><c:if test="${dog.getDog_image_file()!=null and dog.getDog_image_file()!=''}">
+									<img src="/img/${dog.getDog_image_file()}" width="100px" height="100px"></c:if></td>						 
 								<td>${dog.getDog_name()}</td>
 				    			<td><c:choose><c:when test="${ dog.getDog_gender()=='f' }">여자아이</c:when>
 										      <c:when test="${ dog.getDog_gender()=='m' }">남자아이</c:when></c:choose></td>

@@ -1,7 +1,10 @@
 package com.lec.amigo.controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.dao.ChatDAO;
 import com.lec.amigo.dao.UserDAO;
@@ -27,6 +31,8 @@ public class LoginController {
 	
 	@Autowired
 	UserServiceImpl userService;
+	
+	private String uploadFolder = "";
 	
 	
 	// 로그인 화면 
@@ -78,6 +84,13 @@ public class LoginController {
 	@RequestMapping(value ="/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession sess) {
 		sess.invalidate();
+		return "home.jsp";
+	}
+	
+	// 회원탈퇴
+	@RequestMapping(value="/revoke.do", method = RequestMethod.GET)
+	public String revoke(UserVO userVO) {
+		userService.revokeUser(userVO.getUser_no());
 		return "home.jsp";
 	}
 	
@@ -161,6 +174,34 @@ public class LoginController {
 		return "view/main_tour.jsp"; 
 	}
 	
+	// 내 프로필
+	@RequestMapping(value="/my_profile.do",  method = RequestMethod.GET)
+	public String myProfile() {
+		return "view/mypage/my_profile.jsp";
+	}
+	
+	// 회원 정보 수정
+	@RequestMapping(value="/updateUser.do", method = RequestMethod.POST)
+	public String updateUser(Model model, UserVO userVO) throws IOException {
+		
+		MultipartFile uploadFile = userVO.getUploadFile();
+		
+		if (!uploadFile.isEmpty()) {
+			String fileName = uploadFile.getOriginalFilename();
+			String fileExtension = fileName.substring(fileName.lastIndexOf("."),fileName.length());
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
+			uploadFile.transferTo(new File(uploadFolder + fileName + uniqueName));
+			userVO.setUser_photo(fileName+uniqueName);
+		}
+		
+		userService.updateUser(userVO);
+		model.addAttribute("msg","정보가 정상적으로 수정되었습니다.");
+		model.addAttribute("url","my_profile.do");
+		
+		return "view/comunity/alert.jsp";
+	}
 	
 	
 }

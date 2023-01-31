@@ -20,33 +20,42 @@ prefix="c"%>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>main</title>
-    
+
     <!-- a href컬러 조절 -->
     <style>
-    .mypage_link:link {
-   	color : black;
-    }
-	.mypage_link:visited {
- 	 color : black;
-	}
-	.mypage_link:hover {
- 	 color : #189cc4;
-	}
-	/* 글자색 */
-	.mypage_link{
-		 font-family: 'Jalnan'
-	}
+      .mypage_link:link {
+        color: black;
+      }
+      .mypage_link:visited {
+        color: black;
+      }
+      .mypage_link:hover {
+        color: #189cc4;
+      }
+      /* 글자색 */
+      .mypage_link {
+        font-family: "Jalnan";
+      }
     </style>
   </head>
   <body>
-   <%@include file="/includes/header.jsp" %>
+    <%@include file="/includes/header.jsp" %>
 
     <!-- 마이페이지 시작 -->
     <div class="container mb-5" align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
+        <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
+          <li class="list-group-item">
+            <a>관리자 ** ${ user.getUser_name() } ** 입니다</a>
+          </li>
+        </c:if>
         <li class="list-group-item">
-          <a href="<%=request.getContextPath() %>/view/mypage/my_profile.jsp" class="mypage_link">내 프로필 관리</a>
-          <img src="../imagescodeit.pngg" alt="코드잇 이미지" />
+          <a
+            href="<%=request.getContextPath() %>/my_profile.do"
+            class="mypage_link"
+            >내 프로필 관리</a
+          >
+          <img src="../images/codeit.png" alt="코드잇 이미지" />
         </li>
         <li class="list-group-item">
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>
@@ -71,8 +80,17 @@ prefix="c"%>
         <li class="list-group-item">
           <a href="account_controll.jsp" class="mypage_link">계정관리</a>
         </li>
+        <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
+          <li class="list-group-item">
+            <a
+              href="<%=request.getContextPath() %>/view/admin/admin_sitList.jsp"
+              class="mypage_link"
+              >펫시터 회원관리</a
+            >
+          </li>
+        </c:if>
         <li class="list-group-item">
-          <a href="../apply/insertSitter.do" class="mypage_link">펫시터 지원하기</a>
+          <a href="apply/sitter_join.do" class="mypage_link">펫시터 지원하기</a>
         </li>
         <li class="list-group-item">
           <a href="#" class="mypage_link">펫시터모드로 전환</a>
@@ -82,7 +100,7 @@ prefix="c"%>
     <!-- Footer -->
     <footer class="bg-primary text-center text-white mt-5">
       <!-- Copyright -->
-      <div class="text-center p-3 mt-5" style="background-color: #189cc4;">
+      <div class="text-center p-3 mt-5" style="background-color: #189cc4">
         © 2022 Copyright:
         <a class="text-white" href="#">amigo.com</a>
       </div>

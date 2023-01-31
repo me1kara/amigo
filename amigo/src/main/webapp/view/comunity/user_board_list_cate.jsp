@@ -28,7 +28,8 @@
     <![endif]-->
       <style>
       .card {
-       box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
       }
 
       .card {
@@ -48,9 +49,6 @@
         min-height: 1px;
         padding: 1rem;
       }
-      
-      
-      
     </style>
 </head>
 <body>
@@ -77,16 +75,12 @@
 			<input type="hidden" id="curPage" name="curPage" value="${searchVO.getCurPage()}"> 
 			<input type="hidden" id="rowSizePerPage" name="rowSizePerPage" value="${searchVO.getRowSizePerPage()}">
 			
-				
-				
 			<!-- 상단 메뉴 -->
 	   		<div class="row mt-3 justify-content-end">
 	   			<div class="col-auto">
 					<a href="user_board_list.do">전체글</a> 
 	   				<a href="user_board_list_Like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a> 
 	   				<a href="">펫시터 커뮤니티</a>
-	   			</div>
-	   			
 	   			</div>
 	   		<div class="row mt-3 justify-content-end">
 	   			<div class="col-auto">
@@ -120,7 +114,7 @@
 					
 				</div> 
 			</div>
-		</form> <!-- getBoardList.do -->
+		</form> 
 
 		<div class="container">					
 					<c:forEach  var="board" items="${ boardList }">
@@ -145,12 +139,12 @@
                       <!-- 말머리/ -->
                       <!-- 제목 -->
                       <h6>
-                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}">${board.getUbd_title()}</a> [${board.getReply_cnt()}]
+                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}">${board.getUbd_title()}</a> [${board.getReply_cnt()}]
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
                       <!-- 작성자 -->
-                        <a class="nickName">${ board.getUser_nick() }</a>&nbsp;
+                        <a class="nickName">${ board.getUser_nick() }</a>
                        <!-- 작성자/ -->
                        <!-- 작성일 -->
                         <span class="text-secondary font-weight-bold">
@@ -159,8 +153,8 @@
                       </p>
                     </div>
                     <div class="text-muted small text-center align-self-center">
-                      <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>&nbsp;&nbsp;
-                      <span><ii class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;${ board.getLike_cnt() }</span>
+                      <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>
+                      <span><ii class="fa fa-heart" aria-hidden="true"></i>${ board.getLike_cnt() }</span>
                     	</div>
                  		</div>
                 		</div>
@@ -183,17 +177,17 @@
 				<c:set var="sw" value="${searchVO.getSearchWord()}"/>
 																
 				<c:if test="${ fp != 1 }">
-					<li class="page-item"><a href="user_board_list.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
-					<li class="page-item"><a href="user_board_list.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-backward"></i></a></li>				
+					<li class="page-item"><a href="user_board_cate.do?ubd_cate=${cate}&curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
+					<li class="page-item"><a href="user_board_cate.do?ubd_cate=${cate}&curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-backward"></i></a></li>				
 				</c:if>
 			
 				<c:forEach var="page" begin="${fp}" end="${lp}">
-					<li class="page-item ${cp==page ? 'active' : ''}"><a href="user_board_list.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link">${page}</a></li>
+					<li class="page-item ${cp==page ? 'active' : ''}"><a href="user_board_cate.do?ubd_cate=${cate}&curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link">${page}</a></li>
 				</c:forEach>
 				
 				<c:if test="${ lp < tp }">
-					<li class="page-item "><a href="user_board_list.do?curPage=${lp+ps}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-forward"></i></a></li>				
-					<li class="page-item"><a href="user_board_list.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>				
+					<li class="page-item "><a href="user_board_cate.do?ubd_cate=${cate}&curPage=${lp+ps}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-forward"></i></a></li>				
+					<li class="page-item"><a href="user_board_cate.do?ubd_cate=${cate}&curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>				
 				</c:if>
 			</ul> <!-- pagination -->	
 	

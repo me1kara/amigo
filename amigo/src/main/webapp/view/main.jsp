@@ -25,15 +25,13 @@ prefix="c"%>
     />
     <meta charset="UTF-8" />
     <style>
-    
       /* aimgo 메인 사진들 css */
       .img-fluid {
         border-radius: 20px;
         cursor: pointer;
         /* 그림자 */
-        box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
+        box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
       }
-
 
       /* 폰트 적용(여기어때 폰트)*/
       h4 {
@@ -44,16 +42,14 @@ prefix="c"%>
         font-size: 90%;
       }
       .all-view {
-      	font-family: "Roboto", sans-serif;
+        font-family: "Roboto", sans-serif;
         text-decoration: none;
         color: gray;
         font-family: "Jalnan";
         font-size: 90%;
       }
       /* 폰트 적용 end */
-      
-      
-      
+
       @import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
       figure.snip0015 {
         font-family: "Roboto", sans-serif;
@@ -64,7 +60,7 @@ prefix="c"%>
         background: #000000;
         text-align: center;
         border-radius: 20px;
-        box-shadow: 5px 2px 20px rgba(0,0,0,0.2)
+        box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
       }
       figure.snip0015 * {
         -webkit-box-sizing: border-box;
@@ -156,10 +152,8 @@ prefix="c"%>
         -webkit-transition-delay: 0s;
         transition-delay: 0s;
       }
-      
     </style>
-    
-    
+
     <title>메인홈</title>
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
@@ -189,20 +183,23 @@ prefix="c"%>
             alt="amigoPet"
           />
           <figcaption>
-        <h2>반가워요!! <span>AM!GO</span> 입니다!</h2>
-        <p>당신곁에 항상 있는 우리의 반려동물들 그들을 위해서 만들어진 곳이예요.</p>
-        <p>혹시 당신의 AM!GO가 집에 혼자 남겨져있나요?</p>
-        <p>걱정말고 AM!GO의 펫시터 앱을 이용해보세요 !</p>
-        <a href="#"></a>
-      </figcaption>
-    </figure>
+            <h2>반가워요!! <span>AM!GO</span> 입니다!</h2>
+            <p>
+              당신곁에 항상 있는 우리의 반려동물들 그들을 위해서 만들어진
+              곳이예요.
+            </p>
+            <p>혹시 당신의 AM!GO가 집에 혼자 남겨져있나요?</p>
+            <p>걱정말고 AM!GO의 펫시터 앱을 이용해보세요 !</p>
+            <a href="#"></a>
+          </figcaption>
+        </figure>
       </div>
       <!--소개 종료-->
 
       <!-- AM!GO 서비스 -->
       <!-- 차후에 아이콘으로 대체할것임.-->
       <div class="container overflow-hidden mb-5 mt-5">
-          <h4>AM!GO서비스</h4>       
+        <h4>AM!GO서비스</h4>
         <div class="row gy-5">
           <!-- 펫시터 -->
           <div class="col-6">
@@ -211,7 +208,7 @@ prefix="c"%>
                 <img
                   src="/amigo/resources/img/petsitter.png"
                   class="img-fluid"
-                  alt="sitter"                 
+                  alt="sitter"
                 />
               </a>
             </div>
@@ -264,15 +261,15 @@ prefix="c"%>
       <!-- 커뮤니티 -->
       <div class="container mt-5">
         <div class="row justify-content-between">
-        	<div class="col-4">
-        	  <h4>커뮤니티</h4>
-        	</div>
-        	<div class="col-4 text-end">
-         	  <a href="#" class="all-view">전체보기</a>
-         	</div>
+          <div class="col-4">
+            <h4>커뮤니티</h4>
+          </div>
+          <div class="col-4 text-end">
+            <a href="user_board_list.do" class="all-view">전체보기</a>
+          </div>
         </div>
         <div class="row text-center">
-          <a href="#">
+          <a href="user_board_list.do">
             <img
               src="/amigo/resources/img/community.png"
               class="img-fluid"
@@ -295,11 +292,11 @@ prefix="c"%>
       <br />
       <!-- 실시간 후기 -->
       <div class="row justify-content-between mt-5">
-      <div class="col-4">
-        <h4>실시간 후기</h4>
-       </div>
-       <div class="col-4 text-end">
-        <a href="#" class="all-view">전체보기</a>
+        <div class="col-4">
+          <h4>실시간 후기</h4>
+        </div>
+        <div class="col-4 text-end">
+          <a href="#" class="all-view">전체보기</a>
         </div>
       </div>
       <div id="carouselExampleDark" class="carousel carousel-dark slide">
@@ -388,13 +385,13 @@ prefix="c"%>
       <!-- 후기 종료 -->
       <br />
       <!-- Q&A -->
-      <div class="row justify-content-between mt-5">    
-       <div class="col-4">
-      	  	<h4>Q&A</h4>
-       </div>
-       <div class="col-4 text-end">
-       	    <a href="#" class="all-view">전체보기</a>
-       </div>
+      <div class="row justify-content-between mt-5">
+        <div class="col-4">
+          <h4>Q&A</h4>
+        </div>
+        <div class="col-4 text-end">
+          <a href="#" class="all-view">전체보기</a>
+        </div>
       </div>
       <div class="container card text-center" style="width: 18rem">
         <img class="card-img-top" src="" alt="Card image cap" />
