@@ -26,8 +26,8 @@ public class SitterServiceImpl implements SitterService {
 	}
 
 	@Override
-	public List<SitterVO> getSitList(int user_no) {
-		return sitterDAO.getSitList(user_no);
+	public List<SitterVO> getSitList(SitterVO svo) {
+		return sitterDAO.getSitList(svo);
 	}
 	
 	@Override
