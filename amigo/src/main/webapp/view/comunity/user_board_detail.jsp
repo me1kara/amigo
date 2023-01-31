@@ -78,7 +78,15 @@
 								</script>
 					<li>
 						<div>
-							<p>${reply.user_nick} / <fmt:formatDate value="${reply.ubd_r_regdate}" pattern="YYYY-MM-DD"/>
+							<c:if test="${ reply.ubd_r_lev !=0 }">
+								┗
+								<c:forEach var="i" begin="1" end="${reply.ubd_r_lev}">
+									-
+								</c:forEach>
+							</c:if>
+							
+							<div>
+							${reply.user_nick} / <fmt:formatDate value="${reply.ubd_r_regdate}" pattern="YYYY-MM-DD"/>
 							
 							<c:if test="${reply.user_nick == user.getUser_nick() || user.getUser_type() == 'A'}">
 		     					<a href="#" onclick="deleteReply(${reply.ubd_r_no})">삭제</a>
@@ -86,15 +94,17 @@
 		     				
 		     				<c:if test="${reply.user_nick == user.getUser_nick()}">
 		     					<a href="updateReply.do?ubd_r_no=${reply.ubd_r_no}">수정</a>
-		     				</c:if>				
-							</p>
-							<p>${reply.ubd_r_content}</p>
+		     				</c:if>	
+		     				
+		     					<a href="updateReply.do?ubd_r_no=${reply.ubd_r_no}">답글</a> <br>
+
+								<P>${reply.ubd_r_content}</P>
+							</div>
+		
 						</div>
 					</li>
-					
 					</c:forEach>
 				</ul>
-				
 			</div>
 			
 			
@@ -117,13 +127,13 @@
 			<div class="container" align="center">
 			
 				<c:if test="${board.getUser_nick() == user.getUser_nick()}">
-				<a href="user_board_update.do?ubd_no=${board.getUbd_no()}" class="btn btn-warning mt-3">게시글수정</a>
+				<a href="user_board_update.do?ubd_no=${board.getUbd_no()}" class="btn btn-warning mt-3">수정</a>
 				</c:if>
 				
-				<a href="user_board_list.do" class="btn btn-primary mt-3">게시글목록</a>	
+				<a href="user_board_list.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}" class="btn btn-primary mt-3">게시글목록</a>	
 				
 				<c:if test="${board.getUser_nick() == user.getUser_nick() || user.getUser_type() == 'A'}">
-				<a href="#" onclick="deleteBoard()" class="btn btn-danger mt-3">게시글삭제</a>
+				<a href="#" onclick="deleteBoard()" class="btn btn-danger mt-3">삭제</a>
 				</c:if>
 				
 			</div>

@@ -141,7 +141,7 @@
                       <!-- 말머리/ -->
                       <!-- 제목 -->
                       <h6>
-                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}">${board.getUbd_title()}</a> [${board.getReply_cnt()}]
+                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}">${board.getUbd_title()}</a> [${board.getReply_cnt()}]
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
