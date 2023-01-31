@@ -68,7 +68,7 @@
     <!-- Submit button -->
     <section class="vh-100">
       <form>
-        <div class="container mt-3 mb-5 py-5 h-100" align="center">
+        <div class="container mt-3 mb-5 py-5  h-100" align="center">
           <!-- 이메일 로그인 -->
           <button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='login.do';">
             이메일 로그인
@@ -96,7 +96,7 @@
         <hr />
         <div class="container text-center mt-2">
           <div class="row justify-content-between">
-            <div class="col-4"><a href="#">가입/로그인이 안되요</a></div>
+            <div class="col-5"><a href="#">가입/로그인이 안되요</a></div>
             <div class="col-4"><a href="main_tour.do">둘러보기</a></div>
           </div>
         </div>

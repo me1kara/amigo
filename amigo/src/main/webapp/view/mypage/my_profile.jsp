@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
-	
+   
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <!--[if lt IE 9]>
@@ -20,14 +20,14 @@
     <![endif]-->
 </head>
 <body>
-	
-	<%@include file="/includes/header.jsp" %>
-		 <!-- Profile nav -->
+   
+   <%@include file="/includes/header.jsp" %>
+       <!-- Profile nav -->
     <!-- user의 프로필 정보를 가져와야합니다. -->
     <form action="updateUser.do" method="post" enctype="multipart/form-data">
     <div class="myProfileMainBox">
       <div class="profileNav">
-       	<a href="#"> ${ user.getUser_name() } </a>
+          <a href="#"> ${ user.getUser_name() } </a>
         <!-- 이곳에 유저의 이름이 들어와야합니다. -->
         <h4>안녕하세요!</h4>
         <!-- 프로필 사진 업로드 -->
@@ -109,8 +109,8 @@
     <![endif]-->
     
     <!-- 이곳은 푸터가 조금 다르기 때문에 직접 적용해줬음
-	<@include file="/includes/footer.jsp" %>
-	-->
-	
+   <@include file="/includes/footer.jsp" %>
+   -->
+   
 </body>
 </html>
