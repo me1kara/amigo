@@ -11,13 +11,13 @@
 	  background: rgba(0,0,0,.3);
 	  border-radius: 10px 10px 0 0 ;
 	  padding: 15px 20px;
-	  position: absolute;
-	  bottom: -100px;
+	  position: fixed;
+	  bottom: -150px;
 	  right:0px;
 	  transition: transform 0.3s ease-in-out;
 	}
 	.notification-container.showChatMessage{
-	  transform: translateY(-100px);
+	  transform: translateY(-150px);
 	}
   </style>
   <script>
@@ -72,7 +72,7 @@
 				index = '<%=room.getChat_index()%>';
 				if(parseInt(roomIndex)==index){
 					if(msg!=null){
-						showNotification(user, txt, roomIndex);
+						showNotification(user, msg, roomIndex);
 					}else{
 						showNotification(user, "이미지가 도착했습니다!", roomIndex);
 					}

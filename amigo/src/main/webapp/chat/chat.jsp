@@ -295,11 +295,13 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  			}else if(jd.type=='file'){
   	  				let fileName = jd.fileName;
   	  				console.log(fileName);
-	  				if(user=='<%=user.getUser_nick()%>') {
-  	  					printImageMe(fileName, chat_no);
-  	  				}else{
-  	  					printImage(user, fileName, chat_no);
-  	  						
+  	  				if(parseInt(roomIndex)==index){
+		  				if(user=='<%=user.getUser_nick()%>') {
+	  	  					printImageMe(fileName, chat_no);
+	  	  				}else{
+	  	  					printImage(user, fileName, chat_no);
+	  	  						
+	  	  				}
   	  				}
   	  			}
   	  			else if (no == '3') {
