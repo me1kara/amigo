@@ -339,6 +339,8 @@ td {
 	display: block;
 }
 
+
+<!-- 일정입력 모달창, 컨트롤 f 강아지 검색하면 돼요 -->
 .modal{
 	position:absolute;
 	top:0; left:0;

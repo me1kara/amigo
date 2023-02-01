@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.lec.amigo.dao.BookDAO;
 import com.lec.amigo.service.BookService;
 import com.lec.amigo.vo.SitterVO;
+import com.lec.amigo.vo.UserVO;
 
 @Service("bookService")
 public class BookServiceImpl implements BookService{
@@ -25,6 +26,11 @@ public class BookServiceImpl implements BookService{
 	public List<SitterVO> getArroundSitter(String address) {
 		
 		return bookDao.getArroudSitter(address);
+	}
+
+	public List<UserVO> getUserNameList(String address) {
+		// TODO Auto-generated method stub
+		return bookDao.getArroundSitterNames(address);
 	}
 	
 }
