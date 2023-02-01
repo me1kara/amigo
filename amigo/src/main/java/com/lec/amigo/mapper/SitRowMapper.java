@@ -16,7 +16,7 @@ public class SitRowMapper implements RowMapper<SitterVO>{
 		SitterVO sit = new SitterVO();
 		UserVO  user = new UserVO();
 		
-                      
+		sit.setSit_no(rs.getInt("sit_no"));                      
 		sit.setUser_no(rs.getInt("user_no"));                       
 		sit.setSit_gender(rs.getString("sit_gender"));      
 		sit.setSit_birth(rs.getString("sit_birth"));        
