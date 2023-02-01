@@ -81,13 +81,9 @@ prefix="c"%>
           <a href="account_controll.jsp" class="mypage_link">계정관리</a>
         </li>
         <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
-          <li class="list-group-item">
-            <a
-              href="<%=request.getContextPath() %>/view/admin/admin_sitList.jsp"
-              class="mypage_link"
-              >펫시터 회원관리</a
-            >
-          </li>
+       		<li class="list-group-item">
+       		   <a href="<%=request.getContextPath() %>/view/admin/getSitList.do" class="mypage_link">펫시터 회원관리</a>
+     	    </li>
         </c:if>
         <li class="list-group-item">
           <a href="apply/sitter_join.do" class="mypage_link">펫시터 지원하기</a>
