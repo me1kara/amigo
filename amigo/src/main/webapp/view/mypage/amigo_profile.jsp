@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>amigo_profile</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
@@ -69,7 +69,8 @@
 				    			<td><c:choose><c:when test="${ dog.isDog_terms() }">예</c:when>
 										      <c:when test="${ !dog.isDog_terms() }">아니오</c:when></c:choose></td>
 								<td><a href="updateDog.do?dog_no=${dog.getDog_no()}" class="btn btn-primary">수정</a></td>
-								<td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#dogdelete" data-dog_no="${dog.getDog_no()}">삭제</button></td>		
+								<td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#dogdelete"
+								data-dog_no="${dog.getDog_no()}" data-dog_image_file="${dog.getDog_image_file()}">삭제</button></td>		
 						 </tr>	 
 					   </c:forEach>									
 					</tbody>
@@ -103,12 +104,14 @@
 		<!--삭제 modal form script dog_no전달-->	  
 		<script>
 		var DOGNO="";
+		var DOGIMAGE="";
 		$(document).ready(function() {     
 	        $('#dogdelete').on('show.bs.modal', function(event) {          
 	        	DOGNO = $(event.relatedTarget).data('dog_no');
+	        	DOGIMAGE =  $(event.relatedTarget).data('dog_image_file');   	
 	        });
 	    });
-		function deleteDog() {location.href='deleteDog.do?dog_no='+DOGNO;}
+		function deleteDog() {location.href='deleteDog.do?dog_no='+DOGNO+'&dog_image_file='+DOGIMAGE;}
 		</script>
 		
     <!-- Bootstrap core JS-->
