@@ -49,7 +49,7 @@ public class DogController {
 	}
 		
 	@RequestMapping(value="/view/mypage/insertDog.do", method = RequestMethod.POST)
-	public String insertDog(HttpSession sess,Model model,DogVO dog) throws IOException {	
+	public String insertDog(Model model,DogVO dog) throws IOException {	
 		MultipartFile uploadFile = dog.getUploadFile();
 		if (!uploadFile.isEmpty()) {
 			String fileName = uploadFile.getOriginalFilename();  // 파일 진짜 이름 가져오기
@@ -74,7 +74,7 @@ public class DogController {
 	}
 	
 	@RequestMapping(value="/view/mypage/updateDog.do", method = RequestMethod.POST)
-	public String updateDog(HttpSession sess,Model model,DogVO dog) throws IOException {
+	public String updateDog(Model model,DogVO dog) throws IOException {
 		MultipartFile uploadFile = dog.getUploadFile();
 		if (!uploadFile.isEmpty()) {
 			new File(uploadFolder+dog.getDog_image_file()).delete(); // 기존 파일 삭제하기
@@ -93,7 +93,7 @@ public class DogController {
 	}
 	
 	@RequestMapping(value="/view/mypage/deleteDog.do", method = RequestMethod.GET)
-	public String deleteDog(HttpServletRequest req,HttpSession sess,Model model) {
+	public String deleteDog(HttpServletRequest req,Model model) {
 	int dog_no = Integer.parseInt(req.getParameter("dog_no"));
 	String fileName = req.getParameter("dog_image_file");
 	new File(uploadFolder+fileName).delete();
