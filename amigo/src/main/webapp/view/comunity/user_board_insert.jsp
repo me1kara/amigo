@@ -17,18 +17,18 @@
     <script src="js/html5shiv.js"></script>
     <![endif]-->
     
-    
+    <style>
+    .insert-user-name{
+    	color:#498dcc;
+    	font-weight:bold;
+    }
+    	
+    </style>
 </head>
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-		<div class="container"  align="center">
-		<div class="mt-4 p-5 bg-primary text-white rounded">
-			<h3>게시글 등록</h3>		
-		</div>
-	</div>		
-
-	<div class="container mt-3" align="center">
+	<div class="container mt-5" align="center">
 		<form action="user_board_insert.do" method="post" enctype="multipart/form-data" onSubmit="return checkResult()">
 		
 			<script>
@@ -59,24 +59,42 @@
           	</script>
 			<input name="user_no" type="hidden" value="${user.user_no}" />
 			<div class="input-group mb-3">
-  			 <b>글제목</b> <input type="text" class="form-control" name="ubd_title" required>
+			<!-- 글제목 -->
+  			<!--   <span class="insert-font">글제목</span>&nbsp;&nbsp; -->
+  			<!-- 글제목 label로 해서 폼을 둥글게 만들어줌. -->
+  			 <label for="ubd_title" class="col-md-1 control-label" style="font-size:18px; font-weight:bold;" >글제목&nbsp;</label>
+  			 <div class="col">
+  			 <input type="text" class="form-control" name="ubd_title" id="ubd_title" required>
+  			 </div>  			 
+  			 <!-- 글제목 끝 -->
 			</div>
 			<div class="input-group mb-3">
-  			 <b>말머리</b> 
+			<label for="searchCategory" class="col-md-1 control-label" style="font-size:18px; font-weight:bold;">말머리&nbsp;</label>
+			 <div class="col-3">
   			 	<select class="form-select" id="searchCategory" name="ubd_cate">							
 				    <option value="자랑글">자랑글</option>						
 				    <option value="자유글">자유글</option>							
 				    <option value="Q&A">Q&A</option>										
 				</select>
 			</div>
-			<div class="input-group mb-3">
-			 <b>견종</b> <input type="text" class="form-control" name="dog_kind">
+			<!--  견종  --> 
+			<!--  <span class="insert-font">견종</span>&nbsp;&nbsp; -->
+			  <label for="dog_kind" class="col-md-1 control-label" style="font-size:18px; font-weight:bold;">&nbsp;견종&nbsp;</label>
+			   <div class="col">
+			  <input type="text" class="form-control" id="dog_kind" name="dog_kind">
+			  </div>
+			  <!--  견종  끝 --> 
 			</div>
+			<!-- 작성자  -->
 			<div class="input-group mb-3">
-			 <b>작성자</b> <input type="text" class="form-control"  name="user_nick" value="${ user.getUser_nick() }" readonly> 
+			 <span class="insert-font col-md-1" style="font-size:18px; font-weight:bold;" >작성자 :</span> &nbsp;<p class="insert-user-name">${ user.getUser_nick() }</p>
 			</div>
+			<!-- 작성자  끝 -->
+			<!-- 상단 끝 -->
+			
+			<hr/>
 			<div class="input-group mb-3">
-			  <b>글내용</b> <textarea class="form-control"  name="ubd_cont" rows="15" required></textarea>
+			   <textarea class="form-control" id="ubd_cont" name="ubd_cont" rows="15" placeholder="글 내용을 입력하세요.." required ></textarea>		 
 			</div>	
 			
 			  <b>사진업로드(최대 5장)</b><br>
@@ -127,9 +145,9 @@
 			</script>
 		  
 			<input type="hidden" name="ubd_file" value=""/>	
-			<div class="container" align="center">
-				<input type="submit" class="btn btn-primary mt-3" value="등록완료"/>
-				<input type="button" class="btn btn-primary mt-3" value="취소" onclick="history.go(-1)"/>
+			<div class="row justify-content-evenly mt-5 mb-5">
+				<input type="button" class="btn btn-primary col-2" value="취소" onclick="history.go(-1)"/>
+				<input type="submit" class="btn btn-primary col-2" value="등록완료"/>
 			</div>
 		</form>			
 	</div>
