@@ -1,5 +1,9 @@
 package com.lec.amigo.vo;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class UserVO {
 
 	private int user_no;
@@ -12,6 +16,7 @@ public class UserVO {
 	private String user_phone;
 	private String user_photo;
 	private boolean user_terms;
+	private MultipartFile uploadFile;
 	
 	public int getUser_no() {
 		return user_no;
@@ -73,6 +78,13 @@ public class UserVO {
 	}
 	public void setUser_terms(boolean user_terms) {
 		this.user_terms = user_terms;
+	}
+	
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
 	}
 	@Override
 	public String toString() {

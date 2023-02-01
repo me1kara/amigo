@@ -31,10 +31,19 @@
    		margin-bottom:30px;
    	}
    	
-   	h4{
+   	.signup-header{
    		color:rgb(89, 139, 198);
    		margin-bottom:10px;
+   		font-family: 'Jalnan';
+   		font-size:25px;
    	}
+   	
+   	.sighup-group {
+   		font-family: 'Jalnan';
+   		font-size:15px;
+   	}
+   	
+   	
    	
    	
    	/* 인증번호 버튼,폼 */
@@ -55,15 +64,15 @@
 
     <article class="container">
         <div class="page-header">
-            <div class="col-md-6 col-md-offset-3">
-            <h4>AM!GO에 오신걸 환영합니다!</h4>
-            <h6>회원님의 정보를 입력해주세요.</h6>
+            <div class="">
+            <h4 class="signup-header">AM!GO에 오신걸 환영합니다!</h4>
+            <h4>회원님의 정보를 입력해주세요.</h4>
             </div>
         </div>
-        <div class="col-sm-6 col-md-offset-3">
+        <div class="container">
             <form role="form" action="signup.do" method="post" onSubmit="return checkResult();">
                 <div class="form-group">
-                    <label for="user_email">이메일주소*</label>
+                    <label for="user_email" class="sighup-group">이메일주소*</label>
                     <input type="email" class="form-control" id="user_email" name="user_email" placeholder="이메일 주소" onchange="checkEmail();" check_email="fail" required>
                     <span id="confirmEmail"></span>
                     <br>
@@ -82,11 +91,11 @@
                	 </div>
                 	<!-- 인증 시스템/ -->
                 <div class="form-group">
-                    <label for="password">비밀번호*</label>
+                    <label for="password" class="sighup-group">비밀번호*</label>
                     <input type="password" class="form-control" id="password" name="user_pw" placeholder="비밀번호" required>
                 </div>
                 <div class="form-group">
-                    <label for="passwordCheck">비밀번호 확인*</label>
+                    <label for="passwordCheck" class="sighup-group">비밀번호 확인*</label>
                     <input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호 확인을 위해 다시 한 번 입력 해 주세요" onkeyup="passConfirm();" check_pw="fail">
                      <span id="confirmMsg"></span>
 
@@ -153,11 +162,11 @@
 			            type:'post', //POST 방식으로 전달
 			            data:{user_email:user_email},
 			            success:function(result){ //컨트롤러에서 넘어온 값을 받는다 
-			                if(result != "fail"){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 이메일
+			                if(result != "fail"){ //result가 'fail'이 아니면 -> 사용 가능한 이메일
 			                	confirmEmail.style.color = correctColor;
 			                	confirmEmail.innerHTML = "사용 가능한 이메일입니다.";
 			                	$('#user_email').attr("check_email", "success");
-			                } else { // cnt가 1일 경우 -> 이미 존재하는 이메일
+			                } else { // fail리면 -> 이미 존재하는 이메일
 			                	confirmEmail.style.color = wrongColor;
 			                	confirmEmail.innerHTML = "이미 존재하는 이메일입니다.";
 			                	$('#user_email').attr("check_email", "fail");
@@ -201,16 +210,16 @@
 				};
 				</script>
                 <div class="form-group">
-                    <label for="user_name">이름*</label>
+                    <label for="user_name" class="sighup-group">이름*</label>
                     <input type="text" class="form-control" id="user_name" name="user_name" placeholder="이름" required>
                 </div>
                 <div class="form-group">
-                    <label for="user_nick">닉네임*</label>
+                    <label for="user_nick" class="sighup-group">닉네임*</label>
                     <input type="text" class="form-control" id="user_nick" name="user_nick" placeholder="닉네임" check_nick="fail" onchange="checkNick();" required>
                     <span id="confirmNick"></span>
                 </div>        
                  <div class="form-group">
-                 <label for="sample4_roadAddress">주소*</label><br>
+                 <label for="sample4_roadAddress" class="sighup-group">주소*</label><br>
                <input type="text" id="sample4_postcode" placeholder="우편번호">
                <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
                <input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" placeholder="도로명주소">
@@ -273,7 +282,7 @@
             </script>
             
                 <div class="form-group">
-                    <label for="inputMobile">전화번호*</label>
+                    <label for="inputMobile" class="sighup-group">전화번호*</label>
                     <input type="tel" class="form-control" id="inputMobile" name="user_phone" placeholder="휴대폰번호" required>
                 </div>
                 </div>

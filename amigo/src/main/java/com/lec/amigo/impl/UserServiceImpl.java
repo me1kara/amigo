@@ -147,5 +147,15 @@ public class UserServiceImpl implements UserService{
 	public int nickCheck(String user_nick) {
 		return userDAO.nickCheck(user_nick);
 	}
+
+	public void revokeUser(int user_no) {
+		userDAO.revokeUser(user_no);
+		
+	}
+
+	public UserVO updateUser(UserVO userVO) {
+		return userDAO.updateUser(userVO);
+		
+	}
 	
 }

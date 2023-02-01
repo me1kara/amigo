@@ -28,8 +28,7 @@
     <![endif]-->
       <style>
       .card {
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
-          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+       box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
       }
 
       .card {
@@ -49,6 +48,31 @@
         min-height: 1px;
         padding: 1rem;
       }
+      
+      
+      .udb-header-menu {
+      font-family: "Jalnan";
+      	padding:15px;	
+      }
+      
+      .ubd-header-title{
+       font-family: "Jalnan";
+       font-size:40px;
+       
+      }
+      
+       .ubd-header-menu:link {
+        color: gray;
+      }
+      .ubd-header-menu:visited {
+        color: gray;
+      }
+      .ubd-header-menu:hover {
+        color: #189cc4;
+      }
+      
+      
+      
     </style>
 </head>
 <body>
@@ -63,7 +87,7 @@
 
 	<div class="container" align="left">
 		<div class="mt-4 p-5">
-			<h3>유저 커뮤니티</h3>
+			<p class="ubd-header-title">유저 커뮤니티</p>
 			<c:if test="${ boardList.isEmpty() }">
 				<h5><p class="bg-danger text-white">등록된 게시판 정보가 존재하지 않습니다!!</p></h5>
 			</c:if>
@@ -78,20 +102,22 @@
 				
 				
 			<!-- 상단 메뉴 -->
-	   		<div class="row mt-3 justify-content-end">
+	   		<div class="row justify-content-between">
 	   			<div class="col-auto">
-					<a href="user_board_list.do">전체글</a> 
-	   				<a href="user_board_list_Like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a> 
-	   				<a href="">펫시터 커뮤니티</a>
+					<a class="ubd-header-menu" href="user_board_list.do">전체글</a>&nbsp;&nbsp;
+	   				<a class="ubd-header-menu" href="user_board_list_Like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a>&nbsp;&nbsp;
+	   				<a class="ubd-header-menu" href="">펫시터커뮤니티</a>
 	   			</div>
-	   		<div class="row mt-3 justify-content-end">
-	   			<div class="col-auto">
+	   			   	<div class="col-auto">
 					<select class="form-select" id="searchCategory" name="searchCategory" onchange="chageSelect()">
 				    	<option value="말머리">말머리</option>							
 				    	<option value="자랑글">자랑글</option>						
 				    	<option value="자유글">자유글</option>							
 				    	<option value="질문">질문</option>										
 					</select>
+	   			  </div>
+	   		
+	
 					
 					<script type="text/javascript">
 					
@@ -114,7 +140,7 @@
 					}
 					</script>
 					
-				</div> 
+				
 			</div>
 		</form> <!-- getBoardList.do -->
 
@@ -122,7 +148,8 @@
 					<c:forEach  var="board" items="${ boardList }">
                     <div class="container">
             <!-- Forum List -->
-            <div class="inner-main-body p-2 p-sm-3 forum-content show">
+            <!-- div를 눌러서 접속 될수 있게 만듦 -->
+            <div class="inner-main-body p-2 p-sm-3 forum-content show"  style="cursor: pointer;" onclick="location.href='user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}'">
               <div class="card mb-2">
                 <div class="card-body p-2 p-sm-3">
                   <div class="media forum-item">
@@ -141,12 +168,12 @@
                       <!-- 말머리/ -->
                       <!-- 제목 -->
                       <h6>
-                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}">${board.getUbd_title()}</a> [${board.getReply_cnt()}]
+                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}">${board.getUbd_title()}</a> [${board.getReply_cnt()}]
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
                       <!-- 작성자 -->
-                        <a class="nickName">${ board.getUser_nick() }</a>
+                        <a class="nickName">${ board.getUser_nick() }</a>&nbsp;
                        <!-- 작성자/ -->
                        <!-- 작성일 -->
                         <span class="text-secondary font-weight-bold">
@@ -155,8 +182,8 @@
                       </p>
                     </div>
                     <div class="text-muted small text-center align-self-center">
-                      <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>
-                      <span><ii class="fa fa-heart" aria-hidden="true"></i>${ board.getLike_cnt() }</span>
+                      <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>&nbsp;&nbsp;
+                      <span><ii class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;${ board.getLike_cnt() }</span>
                     	</div>
                  		</div>
                 		</div>

@@ -30,6 +30,36 @@
     	weith:352px;
     
     }
+    
+    .welcome h2{
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  color:rgb(89, 139, 198);
+  font-family: "Jalnan";
+  font-size: 40px;
+  margin-botton:20px;
+  }
+  
+   .welcome h4{
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  color:black;
+  font-family: "Jalnan";
+  font-size: 35px;
+  margin-botton:20px;
+   }
+    
+   .check-box { 
+   	font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  color:black;
+  font-family: "Jalnan";
+  font-size: 15px;
+  padding :10px;
+   } 
+   .check-box a {
+   	margin-botton:20px;
+   }
     </style>
   </head>
   <body>
@@ -48,11 +78,11 @@
  <!-- 약관 동의문서 -->
 <form action="signup.do">
 <div class="container">
-    <div>
-        <h4>어서오세요</h4>
+    <div class="welcome">
+        <h2>어서오세요</h2>
         <h4>약관동의가 필요해요</h4>
     </div>
-    <div>
+    <div class="check-box">
        <input type='checkbox'
        name='amigoTAC' 
        value='selectall'
