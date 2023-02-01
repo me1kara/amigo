@@ -18,18 +18,19 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
 
+<!-- 타임피커 -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
-<!--한국어 달력 쓰려면 추가 로드-->
-<script
-	src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta charset="UTF-8">
 
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/amigo/resources/css/calendar.css"
 	type="text/css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
+
 
 <script
 	src='<%=request.getContextPath() %>/resources/fullcalendar-6.0.3/dist/index.global.js'></script>
@@ -43,7 +44,7 @@
           initialView: 'dayGridMonth',
           contentHeight: 300,
           selectable: true,
-          editable: true,
+          editable: false,
           droppable: true,
           firstDay : 1,
 		
@@ -62,6 +63,8 @@
           eventClick:function(info) {
         	  modalOpen('modify',info);
         	  
+        	
+        	  
 /*     		  $('#modifyEvent').click(function(){ 			  
     			console.log(info.event);
     			let title ="";
@@ -79,8 +82,15 @@
       		  $('#eventTime').val(''); */
           },
 
-          select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-        	  modalOpen('insert',arg);
+          select: function(info) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+        	  let date = new Date();
+        	  if(info.start>new Date(date.setDate(date.getDate()+1))){
+        	  	modalOpen('insert',info);
+        	  }else{
+        		  let arim =date.toLocaleDateString(date.setDate(date.getDate()+1));
+        		  alert(arim.substr(0,arim.length-1)+"부터 예약가능합니다");
+        		  
+        	  }
               /* var title = prompt('시간입력', '13:20~15:00');
               if (title) {
                   calendar.addEvent({
@@ -106,6 +116,31 @@
         }*/
         });
         calendar.render();
+   		$('#eventStartTime').timepicker({
+   			timeFormat: 'HH:mm',
+ 	        interval: 60,
+ 	        minTime: '10',
+ 	        maxTime: '6:00pm',
+ 	        defaultTime: '10',
+ 	        startTime: '10:00',
+ 	        dynamic: false,
+ 	        dropdown: true,
+ 	        scrollbar: true
+
+ 		});
+   		$('#eventEndTime').timepicker({
+   		 	timeFormat: 'HH:mm',
+ 	        interval: 60,
+ 	        minTime: '12',
+ 	        maxTime: '8:00pm',
+ 	        defaultTime: '12',
+ 	        startTime: '12:00',
+ 	        dynamic: false,
+ 	        dropdown: true,
+ 	        scrollbar: true,        
+ 		});
+        
+        $('#eventStartTime').time
       });
       
       function sendBookDate(){
@@ -113,51 +148,92 @@
     	  console.log(allEvent);
     	  var events = new Array();
     	  for(let i=0; i< allEvent.length; i++){
-    		  var obj = new Object();  		  
+    		  var obj = new Object();
+    		  console.log(allEvent[i]);
     		  obj.title = allEvent[i]._def.title;
     		  obj.allday = allEvent[i]._def.allDay;
-    		  obj.start = allEvent[i]._instance.range.start;
-    		  obj.end = allEvent[i]._instance.range.end;		  
+    		  obj.start = allEvent[i].startStr;
+    		  obj.end = allEvent[i].endStr;		  
     		  events.push(obj);
     	  }
     	  let bookDate = JSON.stringify(events);
-    	  console.log(bookDate)
     	  $('#reciveBookData').val(bookDate);
       }
       
       function modifyEvent(g_info){
 			console.log(g_info.event);
-			let title ="";
-			title = $('#eventDog').val() + $('#eventStartTime').val() + $('#eventEndTime').val();
-			console.log(title+"타이틀입니다");
-  		  	g_info.event.setProp('title', title);
-  		  	modalClose();
-	  		$('#eventDog').val('');
-	  		$('#eventStartTime').val('');
-			$('#eventEndTime').val('');
+			let start = $('#eventStartTime').val();
+			let end = $('#eventEndTime').val();
+		
+			if(start=='' || end==''){
+				alert('시간을 입력해주세요!');
+			}else{
+				let startTime = $('#eventStartTime').val();
+				let endTime = $('#eventEndTime').val();			
+ 				let startTimeList = startTime.split(':');
+				let endTimeList = endTime.split(':');		
+				startTime = startTimeList[0] + startTimeList[1];
+				endTime = endTimeList[0] + endTimeList[1];	
+				
+				if(Number(startTime)+200>Number(endTime)){
+					alert('2시간 간격으로 입력해주세요!');
+				}else{
+	    			if(!startTime.includes(':')){
+	    				startTime = startTime.substring(0,2) + ":" + startTime.substring(2,4);	
+	    			}
+	    			if(!endTime.includes(':')){
+	    				endTime = endTime.substring(0,2) + ":" + endTime.substring(2,4);		
+	    			}
+					
+					let title = $('#eventDog').val() + "," + startTime + "~" + endTime;
+					
+					console.log(title+"타이틀입니다");
+		  		  	g_info.event.setProp('title', title);
+		  		  	modalClose();
+		  		  	cost_cal();
+				}
+				
+			}
+			
+	
       }
       
       function deleteEvent(g_info){
 			g_info.event.remove();
 			modalClose();
-			$('#eventDog').val('');
-			$('#eventStartTime').val('');
-			$('#eventEndTime').val('');
+			cost_cal();
       }
       
       function addEvent(g_info){
-    	  	let title = $('#eventDog').val() + $('#eventStartTime').val() + $('#eventEndTime').val();
-            calendar.addEvent({
-            title: title,
-            start: g_info.start,
-            end: g_info.end,
-            allDay: g_info.allDay
-            })
-            calendar.unselect();
-            modalClose();
-			$('#eventDog').val('');
-			$('#eventStartTime').val('');
-			$('#eventEndTime').val('');
+    	  	let title = $('#eventDog').val() + "," + $('#eventStartTime').val() + "~" + $('#eventEndTime').val();
+			if($('#eventStartTime').val()=='' || $('#eventEndTime').val()==''){
+				alert('시간을 입력해주세요!');
+			}else{
+				let startTime = $('#eventStartTime').val();
+				let endTime = $('#eventEndTime').val();
+ 				let startTimeList = startTime.split(':');
+				let endTimeList = endTime.split(':');		
+				startTime = startTimeList[0] + startTimeList[1];
+				endTime = endTimeList[0] + endTimeList[1];
+				
+				console.log("스타트:"+startTime);
+				console.log("엔드:"+endTime);
+				
+				if(Number(startTime)+200>Number(endTime)){
+					alert('2시간 간격으로 입력해주세요!');
+				}else{
+		            calendar.addEvent({
+		            title: title,
+		            start: g_info.start,
+		            end: g_info.end,
+		            allDay: g_info.allDay
+		            })
+		            calendar.unselect();
+		            modalClose();
+		            cost_cal();
+				}
+
+			}
      }
       
 
@@ -170,6 +246,20 @@
 
 
 <style>
+   	body {
+  padding-top: 50px;
+  /* 생략 */
+}
+    	
+    	li {
+	
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  color: black;
+  font-family: "Jalnan";
+  font-size: 90%;
+  
+}
 td {
 	width: 100px;
 	heigth: 500px;
@@ -254,7 +344,7 @@ td {
 	top:0; left:0;
 	dispaly:none;
 	background: rgba(0,0,0,0.8);
-	}
+}
 
 .fc-col-header-cell a {
 	color: black;
@@ -277,7 +367,16 @@ td {
   text-decoration: none;
 }
 
+.fc-event-title-container{
+	text-align: center;
+}
 
+.ui-timepicker { 
+	font-size: 12px; width: 80px;
+	background: white;
+	position:relative;
+	z-index: 1056;
+}
 
 
 
@@ -292,11 +391,36 @@ td {
     	function modalOpen(path ,info){
     		g_info = info;
     		console.log(path);
+ 
+			
     		if(path == 'modify'){
+        		console.log(g_info.event.title);	
+    			let array = g_info.event.title.split(',');
+    			let dog = array[0];
+    			let time = array[1];
+    
+    			let startTime = time.split('~')[0];
+    			let endTime = time.split('~')[1];
+    			
+    			if(!startTime.includes(':')){
+    				startTime = startTime.substring(0,2) + ":" + startTime.substring(2,4);	
+    			}
+    			if(!endTime.includes(':')){
+    				endTime = endTime.substring(0,2) + ":" + endTime.substring(2,4);		
+    			}
+    			
+    			
+    			$('#eventDog').val(dog);
+    			$('#eventStartTime').val(startTime);
+    			$('#eventEndTime').val(endTime);			
+    			
+    			
     			$('#eventModifyForm').fadeIn();
     			$('#modifyEvent').fadeIn();
-    			$('#deleteEvent').fadeIn();
+    			$('#deleteEvent').fadeIn()
+           		
     		}else if(path == 'insert'){
+    			
     			$('#eventModifyForm').fadeIn();
     			$('#addEvent').fadeIn();
     		}
@@ -307,8 +431,38 @@ td {
 			$('#addEvent').fadeOut();
 			$('#modifyEvent').fadeOut();
 			$('#deleteEvent').fadeOut();
-    		$("#eventModifyForm").fadeOut();	
+    		$("#eventModifyForm").fadeOut();
+    		$('#eventStartTime').val('');
+			$('#eventEndTime').val('');
     	}
+    	
+        function checkResult() {
+      	  	var allEvent = calendar.getEvents();   	  
+    	  	if(allEvent.length==0){
+    	  		alert('예약일정을 등록해주세요!');
+    	  		return false;
+    	  	}else{
+    	  		sendBookDate();
+    	  	}
+    	  	
+    	  	if($("input[name=shop]:radio:checked").length<1){
+    	  		alert("방문여부를 선택해주세요!");
+    	  		return false;
+    	  	}
+    	  	
+    	  	
+
+    	  	
+/*             if ($('#address').val() == ''){
+			    $('#address').focus();
+			    return false;
+            }
+            if ($('#term').is(':checked') == 'false'){
+			    $('#term').focus();
+			    alert($('#term').is(':checked'));
+			    return false;
+            }  */
+        }
 </script>
 </head>
 
@@ -316,12 +470,69 @@ td {
 
 <body>
 
-	<%@include file="/includes/header.jsp"%>
+		<div class="container">
+	<nav
+      class="navbar navbar fixed-top navbar-light bg-light navbar-expand-custom navbar-mainbg"
+    >	
+      <button
+        class="navbar-toggler"
+        type="button"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <!-- 햄버거 -->
+        <span class="navbar-toggler-icon"></span>
+        <!-- 햄버거/ -->
+      </button>
+      <a class="logo" href="<%=request.getContextPath() %>/view/main.jsp"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
+      /></a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <div class="hori-selector">
+            <div class="left"></div>
+            <div class="right"></div>
+          </div>
+          <hr/>
+          <li class="nav-nickName">
+          	<a hraf="#">회원님</a>
+          </li>
+          <hr/>
+          <li class="nav-item">
+            <a class="nav-link" href="<%=request.getContextPath() %>/view/mypage/my_page_list.jsp"><i class="fas fa-tachometer-alt"></i>마이페이지</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              ><i class="address-book"></i>예약확인</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/amigo/myChatList.do"><i class="amigo-chating"></i>채팅</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<%=request.getContextPath() %>/user_board_list.do"><i class="far fa-calendar-alt"></i>커뮤니티</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="far fa-chart-bar"></i>아미고 파트너 모집</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"><i class="aimgo-cs"></i>고객센터</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    </div>
+    <!-- 네비바 종료 -->
+	<!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="/amigo/resources/js/script.js"></script>
 	<div class="container" style="width: 480px;">
 
 
 
-		<form action="book.do">
+		<form action="book.do" onsubmit="return checkResult();">
 			<div class="select" style="display: flex; justify-content: space-between; margin-top: 100px;">
 				<input type="radio" id="select1" name="shop" value="visit">
 				<label class="ctn_btn" for="select1">방문</label> 
@@ -357,22 +568,72 @@ td {
 			<div id='calendar-container'>
 				<div id='calendar' name="calendar"></div>
 			</div>
-
-			<br> <b>이용주소</b> <input type="text" name="address" id="address" />
-			<button type="button" class="item_change" data-bs-toggle="modal"
-				data-bs-target="#address_modal">변경</button>
+			
+			<script>
+				function open_address_modal(){
+					console.log('입장확인');
+					$('#address_modal').show();
+				}
+				function close_address_modal(){
+					$('#address_modal').hide();	
+				}
+			</script>
+			
+			
+			<br> <b>이용주소</b> <input type="text" name="address" id="address" required="required" readonly="readonly" style="width :300px;"/>
+			<button type="button" class="item_change" onclick="open_address_modal()">변경</button>
 			<br> <br> <b>특이사항</b><br>
 			<textarea class="etc_content" name="etc_content" rows="5" cols="16"
 				placeholder="펫시터분이 알아야 할 우리 아이에 대한 특이사항을 적어주세요!"></textarea>
 			<br>
-
-
+			
+			<script>
+				function cost_cal(){
+		    	  var allEvent = calendar.getEvents();   	  
+		    	  console.log(allEvent);
+		    	  var events = new Array();
+		    	  
+		    	  if(allEvent.length >0){
+		    	  for(let i=0; i< allEvent.length; i++){
+		    		  var obj = new Object();
+		    		  console.log(allEvent[i]);
+		    		  obj.title = allEvent[i]._def.title;
+		    		  obj.allday = allEvent[i]._def.allDay;
+		    		  obj.start = allEvent[i].startStr;
+		    		  obj.end = allEvent[i].endStr;		  
+		    		  events.push(obj);
+		    	  }
+		    	  let bookDate = JSON.stringify(events);
+			  	    $.ajax({
+				    	url :'ajax/calMoney.do',
+				        type :'POST',
+				        data : {'book_date':bookDate},
+				    	success : function(result){
+				    		//that.prop('name', data);
+				    		console.log('결과:'+result);
+				        	if(result!=0) {
+				        		$('#money').val(result);				            	     //$('#heart').prop("src","resources/img/heart_fill.svg");
+				        		$('#show_money').text(result+'원');
+				        	} else {
+				        		$('#money').val('');
+				        		$('#show_money').text(' 0원');
+				        	}  
+			            	}
+				    });
+		    	  }else{
+		    		  $('#money').val('');
+		    	  }
+				}
+			</script>
+		
 			<div class="inline_box">
-				<b style="margin: 0 auto;">비용</b>
+				<b style="margin: 0 auto;">비용</b><span id="show_money"> 0원</span>
+				<input type="hidden" id="money" name="price"></input>
 			</div>
+			
 
 			<br> <label for="term" class="term_css"> <input
-				type="checkbox" name="term" value="3"> <span>개인정보 이용
+				type="checkbox" id="term" name="term" required="required"> <span>개인정보 이용
 					동의<strong>(필수)</strong>
 			</span>
 			</label>
@@ -390,7 +651,7 @@ td {
 			
 			<div style="display: flex; justify-content: space-between;">
 				<button class="btn btn-primary ctn_btn" onclick="history.back(-1)">이전</button>
-				<button type="submit" class="btn btn-primary ctn_btn" onclick="sendBookDate()">확인</button>
+				<button type="submit" class="btn btn-primary ctn_btn">확인</button>
 			</div>
 		</form>
 
@@ -398,13 +659,7 @@ td {
 
 
 
-	</div>
-	
-	<script>
-		function eventModifyForm(){
-			
-		}		
-	</script>
+	</div>	
 
 	<%@include file="/includes/footer.jsp"%>
 	
@@ -417,11 +672,13 @@ td {
 					<option value="백구">백구</option>
 				</select>
 				<p>시간선택</p>
-				<input type="time" id="eventStartTime" value=""/>~<input type="time" id="eventEndTime" value=""/>
-				<button type="button" id="modifyEvent" style="display: none; " onclick="modifyEvent(g_info)">수정</button>
-				<button type="button" id="deleteEvent" style="display: none; "onclick="deleteEvent(g_info)">삭제</button>
-				<button type="button" id="addEvent" style="display: none; "onclick="addEvent(g_info)">입력</button>
-				<button type="button" onclick="modalClose()">닫기</button>
+				<div >
+					<input type="text" id="eventStartTime" class="timepick"/>~<input type="text" id="eventEndTime" class="timepick"/>
+				</div>
+				<button class="btn btn-secondary" type="button" id="modifyEvent" style="display: none; " onclick="modifyEvent(g_info)">수정</button>
+				<button class="btn btn-danger" type="button" id="deleteEvent" style="display: none; "onclick="deleteEvent(g_info)">삭제</button>
+				<button class="btn btn-dark" type="button" id="addEvent" style="display: none; "onclick="addEvent(g_info)">추가</button>
+				<button class="btn btn-dark" type="button" onclick="modalClose()">닫기</button>
 			</div>
 			
 		</div>
@@ -429,45 +686,14 @@ td {
 
 	<!-- 모달창 -->
 
-	<div class="modal" id="calendar">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">예약날짜 모달창</h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-
-				</div>
-
-				<!-- Modal body -->
-				<div class="modal-body">
-
-					<!-- 시작시 기본 날짜 설정은 value를 이용 -->
-
-					<input type="text" id="datepicker" class="form-control" />
-
-
-				</div>
-
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">확인</button>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-	<div class="modal" id="address_modal">
+	<div class="modal" id="address_modal" style="display: none;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
 				<!-- Modal Header -->
 				<div class="modal-header">
 					<h4 class="modal-title">주소</h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					<button type="button" class="btn-close" onclick="close_address_modal()"></button>
 
 				</div>
 
@@ -478,11 +704,11 @@ td {
 					<!-- 시작시 기본 날짜 설정은 value를 이용 -->
 					<div class="form-group">
 
-						<input type="text" id="sample4_postcode" placeholder="우편번호">
+						<input type="text" id="sample4_postcode" placeholder="우편번호" disabled="disabled">
 						<input type="button" onclick="sample4_execDaumPostcode()"
 							value="우편번호 찾기"><br> <input type="text"
 							id="sample4_roadAddress" class="form-control" name="user_addr"
-							placeholder="도로명주소"> <input type="hidden"
+							placeholder="도로명주소" readonly="readonly"> <input type="hidden"
 							id="sample4_jibunAddress" class="form-control" placeholder="지번주소">
 						<span id="guide" style="color: #999; display: none"></span> <input
 							type="text" id="sample4_detailAddress" class="form-control"
@@ -494,8 +720,7 @@ td {
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" id="address_submit" class="btn btn-secondary"
-						data-bs-dismiss="modal">확인</button>
+					<button type="button" id="address_submit" class="btn btn-secondary">확인</button>
 				</div>
 
 			</div>
@@ -534,9 +759,15 @@ td {
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
             	$('#address_submit').click(function(){
-            			$('#address').val($("#sample4_roadAddress").val() + $("#sample4_jibunAddress").val());
-            		}
-            	);
+            	  	if($('#sample4_detailAddress').val() =='' || $("#sample4_roadAddress").val() == '' || $("#sample4_postcode").val() ==''){	
+            	  		//$(this).removeAttr("data-bs-dismiss");
+            	  	}else{
+            	  		//$(this).attr("data-bs-dismiss", "modal");
+            	  		let temp = $("#sample4_roadAddress").val() + '/' +$('#sample4_detailAddress').val();
+            			$('#address').val(temp);
+            	  		close_address_modal();
+            	  	}
+            	}) 
                 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
                 function sample4_execDaumPostcode() {
                     new daum.Postcode({

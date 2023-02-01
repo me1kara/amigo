@@ -76,13 +76,13 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  function previewFile() {
 		  //var preview = document.getElementById('preimg');
 		  var preview = $('#msgTd');
+		  console.log(document.querySelector('input[type=file]'));
 		  var file = document.querySelector('input[type=file]').files[0];
-		  var reader = new FileReader();
-		
+		  var reader = new FileReader();	
 		  reader.addEventListener(
 		    'load',
 		    function () {
-		      preview.append("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
+		      preview.html("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
 		      preview.append("<button class='btn btn-danger preview_img_del' onclick='preview_del()'>이미지삭제</button>");
 		      $('#msg').val('');
 		      $('#msg').hide();
@@ -95,9 +95,6 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 		}
 		
   	 	function imgPop(url){
-  	 		
-  	 	  window.open("URL", "팝업이름", "팝업 옵션");
-  	 	  console.log('확인용');
   		  var img=new Image();
   		  img.src=url;
   		  var img_width=img.width;
@@ -295,11 +292,13 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  			}else if(jd.type=='file'){
   	  				let fileName = jd.fileName;
   	  				console.log(fileName);
-	  				if(user=='<%=user.getUser_nick()%>') {
-  	  					printImageMe(fileName, chat_no);
-  	  				}else{
-  	  					printImage(user, fileName, chat_no);
-  	  						
+  	  				if(parseInt(roomIndex)==index){
+		  				if(user=='<%=user.getUser_nick()%>') {
+	  	  					printImageMe(fileName, chat_no);
+	  	  				}else{
+	  	  					printImage(user, fileName, chat_no);
+	  	  						
+	  	  				}
   	  				}
   	  			}
   	  			else if (no == '3') {

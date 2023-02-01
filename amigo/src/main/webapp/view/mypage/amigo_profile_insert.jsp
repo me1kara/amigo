@@ -14,7 +14,7 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
-<title>Insert title here</title>
+<title>amigo_insert</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
@@ -26,10 +26,11 @@
 	  <hr>
 			<form role="form" action="insertDog.do" method="post" enctype="multipart/form-data">
 		     
-		                  
-             <div class="form-group" style="width:90px; margin: 0 auto;" >
+             		<div style="text-align: center" id="msgTd"></div>
+             <div class="form-group" style="width:90px; margin: 0 auto;" >             		
 			        <label class="input-group-text" for="dog_image_file">사진등록</label>
-				    <input type="file" style="display:none" class="form-control" name="uploadFile" id="dog_image_file" aria-describedby="uploadFile" aria-label="Upload">
+				    <input type="file" style="display:none" class="form-control" onchange="previewFile()"
+				     name="uploadFile" id="dog_image_file" aria-describedby="uploadFile" aria-label="Upload">
 			 </div>
 	  <hr>
 	         <div class="page-header">
@@ -112,6 +113,31 @@
 		</form>
 	 </div>
 	<%@include file="/includes/footer.jsp" %>
+	
+	<!-- 이미지 프리뷰 -->
+	<script>
+	function previewFile() {
+        var preview = $('#msgTd');
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader();
+        preview_del();
+        reader.addEventListener(
+          'load',
+              function () {
+                 preview.append("<img src="+reader.result+" width='400px' height='400px' class='preview_img_del'/><br>");
+                 preview.append("<button class='btn btn-danger preview_img_del' onclick='preview_del()'>이미지삭제</button>");
+                },false
+         );
+      
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+     }
+    function preview_del(){
+        $('.preview_img_del').remove();
+        $('#dog_image_file').val('');
+     }
+	</script>
 	
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.lec.amigo.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -43,25 +44,26 @@ public class DogController {
 	UserVO user = (UserVO)sess.getAttribute("user");
 	int user_no = user.getUser_no();
 	List<DogVO> dogList = dogService.getDogList(user_no);
-	System.out.println(dogList.toString());
 	model.addAttribute("dogList", dogList);
 	return "amigo_profile.jsp";
 	}
 		
 	@RequestMapping(value="/view/mypage/insertDog.do", method = RequestMethod.POST)
-	public String insertDog(HttpSession sess,Model model,DogVO dog) throws IOException {	
+	public String insertDog(Model model,DogVO dog) throws IOException {	
 		MultipartFile uploadFile = dog.getUploadFile();
 		if (!uploadFile.isEmpty()) {
-			String fileName = uploadFile.getOriginalFilename();
-			uploadFile.transferTo(new File(uploadFolder + fileName));
+			String fileName = uploadFile.getOriginalFilename();  // 파일 진짜 이름 가져오기
+			if(fileName != "") {
+				String fileExtension = fileName.substring(fileName.lastIndexOf("."),fileName.length()); // 확장자명 구하기
+				UUID uuid = UUID.randomUUID();
+				String[] uuids = uuid.toString().split("-");
+				fileName = uuids[0] + fileExtension; // 랜덤 글자 생성
+			}
+			uploadFile.transferTo(new File(uploadFolder+fileName));
 			dog.setDog_image_file(fileName);
 		}
 	dogService.insertDog(dog);
-	UserVO user = (UserVO)sess.getAttribute("user");
-	int user_no = user.getUser_no();
-	List<DogVO> dogList = dogService.getDogList(user_no);
-	model.addAttribute("dogList", dogList);
-	return "amigo_profile.jsp";
+	return "redirect:/view/mypage/getDogList.do ";
 	}
 	
 	@RequestMapping(value="/view/mypage/updateDog.do", method = RequestMethod.GET)
@@ -72,29 +74,30 @@ public class DogController {
 	}
 	
 	@RequestMapping(value="/view/mypage/updateDog.do", method = RequestMethod.POST)
-	public String updateDog(HttpSession sess,Model model,DogVO dog) throws IOException {
+	public String updateDog(Model model,DogVO dog) throws IOException {
 		MultipartFile uploadFile = dog.getUploadFile();
 		if (!uploadFile.isEmpty()) {
-			String fileName = uploadFile.getOriginalFilename();
-			uploadFile.transferTo(new File(uploadFolder + fileName));
+			new File(uploadFolder+dog.getDog_image_file()).delete(); // 기존 파일 삭제하기
+			String fileName = uploadFile.getOriginalFilename();  // 파일 진짜 이름 가져오기
+			if(fileName != "") {
+				String fileExtension = fileName.substring(fileName.lastIndexOf("."),fileName.length()); // 확장자명 구하기
+				UUID uuid = UUID.randomUUID();
+				String[] uuids = uuid.toString().split("-");
+				fileName = uuids[0] + fileExtension; // 랜덤 글자 생성
+			}
+			uploadFile.transferTo(new File(uploadFolder+fileName));
 			dog.setDog_image_file(fileName);
 		}
 	dogService.updateDog(dog);
-	UserVO user = (UserVO)sess.getAttribute("user");
-	int user_no = user.getUser_no();
-	List<DogVO> dogList = dogService.getDogList(user_no);
-	model.addAttribute("dogList", dogList);
-	return "amigo_profile.jsp";
+	return "redirect:/view/mypage/getDogList.do ";
 	}
 	
 	@RequestMapping(value="/view/mypage/deleteDog.do", method = RequestMethod.GET)
-	public String deleteDog(HttpServletRequest req,HttpSession sess,Model model) {
+	public String deleteDog(HttpServletRequest req,Model model) {
 	int dog_no = Integer.parseInt(req.getParameter("dog_no"));
+	String fileName = req.getParameter("dog_image_file");
+	new File(uploadFolder+fileName).delete();
 	dogService.deleteDog(dog_no);
-	UserVO user = (UserVO)sess.getAttribute("user");
-	int user_no = user.getUser_no();
-	List<DogVO> dogList = dogService.getDogList(user_no);
-	model.addAttribute("dogList", dogList);
-	return "amigo_profile.jsp";
+	return "redirect:/view/mypage/getDogList.do ";
 	}
 }

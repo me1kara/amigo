@@ -42,9 +42,9 @@ public class SitterServiceImpl implements SitterService {
 	}
 	
 	@Override
-	public int deleteSitter(int sit_no) {
+	public int deleteSitter(int user_no) {
 		
-		return sitterDAO.deleteSitter(sit_no);
+		return sitterDAO.deleteSitter(user_no);
 	}
 
 

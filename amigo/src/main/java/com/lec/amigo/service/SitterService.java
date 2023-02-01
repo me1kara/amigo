@@ -19,7 +19,7 @@ public interface SitterService {
 	List<SitterVO> getSitList(SitterVO svo);
 	SitterVO insertSitter(SitterVO svo);
 
-	int deleteSitter(int sit_no);
+	int deleteSitter(int user_no);
 	int updateSitter(SitterVO svo, boolean sit_auth_is);
 
 	
