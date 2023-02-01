@@ -63,11 +63,7 @@ public class DogController {
 			dog.setDog_image_file(fileName);
 		}
 	dogService.insertDog(dog);
-	UserVO user = (UserVO)sess.getAttribute("user");
-	int user_no = user.getUser_no();
-	List<DogVO> dogList = dogService.getDogList(user_no);
-	model.addAttribute("dogList", dogList);
-	return "amigo_profile.jsp";
+	return "redirect:/view/mypage/getDogList.do ";
 	}
 	
 	@RequestMapping(value="/view/mypage/updateDog.do", method = RequestMethod.GET)
@@ -93,11 +89,7 @@ public class DogController {
 			dog.setDog_image_file(fileName);
 		}
 	dogService.updateDog(dog);
-	UserVO user = (UserVO)sess.getAttribute("user");
-	int user_no = user.getUser_no();
-	List<DogVO> dogList = dogService.getDogList(user_no);
-	model.addAttribute("dogList", dogList);
-	return "amigo_profile.jsp";
+	return "redirect:/view/mypage/getDogList.do ";
 	}
 	
 	@RequestMapping(value="/view/mypage/deleteDog.do", method = RequestMethod.GET)
@@ -106,10 +98,6 @@ public class DogController {
 	String fileName = req.getParameter("dog_image_file");
 	new File(uploadFolder+fileName).delete();
 	dogService.deleteDog(dog_no);
-	UserVO user = (UserVO)sess.getAttribute("user");
-	int user_no = user.getUser_no();
-	List<DogVO> dogList = dogService.getDogList(user_no);
-	model.addAttribute("dogList", dogList);
-	return "amigo_profile.jsp";
+	return "redirect:/view/mypage/getDogList.do ";
 	}
 }
