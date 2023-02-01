@@ -59,7 +59,7 @@
       <!-- 닉네임 변경 // 유저의 닉네임을 불러와줘야합니다. -->
       <label for="userNickname" class="form-label">닉네임 변경</label>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" id="userNickname" name="user_nick" value="${ user.getUser_nick() }" onchange="checkNick();" check_nick="fail">
+        <input type="text" class="form-control" id="userNickname" name="user_nick" value="${ user.getUser_nick() }" onKeyup="checkNick();" check_nick="success">
       </div>
         <span id="confirmNick"></span><br>
       <!-- 닉네임 변경 end -->
@@ -88,6 +88,8 @@
         <button class="btn btn-outline-secondary" type="submit">변경 완료</button>  
         <input type="hidden" name="user_no" value="${ user.getUser_no()}"/>
         <input type="hidden" name="user_email" value="${ user.getUser_email()}"/>
+        <input type="hidden" name="user_name" value="${ user.getUser_name()}"/>
+        <input type="hidden" name="user_type" value="${ user.getUser_type()}"/>
   </form>
   
 			     <script type="text/javascript">
