@@ -118,6 +118,7 @@
         var file = document.querySelector('input[type=file]').files[0];
         var reader = new FileReader();
         $('.before_img_del').hide();
+        $('.preview_img_del').remove();
       
         reader.addEventListener(
           'load',
