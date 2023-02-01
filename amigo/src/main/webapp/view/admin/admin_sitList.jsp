@@ -37,7 +37,8 @@
 				<table class="table table-hover table-bordered">
 					<thead class="table-dark text-center">					
 						<th scope="col" class="col-1 text-center">사진</th>
-						<th scope="col" class="col-1 text-center">이름</th><!-- 유저테이블의 이름. -->
+						<th scope="col" class="col-1 text-center">유저번호</th>
+						<th scope="col" class="col-1 text-center">시터번호</th>
 						<th scope="col" class="col-1 text-center">성별</th>
 						<th scope="col" class="col-1 text-center">흡연여부</th>
 						<th scope="col" class="col-1 text-center">직업</th>
@@ -45,67 +46,41 @@
 						<th scope="col" class="col-1 text-center">가능시간</th>			
 						<th scope="col" class="col-1 text-center">경력여부</th>			
 						<th scope="col" class="col-2 text-center">시터경험</th>			
-						<th scope="col" class="col-0.5 text-center">자기소개</th>							
+						<th scope="col" class="col-0.5 text-center">자기소개</th>
+						<th scope="col" class="col-0.5 text-center">승인여부</th>						
 						<th scope="col" class="col-0.5 text-center">승인</th>							
 						<th scope="col" class="col-0.5 text-center">실격</th><!-- 시터에서 delete하면될듯. -->							
 					</thead>
 					 <tbody>
-						<c:forEach var="sitList" items="${ sitList }">
+						<c:forEach var="sit" items="${ sitList }">
 						 <tr>
-								<td align="center">${ sitList.getSit_photo()}</td>
-								<td>${user.getUser_no()}</td>
-				    			<td><c:choose><c:when test="${ sitList.getSit_gender()=='m' }">남성</c:when>
-										      <c:when test="${ sitList.getSit_gender()=='f' }">여성</c:when></c:choose></td>
-								<td><c:choose><c:when test="${ sitList.isSit_smoking() }">예</c:when>
-										      <c:when test="${ !sitList.isSit_smoking() }">아니오</c:when></c:choose></td>
-								<td>${ sitList.getSit_job() }</td>
-								<td>${ sitList.getSit_days() }</td>
-								<td>${ sitList.getSit_time() }</td>
-				    			<td><c:choose><c:when test="${ sitList.isSit_exp() }">유경력</c:when>
-										      <c:when test="${ !sitList.isSit_exp() }">무경력</c:when></c:choose></td>
-				    			<td>${ sitList.getSit_care_exp() }</td>
-				    			<td>${ sitList.getSit_intro() }</td>
-				    	
-								<td><a href="updateSitter.do?sit_auth_is=${sitList.setSit_auth_is(1)}" class="btn btn-primary">승인</a></td>
-								<td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#sitterdelete" data-sit_no="${sitList.getSit_no()}">실격(또는 자격해제)</button></td>		
+								<td align="center">${ sit.getSit_photo()}</td>
+								<td>${sit.getUser_no()}</td>
+								<td>${sit.getSit_no()}</td>
+				    			<td><c:choose><c:when test="${ sit.getSit_gender()=='m' }">남성</c:when>
+										      <c:when test="${ sit.getSit_gender()=='f' }">여성</c:when></c:choose></td>
+								<td><c:choose><c:when test="${ sit.isSit_smoking() }">예</c:when>
+										      <c:when test="${ !sit.isSit_smoking() }">아니오</c:when></c:choose></td>
+								<td>${ sit.getSit_job() }</td>
+								<td>${ sit.getSit_days() }</td>
+								<td>${ sit.getSit_time() }</td>
+				    			<td><c:choose><c:when test="${ sit.isSit_exp() }">유경력</c:when>
+										      <c:when test="${ !sit.isSit_exp() }">무경력</c:when></c:choose></td>
+				    			<td>${ sit.getSit_care_exp() }</td>
+				    			<td>${ sit.getSit_intro() }</td>
+				    			<td><c:choose><c:when test="${ sit.isSit_auth_is() }">승인완료</c:when>
+										      <c:when test="${ !sit.isSit_auth_is() }">승인대기</c:when></c:choose></td>
+								<td><a href="updateSitter.do?sit_auth_is=true&user_no=${sit.getUser_no() }" class="btn btn-primary">승인</a></td>
+								<td><a href="deleteSitter.do?user_no=${sit.getUser_no() }" class="btn btn-primary">실격 (자격해제)</a></td>		
 						 </tr>	 
 					   </c:forEach>									
 					</tbody>
-				</table>
-			</div>
-			<!-- 시터 승인하기 -->	
-				<div class="row-sm-3 text-center">
-					<a href="amigo_profile_insert.jsp" class="col-1 btn btn-primary">시터</a>
-				</div>
+				</table>                                <!-- 처음에 do?sit_auth_is= "달러 중괄 s i t . set유저authIs (트루) 중괄" 로 놓고 업뎃이 가능한 것으로 착각...  -->
+			</div>                                      <!-- 승인 -> forEach문의 a태그 :  매서드.do?불리언세팅값=true&유저넘버(쿼리의 where)=달러 중괄 리스트의.유저넘버 얻어오기 중괄호  -->
 		 </c:otherwise>
 		</c:choose>
 		</div>
-				<div id="sitterdelete" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="dogdeleteLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="sitterdeleteLabel">펫시터 자격해제</h5>
-				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				      </div>
-				      <div class="modal-body">
-				        반려견 정보를 정말 삭제하시겠습니까?
-				      </div>
-				      <div class="modal-footer">
-				      	<button type="button" class="btn btn-danger" onclick="deleteSitter();">삭제</button>
-				       	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
-				      </div>
-				    </div>
-				  </div>
-				  </div>
-			<script>
-			var userno ="";
-			$(doument).ready(function() {
-				$('#sitterdelete').on('show.bs.modal', function(event) {
-					userno = $(event.relatedTarget).data('user_no');	
-				});			
-			});
-			function deleteSitter() {location.href='deleteSitter.do?user_no'+userno;}
-			</script>
+
 	<!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

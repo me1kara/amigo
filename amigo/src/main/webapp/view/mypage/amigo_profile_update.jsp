@@ -14,7 +14,7 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
-<title>Insert title here</title>
+<title>amigo_update</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
@@ -27,11 +27,14 @@
 			<form role="form" action="updateDog.do" method="post" enctype="multipart/form-data">
 		     
 		    <c:if test="${dog.getDog_image_file()!=null and dog.getDog_image_file()!=''}">
-				<img src="/img/${dog.getDog_image_file()}" width="20px" height="20px"></c:if>
-            
+				<div style="text-align: center" class="before_img_del"><img src="/img/${dog.getDog_image_file()}" width="400px" height="400px"></div></c:if>
+				    <input type="hidden" value="${dog.getDog_image_file()}"  name="dog_image_file">
+            		<div style="text-align: center" id="msgTd"></div>
              <div class="form-group" style="width:90px; margin: 0 auto;" >
-			        <label class="input-group-text" for="dog_image_file">사진등록</label>
-				    <input type="file" style="display:none" class="form-control" name="uploadFile" id="dog_image_file" aria-describedby="uploadFile" aria-label="Upload">
+			        <label class="input-group-text" for="dog_image_file">사진변경</label>
+				    <input type="file" style="display:none" class="form-control" onchange="previewFile()"
+				    name="uploadFile" id="dog_image_file" aria-describedby="uploadFile" aria-label="Upload">
+				    
 			 </div>
 	  <hr>
 	         <div class="page-header">
@@ -107,6 +110,34 @@
 		</form>
 	 </div>
 	<%@include file="/includes/footer.jsp" %>
+	
+		<!-- 이미지 프리뷰 -->
+	<script>
+	function previewFile() {
+        var preview = $('#msgTd');
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader();
+        $('.before_img_del').hide();
+        $('.preview_img_del').remove();
+      
+        reader.addEventListener(
+          'load',
+              function () {
+                 preview.append("<img src="+reader.result+" width='400px' height='400px' class='preview_img_del'/><br>");
+                 preview.append("<button class='btn btn-danger preview_img_del' onclick='preview_del()'>이미지삭제</button>");
+                },false
+         );
+      
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+     }
+    function preview_del(){
+        $('.preview_img_del').remove();
+        $('#dog_image_file').val('');
+        $('.before_img_del').show();
+     }
+	</script>
 
 	
 </body>

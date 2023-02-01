@@ -53,9 +53,9 @@ public class SitterController {
 		System.out.println("시터등록");
 		System.out.println(svo.toString());													// VO 에 데이터가 제대로 담겼는지 테스트 해봄
 		sitterService.insertSitter(svo);
-//		UserVO user = (UserVO)sess.getAttribute("user");
+	
 //		
-//		int user_no = user.getUser_no();
+//	
 //		List<SitterVO> sitList = sitterService.getSitList();
 //		System.out.println("시터 리스트를 가져옵니다");                                 // 기능확인콘솔
 //		model.addAttribute("sitList", sitList);
