@@ -96,7 +96,7 @@ prefix="c"%>
     <!-- Footer -->
     <footer class="bg-primary text-center text-white mt-5">
       <!-- Copyright -->
-      <div class="text-center p-3 mt-5" style="background-color: #189cc4">
+      <div class="text-center p-3 mt-5" style="background-color:rgb(87, 160, 227);">
         © 2022 Copyright:
         <a class="text-white" href="#">amigo.com</a>
       </div>

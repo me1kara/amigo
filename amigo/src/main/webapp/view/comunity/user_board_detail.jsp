@@ -47,7 +47,7 @@
 			<!-- 이미지를 받아와야할거 같은데 참고: https://okky.kr/articles/1131945 -->
 			
 			
-			<a>${ board.getUser_nick() }</a>
+			<span>${ board.getUser_nick() }</span>
 			<div class="ubd-group">
 			<!-- 등록일 -->
 			<span>${ board.getUbd_date() }</span>
