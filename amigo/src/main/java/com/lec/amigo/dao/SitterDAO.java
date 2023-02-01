@@ -68,7 +68,10 @@ public class SitterDAO {
 	}
 	
 	public int updateSitter(SitterVO svo, boolean sit_auth_is) {
-		return jdbcTemplate.update(updateSitter,svo.getUser_no(), "true");
+		System.out.println(updateSitter);
+		int a = jdbcTemplate.update(updateSitter, true, svo.getUser_no());  // int로 받아서,, 쿼리문, true처리, 객체에서 유저정보를 받아와서 -> 처리.
+		System.out.println(a+"성공여부 확인");                              // 콘솔로 성공여부 확인하기.
+		return a;                                                           // a 라는 업뎃문 실행.
 	}
 	
 	
@@ -76,8 +79,12 @@ public class SitterDAO {
 		return jdbcTemplate.update(updateSitter,svo.getSit_gender(),svo.getSit_birth(),svo.isSit_smoking(),svo.getSit_job(),svo.getSit_days(),svo.getSit_time(),svo.isSit_exp(),svo.getSit_care_exp(),svo.getSit_intro(),svo.getSit_photo(),svo.isSit_auth_is());
 	}*/
 	
-	public int deleteSitter(int sit_no) {
-		return jdbcTemplate.update(deleteSitter, sit_no);
+	public int deleteSitter(int user_no) {
+		
+		
+		System.out.println(deleteSitter);                    // 쿼리 확인하기
+		int del = jdbcTemplate.update(deleteSitter, user_no); // 업데이트 매서드를 위한 변수.
+		return del;                                          // 변수 반환.
 	}
 
 }	

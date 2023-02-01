@@ -11,6 +11,26 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta charset="UTF-8">
+<style>
+      /* aimgo 메인 사진들 css */
+      .img-fluid {
+        border-radius: 20px;
+        border: 2px outset rgba(44, 134, 204, 0.67);
+        cursor: pointer;
+      }
+
+      .img-fluid needYou {
+      }
+
+      /* 폰트 적용(여기어때 폰트)*/
+      h4 {
+        font-family: "Roboto", sans-serif;
+        text-decoration: none;
+        color: black;
+        font-family: "Jalnan";
+        font-size: 90%;
+      }
+      </style>
 <title>메인홈</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -51,12 +71,12 @@
 		
 		 <!-- Am!go 소개 -->
     <div class="container text-center" id="AmigoTop">
-      <div class="row">
-        <img
-          src="https://via.placeholder.com/500x300"
-          class="img-fluid"
-          alt="..."
-        />
+      <div class="amigoMainImg">
+      <img
+           src="/amigo/resources/img/amigoLoginImg.png"
+            class="img-fluid"
+            alt="amigoPet"
+          />
       </div>
     </div>
     <!--소개 종료-->
@@ -70,49 +90,49 @@
       <!-- 펫시터 -->
       <div class="row gy-5">
         <div class="col-6">
-          <div class="p-3 border bg-light">
+          <div class="p-3">
           <a href="#" onclick="main_fail();">
-            <img
-              src="https://via.placeholder.com/150x100"
-              class="img-fluid"
-              alt="..."
-            />
+             <img
+                  src="/amigo/resources/img/petsitter.png"
+                  class="img-fluid"
+                  alt="..."
+                />
             </a>
           </div>
         </div>
         <!-- 추천산책루트 -->
         <div class="col-6">
-          <div class="p-3 border bg-light">
+          <div class="p-3">
             <a href="#" onclick="main_fail();">
-            <img
-              src="https://via.placeholder.com/150x100"
-              class="img-fluid"
-              alt="..."
-            />
+           <img
+                  src="/amigo/resources/img/walking.png"
+                  class="img-fluid"
+                  alt="..."
+                />
             </a>
           </div>
         </div>
         <!-- 병원 -->
         <div class="col-6">
-          <div class="p-3 border bg-light">
+          <div class="p-3">
            <a href="#" onclick="main_fail();">
             <img
-              src="https://via.placeholder.com/150x100"
-              class="img-fluid"
-              alt="..."
-            />
+                  src="/amigo/resources/img/hp.png"
+                  class="img-fluid"
+                  alt="..."
+                />
             </a>
           </div>
         </div>
         <!-- 고객센터 -->
         <div class="col-6">
-          <div class="p-3 border bg-light">
+          <div class="p-3">
           <a href="#" onclick="main_fail();">
-            <img
-              src="https://via.placeholder.com/150x100"
-              class="img-fluid"
-              alt="..."
-            />
+             <img
+                  src="/amigo/resources/img/cs.png"
+                  class="img-fluid"
+                  alt="..."
+                />
             </a>
           </div>
         </div>
@@ -128,20 +148,20 @@
       <div class="row text-center">
         <a href="#" onclick="main_fail();">
           <img
-            src="https://via.placeholder.com/500x300"
-            class="img-fluid"
-            alt="..."
-          />
+              src="/amigo/resources/img/community.png"
+              class="img-fluid"
+              alt="community"
+            />
         </a>
       </div>
       <br />
       <div class="row text-center">
         <a href="#" onclick="main_fail();">
           <img
-            src="https://via.placeholder.com/400x100"
-            class="img-fluid"
-            alt="..."
-          />
+              src="/amigo/resources/img/needYou.png"
+              class="img-fluid"
+              alt="needYou"
+            />
         </a>
       </div>
     </div>
@@ -249,7 +269,9 @@
     </div>
     <br />
     <!-- Q&A 종료 -->
+		<hr/>
 		
+		<hr/>
 		
 		
 	<%@include file="/includes/footer.jsp" %>

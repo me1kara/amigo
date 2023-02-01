@@ -12,24 +12,38 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
-	
+   
 <meta charset="UTF-8">
+<style>
+ .user-name {
+ 	  font-family: "Jalnan";
+ 	  font-size:20px;
+ 	  color:rgb(87, 160, 227);
+  }
+</style>
 <title>Insert title here</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
 </head>
 <body>
-	
-	<%@include file="/includes/header.jsp" %>
-		 <!-- Profile nav -->
+   
+   <%@include file="/includes/header.jsp" %>
+       <!-- Profile nav -->
     <!-- user의 프로필 정보를 가져와야합니다. -->
     <form action="updateUser.do" method="post" enctype="multipart/form-data" onSubmit="return checkResult();">
     <div class="myProfileMainBox">
+<<<<<<< HEAD
       <div class="profileNav">
        	<a href="#"> ${ user.getUser_name() }님 </a>
+=======
+      
+      <div class="container text-center">
+          <a class="user-name"> ${ user.getUser_name() } </a> 님
+>>>>>>> 471a94ed21b04a45940e456da63d7890c4bc3380
         <!-- 이곳에 유저의 이름이 들어와야합니다. -->
         <h4>안녕하세요!</h4>
+        </div>
         <!-- 프로필 사진 업로드 -->
         <div class="container">
           <div class="picture-container">
@@ -47,7 +61,7 @@
         </div>
         <!-- 프로필 사진 업로드 종료 -->
         <!-- profile nav end -->
-      </div>
+      
 
       <!-- 프로필 상세 -->     
       <!-- 이메일 // 이메일 정보가 가져와져야합니다. -->
@@ -59,7 +73,11 @@
       <!-- 닉네임 변경 // 유저의 닉네임을 불러와줘야합니다. -->
       <label for="userNickname" class="form-label">닉네임 변경</label>
       <div class="input-group mb-3">
+<<<<<<< HEAD
         <input type="text" class="form-control" id="userNickname" name="user_nick" value="${ user.getUser_nick() }" onKeyup="checkNick();" check_nick="success">
+=======
+        <input type="text" class="form-control" id="userNickname" name="user_nick" value="${ user.getUser_nick() }">
+>>>>>>> 471a94ed21b04a45940e456da63d7890c4bc3380
       </div>
         <span id="confirmNick"></span><br>
       <!-- 닉네임 변경 end -->
@@ -85,11 +103,17 @@
       
       <!-- 주소 변경 end -->
     <!-- 프로필 상세 end-->
+    <div class="container text-center mb-5">
         <button class="btn btn-outline-secondary" type="submit">변경 완료</button>  
+<<<<<<< HEAD
         <input type="hidden" name="user_no" value="${ user.getUser_no()}"/>
         <input type="hidden" name="user_email" value="${ user.getUser_email()}"/>
         <input type="hidden" name="user_name" value="${ user.getUser_name()}"/>
         <input type="hidden" name="user_type" value="${ user.getUser_type()}"/>
+=======
+        <input type="hidden" name="user_no" value="${ user.getUser_no()}">
+        </div>
+>>>>>>> 471a94ed21b04a45940e456da63d7890c4bc3380
   </form>
   
 			     <script type="text/javascript">
@@ -155,8 +179,8 @@
     <![endif]-->
     
     <!-- 이곳은 푸터가 조금 다르기 때문에 직접 적용해줬음
-	<@include file="/includes/footer.jsp" %>
-	-->
-	
+   <@include file="/includes/footer.jsp" %>
+   -->
+   
 </body>
 </html>
