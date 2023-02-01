@@ -216,7 +216,8 @@
                     <label for="user_nick" class="sighup-group">닉네임*</label>
                     <input type="text" class="form-control" id="user_nick" name="user_nick" placeholder="닉네임" check_nick="fail" onchange="checkNick();" required>
                     <span id="confirmNick"></span>
-                </div>        
+                </div>    
+                    
                  <div class="form-group">
                  <label for="sample4_roadAddress" class="sighup-group">주소*</label><br>
                <input type="text" id="sample4_postcode" placeholder="우편번호">

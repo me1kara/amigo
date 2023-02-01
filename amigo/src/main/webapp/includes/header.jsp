@@ -61,11 +61,7 @@
           </div>
           <hr/>
           <li class="nav-nickName">
-<<<<<<< HEAD
-          	<a hraf="#">${ user.getUser_name() } 회원님</a>
-=======
           	<a class="nav-link" hraf="<%=request.getContextPath() %>/my_profile.do">${ user.getUser_nick() }</a>
->>>>>>> 471a94ed21b04a45940e456da63d7890c4bc3380
           </li>
           <hr/>
           <li class="nav-item">

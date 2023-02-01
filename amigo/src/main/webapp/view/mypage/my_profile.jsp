@@ -33,14 +33,8 @@
     <!-- user의 프로필 정보를 가져와야합니다. -->
     <form action="updateUser.do" method="post" enctype="multipart/form-data" onSubmit="return checkResult();">
     <div class="myProfileMainBox">
-<<<<<<< HEAD
-      <div class="profileNav">
-       	<a href="#"> ${ user.getUser_name() }님 </a>
-=======
-      
       <div class="container text-center">
           <a class="user-name"> ${ user.getUser_name() } </a> 님
->>>>>>> 471a94ed21b04a45940e456da63d7890c4bc3380
         <!-- 이곳에 유저의 이름이 들어와야합니다. -->
         <h4>안녕하세요!</h4>
         </div>
@@ -48,12 +42,12 @@
         <div class="container">
           <div class="picture-container">
             <div class="picture">
-              <img
-                src="https://lh3.googleusercontent.com/LfmMVU71g-HKXTCP_QWlDOemmWg4Dn1rJjxeEsZKMNaQprgunDTtEuzmcwUBgupKQVTuP0vczT9bH32ywaF7h68mF-osUSBAeM6MxyhvJhG6HKZMTYjgEv3WkWCfLB7czfODidNQPdja99HMb4qhCY1uFS8X0OQOVGeuhdHy8ln7eyr-6MnkCcy64wl6S_S6ep9j7aJIIopZ9wxk7Iqm-gFjmBtg6KJVkBD0IA6BnS-XlIVpbqL5LYi62elCrbDgiaD6Oe8uluucbYeL1i9kgr4c1b_NBSNe6zFwj7vrju4Zdbax-GPHmiuirf2h86eKdRl7A5h8PXGrCDNIYMID-J7_KuHKqaM-I7W5yI00QDpG9x5q5xOQMgCy1bbu3St1paqt9KHrvNS_SCx-QJgBTOIWW6T0DHVlvV_9YF5UZpN7aV5a79xvN1Gdrc7spvSs82v6gta8AJHCgzNSWQw5QUR8EN_-cTPF6S-vifLa2KtRdRAV7q-CQvhMrbBCaEYY73bQcPZFd9XE7HIbHXwXYA=s200-no"
-                class="picture-src"
-                id="wizardPicturePreview"
-                title=""
-              />
+            
+				<img src="/img/${user.getUser_photo()}"
+				 	 class="picture-src"
+				 	 id="wizardPicturePreview"
+				 	 title="">
+
               <input type="file" name="uploadFile" id="wizard-picture" class="" aria-describedby="uploadFile" aria-label="Upload"/>
             </div>
             <h6 class="">사진업로드</h6>
@@ -73,11 +67,7 @@
       <!-- 닉네임 변경 // 유저의 닉네임을 불러와줘야합니다. -->
       <label for="userNickname" class="form-label">닉네임 변경</label>
       <div class="input-group mb-3">
-<<<<<<< HEAD
         <input type="text" class="form-control" id="userNickname" name="user_nick" value="${ user.getUser_nick() }" onKeyup="checkNick();" check_nick="success">
-=======
-        <input type="text" class="form-control" id="userNickname" name="user_nick" value="${ user.getUser_nick() }">
->>>>>>> 471a94ed21b04a45940e456da63d7890c4bc3380
       </div>
         <span id="confirmNick"></span><br>
       <!-- 닉네임 변경 end -->
@@ -95,25 +85,79 @@
        <!-- 후대폰 번호 변경 end -->
        <!-- 주소 변경 -->
        <!-- 다음 api 적용예정 -->
-       <label for="addr" class="form-label">내 주소</label>
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" id="addr" name="user_addr" value="${ user.getUser_addr() }">
-      </div>
+
+           <label for="sample4_roadAddress" class="sighup-group">내 주소</label><br>
+           <div class="input-group mb-3">
+               <input type="text" id="sample4_postcode" placeholder="우편번호">
+               <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기"><br>
+               <input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" value="${ user.getUser_addr() }">
+            </div>
+               <br><small>상세주소를 꼭 입력해주세요. 예약 시에 반영됩니다.</small>
+                
+                
+            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+            <script>
+                //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+                function sample4_execDaumPostcode() {
+                    new daum.Postcode({
+                        oncomplete: function(data) {
+                            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+            
+                            // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                            var roadAddr = data.roadAddress; // 도로명 주소 변수
+                            var extraRoadAddr = ''; // 참고 항목 변수
+            
+                            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                                extraRoadAddr += data.bname;
+                            }
+                            // 건물명이 있고, 공동주택일 경우 추가한다.
+                            if(data.buildingName !== '' && data.apartment === 'Y'){
+                               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                            }
+                            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                            if(extraRoadAddr !== ''){
+                                extraRoadAddr = ' (' + extraRoadAddr + ')';
+                            }
+            
+                            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                            document.getElementById('sample4_postcode').value = data.zonecode;
+                            document.getElementById("sample4_roadAddress").value = roadAddr;
+                            document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+            
+                            var guideTextBox = document.getElementById("guide");
+                            // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                            if(data.autoRoadAddress) {
+                                var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                                guideTextBox.style.display = 'block';
+            
+                            } else if(data.autoJibunAddress) {
+                                var expJibunAddr = data.autoJibunAddress;
+                                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                                guideTextBox.style.display = 'block';
+                            } else {
+                                guideTextBox.innerHTML = '';
+                                guideTextBox.style.display = 'none';
+                            }
+                        }
+                    }).open();
+                }
+            </script>
+       
       </div>    
       
       <!-- 주소 변경 end -->
     <!-- 프로필 상세 end-->
     <div class="container text-center mb-5">
         <button class="btn btn-outline-secondary" type="submit">변경 완료</button>  
-<<<<<<< HEAD
         <input type="hidden" name="user_no" value="${ user.getUser_no()}"/>
         <input type="hidden" name="user_email" value="${ user.getUser_email()}"/>
         <input type="hidden" name="user_name" value="${ user.getUser_name()}"/>
         <input type="hidden" name="user_type" value="${ user.getUser_type()}"/>
-=======
-        <input type="hidden" name="user_no" value="${ user.getUser_no()}">
-        </div>
->>>>>>> 471a94ed21b04a45940e456da63d7890c4bc3380
+
   </form>
   
 			     <script type="text/javascript">

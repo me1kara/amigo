@@ -202,7 +202,7 @@ public class LoginController {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
 			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
-			uploadFile.transferTo(new File(uploadFolder + fileName + uniqueName));
+			uploadFile.transferTo(new File(uploadFolder + uniqueName));
 			userVO.setUser_photo(uniqueName);
 		}
 		
