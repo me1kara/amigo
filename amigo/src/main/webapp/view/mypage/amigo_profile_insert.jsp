@@ -120,7 +120,7 @@
         var preview = $('#msgTd');
         var file = document.querySelector('input[type=file]').files[0];
         var reader = new FileReader();
-      
+        preview_del();
         reader.addEventListener(
           'load',
               function () {
