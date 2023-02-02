@@ -233,6 +233,7 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 											<li style="margin-bottom: 3px; overflow: hidden; clear: both;"
 												id="chat_no_${chat.getChat_no() }" >
 												<span ondblclick="imgPop('/img/${chat.getFile() }')">
+
 												<img src="/img/${chat.getFile() }" width="200px" height="200px">
 												</span>
 												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
@@ -260,7 +261,7 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 										<div class="chat-content"> 
 											<li style="margin-bottom: 3px; float: right;"
 												id="chat_no_${chat.getChat_no() }">
-												<span style="overflow: hedden;" onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" ondblclick="imgPop('/img/${chat.getFile() }')">
+												<span style="overflow: hedden;" onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" onclick="imgPop('/img/${chat.getFile() }')">
 												<img src="/img/${chat.getFile() }" width="200px" height="200px"></span>
 											</li>
 											</div>
@@ -445,7 +446,7 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
     	    	console.log(realFile);
     	    	temp += '<li style="margin-bottom:3px; clear: both;" id="chat_no_'+chat_no+'">';
     	    	temp += '[' + user + '] ';
-    	   	  	temp += '<img width="200px" height="200px" src='+realFile+' ondblclick="imgPop('+"'"+realFile+"'"+')">';
+    	   	  	temp += '<img width="200px" height="200px" src='+realFile+' onclick="imgPop('+"'"+realFile+"'"+')">';
     	   	  	temp += ' <span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
     	   	  	temp += '</li>';
     	   	  			
@@ -459,7 +460,7 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  	  	let temp = '';
   	  	
   	  	  	temp += '<li style="margin-bottom:3px; float:right;" id="chat_no_'+chat_no+'">';
-  	  		temp += '<span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" ondblclick="imgPop('+"'"+realFile+"'"+')"><img width="200px" height="200px" src=' + realFile + '><span>';
+  	  		temp += '<span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" onclick="imgPop('+"'"+realFile+"'"+')"><img width="200px" height="200px" src=' + realFile + '><span>';
   	  	  	temp += '</li>';
   	  	  	temp += '<li style="clear: both;"></li';
   	  	  

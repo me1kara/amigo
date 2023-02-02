@@ -154,7 +154,7 @@
                   <!-- user profile -->
                     <a
                       href="#"><img 
-                      	src="img/reviewProfile.jpg"
+                      	src="/img/${user.getUser_photo()}"
                         class="mr-3 rounded-circle"
                         width="50"
                         alt="User"

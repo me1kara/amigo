@@ -15,6 +15,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,16 +34,28 @@ public class BookController {
 	BookServiceImpl bookService;
 	
 	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.GET })
-	public String book (HttpServletRequest req, HttpServletResponse resp) {
+	public String book (HttpServletRequest req, Model model) {
 		
 		String calr = req.getParameter("bookDate");
 		String address = req.getParameter("address");
+		String[] addrList = address.split("\\s");
+		String secondeAddr = addrList[1];
 		
-		List<SitterVO> sittList = bookService.getArroundSitter(address);
-		
-		
-		System.out.println(calr);
+		List<SitterVO> sittList = bookService.getArroundSitter(secondeAddr);
+		List<UserVO> sittNameList = bookService.getUserNameList(secondeAddr);
 	
+		
+		for(SitterVO sit : sittList) {
+			System.out.println(sit.getUser_no()+"컨트롤러에서 확인!");			
+		}
+		
+		req.setAttribute("sittList", sittList);
+		req.setAttribute("sittNameList", sittNameList);
+		
+		model.addAttribute(sittList);
+		model.addAttribute(sittNameList);
+		req.setAttribute("calr", calr);
+		
 		JSONParser parser = new JSONParser();
 		JSONArray jms = null;
 		try {
@@ -61,10 +74,8 @@ public class BookController {
 		
 		//해당날짜,
 		
-		
-		
-		
-		return "book_sitter_list.jsp";
+
+		return "book_sitter_list.jsp?addr="+secondeAddr;
 	}
 	
 	
