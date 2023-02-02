@@ -18,66 +18,141 @@
     <![endif]-->
     
     <style>
-    	.sitt_action_image{
-    		
-    	}
+@import url("https://fonts.googleapis.com/css?family=Muli:400,700&display=swap");
+
+body {
+  margin: 0;
+  height: calc(100vh - 8em);
+  font-family: "Muli", sans-serif;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  margin: 1.5em;
+}
+
+.sit_img {
+  width: 35%;
+  border-radius: 50%;
+}
+.session_img {
+  width: 35%;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.items {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  animation: carouselAnim 50s infinite alternate linear;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  width: 450px;
+  background: #fff;
+  margin: 1em;
+  padding: 0.5em;
+  border-radius: 10px;
+  box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+@media only screen and (max-width: 768px) {
+  .items {
+    animation: carouselAnim 35s infinite alternate linear;
+  }
+  
+  @keyframes carouselAnim {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(calc(-100% + (2 * 300px)));
+    }
+  }
+}
+
+.entry p {
+  text-align: center;
+  padding: 1em;
+}
+
+.name {
+  font-weight: bold;
+}
+
+@keyframes carouselAnim {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(calc(-100% + (5 * 300px)));
+  }
+}
+
     </style>
     
 </head>
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-		<div class="container">
-			펫시터서비스(활동사진)<br>
-			
-			<img src="https://via.placeholder.com/150x100"" alt="돌봄" class="sitt_action_image"/>
-			<img src="https://via.placeholder.com/150x100"" alt="산책" class="sitt_action_image"/>
-			<img src="https://via.placeholder.com/150x100"" alt="케어" class="sitt_action_image"/>
-			
-			<p>대표펫시터사진들</p>
-			<div id="demo" class="carousel slide" data-bs-ride="carousel">
-			
-			  <!-- Indicators/dots -->
-			  <div class="carousel-indicators">
-			    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-			    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-			    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-			    <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
-			  </div>
-			
-			  <!-- The slideshow/carousel -->
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="https://via.placeholder.com/250x100" alt="시터1" >
-			      <img src="https://via.placeholder.com/250x100" alt="시터2" >
+		<div class="container" >
+			<h2>펫시터서비스(활동사진)</h2>
+			<div style="display: flex;">			
+	 			<img src="https://via.placeholder.com/150x100"" alt="돌봄" class="sitt_action_image session_img"/>
+				<img src="https://via.placeholder.com/150x100"" alt="산책" class="sitt_action_image session_img"/>
+				<img src="https://via.placeholder.com/150x100"" alt="케어" class="sitt_action_image session_img"/>		
+ 			</div>
+ 			
+			<h2>대표펫시터사진들</h2>
+<!-- 		  <div class="faders">
+			  </div> -->
+			  <div class="items">
+			    <div class="entry">
+			      <p class="name">시터</p>
+			      <img src="https://via.placeholder.com/150x100" class="sit_img" alt="Smiling person" />
+			      <p class="quote">"안녕하세요!"</p>
 			    </div>
-			    <div class="carousel-item">
-			      <img src="https://via.placeholder.com/250x100" alt="시터3">
-			      <img src="https://via.placeholder.com/250x100" alt="시터4">
+			    <div class="entry">
+			      <p class="name">시터</p>
+			      <img src="https://via.placeholder.com/150x100" class="sit_img" alt="Smiling person" />
+			      <p class="quote">"안녕하세요!"</p>
 			    </div>
-			    <div class="carousel-item">
-			      <img src="https://via.placeholder.com/250x100" alt="시터5">
-			      <img src="https://via.placeholder.com/250x100" alt="시터6">
+			    <div class="entry">
+			      <p class="name">시터</p>
+			      <img src="https://via.placeholder.com/150x100" class="sit_img" alt="Smiling person" />
+			      <p class="quote">"안녕하세요!"</p>
 			    </div>
-			     <div class="carousel-item">
-			      <img src="https://via.placeholder.com/250x100" alt="시터7">
-			      <img src="https://via.placeholder.com/250x100" alt="시터8">
+			    <div class="entry">
+			      <p class="name">시터</p>
+			      <img src="https://via.placeholder.com/150x100" class="sit_img" alt="Smiling person" />
+			      <p class="quote">"안녕하세요!"</p>
 			    </div>
-			  </div>
-			
-			  <!-- Left and right controls/icons -->
-			  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon"></span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-			    <span class="carousel-control-next-icon"></span>
-			  </button>
-			</div>
-			
-			<button type="button" class="btn btn-primary"><a href="/amigo/view/book/book_sitter_form.jsp">신청하기</a></button>
-			
-			
-			
+			    <div class="entry">
+			      <p class="name">시터</p>
+			      <img src="https://via.placeholder.com/150x100" class="sit_img" alt="Smiling person" />
+			      <p class="quote">"안녕하세요!"</p>
+			    </div>
+			    <div class="entry">
+			      <p class="name">시터</p>
+			      <img src="https://via.placeholder.com/150x100" class="sit_img" alt="Smiling person" />
+			      <p class="quote">"안녕하세요!"</p>
+			    </div>
+			  </div>  
+			  
+				<button type="button" class="btn btn-primary" onclick="location.href='/amigo/view/book/book_sitter_form.jsp'" style="position:relative; left: 50%; transform:translate(-50px);">신청하기</button>
+			  
 		</div>
 	<%@include file="/includes/footer.jsp" %>
 

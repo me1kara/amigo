@@ -66,7 +66,7 @@ public class BoardController {
 			@RequestParam(defaultValue="") String searchType,
 			@RequestParam(defaultValue="") String searchWord) {
 			
-		searchVO.setTotalRowCount(boardService.getTotalRowCount(searchVO));
+			searchVO.setTotalRowCount(boardService.getTotalRowCount(searchVO));
 			searchVO.setCurPage(curPage);
 			searchVO.setRowSizePerPage(rowSizePerPage);
 			searchVO.setSearchCategory(searchCategory);

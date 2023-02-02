@@ -12,7 +12,7 @@
 	
 	<%
 		String addr = request.getParameter("addr");
-	
+		
 	%>
 
 <script
@@ -34,12 +34,37 @@
     	a:visited {color: white; text-decoration: none;}
     	a:link{color: white; text-decoration: none;}
     </style>
+    
+    <script>
+    	function sendJsonUrl(no,curPage, rowSize){
+    	    let f = document.createElement('form');
+    	    
+    	    let obj;
+    	    
+    	    if(no == '1'){
+    	    	let cur = document.createElement('input');
+    	    	let row = document.createElement('input');
+        	    obj.setAttribute('type', 'hidden');
+        	    obj.setAttribute('name', 'curPage');
+        	    obj.setAttribute('value', userid);	
+    	    }
+    	    
+    	    f.appendChild(obj);
+    	    f.setAttribute('method', 'post');
+    	    f.setAttribute('action', 'view.do');
+    	    document.body.appendChild(f);
+    	    f.submit();
+    	}
+    
+    </script>
 </head>
 <body>
 
 	<%@include file="/includes/header.jsp"%>
 		<div class="container">
-			<p><%=addr %> 시터들 목록</p>
+			<p><%= addr%> 시터들 목록</p>
+			
+			${calr } 확인용
 			
 			<c:choose>
 
@@ -63,8 +88,29 @@
 						</c:if>
 					</c:forEach>
 				</c:forEach>
+				<div class="row align-items-start mt-3">
+					<ul class="col pagination justify-content-center">
+					
+						<c:set var="cp" value="${searchVO.getCurPage()}"/>
+						<c:set var="rp" value="${searchVO.getRowSizePerPage()}"/>
+						<c:set var="fp" value="${searchVO.getFirstPage()}"/>
+						<c:set var="lp" value="${searchVO.getLastPage()}"/>
+						<c:set var="ps" value="${searchVO.getPageSize()}"/>
+						<c:set var="tp" value="${searchVO.getTotalPageCount()}"/>										
+						<c:if test="${ fp != 1 }">
+							<li class="page-item"><a href="book.do?curPage=1&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
+							<li class="page-item"><a href="book.do?curPage=${fp-rp}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-backward"></i></a></li>				
+						</c:if>
+						<c:forEach var="page" begin="${fp}" end="${lp}"><button class="btn" onclick="sendJsonUrl(1,${page},${rp})">${page}</button>
+							<li class="page-item ${cp==page ? 'active' : ''}"><a href="book.do?curPage=${page}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link">${page}</a></li>
+						</c:forEach>				
+						<c:if test="${ lp < tp }">
+							<li class="page-item "><a href="book.do?curPage=${lp+1}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-forward"></i></a></li>				
+							<li class="page-item"><a href="book.do?curPage=${tp}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>				
+						</c:if>
+					</ul> <!-- pagination -->	
+				</div> <!-- 페이징 -->
 			</c:when>
-
 			<c:otherwise>
 					<h>해당한 지역의 펫시터가 없습니다!</h>
 				</c:otherwise>

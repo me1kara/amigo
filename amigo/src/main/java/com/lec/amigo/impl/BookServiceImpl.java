@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.lec.amigo.common.PagingVO;
 import com.lec.amigo.dao.BookDAO;
 import com.lec.amigo.service.BookService;
 import com.lec.amigo.vo.SitterVO;
@@ -23,14 +24,20 @@ public class BookServiceImpl implements BookService{
 		return bookDao.calMoney(days, time);
 	}
 
-	public List<SitterVO> getArroundSitter(String address) {
+	public List<SitterVO> getArroundSitter(String address,PagingVO page) {
 		
-		return bookDao.getArroudSitter(address);
+		return bookDao.getArroudSitter(address,page);
 	}
 
 	public List<UserVO> getUserNameList(String address) {
 		// TODO Auto-generated method stub
 		return bookDao.getArroundSitterNames(address);
 	}
+	
+	public int getTotalRowCount(String address) {
+		return bookDao.getTotalRowCount(address);
+	}
+	
+	
 	
 }

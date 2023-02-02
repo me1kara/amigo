@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lec.amigo.common.PagingVO;
+import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.impl.BookServiceImpl;
 import com.lec.amigo.vo.HeartVO;
 import com.lec.amigo.vo.SitterVO;
@@ -34,42 +37,65 @@ public class BookController {
 	BookServiceImpl bookService;
 	
 	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.GET })
-	public String book (HttpServletRequest req, Model model) {
+	public String book (HttpServletRequest req, Model model, SearchVO search, 
+			@RequestParam(defaultValue="1") int curPage,
+			@RequestParam(defaultValue="10") int rowSizePerPage) {
 		
 		String calr = req.getParameter("bookDate");
 		String address = req.getParameter("address");
 		String[] addrList = address.split("\\s");
 		String secondeAddr = addrList[1];
 		
-		List<SitterVO> sittList = bookService.getArroundSitter(secondeAddr);
+		search.setCurPage(curPage); // 현재페이지
+		search.setRowSizePerPage(rowSizePerPage); // 페이지당 담길 글 갯수
+		int totalCount = bookService.getTotalRowCount(secondeAddr);
+		int totalPage = (totalCount % rowSizePerPage>0) ? (totalCount/rowSizePerPage)+1 : (totalCount/rowSizePerPage); //나머지가 있다면, 없다면 
+		search.setTotalRowCount(totalCount); // 토탈 펫시터 갯수
+		search.setTotalPageCount(totalPage); // 토탈 페이지 갯수
+		int startPage = (search.getCurPage() % search.getRowSizePerPage()>0) ? (int)(search.getCurPage()/search.getRowSizePerPage())+1:((int)(search.getCurPage()/search.getRowSizePerPage()))-search.getRowSizePerPage()+1;
+		int endPage = startPage+rowSizePerPage-1;
+		if(endPage>totalPage) {
+			endPage=totalPage;
+		}
+		search.setFirstPage(startPage);//현재 페이지기준 스타트페이지
+		search.setLastPage(endPage);//현재 페이지기준 엔드페이지
+		search.setPageSize(rowSizePerPage);
+		List<SitterVO> sittList = bookService.getArroundSitter(secondeAddr,search);
 		List<UserVO> sittNameList = bookService.getUserNameList(secondeAddr);
-	
 		
 		for(SitterVO sit : sittList) {
 			System.out.println(sit.getUser_no()+"컨트롤러에서 확인!");			
 		}
 		
-		req.setAttribute("sittList", sittList);
-		req.setAttribute("sittNameList", sittNameList);
+		System.out.println("시작페이지"+startPage);
+		System.out.println("끝페이지"+endPage);
+		System.out.println("총페이지"+totalPage);
+		System.out.println("현재페이지"+curPage);
+		System.out.println("페이지당글갯수"+rowSizePerPage);
 		
-		model.addAttribute(sittList);
-		model.addAttribute(sittNameList);
+		
+		req.setAttribute("sittList", sittList); //현재쪽기반리스트
+		req.setAttribute("sittNameList", sittNameList); // 이름
+		req.setAttribute("searchVO", search); //페이징 정보
+		
+		//페이징때문에 넣은 주소 보존
+		req.setAttribute("address", address);
+		
+		//예약정보담김
 		req.setAttribute("calr", calr);
 		
-		JSONParser parser = new JSONParser();
-		JSONArray jms = null;
-		try {
-			jms = (JSONArray) parser.parse(calr);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		System.out.println(calr);
 		
-		for(int i=0; i< jms.size(); i++) {
-			 JSONObject jsonObj = (JSONObject)jms.get(i);
-			 System.out.println(jsonObj.get("title"));
-			 System.out.println(jsonObj.get("start"));
-			 System.out.println(jsonObj.get("end"));
-		}
+		/*
+		 * JSONParser parser = new JSONParser(); JSONArray jms = null; try { jms =
+		 * (JSONArray) parser.parse(calr); } catch (ParseException e) {
+		 * e.printStackTrace(); }
+		 * 
+		 * for(int i=0; i< jms.size(); i++) { JSONObject jsonObj =
+		 * (JSONObject)jms.get(i); System.out.println(jsonObj.get("title"));
+		 * System.out.println(jsonObj.get("start"));
+		 * System.out.println(jsonObj.get("end")); }
+		 */
 		
 		
 		//해당날짜,
@@ -81,8 +107,8 @@ public class BookController {
 	
 	@RequestMapping(value = "/view/book/sitter_profile.do", method = { RequestMethod.GET })
 	public String getSitterProfile (HttpServletRequest req, HttpServletResponse resp, UserVO userVO) {
-		
 		System.out.println("예약폼");	
+		
 		return "/view/sitter/sitter_profile.jsp";
 	}
 	
