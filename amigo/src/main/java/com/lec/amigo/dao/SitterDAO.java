@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.mapper.SitRowMapper;
 import com.lec.amigo.vo.SitterVO;
+import com.lec.amigo.vo.UserVO;
 
 
 
@@ -37,6 +38,8 @@ public class SitterDAO {
 	private String insertSitter = "";
 	private String deleteSitter = "";
 	private String updateSitter = "";
+	private String updateTypeS  = "";
+	private String updateTypeU  = "";
 	private String selectSitListByUserNo = "";
 	
 	@PostConstruct
@@ -46,6 +49,8 @@ public class SitterDAO {
 		insertSitter          = environment.getProperty("insertSitter");
 		deleteSitter          = environment.getProperty("deleteSitter");
 		updateSitter          = environment.getProperty("updateSitter");
+		updateTypeS           = environment.getProperty("updateTypeS");
+		updateTypeU           = environment.getProperty("updateTypeU");
 		selectSitListByUserNo = environment.getProperty("selectSitListByUserNo");
 	}
 	
@@ -54,6 +59,7 @@ public class SitterDAO {
 	public List<SitterVO> getSitList(SitterVO svo) {
 		
 		return jdbcTemplate.query(selectSitter, new SitRowMapper());
+		
 	}
 	
 	public SitterVO getSitter(int sit_no) {
@@ -74,6 +80,13 @@ public class SitterDAO {
 		return a;                                                           // a 라는 업뎃문 실행.
 	}
 	
+	public void updateTypeS(SitterVO svo) {
+		jdbcTemplate.update(updateTypeS, svo.getUser_type());
+	}
+	
+	public void updateTypeU(SitterVO svo) {
+		jdbcTemplate.update(updateTypeU, svo.getUser_type());
+	}
 	
 /*public int updateSitter(SitterVO svo) {
 		return jdbcTemplate.update(updateSitter,svo.getSit_gender(),svo.getSit_birth(),svo.isSit_smoking(),svo.getSit_job(),svo.getSit_days(),svo.getSit_time(),svo.isSit_exp(),svo.getSit_care_exp(),svo.getSit_intro(),svo.getSit_photo(),svo.isSit_auth_is());

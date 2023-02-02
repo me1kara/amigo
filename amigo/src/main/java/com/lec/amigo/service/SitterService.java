@@ -21,6 +21,8 @@ public interface SitterService {
 
 	int deleteSitter(int user_no);
 	int updateSitter(SitterVO svo, boolean sit_auth_is);
+	void updateTypeS(SitterVO svo);
+	void updateTypeU(SitterVO svo);
 
 	
 	
