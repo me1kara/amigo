@@ -71,10 +71,7 @@
         color: #189cc4;
       }
       
-      .text-body{
-      	
-      }
-      
+  
     </style>
 </head>
 <body>
@@ -169,7 +166,7 @@
                       <!-- 말머리/ -->
                       <!-- 제목 -->
                       <h6>
-                      <a class="text-body" style="font-size:25px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
+                      <a class="text-body" style="font-size:20px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
@@ -184,7 +181,7 @@
                     </div>
                     <div class="text-muted small text-center align-self-center">
                       <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>&nbsp;&nbsp;
-                      <span><ii class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;${ board.getLike_cnt() }</span>
+                      <span><i class="fa fa-heart" aria-hidden="true"></i>&nbsp;${ board.getLike_cnt() }</span>
                     	</div>
                  		</div>
                 		</div>
@@ -225,7 +222,6 @@
 		
 	
 		<!-- 하단 검색 시스템 -->
-		
 		<form action="user_board_list.do" method="post" id="boardForm">   
 				    	<div class="col-3 me-1">
 					<select class="form-select" id="searchType" name="searchType">
