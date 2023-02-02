@@ -31,8 +31,17 @@
   color: black;
   font-family: "Jalnan";
   font-size: 90%;
-  
-}
+ }
+ 
+ .navbar-toggler {
+ 	margin-left:20px;
+ }
+ 
+ .main-big-logo {
+ width:180px;
+   display: flex;
+ justify-content: center;
+ }
     </style>
 </head>
 <body>
@@ -51,7 +60,7 @@
         <span class="navbar-toggler-icon"></span>
         <!-- 햄버거/ -->
       </button>
-      <a class="logo" href="<%=request.getContextPath() %>/view/main.jsp"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
+      <a class="logo" href="<%=request.getContextPath() %>/view/main.jsp"><img class="main-big-logo" alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
       /></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
