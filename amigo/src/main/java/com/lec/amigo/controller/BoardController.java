@@ -66,7 +66,7 @@ public class BoardController {
 			@RequestParam(defaultValue="") String searchType,
 			@RequestParam(defaultValue="") String searchWord) {
 			
-		searchVO.setTotalRowCount(boardService.getTotalRowCount(searchVO));
+			searchVO.setTotalRowCount(boardService.getTotalRowCount(searchVO));
 			searchVO.setCurPage(curPage);
 			searchVO.setRowSizePerPage(rowSizePerPage);
 			searchVO.setSearchCategory(searchCategory);
@@ -135,12 +135,14 @@ public class BoardController {
 	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, 
 			                        @RequestParam int ubd_no, HttpServletRequest req, 
 			                        ReplyVO replyVO, UserVO userVO) {
-		
-		// 조회수 올리는 로직
-		boardService.updateCount(ubd_no);
-		
+			
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
+
+		// 조회수 올리는 로직
+		if(req.getAttribute("updateCount_is")==null) { 
+			boardService.updateCount(ubd_no);
+		}
 		
 		// 파일 가져오는 로직
 		BoardVO boardUser = boardService.getBoard(board);  // 파일명 가져오기 위해 boardUser에 담아줌
@@ -158,7 +160,6 @@ public class BoardController {
 		// 이미 좋아요했는지 확인하는 로직
 		model.addAttribute("findHeart", boardService.findHeart(userVO.getUser_no(), ubd_no));
 
-
 		return "view/comunity/user_board_detail.jsp";
 	}
 	
@@ -166,24 +167,15 @@ public class BoardController {
 	public String user_board_update(Model model, BoardVO board, SearchVO searchVO) {
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
-		
-		BoardVO boardUser = boardService.getBoard(board);  // 파일명 가져오기 위해 boardUser에 담아줌
-		if(boardUser.getUbd_file()!=null) {
-		String[] fileSplit = boardUser.getUbd_file().split(","); // ,를 기준으로 파일명 나눠서 배열에 담음
-		
-		model.addAttribute("fileSplit", fileSplit); // jsp 파일에 파일 보냄
-		} 
-		
 		return "view/comunity/user_board_update.jsp";
 	}
 	
 	@RequestMapping(value="/user_board_update.do", method=RequestMethod.POST)
 	public String user_board_update(Model model, BoardVO board) {	
 		
-		
+		if(board.getUploadFile() != null) {
 		List<MultipartFile> uploadFile = board.getUploadFile(); 
-
-		// input type=file mutiple 수대로 uploadFile은 무조건 생김!  
+		
 		if (!uploadFile.isEmpty()) {
 
 			List<Map<String, String>> uploadFileList = new ArrayList<>();
@@ -211,8 +203,7 @@ public class BoardController {
 				for(int i=0; i<uploadFileList.size(); i++) {
 					File saveFile = new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName"));
 					uploadFile.get(i).transferTo(saveFile);
-					}
-				
+				}
 				
 			} catch (Exception e) {
 				System.out.println("------------------------> 다중 파일 업로드 실패");
@@ -229,7 +220,7 @@ public class BoardController {
 			String DBUploadFile = StringUtils.join(DBUpload, ",");  // 리스트 값들을 ,로 연결해주는 자바에 있는 메서드
 			board.setUbd_file(DBUploadFile); // 파일 이름을 ,로 연결해서 DB에 저장
 		} 
-		
+		}
 		
 		boardService.updateBoard(board);
 		model.addAttribute("msg","글이 정상적으로 수정되었습니다.");
@@ -283,7 +274,7 @@ public class BoardController {
 					File saveFile = new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName"));
 					uploadFile.get(i).transferTo(saveFile);
 				}
-			
+				
 			} catch (Exception e) {
 				System.out.println("------------------------> 다중 파일 업로드 실패");
 				for(int i=0; i<uploadFile.size(); i++) {

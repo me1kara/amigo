@@ -13,8 +13,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
+import com.lec.amigo.common.PagingVO;
+import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.mapper.SitterRowMapper;
 import com.lec.amigo.mapper.UserRowMapper;
+import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
@@ -32,15 +35,20 @@ public class BookDAO {
 		return calResult;
 	}
 
-	public List<SitterVO> getArroudSitter(String secondeAddr) {
+	public List<SitterVO> getArroudSitter(String secondeAddr, PagingVO page) {
 		
 		System.out.println(secondeAddr);
 
 		String sql = "select u.user_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_exp from user u,petsitter s"+ 
-				" where u.user_no = s.user_no and u.user_type='S' and user_addr like ?";
+				" where u.user_no = s.user_no and u.user_type='S' and user_addr like ? limit ?,?";
 		
 		String sqlinput = "%"+secondeAddr+"%";
-				
+		//1 -> 0 
+		//2 -> 10
+		//3 ->
+		// 1*10 -> 10 - 10 = 0;
+		// 2*10 -> 20 - 10 = 10;
+		int startSno = (page.getCurPage()*page.getRowSizePerPage())-page.getRowSizePerPage();	
 		List<SitterVO> sitList = new ArrayList<SitterVO>();
 		Connection conn = JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
@@ -48,9 +56,10 @@ public class BookDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, sqlinput);
+			pstmt.setInt(2, startSno);
+			pstmt.setInt(3, page.getRowSizePerPage());
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				System.out.println("확ㄴ이요!");
 				SitterVO si = new SitterVO();
 				si.setUser_no(rs.getInt("user_no"));
 				si.setSit_days(rs.getString("sit_days"));
@@ -91,6 +100,21 @@ public class BookDAO {
 		}
 		return null;
 	}
+	
+	public int getTotalRowCount(String secondeAddr) {
+		String sql = "select count(u.user_no) cno from user u,petsitter s"+ 
+				" where u.user_no = s.user_no and u.user_type='S' and user_addr like ?";
+		String sqlinput = "%"+secondeAddr+"%";
+		Object[] args = {sqlinput};
+		return jdbcTemplate.queryForObject(sql, args, Integer.class);
+	}
+	
+	public int getCateRowCount () {
+		
+		return 0;
+	}
+	
+	
 
 	
 	
