@@ -57,7 +57,7 @@ prefix="c"%>
           >
           <c:choose>
           	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
-          	<img src="/img/${user.getUser_photo()}" alt="코드잇 이미지" width="20px" height="20px"/>
+          	<img src="/img/${user.getUser_photo()}" alt="userphoto" width="20px" height="20px"/>
             </c:when>
             <c:otherwise>
             <img src="../../resources/img/logo2.png" alt="logo2" width="20px" height="20px"/>

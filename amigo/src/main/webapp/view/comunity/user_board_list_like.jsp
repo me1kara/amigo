@@ -127,13 +127,13 @@
 							location.href = "user_board_list.do?";
 						}
 						if(selectList.options[selectList.selectedIndex].value == "자랑글"){
-							location.href = "user_board_cate.do?ubd_cate=자랑글&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}";
+							location.href = "user_board_cate.do?ubd_cate=자랑글";
 						}
 						if(selectList.options[selectList.selectedIndex].value == "자유글"){
-							location.href = "user_board_cate.do?ubd_cate=자유글&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}";
+							location.href = "user_board_cate.do?ubd_cate=자유글";
 						}
 						if(selectList.options[selectList.selectedIndex].value == "질문"){
-							location.href = "user_board_cate.do?ubd_cate=질문&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}";
+							location.href = "user_board_cate.do?ubd_cate=질문";
 						}
 					}
 					</script>
