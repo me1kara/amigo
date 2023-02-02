@@ -12,7 +12,6 @@
 	
 	<%
 		String addr = request.getParameter("addr");
-		
 	%>
 
 <script
@@ -35,37 +34,60 @@
     	a:link{color: white; text-decoration: none;}
     </style>
     
-    <script>
-    	function sendJsonUrl(no,curPage, rowSize){
-    	    let f = document.createElement('form');
-    	    
-    	    let obj;
-    	    
-    	    if(no == '1'){
-    	    	let cur = document.createElement('input');
-    	    	let row = document.createElement('input');
-        	    obj.setAttribute('type', 'hidden');
-        	    obj.setAttribute('name', 'curPage');
-        	    obj.setAttribute('value', userid);	
-    	    }
-    	    
-    	    f.appendChild(obj);
-    	    f.setAttribute('method', 'post');
-    	    f.setAttribute('action', 'view.do');
-    	    document.body.appendChild(f);
-    	    f.submit();
-    	}
-    
-    </script>
 </head>
 <body>
+		 <script type="text/javascript">
+    	function sendJsonUrl(curPage,rowSize){
+    		console.log('입장확인용');
+    	    //let f = document.createElement('form');
+    	    var f = document.f;
+    	    f.curPage.value=curPage;
+    	    f.rowSizePerPage.value=rowSize;
+    	    
+    	    let b = ${calr}; 
+    	    console.log(b);
+    	    $('#bookDate').val(JSON.stringify(b));
+    	    
+    	    
+/*    	    	let cur = document.createElement('input');
+   	    	let row = document.createElement('input');
+   	    	let address = document.address;
+   	    	let book_date = document.createElement('input');
+   	    
+       	    cur.setAttribute('type', 'hidden');
+       	    cur.setAttribute('name', 'curPage');
+       	    cur.setAttribute('value', curPage);
+       	    
+       	    row.setAttribute('type', 'hidden');
+       	    row.setAttribute('name', 'rowSizePerPage');
+       	 	row.setAttribute('value', rowSize);
+       	 	      	
+    	 address.setAttribute('type', 'hidden');
+    	    address.setAttribute('name', 'address');
+    	    address.setAttribute('value', ${address}); 
+    	    
+    	    book_date.setAttribute('type', 'hidden');
+    	    book_date.setAttribute('name', 'book_date');
+    	    book_date.setAttribute('value', ${calr});
+    	    
+    	    f.appendChild(cur);
+    	    f.appendChild(row);
+    	    f.appendChild(address);
+    	    f.appendChild(book_date); */
+    	    
+/*     	    f.setAttribute('method', 'get');
+    	    f.setAttribute('action', 'book.do'); */
+    	    //document.body.appendChild(f);
+    	    f.submit();
+    	}
+    	
 
-	<%@include file="/includes/header.jsp"%>
+    </script>
+
+	<%-- <%@include file="/includes/header.jsp"%> --%>
 		<div class="container">
-			<p><%= addr%> 시터들 목록</p>
-			
-			${calr } 확인용
-			
+		
+			<p><%=addr%> 시터들 목록</p>
 			<c:choose>
 
 			<c:when test="${sittList!=null }">
@@ -82,7 +104,7 @@
 							</div>
 							<div class="col-sm-4">
 								<button class="btn btn-secondary"
-									onclick="location.href='sitter_profile.do?user_name=${user.getUser_name()}'">자세히보기</button>
+									onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }'">자세히보기</button>
 							</div>
 						</div>
 						</c:if>
@@ -98,15 +120,17 @@
 						<c:set var="ps" value="${searchVO.getPageSize()}"/>
 						<c:set var="tp" value="${searchVO.getTotalPageCount()}"/>										
 						<c:if test="${ fp != 1 }">
-							<li class="page-item"><a href="book.do?curPage=1&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
-							<li class="page-item"><a href="book.do?curPage=${fp-rp}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-backward"></i></a></li>				
+							<li class="page-item"><button class="btn" onclick="sendJsonUrl(1,${rp})"><i class="fas fa-fast-backward"></i></button></li>
+							<li class="page-item"><button class="btn" onclick="sendJsonUrl(${fp-rp},${rp})"><i class="fas fa-backward"></i></button></li>				
 						</c:if>
-						<c:forEach var="page" begin="${fp}" end="${lp}"><button class="btn" onclick="sendJsonUrl(1,${page},${rp})">${page}</button>
-							<li class="page-item ${cp==page ? 'active' : ''}"><a href="book.do?curPage=${page}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link">${page}</a></li>
+						<c:forEach var="page" begin="${fp}" end="${lp}">
+							<li class="page-item ${cp==page ? 'active' : ''}">
+							<button class="btn" onclick="sendJsonUrl(${page},${rp})">${page}</button>
+							</li>
 						</c:forEach>				
 						<c:if test="${ lp < tp }">
-							<li class="page-item "><a href="book.do?curPage=${lp+1}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-forward"></i></a></li>				
-							<li class="page-item"><a href="book.do?curPage=${tp}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>				
+							<li class="page-item "><span class="btn" onclick="sendJsonUrl(${lp+1},${rp})"><i class="fas fa-forward"></i></span></li>
+							<button class="btn" onclick="sendJsonUrl(${tp},${rp})"><i class="fas fa-fast-forward"></i></button>				
 						</c:if>
 					</ul> <!-- pagination -->	
 				</div> <!-- 페이징 -->
@@ -115,11 +139,24 @@
 					<h>해당한 지역의 펫시터가 없습니다!</h>
 				</c:otherwise>
 			</c:choose>
+			
+			<form name="f" action="book.do">
+			<input type="hidden" name="address" value="${address }"/>
+			<input type="hidden" name="rowSizePerPage"/>
+			<input type="hidden" name="curPage" />
+			<input type="hidden" id="bookDate" name="bookDate"/>
+			</form>
 
 
 	</div>
+	<%-- <a href="book.do?curPage=${lp+1}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-forward"></i></a> --%>
+	<%-- <a href="book.do?curPage=${page}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link">${page}</a> --%>
+	<%-- <li class="page-item"><a href="book.do?curPage=${tp}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"></a></li> --%>
+	<%-- <a href="book.do?curPage=1&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"></a> --%>
+	<%-- <a href="book.do?curPage=${fp-rp}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-backward"></i></a> --%>
 	<%@include file="/includes/footer.jsp" %>
 
-	
+
+
 </body>
 </html>
