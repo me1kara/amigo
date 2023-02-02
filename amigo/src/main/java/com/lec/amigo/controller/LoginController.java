@@ -214,5 +214,7 @@ public class LoginController {
 		return "view/comunity/alert.jsp";
 	}
 	
-	
+	//사용자수정(사용자번호) {
+	//	update sql
+	//}
 }
