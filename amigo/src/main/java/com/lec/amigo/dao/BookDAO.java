@@ -39,7 +39,7 @@ public class BookDAO {
 		
 		System.out.println(secondeAddr);
 
-		String sql = "select u.user_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_exp from user u,petsitter s"+ 
+		String sql = "select u.user_no, s.sit_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_intro from user u,petsitter s"+ 
 				" where u.user_no = s.user_no and u.user_type='S' and user_addr like ? limit ?,?";
 		
 		String sqlinput = "%"+secondeAddr+"%";
@@ -63,12 +63,13 @@ public class BookDAO {
 				SitterVO si = new SitterVO();
 				si.setUser_no(rs.getInt("user_no"));
 				si.setSit_days(rs.getString("sit_days"));
+				si.setSit_no(rs.getInt("sit_no"));
 				si.setSit_time(rs.getString("sit_time"));
 				si.setSit_photo(rs.getString("sit_photo"));
-				si.setSit_care_exp(rs.getString(5));
+				si.setSit_intro(rs.getString("sit_intro"));
 				sitList.add(si);
 				
-				System.out.println(si.getUser_no()+"유저번호 확인용");
+				System.out.println(si.getSit_no()+"sit_no 확인용");
 				
 			}
 		
