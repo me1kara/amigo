@@ -12,6 +12,13 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
+<style>
+	
+	.CsTitleColor {
+		color:rgb(88, 150, 187);
+	}
+
+</style>
 <title>고객센터01_고객센터메인</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -23,8 +30,10 @@
 		   <!-- 타이틀 -->
 		   <div class="container">
 <div class="container text-center" id="csHeader">
+<div class="CsTitleColor">
     <h1>AM!GO입니다.</h1>
-    <h4>무엇을 도와드릴까요?</h4>
+</div>
+    <h5>무엇을 도와드릴까요?</h5>
 </div>
 <!-- 타이틀 end-->
 
@@ -72,26 +81,26 @@
 
 <hr class="pill">
 <!-- 상담 -->
-<div class="form-outline form-white mb-4 text-center">
+<div class="form-outline form-white mt-5 mb-5 text-center ">
   <button type="button" class="btn btn-secondary btn-lg" onclick="#"> 게시판 문의</button>
   <button type="button" class="btn btn-secondary btn-lg" onclick="#">채팅 문의</button>
 </div>
 
 <!-- 상담 end -->
        <!-- Footer -->
-       <footer class="bg-primary  text-center text-white">
+       <footer class="container text-center text-white" style="background-color: rgb(87, 160, 227);">
         <!-- Grid container -->
-        <div class="container p-1">
+        <div class="container p-2">
           <!-- Section: Social media -->
-          <section class="mb-4">
-          </section>
+          <section class="mb-5">
           <span>채팅 문의 평일 오전 10:00~오후 06:00 (상시 상담 가능)</span>
+          </section>
           <!-- Section: Form -->
         </div>
         <!-- Grid container -->
         
         <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        <div class="text-center p-3" style="background-color: rgb(87, 160, 227);">
           © 2022 Copyright:
           <a class="text-white" href="#">amigo.com</a>
         </div>

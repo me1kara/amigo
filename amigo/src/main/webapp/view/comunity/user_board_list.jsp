@@ -71,7 +71,9 @@
         color: #189cc4;
       }
       
-      
+      .text-body{
+      	
+      }
       
     </style>
 </head>
@@ -79,10 +81,9 @@
 <%@include file="/includes/header.jsp" %>
 
    <!-- far fa icon 불러오기 -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+<link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+</link>
 
 
 	<div class="container" align="left">
@@ -156,7 +157,7 @@
                   <!-- user profile -->
                     <a
                       href="#"><img 
-                      	src="img/reviewProfile.jpg"
+                      	src="/img/${user.getUser_photo()}"
                         class="mr-3 rounded-circle"
                         width="50"
                         alt="User"
@@ -164,16 +165,16 @@
                     <!-- user profile/ -->
                     <div class="media-body">
                       <!-- 말머리 -->
-                        <a class="text-secondary">${ board.getUbd_cate()}</a>
+                        <div class="text-secondary">${ board.getUbd_cate()}</div>
                       <!-- 말머리/ -->
                       <!-- 제목 -->
                       <h6>
-                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}">${board.getUbd_title()}</a> [${board.getReply_cnt()}]
+                      <a class="text-body" style="font-size:25px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
                       <!-- 작성자 -->
-                        <a class="nickName">${ board.getUser_nick() }</a>&nbsp;
+                        <span class="nickName" style="color:#498dcc; font-weight:bold">${ board.getUser_nick() }</span>&nbsp;
                        <!-- 작성자/ -->
                        <!-- 작성일 -->
                         <span class="text-secondary font-weight-bold">
@@ -222,10 +223,9 @@
 	
 		</div> <!-- 페이징 -->
 		
-		<div class="col-2 btn-group">
-			    <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
-		</div>
+	
 		<!-- 하단 검색 시스템 -->
+		
 		<form action="user_board_list.do" method="post" id="boardForm">   
 				    	<div class="col-3 me-1">
 					<select class="form-select" id="searchType" name="searchType">
@@ -238,11 +238,13 @@
 				<div class="col-3 me-1">			
 					<input class="form-control me-2" name="searchWord" type="text" placeholder="내용은 입력하세요." />
 				</div>
-				<div class="col-3 btn-group">
+				<div class="col-2 btn-group">
 			    	<input type="submit" class="col-1 btn btn-primary me-2" value="검색">
 	        	</div>
-	     </form>
-							
+	        	<div class="col-2 btn-group">
+			    <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
+		        </div>
+	     </form>		
 	</div> <!— main  —>
 	    
 	    

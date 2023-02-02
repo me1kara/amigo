@@ -24,13 +24,13 @@ public class ReplyController {
 	public String insertReply(ReplyVO reply) {
 	
 		replyService.insertReply(reply);
-		return "redirect:/user_board_detail.do?ubd_no=" + reply.getUbd_no();
+		return "redirect:/user_board_detail.do?ubd_no=" + reply.getUbd_no() +"&user_no=" + reply.getUser_no();
 	}
 
 	@RequestMapping(value="/deleteReply.do", method=RequestMethod.GET)
 	public String deleteReply(ReplyVO reply, HttpServletRequest req) {
 		replyService.deleteReply(reply);
-		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no");
+		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no") + "&user_no=" + req.getParameter("user_no");
 	}
 	
 	@RequestMapping(value="/updateReply.do", method=RequestMethod.GET)
@@ -42,7 +42,7 @@ public class ReplyController {
 	@RequestMapping(value="/updateReply.do", method=RequestMethod.POST)
 	public String updateReply(ReplyVO reply, HttpServletRequest req) {
 		replyService.updateReply(reply);
-		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no");
+		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no") + "&user_no=" + req.getParameter("user_no");
 	}
 	
 }

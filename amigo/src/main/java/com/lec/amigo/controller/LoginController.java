@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +35,14 @@ public class LoginController {
 	UserServiceImpl userService;
 	
 	private String uploadFolder = "";
+	
+	@Autowired
+	Environment environment;
+	
+	@PostConstruct
+	public void getUploadPathPropeties() {
+		uploadFolder = environment.getProperty("uploadFolder");
+	}
 	
 	
 	// 로그인 화면 
@@ -182,7 +192,7 @@ public class LoginController {
 	
 	// 회원 정보 수정
 	@RequestMapping(value="/updateUser.do", method = RequestMethod.POST)
-	public String updateUser(Model model, UserVO userVO) throws IOException {
+	public String updateUser(Model model, UserVO userVO, HttpSession sess) throws IOException {
 		
 		MultipartFile uploadFile = userVO.getUploadFile();
 		
@@ -192,11 +202,12 @@ public class LoginController {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
 			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
-			uploadFile.transferTo(new File(uploadFolder + fileName + uniqueName));
-			userVO.setUser_photo(fileName+uniqueName);
+			uploadFile.transferTo(new File(uploadFolder + uniqueName));
+			userVO.setUser_photo(uniqueName);
 		}
 		
-		userService.updateUser(userVO);
+		// 바뀐 정보로 세션 정보 업데이트!
+		sess.setAttribute("user", userService.updateUser(userVO));
 		model.addAttribute("msg","정보가 정상적으로 수정되었습니다.");
 		model.addAttribute("url","my_profile.do");
 		

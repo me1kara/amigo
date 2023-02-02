@@ -108,7 +108,7 @@ public class UserDAO {
 	}
 
 	public UserVO updateUser(UserVO userVO) {
-		jdbcTemplate.update(updateUser, userVO.getUser_pw(), userVO.getUser_nick(), userVO.getUser_addr(), userVO.getUser_phone(), userVO.getUser_photo(), userVO.getUser_no());
+		jdbcTemplate.update(updateUser, userVO.getUser_email(), userVO.getUser_pw(), userVO.getUser_nick(), userVO.getUser_addr(), userVO.getUser_phone(), userVO.getUser_photo(), userVO.getUser_no());
 		return userVO;
 	}
 	
