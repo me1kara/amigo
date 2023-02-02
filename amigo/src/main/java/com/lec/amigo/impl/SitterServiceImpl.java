@@ -47,6 +47,21 @@ public class SitterServiceImpl implements SitterService {
 		return sitterDAO.deleteSitter(user_no);
 	}
 
+	@Override
+	public void updateTypeS(SitterVO svo) {
+		
+		sitterDAO.updateTypeS(svo);
+		
+	}
+
+	@Override
+	public void updateTypeU(SitterVO svo) {
+		
+		sitterDAO.updateTypeU(svo);
+		
+	}
+
+	
 
 	
 

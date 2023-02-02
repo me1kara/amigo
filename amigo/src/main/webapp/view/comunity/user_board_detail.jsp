@@ -46,8 +46,9 @@
 			<!-- 작성자 -->
 			<!-- 이미지를 받아와야할거 같은데 참고: https://okky.kr/articles/1131945 -->
 			
-			
+
 			<span>${ board.getUser_nick() }</span>
+
 			<div class="ubd-group">
 			<!-- 등록일 -->
 			<span>${ board.getUbd_date() }</span>
@@ -67,11 +68,11 @@
 		<br/>
 		<a>
 		<c:if test="${board.getUbd_file()!=null and board.getUbd_file()!=''}">
-								<c:forEach items="${fileSplit}" var="file">
-								<img src="/img/${file}" width="300px" height="300px"><br><br>
-								</c:forEach>
-							</c:if>
-							</a>
+			<c:forEach items="${fileSplit}" var="file">
+				<img src="/img/${file}" width="300px" height="300px"><br><br>
+			</c:forEach>
+		</c:if>
+		</a>
 		
 		</div>
 		<!-- 글작성 내용 end -->
@@ -81,7 +82,7 @@
 			<div class="container text-center">
 				<a class="heart" style="text-decoration-line: none;">
 					<img id="heart" src="resources/img/heart.svg">
-					좋아요( ${board.getLike_cnt()} )
+					좋아요
 				</a>
 			</div>
 		<!-- 추천 -->
@@ -96,31 +97,22 @@
 								<script>
 									function deleteReply(ubd_r_no) {
 									if(confirm("이 댓글을 삭제하겠습니까?")) {
-									self.location.href = "deleteReply.do?ubd_r_no="+ubd_r_no+"&ubd_no=${reply.ubd_no}";
+									self.location.href = "deleteReply.do?ubd_r_no="+ubd_r_no+"&ubd_no=${reply.ubd_no}&user_no=${reply.user_no}";
 										}
 									}
 								</script>
 					<li>
 						<div>
-							<c:if test="${ reply.ubd_r_lev !=0 }">
-								┗
-								<c:forEach var="i" begin="1" end="${reply.ubd_r_lev}">
-									-
-								</c:forEach>
-							</c:if>
-							
 							<div>
-							${reply.user_nick} / <fmt:formatDate value="${reply.ubd_r_regdate}" pattern="YYYY-MM-DD"/>
+							${reply.user_nick} / <fmt:formatDate value="${reply.ubd_r_regdate}" type="date"/>
 							
 							<c:if test="${reply.user_nick == user.getUser_nick() || user.getUser_type() == 'A'}">
 		     					<a href="#" onclick="deleteReply(${reply.ubd_r_no})">삭제</a>
 		     				</c:if>
 		     				
 		     				<c:if test="${reply.user_nick == user.getUser_nick()}">
-		     					<a href="updateReply.do?ubd_r_no=${reply.ubd_r_no}">수정</a>
+		     					<a href="updateReply.do?ubd_r_no=${reply.ubd_r_no}&user_no=${reply.user_no}">수정</a>
 		     				</c:if>	
-		     				
-		     					<a href="updateReply.do?ubd_r_no=${reply.ubd_r_no}">답글</a> <br>
 
 								<P>${reply.ubd_r_content}</P>
 							</div>
@@ -182,12 +174,12 @@
         if(findHeart>0) {
         	console.log(findHeart);
             $("#heart").prop("src", "resources/img/heart_fill.svg");
-            $(".heart").prop('name', findHeart)
+            $(".heart").prop('name', findHeart);
         }
         else {
         	console.log(findHeart);
             $("#heart").prop("src", "resources/img/heart.svg");
-            $(".heart").prop('name', findHeart)
+            $(".heart").prop('name', findHeart);
         }
     });
 	</script>
