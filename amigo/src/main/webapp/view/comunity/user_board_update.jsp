@@ -29,6 +29,11 @@
 	<div class="container mt-3" align="center">
 		<form action="user_board_update.do" method="post" enctype="multipart/form-data">
 			<input name="ubd_no" type="hidden" value="${board.ubd_no}" />
+			<input name="curPage" type="hidden" value="${searchVO.getCurPage()}"/>
+			<input name="rowSizePerPage" type="hidden" value="${searchVO.getRowSizePerPage()}"/>
+			<input name="searchType" type="hidden" value="${searchVO.getSearchType()}"/>
+			<input name="searchWord" type="hidden" value="${searchVO.getSearchWord()}"/>
+
 			<div class="input-group mb-3">
   			 <b>글제목</b> <input type="text" class="form-control" name="ubd_title" value="${ board.ubd_title }">
 			</div>

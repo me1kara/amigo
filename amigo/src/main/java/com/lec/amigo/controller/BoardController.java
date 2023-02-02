@@ -82,7 +82,7 @@ public class BoardController {
 	
 	
 	// 인기글 목록
-	@RequestMapping("/user_board_list_Like.do")
+	@RequestMapping("/user_board_list_like.do")
 	public String getBoardListLike (Model model, SearchVO searchVO,
 			@RequestParam(defaultValue="1") int curPage,
 			@RequestParam(defaultValue="10") int rowSizePerPage,
@@ -138,6 +138,7 @@ public class BoardController {
 			
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
+		
 
 		// 조회수 올리는 로직
 		if(req.getAttribute("updateCount_is")==null) { 
@@ -164,14 +165,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value= "/user_board_update.do", method=RequestMethod.GET)
-	public String user_board_update(Model model, BoardVO board, SearchVO searchVO) {
+	public String user_board_update_form(Model model, BoardVO board, SearchVO searchVO) {
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
 		return "view/comunity/user_board_update.jsp";
 	}
 	
 	@RequestMapping(value="/user_board_update.do", method=RequestMethod.POST)
-	public String user_board_update(Model model, BoardVO board) {	
+	public String user_board_update(Model model, BoardVO board, SearchVO searchVO) {	
 		
 		if(board.getUploadFile() != null) {
 		List<MultipartFile> uploadFile = board.getUploadFile(); 
@@ -224,7 +225,7 @@ public class BoardController {
 		
 		boardService.updateBoard(board);
 		model.addAttribute("msg","글이 정상적으로 수정되었습니다.");
-		model.addAttribute("url","user_board_list.do");
+		model.addAttribute("url","user_board_detail.do?ubd_no="+board.getUbd_no()+"&curPage="+searchVO.getCurPage()+"&rowSizePerPage="+searchVO.getRowSizePerPage()+"&searchType="+searchVO.getSearchType()+"&searchWord="+searchVO.getSearchWord());
 		return "view/comunity/alert.jsp";
 	}
 	

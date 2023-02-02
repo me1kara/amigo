@@ -38,7 +38,6 @@
 					<thead class="table-dark text-center">					
 						<th scope="col" class="col-1 text-center">사진</th>
 						<th scope="col" class="col-1 text-center">유저번호</th>
-						<th scope="col" class="col-1 text-center">유저명</th>
 						<th scope="col" class="col-1 text-center">시터번호</th>
 						<th scope="col" class="col-1 text-center">성별</th>
 						<th scope="col" class="col-1 text-center">흡연여부</th>
@@ -57,7 +56,6 @@
 						 <tr>
 								<td align="center">${ sit.getSit_photo()}</td>
 								<td>${sit.getUser_no()}</td>
-								<td>${sit.getUser_name()}</td>
 								<td>${sit.getSit_no()}</td>
 				    			<td><c:choose><c:when test="${ sit.getSit_gender()=='m' }">남성</c:when>
 										      <c:when test="${ sit.getSit_gender()=='f' }">여성</c:when></c:choose></td>

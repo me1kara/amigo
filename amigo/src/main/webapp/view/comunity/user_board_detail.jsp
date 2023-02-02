@@ -106,11 +106,11 @@
 							<div>
 							${reply.user_nick} / <fmt:formatDate value="${reply.ubd_r_regdate}" type="date"/>
 							
-							<c:if test="${reply.user_nick == user.getUser_nick() || user.getUser_type() == 'A'}">
+							<c:if test="${reply.user_no == user.getUser_no() || user.getUser_type() == 'A'}">
 		     					<a href="#" onclick="deleteReply(${reply.ubd_r_no})">삭제</a>
 		     				</c:if>
 		     				
-		     				<c:if test="${reply.user_nick == user.getUser_nick()}">
+		     				<c:if test="${reply.user_no == user.getUser_no()}">
 		     					<a href="updateReply.do?ubd_r_no=${reply.ubd_r_no}&user_no=${reply.user_no}">수정</a>
 		     				</c:if>	
 
@@ -143,29 +143,61 @@
 			
 			<div class="container" align="center">
 			
-				<c:if test="${board.getUser_nick() == user.getUser_nick()}">
-				<a href="user_board_update.do?ubd_no=${board.getUbd_no()}" class="btn btn-warning mt-3">수정</a>
+				<c:if test="${board.getUser_no() == user.getUser_no()}">
+				<a href="user_board_update.do?ubd_no=${board.getUbd_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-warning mt-3">수정</a>
 				</c:if>
 				
-				<a href="user_board_list.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}" class="btn btn-primary mt-3">게시글목록</a>	
+				<a href="user_board_list.do?ubd_cate=${board.getUbd_cate()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-3">목록</a>
+
 				
-				<c:if test="${board.getUser_nick() == user.getUser_nick() || user.getUser_type() == 'A'}">
-				<a href="#" onclick="deleteBoard()" class="btn btn-danger mt-3">삭제</a>
+				<c:if test="${board.getUser_no() == user.getUser_no() || user.getUser_type() == 'A'}">
+				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ubddelete"
+				data-ubd_no="${board.getUbd_no()}" data-ubd_file="${board.getUbd_file()}" 
+				data-cur_page="${searchVO.getCurPage()}" data-rowsize_perpage="${searchVO.getRowSizePerPage()}">삭제</button>
 				</c:if>
 				
 			</div>
 		
 	</div>
-	<%@include file="/includes/footer.jsp" %>
 	
-	<script>
-		function deleteBoard() {
-			if(confirm("이 게시글을 삭제하겠습니까?")) {
-		    	self.location.href = "user_board_delete.do?ubd_no=${ board.ubd_no }";
-		    }
-		}
-	</script>
-</body>
+		<!--삭제 modal form  -->
+				<div id="ubddelete" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ubddeleteLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+				   <div class="modal-content">
+				     <div class="modal-header">
+				        <h5 class="modal-title" id="ubddeleteLabel">게시글 삭제</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				     </div>
+				      <div class="modal-body">
+				        게시글을 정말 삭제하시겠습니까?
+				      </div>
+				      <div class="modal-footer">
+				      	<button type="button" class="btn btn-danger" onclick="deleteBoard();">삭제</button>
+				       	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+				      </div>
+				   </div>
+				</div>
+				</div>
+				  
+		<!--삭제 modal form script ubd_no전달-->	
+		<script>
+		var UBDNO="";
+		var USERFILE="";
+		var CURPAGE ="";
+		var ROWPAGE ="";
+		$(document).ready(function() {     
+	        $('#ubddelete').on('show.bs.modal', function(event) {          
+	        	UBDNO    = $(event.relatedTarget).data('ubd_no');
+	        	USERFILE = $(event.relatedTarget).data('ubd_file');  
+	        	CURPAGE  = $(event.relatedTarget).data('cur_page');
+	        	ROWPAGE  = $(event.relatedTarget).data('rowsize_perpage');
+	        });
+	    });
+		function deleteBoard() {location.href='user_board_delete.do?ubd_no='+UBDNO+'&ubd_file='+USERFILE+'&curPage='+CURPAGE+'&rowSizePerPage='+ROWPAGE;}
+		</script>
+
 	<script>
     $(document).ready(function () {
 	// 좋아요가 있는지 확인한 값을 findLike에 저장
@@ -204,4 +236,10 @@
        });
 </script>
 
+	<!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/script.js"></script>
+	<%@include file="/includes/footer.jsp" %>
+</body>
 </html>
