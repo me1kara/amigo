@@ -65,26 +65,26 @@
           </li>
           <hr/>
           <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/view/mypage/my_page_list.jsp"><i class="fas fa-tachometer-alt"></i>마이페이지</a>
+            <a class="nav-link" href="<%=request.getContextPath() %>/view/mypage/my_page_list.jsp">마이페이지</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="#"
-              ><i class="address-book"></i>예약확인</a
+              >예약확인</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/amigo/myChatList.do"><i class="amigo-chating"></i>채팅</a>
+            <a class="nav-link" href="/amigo/myChatList.do">채팅</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/user_board_list.do"><i class="far fa-calendar-alt"></i>커뮤니티</a>
+            <a class="nav-link" href="<%=request.getContextPath() %>/user_board_list.do">커뮤니티</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"
-              ><i class="far fa-chart-bar"></i>아미고 파트너 모집</a
+              >아미고 파트너 모집</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"><i class="aimgo-cs"></i>고객센터</a>
+            <a class="nav-link" href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp">고객센터</a>
           </li>
         </ul>
       </div>

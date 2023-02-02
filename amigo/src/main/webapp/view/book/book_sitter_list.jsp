@@ -1,3 +1,4 @@
+<%@page import="com.lec.amigo.vo.SitterVO"%>
 <%@page import="com.lec.amigo.vo.ChatVO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.lec.amigo.dao.ChatDAO"%>
@@ -7,9 +8,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-	<% %>
 	
+	
+	<%
+		String addr = request.getParameter("addr");
+	
+	%>
+
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
   integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
@@ -31,67 +36,42 @@
     </style>
 </head>
 <body>
-	
-	<%@include file="/includes/header.jsp" %>
-		<div class="container">
-			<p>인근시터들 목록</p>
-			
-			<div class="row">
-				<img src="https://via.placeholder.com/100x100"" class="col-sm-4"/>
-				<div class="col-sm-4">
-					<h4>시터이름</h4>
-					<p>경력사항,특기</p>
-				</div>
-				<div class="col-sm-4">
-					<button class="btn btn-secondary"  onclick="location.href='sitter_profile.do?user_name=최성형'">자세히보기</button>
-					
-				</div>
-			</div>
-			<br>
-			<div class="row">
-			<img src="https://via.placeholder.com/100x100"" class="col-sm-4"/>
-				<div class="col-sm-4">
-					<h4>시터이름</h4>
-					<p>경력사항,특기</p>
-				</div>
-				<div class="col-sm-4">
-					<button class="btn btn-secondary" onclick="location.href='sitter_profile.do?user_name=최성형'">자세히보기</button>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-			<img src="https://via.placeholder.com/100x100"" class="col-sm-4"/>
-				<div class="col-sm-4">
-					<h4>시터이름</h4>
-					<p>경력사항,특기</p>
-				</div>
-				<div class="col-sm-4">
-					<button class="btn btn-secondary" onclick="location.href='sitter_profile.do?user_name=최성형'">자세히보기</button>
-				</div>
-			
-			</div>
-			<br>
-			<div class="row">
-			<img src="https://via.placeholder.com/100x100"" class="col-sm-4"/>
-				<div class="col-sm-4">
-					<h4>시터이름</h4>
-					<p>경력사항,특기</p>
-				</div>
-				<div class="col-sm-4">
-					<button class="btn btn-secondary" onclick="location.href='sitter_profile.do?user_name=최성형'">자세히보기</button>
-				</div>
-			
-			</div>
-				
-		
-			
-			
-			
-			
 
+	<%@include file="/includes/header.jsp"%>
+		<div class="container">
+			<p><%=addr %> 시터들 목록</p>
 			
-			
-		</div>
+			<c:choose>
+
+			<c:when test="${sittList!=null }">
+				<c:forEach var="sit" items="${sittList }">
+					<c:forEach var="user" items="${sittNameList }">
+					
+						<c:if test="${user.getUser_no() == sit.getUser_no() }">
+						<div class="row">
+							<img src="https://via.placeholder.com/100x100" " class="col-sm-4" />
+							<div class="col-sm-4">
+								<h4>이름:${user.getUser_name() }</h4>
+								<p>경력사항,특기</p>
+								<p>시간:${sit.getSit_time() }</p>
+							</div>
+							<div class="col-sm-4">
+								<button class="btn btn-secondary"
+									onclick="location.href='sitter_profile.do?user_name=${user.getUser_name()}'">자세히보기</button>
+							</div>
+						</div>
+						</c:if>
+					</c:forEach>
+				</c:forEach>
+			</c:when>
+
+			<c:otherwise>
+					<h>해당한 지역의 펫시터가 없습니다!</h>
+				</c:otherwise>
+			</c:choose>
+
+
+	</div>
 	<%@include file="/includes/footer.jsp" %>
 
 	

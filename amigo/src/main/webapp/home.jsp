@@ -47,6 +47,7 @@
 		
 		 <!-- 메인 화면-->
     <!-- icon -->
+    <div class="container mb-5">
     <div class="contaier mt-5 text-center">
       <img
         class="img-responsive"
@@ -66,7 +67,7 @@
     </div>
     <!-- 로그인 폼 -->
     <!-- Submit button -->
-    <section class="vh-100">
+    
       <form>
         <div class="container mt-3 mb-5 py-5  h-100" align="center">
           <!-- 이메일 로그인 -->
@@ -101,22 +102,15 @@
           </div>
         </div>
       </form>
-    </section>
+    </div>
     <!-- 로그인 end -->
     <!-- 하단 -->
     <!-- 메인 화면 종료 -->
   	 <!-- Footer -->
     <footer class="bg-primary text-center text-white">
-      <!-- Grid container -->
-      <div class="container">
-        <!-- Section: Social media -->
-        <section class="mb-4"></section>
-        <!-- Section: Form -->
-      </div>
-      <!-- Grid container -->
       <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        © 2022 Copyright:
+      <div class="text-center p-3" style="background-color: rgb(87, 160, 227);">
+        © 2023 Copyright:
         <a class="text-white" href="#">amigo.com</a>
       </div>
       <!-- Copyright -->

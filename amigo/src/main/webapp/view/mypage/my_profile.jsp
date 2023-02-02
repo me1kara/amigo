@@ -205,11 +205,11 @@
     
     <!-- profile page 종료 -->
     <!-- Footer -->
-    <footer class="bg-primary text-center text-white">
+    <footer class="bg-primary text-center text-white" style="background-color: rgb(87, 160, 227);>
       <!-- Grid container -->
       <!-- Grid container -->
       <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      <div class="text-center p-3"">
         © 2022 Copyright:
         <a class="text-white" href="#">amigo.com</a>
       </div>
