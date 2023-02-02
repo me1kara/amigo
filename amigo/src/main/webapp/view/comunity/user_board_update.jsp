@@ -49,33 +49,60 @@
 			<div class="input-group mb-3">
 			  <b>글내용</b> <textarea class="form-control"  name="ubd_cont" rows="15" >${ board.ubd_cont }</textarea>
 			</div>	
-			<div class="input-group mb-3">
-			  <b>사진업로드</b><input type="button" value="파일 추가(최대 5개)" id="add" onclick="fn_addFile()" /><br>
-			  <input type="button" value="파일삭제" id="remove" onclick="fn_removeFile()"/><br>
-			</div>	
-			  <div id="d_file">
-			  </div>
-			<script>
-		    var cnt = 1;
-		    var maxAppend = 1;
-		    function fn_addFile(){
-		    	if(maxAppend > 5) return;
-		        $("#d_file").append("<br>" + "<input type='file' name='uploadFile' multiple id='uploadFile' aria-describedby='uploadFile' aria-label='Upload'" + cnt + " />");
-		        cnt++;
-		    	maxAppend++;
-		    }
-		    
-			function fn_removeFile() {
-				$("#uploadFile").remove();
-				maxAppend--;
-				cnt--;
-				if(maxAppend==1){
-					$("#d_file *").remove();
-				}
-			}
-			</script>
+			<div>
+			  <b>사진업로드</b><br>
+			  
+ 			  	<c:if test="${board.getUbd_file()!=null and board.getUbd_file()!=''}">
+						<c:forEach items="${fileSplit}" var="file">
+							<img src="/img/${file}" width="80px" height="80px">
+				    	 </c:forEach>
+				</c:if>
+				
+				    <input type="file" class="form-control fu" onchange="previewFile(0)"
+				     name="uploadFile" multiple id="uploadFile0" aria-describedby="uploadFile" aria-label="Upload">
+				     <div id="msgTd0"></div>
+ 				  	<input type="file" class="form-control fu" onchange="previewFile(1)" 
+				     name="uploadFile" multiple id="uploadFile1" aria-describedby="uploadFile" aria-label="Upload">
+				     <div id="msgTd1"></div>
+				    <input type="file" class="form-control fu" onchange="previewFile(2)" 
+				     name="uploadFile" multiple id="uploadFile2" aria-describedby="uploadFile" aria-label="Upload">
+				     <div id="msgTd2"></div>
+				    <input type="file" class="form-control fu" onchange="previewFile(3)" 
+				     name="uploadFile" multiple id="uploadFile3" aria-describedby="uploadFile" aria-label="Upload">
+				     <div id="msgTd3"></div>
+				     <input type="file" class="form-control fu" onchange="previewFile(4)" 
+				     name="uploadFile" multiple id="uploadFile4" aria-describedby="uploadFile" aria-label="Upload">
+				     <div id="msgTd4"></div>        
+			</div>
+			 
+			<!-- 이미지 프리뷰 -->
+				<script>
+				function previewFile(no) {
+			        var preview = $('#msgTd'+no);
+			        console.log(preview);
+			        var file = document.querySelector('#uploadFile'+no).files[0];
+			        var reader = new FileReader();
+			      
+			      
+			        reader.addEventListener(
+			          'load',
+			              function () {
+			                 preview.html("<img src="+reader.result+" width='100px' height='100px' class='preview_img_del"+no+"'/>");
+			                 preview.append("<button class='btn btn-danger preview_img_del"+no+"' onclick='preview_del("+no+")'>삭제</button>");
+			                },false
+			         );
+			      
+			        if (file) {
+			          reader.readAsDataURL(file);
+			        }
+			     }
+			    function preview_del(no){
+			        $('.preview_img_del'+no).remove();
+			        $('#uploadFile'+no).val('');
+			     }
+				</script>
 			
-			<input type="hidden" name="ubd_file" value=""/>	
+			<input type="hidden" value="${board.getUbd_file()}"  name="ubd_file"/>
 			
 			
 			<div class="container" align="center">
