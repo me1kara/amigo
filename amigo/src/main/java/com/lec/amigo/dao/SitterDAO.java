@@ -36,6 +36,10 @@ public class SitterDAO {
 	
 	private String sql          = "";
 	private String selectSitter = "";	// getSitter
+	private String selectSitterA   = "";
+	private String selectSitterByG = "";
+	private String selectSitterByUserName = "";
+	private String sitterTotalRowCount = "";
 	private String selectSitterInfo = "";   // 펫시터 개인의 상세정보
 	private String selectSitterCate = "";   // 승인/미승인 을 나눠서 정렬하기
 	private String insertSitter = "";
@@ -48,36 +52,71 @@ public class SitterDAO {
 	@PostConstruct
 	public void getSqlProperties() {
 		
-		selectSitter          = environment.getProperty("selectSitter");
-		selectSitterInfo      = environment.getProperty("selectSitterInfo");
-		selectSitterCate      = environment.getProperty("selectSitterCate");
-		insertSitter          = environment.getProperty("insertSitter");
-		deleteSitter          = environment.getProperty("deleteSitter");
-		updateSitter          = environment.getProperty("updateSitter");
-		updateTypeS           = environment.getProperty("updateTypeS");
-		updateTypeU           = environment.getProperty("updateTypeU");
-		selectSitListByUserNo = environment.getProperty("selectSitListByUserNo");
+		selectSitter            = environment.getProperty("selectSitter");
+		selectSitterA           = environment.getProperty("selectSitterA");
+		selectSitterByG         = environment.getProperty("selectSitterByG");
+		selectSitterByUserName  = environment.getProperty("selectSitterByUserName");
+		sitterTotalRowCount     = environment.getProperty("sitterTotalRowCount");
+		selectSitterInfo        = environment.getProperty("selectSitterInfo");
+		selectSitterCate        = environment.getProperty("selectSitterCate");
+		insertSitter            = environment.getProperty("insertSitter");
+		deleteSitter            = environment.getProperty("deleteSitter");
+		updateSitter            = environment.getProperty("updateSitter");
+		updateTypeS             = environment.getProperty("updateTypeS");
+		updateTypeU             = environment.getProperty("updateTypeU");
+		selectSitListByUserNo   = environment.getProperty("selectSitListByUserNo");
 	}
 	
 
-	
-	public List<SitterVO> getSitList(SitterVO svo) {
-		
-		return jdbcTemplate.query(selectSitter, new SitRowMapper());
-		
-	}
-	public List<SitterVO> getSitListCate(SitterVO svo, SearchVO searchVO){
-		
-		
-		return null;
-		
-	}
-	
 	public SitterVO getSitter(SitterVO svo) {
 		Object[] args = { svo.getSit_no() };
 		return (SitterVO) jdbcTemplate.query(selectSitterInfo, args, new SitRowMapper());
 		
-	} // 
+	}
+	
+	public List<SitterVO> getSitList(SearchVO searchVO) {
+		if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
+				searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) {
+			sql = selectSitter;
+			// searchVO.setSearchType("user_name");
+		} else {
+			if(searchVO.getSearchType().equalsIgnoreCase("user_name")) {
+				sql = selectSitterByUserName;
+			} else if(searchVO.getSearchType().equalsIgnoreCase("sit_auth_is")) {
+				sql = selectSitterA;
+			} else if(searchVO.getSearchType().equalsIgnoreCase("sit_gender")) {
+				sql = selectSitterByG;
+			} 					
+		}
+		
+		String searchWord = "%" + searchVO.getSearchWord() + "%";			  // sql문에서 limit를 나타냄		
+		Object[] args = {searchWord, searchVO.getFirstRow(), searchVO.getRowSizePerPage()};	
+		return jdbcTemplate.query(sql, args, new SitRowMapper());
+	}
+
+	
+	public int getTotalSitRowCount(SearchVO searchVO) {
+		if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
+				searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) {
+			sql = sitterTotalRowCount;
+			searchVO.setSearchType("user_name");  // 검색조건이 비어있을때 모두 나오게 (또는 모든 갯수) 를 보이게 하려면?
+		} else {			
+			if(searchVO.getSearchType().equalsIgnoreCase("user_name")) {
+				sql = sitterTotalRowCount + " where user_name like '%" + searchVO.getSearchWord() + "%'";
+			} else if(searchVO.getSearchType().equalsIgnoreCase("sit_auth_is")) {
+				sql = sitterTotalRowCount + " where sit_auth_is like '%" + searchVO.getSearchWord() + "%'";
+			} else if(searchVO.getSearchType().equalsIgnoreCase("sit_gender")) {
+				sql = sitterTotalRowCount + " where sit_gender like '%" + searchVO.getSearchWord() + "%'";
+			}	
+		}
+		return jdbcTemplate.queryForObject(sql, Integer.class);
+	}
+	
+	
+	public List<SitterVO> getSitListCate(SitterVO svo, SearchVO searchVO){
+		return null;	
+	}
+	
 	
 	public SitterVO insertSitter(SitterVO svo) {
 		jdbcTemplate.update(insertSitter,svo.getUser_no(),svo.getSit_gender(),svo.getSit_birth(),svo.isSit_smoking(),svo.getSit_job(),svo.getSit_days(),svo.getSit_time(),svo.isSit_exp(),svo.getSit_care_exp(),svo.getSit_intro(),svo.getSit_photo(),svo.isSit_auth_is());
