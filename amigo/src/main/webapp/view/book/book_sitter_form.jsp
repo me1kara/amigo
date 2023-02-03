@@ -465,15 +465,6 @@ td {
 			    return false;
             }  */
         }
-        
-        $('#select1').click(function(){
-        	$('#select2').prop("checked", false);
-        	$('#select1').prop("checked", true);
-        });
-        $('#select2').click(function(){
-        	$('#select2').prop("checked", true);
-        	$('#select1').prop("checked", false);
-        });
 </script>
 </head>
 
@@ -545,7 +536,7 @@ td {
 
 		<form action="book.do" onsubmit="return checkResult();">
 			<div class="select" style="display: flex; justify-content: space-between; margin-top: 100px;">
-				<input type="radio" id="select1" name="shop" value="visit" checked="checked">
+				<input type="radio" id="select1" name="shop" value="visit">
 				<label class="ctn_btn" for="select1">방문</label> 
 				<input type="radio" id="select2" name="shop" value="consign">
 				<label class="ctn_btn" for="select2">위탁</label>
@@ -659,6 +650,7 @@ td {
 				정보를 포함하고 있습니다. amigo 서비스를 이용하시거나 amig 펫시터 서비스를 예약하실 경우 여러분은 본 약관 및 관련
 				운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.</div>
 			<br>
+			
 			<div style="display: flex; justify-content: space-between;">
 				<button class="btn btn-primary ctn_btn" onclick="history.back(-1)">이전</button>
 				<button type="submit" class="btn btn-primary ctn_btn">확인</button>

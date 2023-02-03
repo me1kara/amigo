@@ -184,6 +184,12 @@ public class LoginController {
 		return "view/main_tour.jsp"; 
 	}
 	
+	// 로고 클릭시 메인가기
+	@RequestMapping(value="/main_home.do", method = RequestMethod.GET) 
+	public String main_home() {
+		return "view/main.jsp"; 
+	}
+	
 	// 내 프로필
 	@RequestMapping(value="/my_profile.do",  method = RequestMethod.GET)
 	public String myProfile() {
@@ -214,7 +220,5 @@ public class LoginController {
 		return "view/comunity/alert.jsp";
 	}
 	
-	//사용자수정(사용자번호) {
-	//	update sql
-	//}
+
 }
