@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.lec.amigo.common.PagingVO;
 import com.lec.amigo.dao.BookDAO;
 import com.lec.amigo.service.BookService;
+import com.lec.amigo.vo.BookVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
@@ -36,6 +37,16 @@ public class BookServiceImpl implements BookService{
 	
 	public int getTotalRowCount(String address) {
 		return bookDao.getTotalRowCount(address);
+	}
+
+	public int setBook(String calr, BookVO book) {
+		
+		return bookDao.setBook(calr, book);
+	}
+
+	public List<BookVO> getBookList(int user_no) {
+		// TODO Auto-generated method stub
+		return bookDao.getBookList(user_no);
 	}
 	
 	

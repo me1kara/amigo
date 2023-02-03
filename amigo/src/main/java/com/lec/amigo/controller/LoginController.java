@@ -24,8 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.dao.ChatDAO;
 import com.lec.amigo.dao.UserDAO;
+import com.lec.amigo.impl.ChatServiceImpl;
+import com.lec.amigo.impl.DogServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.vo.ChatRoom;
+import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
@@ -33,6 +36,12 @@ public class LoginController {
 	
 	@Autowired
 	UserServiceImpl userService;
+	
+	@Autowired
+	DogServiceImpl dogService;
+	
+	@Autowired
+	ChatServiceImpl chatService;
 	
 	private String uploadFolder = "";
 	
@@ -71,12 +80,21 @@ public class LoginController {
 		if(user.getUser_email().equals(userVO.getUser_email())) {
 			sess.setAttribute("user", user);
 			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요! 싫은데용
-			ChatDAO chat_dao = new ChatDAO();
-			List<ChatRoom> room_list = chat_dao.getRoomList(user.getUser_no());
+			
+			List<ChatRoom> room_list = chatService.getRoomList(user.getUser_no());
+			List<DogVO> myDog_list = dogService.getDogList(user.getUser_no());
+		
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);
+			}else {
+				sess.removeAttribute("chat_room_list");
 			}
-			
+			if(!myDog_list.isEmpty()) {
+				sess.setAttribute("myDog_list", myDog_list);
+			}else {
+				sess.removeAttribute("myDog_list");
+			}
+				
 			if(user.getUser_type().equals("A")) {
 				sess.setAttribute("isAdmin", true);
 			} else {

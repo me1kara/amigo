@@ -1,13 +1,19 @@
 package com.lec.amigo.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,9 +21,11 @@ import org.springframework.stereotype.Repository;
 import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.common.PagingVO;
 import com.lec.amigo.common.SearchVO;
+import com.lec.amigo.mapper.BookRowMapper;
 import com.lec.amigo.mapper.SitterRowMapper;
 import com.lec.amigo.mapper.UserRowMapper;
 import com.lec.amigo.vo.BoardVO;
+import com.lec.amigo.vo.BookVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
@@ -113,6 +121,96 @@ public class BookDAO {
 	public int getCateRowCount () {
 		
 		return 0;
+	}
+
+	
+	
+	
+	public int setBook(String calr, BookVO book) {
+		
+		String sql = "insert into reservation(user_no,sit_no,res_regdate,res_is,res_etc,res_pay,res_visit_is,res_term_is) "
+				+ "values(?,?,SYSDATE(),false, ?,?,?,?)";
+		
+		System.out.println(calr+"확인용");
+		
+		int user_no = book.getUser_no();
+		int sit_no = book.getSit_no();
+		String res_etc = book.getRes_etc();
+		int res_pay = book.getRes_pay();
+		boolean res_visit_is = book.isRes_visit_is();
+		boolean res_term_is = book.isRes_term_is();
+		int row = jdbcTemplate.update(sql, user_no, sit_no, res_etc, res_pay, res_visit_is, res_term_is);
+		
+		if(row>0) {
+			
+			String selectBook = "select res_no from reservation where user_no = ? and sit_no = ? ORDER BY res_regdate desc limit 0,1";
+			Object[] args = {user_no, sit_no};
+			int res_no = jdbcTemplate.queryForObject(selectBook, args, Integer.class);
+	
+			JSONParser parser = new JSONParser();
+			JSONArray jms = null;
+			try {
+				jms = (JSONArray) parser.parse(calr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			for (int i = 0; i < jms.size(); i++) {
+				JSONObject jsonObj = (JSONObject) jms.get(i);
+				String title = (String)jsonObj.get("title");
+				String start = (String) jsonObj.get("start");
+				String end = (String) jsonObj.get("end");
+				
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+				
+				String dog_name = title.split(",")[0];
+				String time = title.split(",")[1];
+				
+				String selectDogNo = "select dog_no from dog where dog_name=? and user_no=?";
+				Object[] dogO = {dog_name, user_no};
+				int dog_no = jdbcTemplate.queryForObject(selectDogNo, dogO, Integer.class);
+				
+				System.out.println(dog_no+"도그번호 확인용");
+				
+				try {
+					java.util.Date date1 = transFormat.parse(start);
+					java.util.Date date2 = transFormat.parse(end);
+			        long diffSec = (date2.getTime() - date1.getTime()) / 1000;
+					Long diffDays = diffSec / (24*60*60);
+					int days = diffDays.intValue();
+					String insertContent = "insert into res_content(res_no, res_date, res_time, dog_no, res_addr) values(?,?,?,?,?)";
+					if(days==1) {
+						jdbcTemplate.update(insertContent, res_no,start,time,dog_no,book.getRes_addr());
+					}else {
+						for(int day=0;day<days;day++) {
+							cal.setTime(date1);
+							cal.add(Calendar.DATE, day);
+							String da = transFormat.format(cal.getTime()).toString();
+							
+						
+							jdbcTemplate.update(insertContent, res_no,da,time,dog_no,book.getRes_addr());
+						}
+					}		
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+
+			}
+			return row;
+		}
+		
+		
+		
+		
+		return 0;
+	}
+
+	public List<BookVO> getBookList(int user_no) {
+		String sql = "select * from reservation where user_no=?";
+		Object[] args = {user_no};
+		return jdbcTemplate.query(sql, args, new BookRowMapper());
 	}
 	
 	

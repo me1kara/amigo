@@ -13,12 +13,12 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>병원01_병원메인,병원03_병원위치확대</title>
+<title>병원메인</title>
 <style>
-.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:20px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {position:relative;width:100%;height:500px;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+#menu_wrap {position:relative;top:0;left:0;bottom:0;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option{text-align: center;}
@@ -26,8 +26,8 @@
 #menu_wrap .option button {margin-left:5px;}
 #placesList li {list-style: none;}
 #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
-#placesList .item span {display: block;margin-top:4px;}
-#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item span {margin-top:4px;}
+#placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 #placesList .item .info{padding:10px 0 10px 55px;}
 #placesList .info .gray {color:#8a8a8a;}
 #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
@@ -58,21 +58,23 @@
 </head>
 <body>
 	<%@include file="/includes/header.jsp" %>
-		<div class="map_wrap">
-		<div class="container" id="map" style="width:60%;height:500px;"></div>
-			<div id="menu_wrap" class="bg_white">
-       		 <div class="option">
-            	<div>
-	                <form onsubmit="searchPlaces(); return false;">
-	                    키워드 : <input type="text" value="동물병원" id="keyword" size="15"> 
-	                    <button type="submit">검색하기</button> 
-	                </form>
-           	    </div>
-       		 </div>
-		        <hr>
-		        <ul id="placesList"></ul>
-		        <div id="pagination"></div>
-  		   </div>
+		<div class="map_wrap container">
+				<div id="map" style="width:100%;height:600px;"></div>
+					<div id="menu_wrap" class="bg_white">
+					      
+					   		 <div class="option">
+					            	<div>
+						                <form onsubmit="searchPlaces(); return false;">
+						                    키워드 : <input type="text" value="동물병원" id="keyword" size="15"> 
+						                    <button type="submit">검색하기</button> 
+						                </form>
+					           	    </div>
+					       		 </div> 
+							        <hr>  
+							        <ul id="placesList"></ul>
+							        <div id="pagination"></div>
+					      
+		  		     </div>
     	</div>
 	<%@include file="/includes/footer.jsp" %>
 </body>
@@ -84,66 +86,62 @@
 	<script>
 	var mapContainer  = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var mapOption  = { //지도를 생성할 때 필요한 기본 옵션
-		center: new kakao.maps.LatLng(37.502183  , 127.024600 ), //지도의 중심좌표.
-		level: 5 //지도의 레벨(확대, 축소 정도)
+		center: new kakao.maps.LatLng(37.55470406595618   , 126.97060351231876  ), //지도의 중심좌표.
+		level: 5, //지도의 레벨(확대, 축소 정도)
 	};
-
+	
 	var map = new kakao.maps.Map(mapContainer, mapOption); //지도 생성 및 객체 리턴
 	
 
 	// 마커를 담을 배열입니다
 	var markers = [];
 	
+	
 	// 장소 검색 객체를 생성합니다
-	var ps = new kakao.maps.services.Places();
-	
-    // 검색 옵션 객체
-    var searchOption = {
-        location: currentPos,
-        radius: 1000,
-        size: 5
-    };
-	
+	var ps = new kakao.maps.services.Places(map);  
+
 	// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 	var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-	
+
 	// 키워드로 장소를 검색합니다
 	searchPlaces();
-	
-	
+
 	// 키워드 검색을 요청하는 함수입니다
 	function searchPlaces() {
 
-    var keyword = document.getElementById('keyword').value;
+	    var keyword = document.getElementById('keyword').value;
 
-    if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
-        return false;
-    }
-	
-/*	 
-	if (navigator.geolocation) {
+	    if (!keyword.replace(/^\s+|\s+$/g, '')) {
+	        alert('키워드를 입력해주세요!');
+	        return false;
+	    }
 	    
-	    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-	    navigator.geolocation.getCurrentPosition(function(position) {
-	        
-	        var lat = position.coords.latitude, // 위도
-	            lon = position.coords.longitude; // 경도
-	            
-	         var locPosition = new kakao.maps.LatLng(lat, lon);
-	         map.setCenter(locPosition);
-
-	      });
-	} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-		var locPosition = new kakao.maps.LatLng(37.502183  , 127.024600);
-		map.setCenter(locPosition);	
+		// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 	 
+		if (navigator.geolocation) {
+		    
+		    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		    	
+		        var lat = position.coords.latitude, // 위도
+		            lon = position.coords.longitude; // 경도
+		            
+		         var currentPos = new kakao.maps.LatLng(lat, lon);
+		            map.setCenter(currentPos);
+		         	ps.keywordSearch( keyword, placesSearchCB, searchOption ); 
+		      });
+		} else { alert("이 브라우저에서는 Geolocation이 지원되지 않습니다."); }
+		
+		
+		
+	    // 검색 옵션 객체
+	    var searchOption = {
+	    	useMapBounds:true,
+	    	size: 10
+	    };
+	    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+	    ps.keywordSearch( keyword, placesSearchCB, searchOption ); 
 	}
-*/	
-  	
-   	    
-    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch(keyword, placesSearchCB, searchOption); 
-}
+
 	
 	// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
 	function placesSearchCB(data, status, pagination) {
@@ -168,7 +166,7 @@
 
 	    }
 	}
-	
+
 	// 검색 결과 목록과 마커를 표출하는 함수입니다
 	function displayPlaces(places) {
 
@@ -194,6 +192,7 @@
 	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
 	        // LatLngBounds 객체에 좌표를 추가합니다
 	        bounds.extend(placePosition);
+	            
 
 	        // 마커와 검색결과 항목에 mouseover 했을때
 	        // 해당 장소에 인포윈도우에 장소명을 표시합니다
@@ -206,7 +205,7 @@
 	            kakao.maps.event.addListener(marker, 'mouseout', function() {
 	                infowindow.close();
 	            });
-
+	             
 	            itemEl.onmouseover =  function () {
 	                displayInfowindow(marker, title);
 	            };
@@ -215,7 +214,7 @@
 	                infowindow.close();
 	            };
 	        })(marker, places[i].place_name);
-
+	          	        
 	        fragment.appendChild(itemEl);
 	    }
 
@@ -224,16 +223,18 @@
 	    menuEl.scrollTop = 0;
 
 	    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-	    //map.setBounds(bounds);
+	    map.setBounds(bounds);
 	}
 
 	// 검색결과 항목을 Element로 반환하는 함수입니다
 	function getListItem(index, places) {
 
 	    var el = document.createElement('li'),
+	        
 	    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-	                '<div class="info">' +
-	                '   <h5>' + places.place_name + '</h5>';
+	                '<div class="info"><a href="' + places.place_url + '" target="_blank">' +
+	                '   <span>' + places.place_name + '</span>'+
+	                '  <span class="tel">' + places.phone  + '</span><br>';
 
 	    if (places.road_address_name) {
 	        itemStr += '    <span>' + places.road_address_name + '</span>' +
@@ -241,9 +242,7 @@
 	    } else {
 	        itemStr += '    <span>' +  places.address_name  + '</span>'; 
 	    }
-	                 
-	      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-	                '</div>';           
+	                            
 
 	    el.innerHTML = itemStr;
 	    el.className = 'item';
