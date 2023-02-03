@@ -41,7 +41,9 @@ public class BoardDAO {
 	private String updateCount = "";
 	private String updateBoard = "";
 	private String deleteBoard = "";
-	private String selectCate = "";
+	private String selectCateByUbdTitle = "";
+	private String selectCateByUserNick = "";
+	private String selectCateByUbdCont = "";
 	private String insertBoard = "";
 	private String findHeart = "";
 	private String insertHeart = "";
@@ -61,7 +63,9 @@ public class BoardDAO {
 		updateCount               = environment.getProperty("updateCount");
 		updateBoard               = environment.getProperty("updateBoard");
 		deleteBoard               = environment.getProperty("deleteBoard");
-		selectCate                = environment.getProperty("selectCate");
+		selectCateByUbdTitle      = environment.getProperty("selectCateByUbdTitle");
+		selectCateByUserNick      = environment.getProperty("selectCateByUserNick");
+		selectCateByUbdCont      = environment.getProperty("selectCateByUbdCont");
 		insertBoard               = environment.getProperty("insertBoard");
 		findHeart                 = environment.getProperty("findHeart");
 		insertHeart               = environment.getProperty("insertHeart");
@@ -108,8 +112,32 @@ public class BoardDAO {
 		Object[] args = {searchWord, searchVO.getFirstRow(), searchVO.getRowSizePerPage()};
 		return jdbcTemplate.query(sql, args, new BoardRowMapper());
 	}
+	
 
+	public List<BoardVO> selectCate(BoardVO board, SearchVO searchVO) {
+		if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
+				searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) {
+			sql = selectCateByUbdTitle;
+			searchVO.setSearchType("ubd_title");
+		} else {
+			if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) {
+				sql = selectCateByUbdTitle;
+			} else if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) {
+				sql = selectCateByUserNick;
+			} else if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) {
+				sql = selectCateByUbdCont;
+			} 					
+		}
+		
+		String searchWord = "%" + searchVO.getSearchWord() + "%";					
+		Object[] args = { board.getUbd_cate(), searchWord, searchVO.getFirstRow(), searchVO.getRowSizePerPage() };
+		return jdbcTemplate.query(sql, args, new BoardRowMapper());
+		
+	}
 
+	
+	
+	
 	public int getTotalRowCount(SearchVO searchVO) {
 		if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
 				searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) {
@@ -164,10 +192,6 @@ public class BoardDAO {
 		return jdbcTemplate.update(deleteBoard, board.getUbd_no());
 	}
 
-	public List<BoardVO> selectCate(BoardVO board, SearchVO searchVO) {
-		Object[] args = { board.getUbd_cate(), searchVO.getFirstRow(), searchVO.getRowSizePerPage() };
-		return jdbcTemplate.query(selectCate, args, new BoardRowMapper());
-	}
 
 	public BoardVO insertBoard(BoardVO board) {
 		jdbcTemplate.update(insertBoard, board.getUbd_title(), board.getUbd_file(), board.getUbd_cont(), board.getUbd_cate(), board.getUser_no(), board.getDog_kind());

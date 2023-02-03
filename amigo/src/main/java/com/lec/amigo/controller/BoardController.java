@@ -77,6 +77,7 @@ public class BoardController {
 			List<BoardVO> boardList = boardService.getBoardList(searchVO);
 			model.addAttribute("searchVO", searchVO);
 			model.addAttribute("boardList", boardList);
+			
 			return "view/comunity/user_board_list.jsp";
 	}
 	
@@ -134,15 +135,15 @@ public class BoardController {
 	@RequestMapping(value= "/user_board_detail.do", method=RequestMethod.GET)
 	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, 
 			                        @RequestParam int ubd_no, HttpServletRequest req, 
-			                        @RequestParam("cnt") int cnt,
+			                        @RequestParam("updateCount_is") String updateCount_is,
+			                        
 			                        ReplyVO replyVO, UserVO userVO) {
 			
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
-		model.addAttribute("cnt", cnt);
 		
 		// 조회수 올리는 로직
-		if(req.getAttribute("updateCount_is")==null) { 
+		if(updateCount_is.equals("abc")) { 
 			boardService.updateCount(ubd_no);
 		}
 		
@@ -226,7 +227,8 @@ public class BoardController {
 		
 		boardService.updateBoard(board);
 		model.addAttribute("msg","글이 정상적으로 수정되었습니다.");
-		model.addAttribute("url","user_board_detail.do?ubd_no="+board.getUbd_no()+"&curPage="+searchVO.getCurPage()+"&rowSizePerPage="+searchVO.getRowSizePerPage()+"&searchType="+searchVO.getSearchType()+"&searchWord="+searchVO.getSearchWord());
+		model.addAttribute("url","user_board_detail.do?&ubd_no="+board.getUbd_no()+"&curPage="+searchVO.getCurPage()+"&rowSizePerPage="+searchVO.getRowSizePerPage()
+							+"&searchType="+searchVO.getSearchType()+"&searchWord="+searchVO.getSearchWord()+"&updateCount_is=xyz");
 		return "view/comunity/alert.jsp";
 	}
 	
@@ -305,7 +307,6 @@ public class BoardController {
 	public int heart(@ModelAttribute HeartVO heart) {
 		int data = boardService.insertHeart(heart);
 		return data;
-		
 	}
 	
 }
