@@ -71,10 +71,6 @@
         color: #189cc4;
       }
       
-      .text-body{
-      	
-      }
-      
     </style>
 </head>
 <body>
@@ -91,14 +87,7 @@
 			<p class="ubd-header-title">유저 커뮤니티</p>
 		</div> 
 		<hr/>
-		
-			
-		<form action="user_board_list.do" method="post" id="boardForm">   
-			<input type="hidden" id="curPage" name="curPage" value="${searchVO.getCurPage()}"> 
-			<input type="hidden" id="rowSizePerPage" name="rowSizePerPage" value="${searchVO.getRowSizePerPage()}">
-			
-				
-				
+					
 			<!-- 상단 메뉴 -->
 	   		<div class="row justify-content-between">
 	   			<div class="col-auto">
@@ -136,11 +125,9 @@
 							location.href = "user_board_cate.do?ubd_cate=질문";
 						}
 					}
-					</script>
-					
+					</script>			
 				
 			</div>
-		</form> <!-- getBoardList.do -->
 
 		<div class="container">					
 			<c:if test="${ boardList.isEmpty() }">
@@ -158,8 +145,8 @@
                   <div class="media forum-item">
                   <!-- user profile 아직 미완성이라 여기 완성되면 다른 리스트에도 복붙!!-->
                    <c:choose>
-			          	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
-			          	<img src="/img/${user.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
+			          	<c:when test="${board.getUser_photo()!=null and board.getUser_photo()!=''}">
+			          	<img src="/img/${board.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
 			            </c:when>
 			            <c:otherwise>
 			            <img src="resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>
@@ -172,9 +159,9 @@
                       <!-- 말머리/ -->
                       <!-- 제목 -->
                       <h6>
-                      <a class="text-body" style="font-size:25px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
+                      <a class="text-body" style="font-size:20px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
                       &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=1">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
+                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
@@ -184,12 +171,13 @@
                        <!-- 작성일 -->
                         <span class="text-secondary font-weight-bold">
                         <fmt:formatDate value="${board.ubd_date}" pattern="yyyy-MM-dd"/></span>
+                        &nbsp;<span><i class="fa-solid fa-dog"></i>${board.getDog_kind()}</span>
                    		<!-- 작성일자/ -->   	
                       </p>
                     </div>
                     <div class="text-muted small text-center align-self-center">
                       <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>&nbsp;&nbsp;
-                      <span><ii class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;${ board.getLike_cnt() }</span>
+                      <span><i class="fa fa-heart" aria-hidden="true"></i>${ board.getLike_cnt() }</span>
                     	</div>
                  		</div>
                 		</div>
@@ -230,9 +218,8 @@
 		
 	
 		<!-- 하단 검색 시스템 -->
-		
-		<form action="user_board_list.do" method="post" id="boardForm">   
-				    	<div class="col-3 me-1">
+		<form action="user_board_list.do" method="post" >  
+				<div class="col-3 me-1">
 					<select class="form-select" id="searchType" name="searchType">
 				    	<option value="">검색</option>							
 				    	<option value="ubd_title" ${searchVO.getSearchType()=="ubd_title" ? "selected" : "" }>제목</option>							

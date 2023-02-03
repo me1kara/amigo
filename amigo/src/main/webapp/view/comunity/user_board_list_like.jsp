@@ -90,14 +90,7 @@
 		<div class="mt-4 p-5">
 			<p class="ubd-header-title">유저 커뮤니티</p>
 		</div> 
-		<hr/>
-		
-			
-		<form action="user_board_list.do" method="post" id="boardForm">   
-			<input type="hidden" id="curPage" name="curPage" value="${searchVO.getCurPage()}"> 
-			<input type="hidden" id="rowSizePerPage" name="rowSizePerPage" value="${searchVO.getRowSizePerPage()}">
-			
-				
+		<hr/>		
 				
 			<!-- 상단 메뉴 -->
 	   		<div class="row justify-content-between">
@@ -113,7 +106,7 @@
 				    	<option value="자유글">자유글</option>							
 				    	<option value="질문">질문</option>										
 					</select>
-	   			  </div>
+	   			</div>
 	   		
 	
 					
@@ -137,11 +130,9 @@
 						}
 					}
 					</script>
-					
-				
+	
 			</div>
-		</form> <!-- getBoardList.do -->
-
+			
 		<div class="container">					
 			<c:if test="${ boardList.isEmpty() }">
 				<h6><p>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</p></h6>
@@ -174,7 +165,7 @@
                       <h6>
                       <a class="text-body" style="font-size:25px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
                       &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=2">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
+                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
@@ -230,9 +221,8 @@
 		
 	
 		<!-- 하단 검색 시스템 -->
-		
-		<form action="user_board_list.do" method="post" id="boardForm">   
-				    	<div class="col-3 me-1">
+		<form action="user_board_list.do" method="post" >  
+				<div class="col-3 me-1">
 					<select class="form-select" id="searchType" name="searchType">
 				    	<option value="">검색</option>							
 				    	<option value="ubd_title" ${searchVO.getSearchType()=="ubd_title" ? "selected" : "" }>제목</option>							
@@ -249,7 +239,7 @@
 	        	<div class="col-2 btn-group">
 			    <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
 		        </div>
-	     </form>		
+	     </form>	
 	</div> <!— main  —>
 	    
 	    

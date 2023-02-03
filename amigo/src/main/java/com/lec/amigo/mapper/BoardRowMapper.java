@@ -20,6 +20,7 @@ public class BoardRowMapper implements RowMapper<BoardVO>{
 		board.setUser_no(rs.getInt("user_no"));
 		board.setDog_kind(rs.getString("dog_kind"));
 		board.setUser_nick(rs.getString("user_nick"));
+		board.setUser_photo(rs.getString("user_photo"));
 		board.setLike_cnt(rs.getInt("like_cnt"));
 		board.setReply_cnt(rs.getInt("reply_cnt"));
 		return board;
