@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+
+<%
+	int count = (int)request.getAttribute("count");
+
+	System.out.print(count+"확인용");
+	
+	if(count==0){
+		%>
+		<script>alert('예약에 실패하였습니다!');
+				history.go(-2);
+		</script>
+		<% 
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +35,8 @@
 	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
-
+			<h1>예약이 완료됐습니다!</h1>
+			<a href="/amigo/book_check.do">예약확인하기!</a>
 		</div>
 	<%@include file="/includes/footer.jsp" %>
 

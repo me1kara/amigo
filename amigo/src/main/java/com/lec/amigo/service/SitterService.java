@@ -20,7 +20,11 @@ public interface SitterService {
 	SitterVO getSitter(SitterVO svo);
 	
 	// 펫시터(신청)리스트(승인무관)
-	List<SitterVO> getSitList(SitterVO svo);
+	List<SitterVO> getSitList(SearchVO searchVO);
+	
+	// 펫시터 페이징 관련
+	int getTotalSitRowCount(SearchVO searchVO);
+	int getCateRowCount(SearchVO searchVO, SitterVO svo);
 	
 	// 펫시터신청하기 
 	SitterVO insertSitter(SitterVO svo);
@@ -34,11 +38,7 @@ public interface SitterService {
 	// 승인된 펫시터 회원타입 바꾸기 ( U -> S )
 	void updateTypeS(SitterVO svo);
 	
-	// 펫시터 리스트 페이징하기
-	int getTotalRowCount(SearchVO searchVO);
-	int getCateRowCount(SearchVO searchVO, SitterVO svo);
-	
-	
+	// 펫시터 삭제하면 회원타입 원복시키기 (아직 보류)
 	void updateTypeU(SitterVO svo);
 
 	

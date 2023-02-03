@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.vo.SitterVO;
@@ -35,31 +35,29 @@ public class AdminController {
 	
 	// 펫시터 신청인 전체 리스트
 	@RequestMapping(value="/view/admin/getSitList.do", method=RequestMethod.GET) //
-	public String getSitList(Model model, SitterVO svo) {			
+	public String getSitList(Model model, SearchVO searchVO,
+			@RequestParam(defaultValue="1") int curPage,
+			@RequestParam(defaultValue="10") int rowSizePerPage,
+			@RequestParam(defaultValue="") String searchCategory,
+			@RequestParam(defaultValue="") String searchType,
+			@RequestParam(defaultValue="") String searchWord) {	
+		
+		searchVO.setTotalRowCount(sitterService.getTotalSitRowCount(searchVO));
+		searchVO.setCurPage(curPage);
+		searchVO.setRowSizePerPage(rowSizePerPage);
+		searchVO.setSearchCategory(searchCategory);
+		searchVO.setSearchType(searchType);
+		searchVO.setSearchWord(searchWord);
+		searchVO.pageSetting();
 		
 		
+		List<SitterVO> sitList = sitterService.getSitList(searchVO);
 		System.out.println("펫시터 신청리스트 조회");
-		List<SitterVO> sitList = sitterService.getSitList(svo);
+		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("sitList", sitList);
 		return "/view/admin/admin_sitList.jsp";
 		
 	}
-
-	// 카테고리별 리스트
-//	@RequestMapping("/view/admin/getSitListCate.do")
-//	Public String GetSitListCate(Model model, SearchVO searchVO, SitterVO svo
-//			@RequestParam(defaultValue="1") int curPage,
-//			@RequestParam(defaultValue="10") int rowSizePerPage,
-//			@RequestParam(defaultValue="") String searchCategory,
-//			@RequestParam(defaultValue="") String searchType,
-//			@RequestParam(defaultValue="") String searchWord)
-//			{
-//		
-//		
-//		
-//		
-//		
-//			}
 	
 	
 	@RequestMapping(value="/view/admin/updateSitter.do", method=RequestMethod.GET)
