@@ -22,7 +22,7 @@ public class ReplyController {
 	
 	@RequestMapping(value="/insertReply.do", method=RequestMethod.POST)
 	public String insertReply(ReplyVO reply) {
-	
+		
 		replyService.insertReply(reply);
 		return "redirect:/user_board_detail.do?ubd_no=" + reply.getUbd_no() +"&user_no=" + reply.getUser_no();
 	}

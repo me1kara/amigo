@@ -31,17 +31,8 @@
   color: black;
   font-family: "Jalnan";
   font-size: 90%;
- }
- 
- .navbar-toggler {
- 	margin-left:20px;
- }
- 
- .main-big-logo {
- width:180px;
-   display: flex;
- justify-content: center;
- }
+  
+}
     </style>
 </head>
 <body>
@@ -60,8 +51,7 @@
         <span class="navbar-toggler-icon"></span>
         <!-- 햄버거/ -->
       </button>
-      <a class="logo" href="<%=request.getContextPath() %>/view/main.jsp"><img class="main-big-logo" alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
-      /></a>
+      <a class="logo" href="<%=request.getContextPath()%>/main_home.do"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"/></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <div class="hori-selector">
@@ -70,7 +60,7 @@
           </div>
           <hr/>
           <li class="nav-nickName">
-          	<a class="nav-link" hraf="<%=request.getContextPath() %>/my_profile.do">${ user.getUser_nick() }</a>
+          	<a class="nav-link" href="<%=request.getContextPath() %>/my_profile.do">${ user.getUser_nick() }</a>
           </li>
           <hr/>
           <li class="nav-item">

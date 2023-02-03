@@ -8,6 +8,7 @@ import java.util.List;
 import javax.mail.search.IntegerComparisonTerm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -28,6 +29,7 @@ import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.dao.SitterDAO;
 import com.lec.amigo.impl.BookServiceImpl;
 import com.lec.amigo.impl.SitterServiceImpl;
+import com.lec.amigo.vo.BookVO;
 import com.lec.amigo.vo.HeartVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
@@ -45,10 +47,14 @@ public class BookController {
 	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.GET })
 	public String book (HttpServletRequest req, Model model, SearchVO search, 
 			@RequestParam(defaultValue="1") int curPage,
-			@RequestParam(defaultValue="10") int rowSizePerPage) {
+			@RequestParam(defaultValue="10") int rowSizePerPage, BookVO bookVO) {
 		
 		String calr = req.getParameter("bookDate");
-		String address = req.getParameter("address");
+		String address = req.getParameter("res_addr"); //주소
+		
+		System.out.println(bookVO.toString());
+		
+		
 		String[] addrList = address.split("\\s");
 		String secondeAddr = addrList[1];
 		
@@ -73,13 +79,6 @@ public class BookController {
 			System.out.println(sit.getUser_no()+"컨트롤러에서 확인!");			
 		}
 		
-		System.out.println("시작페이지"+startPage);
-		System.out.println("끝페이지"+endPage);
-		System.out.println("총페이지"+totalPage);
-		System.out.println("현재페이지"+curPage);
-		System.out.println("페이지당글갯수"+rowSizePerPage);
-		
-		
 		req.setAttribute("sittList", sittList); //현재쪽기반리스트
 		req.setAttribute("sittNameList", sittNameList); // 이름
 		req.setAttribute("searchVO", search); //페이징 정보
@@ -89,23 +88,24 @@ public class BookController {
 		
 		//예약정보담김
 		req.setAttribute("calr", calr);
+		HttpSession sess =req.getSession(); 
 		
-		System.out.println(calr);
+		sess.setAttribute("calr", calr);
+		sess.setAttribute("book", bookVO);
 		
-		/*
-		 * JSONParser parser = new JSONParser(); JSONArray jms = null; try { jms =
-		 * (JSONArray) parser.parse(calr); } catch (ParseException e) {
-		 * e.printStackTrace(); }
-		 * 
-		 * for(int i=0; i< jms.size(); i++) { JSONObject jsonObj =
-		 * (JSONObject)jms.get(i); System.out.println(jsonObj.get("title"));
-		 * System.out.println(jsonObj.get("start"));
-		 * System.out.println(jsonObj.get("end")); }
-		 */
-		
-		
-		//해당날짜,
-		
+		JSONParser parser = new JSONParser();
+		JSONArray jms = null;
+		try {
+			jms = (JSONArray) parser.parse(calr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < jms.size(); i++) {
+			JSONObject jsonObj = (JSONObject) jms.get(i);
+			String title = (String)jsonObj.get("title");
+			System.out.println(title);
+		}
+
 
 		return "book_sitter_list.jsp?addr="+secondeAddr;
 	}
@@ -115,15 +115,31 @@ public class BookController {
 	public String getSitterProfile (HttpServletRequest req, HttpServletResponse resp, SitterVO sitterVO) {
 
 		SitterVO s = sitterService.getSitter(sitterVO);
-		System.out.println(sitterVO.getSit_no()+"싯넘버 확인용");
-		
 		req.setAttribute("sitter", s);
-
-		
-		
-	
-		
 		return "/view/sitter/sitter_profile.jsp";
+	}
+	
+	@RequestMapping(value = "/requestBook.do", method = { RequestMethod.GET })
+	public String finalBook (HttpServletRequest req) {
+		HttpSession sess= req.getSession();
+		int sit_no = Integer.parseInt(req.getParameter("sit_no"));
+		int user_no = ((UserVO)sess.getAttribute("user")).getUser_no();
+		String calr = (String)sess.getAttribute("calr");
+		BookVO book = (BookVO)sess.getAttribute("book");
+		
+		book.setSit_no(sit_no);
+		book.setUser_no(user_no);
+		
+		int b = bookService.setBook(calr, book);
+		
+		
+		if(b>0) {
+			sess.removeAttribute("calr");
+			sess.removeAttribute("book");
+			req.setAttribute("count", b);
+		}
+
+		return "/view/book/book_sitter_request.jsp";
 	}
 	
 	@PostMapping("/view/book/ajax/calMoney.do")
@@ -185,6 +201,17 @@ public class BookController {
 		return data;
 		
 	}
+	
+	
+	@RequestMapping(value = "/book_check.do", method = { RequestMethod.GET })
+	public String myBookList (Model model,UserVO user) {
+		
+		int user_no = user.getUser_no();
+		List<BookVO> myBookList = bookService.getBookList(user_no);
+		
+		return "/view/book/book_check.jsp";
+	}
+		
 
 	
 }
