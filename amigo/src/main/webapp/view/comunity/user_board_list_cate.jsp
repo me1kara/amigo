@@ -174,7 +174,7 @@
                       <h6>
                       <a class="text-body" style="font-size:25px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
                       &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&abc=1">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
+                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=3">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">

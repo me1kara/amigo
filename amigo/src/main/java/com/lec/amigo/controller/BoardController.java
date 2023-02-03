@@ -134,12 +134,13 @@ public class BoardController {
 	@RequestMapping(value= "/user_board_detail.do", method=RequestMethod.GET)
 	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, 
 			                        @RequestParam int ubd_no, HttpServletRequest req, 
+			                        @RequestParam("cnt") int cnt,
 			                        ReplyVO replyVO, UserVO userVO) {
 			
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
+		model.addAttribute("cnt", cnt);
 		
-
 		// 조회수 올리는 로직
 		if(req.getAttribute("updateCount_is")==null) { 
 			boardService.updateCount(ubd_no);
