@@ -15,12 +15,14 @@ public interface SitterService {
 	
 	
 
-	SitterVO getSitter(int sit_no);
+	SitterVO getSitter(SitterVO svo);
 	List<SitterVO> getSitList(SitterVO svo);
 	SitterVO insertSitter(SitterVO svo);
 
 	int deleteSitter(int user_no);
 	int updateSitter(SitterVO svo, boolean sit_auth_is);
+	void updateTypeS(SitterVO svo);
+	void updateTypeU(SitterVO svo);
 
 	
 	

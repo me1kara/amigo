@@ -67,6 +67,81 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 	overflow: auto;
 }
 
+.page-header{
+	margin:20px 0 20px 0;
+	font-family:Jalnan;"
+}
+.chat-body {
+      display: block;
+      margin: 10px 30px 0 0;
+      overflow: hidden
+  }
+  
+  .chat-body:first-child {
+      margin-top: 0
+  }
+  
+  .chat-content {
+      position: relative;
+      display: block;
+      float: right;
+      padding: 8px 15px;
+      margin: 0 20px 10px 0;
+      clear: both;
+      color: #fff;
+      background-color: #62a8ea;
+      border-radius: 4px;
+          -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+      box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+  }
+  
+  .chat-content:before {
+      position: absolute;
+      top: 10px;
+      right: -10px;
+      width: 0;
+      height: 0;
+      content: '';
+      border: 5px solid transparent;
+      border-left-color: #62a8ea
+  }
+  
+  .chat-content>p:last-child {
+      margin-bottom: 0
+  }
+  
+  .chat-content+.chat-content:before {
+      border-color: transparent
+  }
+  
+  .chat-left .chat-body {
+      margin-right: 0;
+      margin-left: 30px
+  }
+  
+  .chat-left .chat-content {
+      float: left;
+      margin: 0 0 10px 20px;
+      color: #76838f;
+      background-color: #dfe9ef
+  }
+  
+  .chat-left .chat-content:before {
+      right: auto;
+      left: -10px;
+      border-right-color: #dfe9ef;
+      border-left-color: transparent
+  }
+  
+  .chat-left .chat-content+.chat-content:before {
+      border-color: transparent
+  }
+  
+  .chat-left .chat-time {
+      color: #a3afb7
+  }
+  
+
 </style>
 <script>
 		$(document).ready(function(){
@@ -76,13 +151,13 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  function previewFile() {
 		  //var preview = document.getElementById('preimg');
 		  var preview = $('#msgTd');
+		  console.log(document.querySelector('input[type=file]'));
 		  var file = document.querySelector('input[type=file]').files[0];
-		  var reader = new FileReader();
-		
+		  var reader = new FileReader();	
 		  reader.addEventListener(
 		    'load',
 		    function () {
-		      preview.append("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
+		      preview.html("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
 		      preview.append("<button class='btn btn-danger preview_img_del' onclick='preview_del()'>이미지삭제</button>");
 		      $('#msg').val('');
 		      $('#msg').hide();
@@ -95,9 +170,6 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 		}
 		
   	 	function imgPop(url){
-  	 		
-  	 	  window.open("URL", "팝업이름", "팝업 옵션");
-  	 	  console.log('확인용');
   		  var img=new Image();
   		  img.src=url;
   		  var img_width=img.width;
@@ -112,12 +184,21 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 
 	</script>
 </head>
+
+<link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+</link>
+
 <body>
 	<c:set var="user" value="<%=user%>" />
 	<div class="container">
-		<h1 class="page-header">채팅방</h1>
+		<h2 class="page-header">채팅방</h2>
 
-
+		  <body ng-app="elastichat">
+    	<ion-nav-bar class="bar-positive" no-tap-scroll="false">
+      	<ion-nav-back-button class="button-icon ion-arrow-left-c">
+     	 </ion-nav-back-button>
+   		 </ion-nav-bar>
 		<table class="table table-bordered" style="background: #81DAF5;">
 
 			<tr class="table-borderless">
@@ -129,20 +210,36 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 								<c:when test="${chat.getUser_nick()!=user.getUser_nick() }">
 									<c:choose>
 										<c:when test="${chat.getFile()==null}">
+										<!-- 상대방 말풍선 -->
+										<div class="chat chat-left">
+										<span class="user-nickName" style="font-size:15px;">${chat.getUser_nick() }</span>
+										<div class="chat-body">
+										<div class="chat-content"> 
 											<li style="margin-bottom: 3px; clear: both;"
 												id="chat_no_${chat.getChat_no() }">
-												[${chat.getUser_nick() }] ${chat.getContent()} 
-												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
+												 ${chat.getContent()} 
 											</li>
+											<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
+											</div>
+										</div>
+										</div>
+										
 										</c:when>
 										<c:when test="${chat.getFile()!=null}">
+										<div class="chat chat-left">
+										<span class="user-nickName" style="font-size:15px;">${chat.getUser_nick() }</span>
+										<div class="chat-body">
+										<div class="chat-content"> 
 											<li style="margin-bottom: 3px; overflow: hidden; clear: both;"
 												id="chat_no_${chat.getChat_no() }" >
-												[${chat.getUser_nick() }]
 												<span ondblclick="imgPop('/img/${chat.getFile() }')">
+
 												<img src="/img/${chat.getFile() }" width="200px" height="200px">
-												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
 												</span>
+												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
+												</div>
+												</div>
+												</div>
 											</li>
 										</c:when>
 									</c:choose>
@@ -150,17 +247,25 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 								<c:when test="${chat.getUser_nick()==user.getUser_nick() }">
 									<c:choose>
 										<c:when test="${chat.getFile()==null}">
+										<div class="chat-body">
+										<div class="chat-content"> 
 											<li style="margin-bottom: 3px; float: right;"
 												id="chat_no_${chat.getChat_no() }">
 												<span onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()">${chat.getContent()}</span>
 											</li>
+											</div>
+											</div>
 										</c:when>
 										<c:when test="${chat.getFile()!=null}">
+										<div class="chat-body">
+										<div class="chat-content"> 
 											<li style="margin-bottom: 3px; float: right;"
 												id="chat_no_${chat.getChat_no() }">
-												<span style="overflow: hedden;" onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" ondblclick="imgPop('/img/${chat.getFile() }')">
+												<span style="overflow: hedden;" onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" onclick="imgPop('/img/${chat.getFile() }')">
 												<img src="/img/${chat.getFile() }" width="200px" height="200px"></span>
 											</li>
+											</div>
+											</div>
 										</c:when>
 									</c:choose>
 									<li style="clear: both;"></li>
@@ -341,7 +446,7 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
     	    	console.log(realFile);
     	    	temp += '<li style="margin-bottom:3px; clear: both;" id="chat_no_'+chat_no+'">';
     	    	temp += '[' + user + '] ';
-    	   	  	temp += '<img width="200px" height="200px" src='+realFile+' ondblclick="imgPop('+"'"+realFile+"'"+')">';
+    	   	  	temp += '<img width="200px" height="200px" src='+realFile+' onclick="imgPop('+"'"+realFile+"'"+')">';
     	   	  	temp += ' <span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
     	   	  	temp += '</li>';
     	   	  			
@@ -355,7 +460,7 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  	  	let temp = '';
   	  	
   	  	  	temp += '<li style="margin-bottom:3px; float:right;" id="chat_no_'+chat_no+'">';
-  	  		temp += '<span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" ondblclick="imgPop('+"'"+realFile+"'"+')"><img width="200px" height="200px" src=' + realFile + '><span>';
+  	  		temp += '<span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" onclick="imgPop('+"'"+realFile+"'"+')"><img width="200px" height="200px" src=' + realFile + '><span>';
   	  	  	temp += '</li>';
   	  	  	temp += '<li style="clear: both;"></li';
   	  	  

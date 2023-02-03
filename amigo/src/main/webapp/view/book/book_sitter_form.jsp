@@ -116,6 +116,31 @@
         }*/
         });
         calendar.render();
+   		$('#eventStartTime').timepicker({
+   			timeFormat: 'HH:mm',
+ 	        interval: 60,
+ 	        minTime: '10',
+ 	        maxTime: '6:00pm',
+ 	        defaultTime: '10',
+ 	        startTime: '10:00',
+ 	        dynamic: false,
+ 	        dropdown: true,
+ 	        scrollbar: true
+
+ 		});
+   		$('#eventEndTime').timepicker({
+   		 	timeFormat: 'HH:mm',
+ 	        interval: 60,
+ 	        minTime: '12',
+ 	        maxTime: '8:00pm',
+ 	        defaultTime: '12',
+ 	        startTime: '12:00',
+ 	        dynamic: false,
+ 	        dropdown: true,
+ 	        scrollbar: true,        
+ 		});
+        
+        $('#eventStartTime').time
       });
       
       function sendBookDate(){
@@ -132,7 +157,6 @@
     		  events.push(obj);
     	  }
     	  let bookDate = JSON.stringify(events);
-    	  console.log(bookDate)
     	  $('#reciveBookData').val(bookDate);
       }
       
@@ -154,10 +178,19 @@
 				if(Number(startTime)+200>Number(endTime)){
 					alert('2시간 간격으로 입력해주세요!');
 				}else{
-					let title = $('#eventDog').val() + "," + startTime + "~" + endTime;	
+	    			if(!startTime.includes(':')){
+	    				startTime = startTime.substring(0,2) + ":" + startTime.substring(2,4);	
+	    			}
+	    			if(!endTime.includes(':')){
+	    				endTime = endTime.substring(0,2) + ":" + endTime.substring(2,4);		
+	    			}
+					
+					let title = $('#eventDog').val() + "," + startTime + "~" + endTime;
+					
 					console.log(title+"타이틀입니다");
 		  		  	g_info.event.setProp('title', title);
 		  		  	modalClose();
+		  		  	cost_cal();
 				}
 				
 			}
@@ -168,7 +201,7 @@
       function deleteEvent(g_info){
 			g_info.event.remove();
 			modalClose();
-			
+			cost_cal();
       }
       
       function addEvent(g_info){
@@ -197,6 +230,7 @@
 		            })
 		            calendar.unselect();
 		            modalClose();
+		            cost_cal();
 				}
 
 			}
@@ -305,12 +339,14 @@ td {
 	display: block;
 }
 
+
+<!-- 일정입력 모달창, 컨트롤 f 강아지 검색하면 돼요 -->
 .modal{
 	position:absolute;
 	top:0; left:0;
 	dispaly:none;
 	background: rgba(0,0,0,0.8);
-	}
+}
 
 .fc-col-header-cell a {
 	color: black;
@@ -337,6 +373,12 @@ td {
 	text-align: center;
 }
 
+.ui-timepicker { 
+	font-size: 12px; width: 80px;
+	background: white;
+	position:relative;
+	z-index: 1056;
+}
 
 
 
@@ -358,41 +400,31 @@ td {
     			let array = g_info.event.title.split(',');
     			let dog = array[0];
     			let time = array[1];
+    
     			let startTime = time.split('~')[0];
     			let endTime = time.split('~')[1];
+    			
+    			if(!startTime.includes(':')){
+    				startTime = startTime.substring(0,2) + ":" + startTime.substring(2,4);	
+    			}
+    			if(!endTime.includes(':')){
+    				endTime = endTime.substring(0,2) + ":" + endTime.substring(2,4);		
+    			}
+    			
     			
     			$('#eventDog').val(dog);
     			$('#eventStartTime').val(startTime);
     			$('#eventEndTime').val(endTime);			
     			
+    			
     			$('#eventModifyForm').fadeIn();
     			$('#modifyEvent').fadeIn();
-    			$('#deleteEvent').fadeIn();
-           		$('.timepick').timepicker({
-         	        timeFormat: 'h:mm p',
-         	        interval: 60,
-         	        minTime: '10',
-         	        maxTime: '6:00pm',
-         	        defaultTime: '11',
-         	        startTime: '10:00',
-         	        dynamic: false,
-         	        dropdown: true,
-         	        scrollbar: true        
-         		});
+    			$('#deleteEvent').fadeIn()
+           		
     		}else if(path == 'insert'){
+    			
     			$('#eventModifyForm').fadeIn();
     			$('#addEvent').fadeIn();
-           		$('.timepick').timepicker({
-         	        timeFormat: 'h:mm p',
-         	        interval: 60,
-         	        minTime: '10',
-         	        maxTime: '6:00pm',
-         	        defaultTime: '11',
-         	        startTime: '10:00',
-         	        dynamic: false,
-         	        dropdown: true,
-         	        scrollbar: true        
-         		});
     		}
     		
     	}
@@ -433,6 +465,15 @@ td {
 			    return false;
             }  */
         }
+        
+        $('#select1').click(function(){
+        	$('#select2').prop("checked", false);
+        	$('#select1').prop("checked", true);
+        });
+        $('#select2').click(function(){
+        	$('#select2').prop("checked", true);
+        	$('#select1').prop("checked", false);
+        });
 </script>
 </head>
 
@@ -504,7 +545,7 @@ td {
 
 		<form action="book.do" onsubmit="return checkResult();">
 			<div class="select" style="display: flex; justify-content: space-between; margin-top: 100px;">
-				<input type="radio" id="select1" name="shop" value="visit">
+				<input type="radio" id="select1" name="shop" value="visit" checked="checked">
 				<label class="ctn_btn" for="select1">방문</label> 
 				<input type="radio" id="select2" name="shop" value="consign">
 				<label class="ctn_btn" for="select2">위탁</label>
@@ -556,11 +597,51 @@ td {
 			<textarea class="etc_content" name="etc_content" rows="5" cols="16"
 				placeholder="펫시터분이 알아야 할 우리 아이에 대한 특이사항을 적어주세요!"></textarea>
 			<br>
-
-
+			
+			<script>
+				function cost_cal(){
+		    	  var allEvent = calendar.getEvents();   	  
+		    	  console.log(allEvent);
+		    	  var events = new Array();
+		    	  
+		    	  if(allEvent.length >0){
+		    	  for(let i=0; i< allEvent.length; i++){
+		    		  var obj = new Object();
+		    		  console.log(allEvent[i]);
+		    		  obj.title = allEvent[i]._def.title;
+		    		  obj.allday = allEvent[i]._def.allDay;
+		    		  obj.start = allEvent[i].startStr;
+		    		  obj.end = allEvent[i].endStr;		  
+		    		  events.push(obj);
+		    	  }
+		    	  let bookDate = JSON.stringify(events);
+			  	    $.ajax({
+				    	url :'ajax/calMoney.do',
+				        type :'POST',
+				        data : {'book_date':bookDate},
+				    	success : function(result){
+				    		//that.prop('name', data);
+				    		console.log('결과:'+result);
+				        	if(result!=0) {
+				        		$('#money').val(result);				            	     //$('#heart').prop("src","resources/img/heart_fill.svg");
+				        		$('#show_money').text(result+'원');
+				        	} else {
+				        		$('#money').val('');
+				        		$('#show_money').text(' 0원');
+				        	}  
+			            	}
+				    });
+		    	  }else{
+		    		  $('#money').val('');
+		    	  }
+				}
+			</script>
+		
 			<div class="inline_box">
-				<b style="margin: 0 auto;">비용</b>
+				<b style="margin: 0 auto;">비용</b><span id="show_money"> 0원</span>
+				<input type="hidden" id="money" name="price"></input>
 			</div>
+			
 
 			<br> <label for="term" class="term_css"> <input
 				type="checkbox" id="term" name="term" required="required"> <span>개인정보 이용
@@ -578,7 +659,6 @@ td {
 				정보를 포함하고 있습니다. amigo 서비스를 이용하시거나 amig 펫시터 서비스를 예약하실 경우 여러분은 본 약관 및 관련
 				운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.</div>
 			<br>
-			
 			<div style="display: flex; justify-content: space-between;">
 				<button class="btn btn-primary ctn_btn" onclick="history.back(-1)">이전</button>
 				<button type="submit" class="btn btn-primary ctn_btn">확인</button>
@@ -602,7 +682,9 @@ td {
 					<option value="백구">백구</option>
 				</select>
 				<p>시간선택</p>
-				<input type="time" id="eventStartTime" class="timepick"/>~<input type="time" id="eventEndTime" class="timepick"/>
+				<div >
+					<input type="text" id="eventStartTime" class="timepick"/>~<input type="text" id="eventEndTime" class="timepick"/>
+				</div>
 				<button class="btn btn-secondary" type="button" id="modifyEvent" style="display: none; " onclick="modifyEvent(g_info)">수정</button>
 				<button class="btn btn-danger" type="button" id="deleteEvent" style="display: none; "onclick="deleteEvent(g_info)">삭제</button>
 				<button class="btn btn-dark" type="button" id="addEvent" style="display: none; "onclick="addEvent(g_info)">추가</button>

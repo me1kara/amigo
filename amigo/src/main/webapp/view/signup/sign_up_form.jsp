@@ -75,7 +75,7 @@
                     <label for="user_email" class="sighup-group">이메일주소*</label>
                     <input type="email" class="form-control" id="user_email" name="user_email" placeholder="이메일 주소" onchange="checkEmail();" check_email="fail" required>
                     <span id="confirmEmail"></span>
-                    <br>
+               	 </div>
                     <!-- 인증 시스템 -->
                     <button type="button" id="email_auth_btn" class="email_auth_btn">인증번호 받기</button>
                     <input type="text" placeholder="인증번호 입력" id="email_auth_key" onchange="email_auth_Confirm();">
@@ -88,7 +88,6 @@
             			}
                     }
                     </script>                  
-               	 </div>
                 	<!-- 인증 시스템/ -->
                 <div class="form-group">
                     <label for="password" class="sighup-group">비밀번호*</label>
@@ -217,7 +216,8 @@
                     <label for="user_nick" class="sighup-group">닉네임*</label>
                     <input type="text" class="form-control" id="user_nick" name="user_nick" placeholder="닉네임" check_nick="fail" onchange="checkNick();" required>
                     <span id="confirmNick"></span>
-                </div>        
+                </div>    
+                    
                  <div class="form-group">
                  <label for="sample4_roadAddress" class="sighup-group">주소*</label><br>
                <input type="text" id="sample4_postcode" placeholder="우편번호">

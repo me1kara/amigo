@@ -26,8 +26,8 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
-      <style>
-       .card {
+       <style>
+      .card {
        box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
       }
 
@@ -48,21 +48,45 @@
         min-height: 1px;
         padding: 1rem;
       }
+      
+      
+      .udb-header-menu {
+      font-family: "Jalnan";
+      	padding:15px;	
+      }
+      
+      .ubd-header-title{
+       font-family: "Jalnan";
+       font-size:40px;
+       
+      }
+      
+       .ubd-header-menu:link {
+        color: gray;
+      }
+      .ubd-header-menu:visited {
+        color: gray;
+      }
+      .ubd-header-menu:hover {
+        color: #189cc4;
+      }
+      
+
+      
     </style>
 </head>
 <body>
 <%@include file="/includes/header.jsp" %>
 
    <!-- far fa icon 불러오기 -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+<link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+</link>
 
 
 	<div class="container" align="left">
 		<div class="mt-4 p-5">
-			<h3>유저 커뮤니티</h3>
+			<p class="ubd-header-title">유저 커뮤니티</p>
 			<c:if test="${ boardList.isEmpty() }">
 				<h5><p class="bg-danger text-white">등록된 게시판 정보가 존재하지 않습니다!!</p></h5>
 			</c:if>
@@ -77,20 +101,20 @@
 				
 				
 			<!-- 상단 메뉴 -->
-	   		<div class="row mt-3 justify-content-end">
+	   		<div class="row justify-content-between">
 	   			<div class="col-auto">
-					<a href="user_board_list.do">전체글</a> 
-	   				<a href="user_board_list_Like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a> 
-	   				<a href="">펫시터 커뮤니티</a>
+					<a class="ubd-header-menu" href="user_board_list.do">전체글</a>&nbsp;&nbsp;
+	   				<a class="ubd-header-menu" href="user_board_list_Like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a>&nbsp;&nbsp;
+	   				<a class="ubd-header-menu" href="">펫시터커뮤니티</a>
 	   			</div>
-	   		<div class="row mt-3 justify-content-end">
-	   			<div class="col-auto">
+	   			   	<div class="col-auto">
 					<select class="form-select" id="searchCategory" name="searchCategory" onchange="chageSelect()">
 				    	<option value="말머리">말머리</option>							
 				    	<option value="자랑글">자랑글</option>						
 				    	<option value="자유글">자유글</option>							
 				    	<option value="질문">질문</option>										
 					</select>
+	   			  </div>
 					
 					<script type="text/javascript">
 					
@@ -113,14 +137,15 @@
 					}
 					</script>
 					
-				</div> 
+				
 			</div>
 		</form> <!-- getBoardList.do -->
 
-		<div class="container">					
+	<div class="container">					
 					<c:forEach  var="board" items="${ boardList }">
                     <div class="container">
             <!-- Forum List -->
+            <!-- div를 눌러서 접속 될수 있게 만듦 -->
             <div class="inner-main-body p-2 p-sm-3 forum-content show"  style="cursor: pointer;" onclick="location.href='user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}'">
               <div class="card mb-2">
                 <div class="card-body p-2 p-sm-3">
@@ -136,16 +161,16 @@
                     <!-- user profile/ -->
                     <div class="media-body">
                       <!-- 말머리 -->
-                        <a class="text-secondary">${ board.getUbd_cate()}</a>
+                        <div class="text-secondary">${ board.getUbd_cate()}</div>
                       <!-- 말머리/ -->
                       <!-- 제목 -->
                       <h6>
-                      <a class="text-body" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}">${board.getUbd_title()}</a> [${board.getReply_cnt()}]
+                      <a class="text-body" style="font-size:20px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
                       <!-- 작성자 -->
-                        <a class="nickName">${ board.getUser_nick() }</a>
+                        <span class="nickName" style="color:#498dcc; font-weight:bold">${ board.getUser_nick() }</span>&nbsp;
                        <!-- 작성자/ -->
                        <!-- 작성일 -->
                         <span class="text-secondary font-weight-bold">
@@ -155,7 +180,7 @@
                     </div>
                     <div class="text-muted small text-center align-self-center">
                       <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>&nbsp;&nbsp;
-                      <span><ii class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;${ board.getLike_cnt() }</span>
+                      <span><i class="fa fa-heart" aria-hidden="true"></i>&nbsp;${ board.getLike_cnt() }</span>
                     	</div>
                  		</div>
                 		</div>
@@ -194,11 +219,10 @@
 	
 		</div> <!-- 페이징 -->
 		
-		<div class="col-2 btn-group">
-			    <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
+		
 		</div>
 		<!-- 하단 검색 시스템 -->
-		<form action="user_board_list.do" method="post" id="boardForm">   
+<form action="user_board_list.do" method="post" id="boardForm">   
 				    	<div class="col-3 me-1">
 					<select class="form-select" id="searchType" name="searchType">
 				    	<option value="">검색</option>							
@@ -210,11 +234,13 @@
 				<div class="col-3 me-1">			
 					<input class="form-control me-2" name="searchWord" type="text" placeholder="내용은 입력하세요." />
 				</div>
-				<div class="col-3 btn-group">
+				<div class="col-2 btn-group">
 			    	<input type="submit" class="col-1 btn btn-primary me-2" value="검색">
 	        	</div>
-	     </form>
-							
+	        	<div class="col-2 btn-group">
+			    <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
+		        </div>
+	     </form>		
 	</div> <!— main  —>
 	    
 	    
