@@ -61,7 +61,7 @@
 			</div>
 			<!-- 작성자  -->
 			<div class="input-group mb-3">
-			 <span class="insert-font col-md-1" style="font-size:18px; font-weight:bold;" >작성자 :</span> &nbsp;<p class="insert-user-name">${ user.getUser_nick() }</p>
+			 <span class="insert-font col-md-1" style="font-size:18px; font-weight:bold;" >작성자 :</span> &nbsp;<p class="insert-user-name" style="font-size:18px; font-weight:bold;">${ user.getUser_nick() }</p>
 			</div>
 			<!-- 작성자  끝 -->
 			<!-- 상단 끝 -->

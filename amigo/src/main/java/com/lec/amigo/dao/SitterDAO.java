@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
+import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.mapper.SitRowMapper;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
@@ -33,44 +34,50 @@ public class SitterDAO {
 	@Autowired
 	Environment environment;			// 설정(properties)을 java에서 가져오지 않고 외부의 파일에서 sql문 등을 가져오기 위해 이 객체를 사용하여 스프링 빈과 설정을 세팅함.
 	
-    private String sql          = "";
-    private String selectSitter = "";   // getSitter
-    private String selectSitterInfo = "";   // 펫시터 개인의 상세정보
-    private String selectSitterCate = "";   // 승인/미승인 을 나눠서 정렬하기
-    private String insertSitter = "";
-    private String deleteSitter = "";
-    private String updateSitter = "";
-    private String updateTypeS  = "";
-    private String updateTypeU  = "";
-    private String selectSitListByUserNo = "";
+	private String sql          = "";
+	private String selectSitter = "";	// getSitter
+	private String selectSitterInfo = "";   // 펫시터 개인의 상세정보
+	private String selectSitterCate = "";   // 승인/미승인 을 나눠서 정렬하기
+	private String insertSitter = "";
+	private String deleteSitter = "";
+	private String updateSitter = "";
+	private String updateTypeS  = "";
+	private String updateTypeU  = "";
+	private String selectSitListByUserNo = "";
 	
 	@PostConstruct
 	public void getSqlProperties() {
 		
-       selectSitter          = environment.getProperty("selectSitter");
-       selectSitterInfo      = environment.getProperty("selectSitterInfo");
-       selectSitterCate      = environment.getProperty("selectSitterCate");
-       insertSitter          = environment.getProperty("insertSitter");
-       deleteSitter          = environment.getProperty("deleteSitter");
-       updateSitter          = environment.getProperty("updateSitter");
-       updateTypeS           = environment.getProperty("updateTypeS");
-       updateTypeU           = environment.getProperty("updateTypeU");
-       selectSitListByUserNo = environment.getProperty("selectSitListByUserNo");
+		selectSitter          = environment.getProperty("selectSitter");
+		selectSitterInfo      = environment.getProperty("selectSitterInfo");
+		selectSitterCate      = environment.getProperty("selectSitterCate");
+		insertSitter          = environment.getProperty("insertSitter");
+		deleteSitter          = environment.getProperty("deleteSitter");
+		updateSitter          = environment.getProperty("updateSitter");
+		updateTypeS           = environment.getProperty("updateTypeS");
+		updateTypeU           = environment.getProperty("updateTypeU");
+		selectSitListByUserNo = environment.getProperty("selectSitListByUserNo");
 	}
 	
-	
+
 	
 	public List<SitterVO> getSitList(SitterVO svo) {
 		
 		return jdbcTemplate.query(selectSitter, new SitRowMapper());
 		
 	}
-	
+	public List<SitterVO> getSitListCate(SitterVO svo, SearchVO searchVO){
+		
+		
+		return null;
+		
+	}
 	
 	public SitterVO getSitter(SitterVO svo) {
-		Object[] args = {svo.getSit_no() };
-		return jdbcTemplate.queryForObject(selectSitterInfo, args, new SitRowMapper());
-	}
+		Object[] args = { svo.getSit_no() };
+		return (SitterVO) jdbcTemplate.query(selectSitterInfo, args, new SitRowMapper());
+		
+	} // 
 	
 	public SitterVO insertSitter(SitterVO svo) {
 		jdbcTemplate.update(insertSitter,svo.getUser_no(),svo.getSit_gender(),svo.getSit_birth(),svo.isSit_smoking(),svo.getSit_job(),svo.getSit_days(),svo.getSit_time(),svo.isSit_exp(),svo.getSit_care_exp(),svo.getSit_intro(),svo.getSit_photo(),svo.isSit_auth_is());
