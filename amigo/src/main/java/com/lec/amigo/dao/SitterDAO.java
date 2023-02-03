@@ -33,28 +33,32 @@ public class SitterDAO {
 	@Autowired
 	Environment environment;			// 설정(properties)을 java에서 가져오지 않고 외부의 파일에서 sql문 등을 가져오기 위해 이 객체를 사용하여 스프링 빈과 설정을 세팅함.
 	
-	private String sql          = "";
-	private String selectSitter = "";	// getSitter
-	private String insertSitter = "";
-	private String deleteSitter = "";
-	private String updateSitter = "";
-	private String updateTypeS  = "";
-	private String updateTypeU  = "";
-	private String selectSitListByUserNo = "";
+    private String sql          = "";
+    private String selectSitter = "";   // getSitter
+    private String selectSitterInfo = "";   // 펫시터 개인의 상세정보
+    private String selectSitterCate = "";   // 승인/미승인 을 나눠서 정렬하기
+    private String insertSitter = "";
+    private String deleteSitter = "";
+    private String updateSitter = "";
+    private String updateTypeS  = "";
+    private String updateTypeU  = "";
+    private String selectSitListByUserNo = "";
 	
 	@PostConstruct
 	public void getSqlProperties() {
 		
-		selectSitter          = environment.getProperty("selectSitter");
-		insertSitter          = environment.getProperty("insertSitter");
-		deleteSitter          = environment.getProperty("deleteSitter");
-		updateSitter          = environment.getProperty("updateSitter");
-		updateTypeS           = environment.getProperty("updateTypeS");
-		updateTypeU           = environment.getProperty("updateTypeU");
-		selectSitListByUserNo = environment.getProperty("selectSitListByUserNo");
+       selectSitter          = environment.getProperty("selectSitter");
+       selectSitterInfo      = environment.getProperty("selectSitterInfo");
+       selectSitterCate      = environment.getProperty("selectSitterCate");
+       insertSitter          = environment.getProperty("insertSitter");
+       deleteSitter          = environment.getProperty("deleteSitter");
+       updateSitter          = environment.getProperty("updateSitter");
+       updateTypeS           = environment.getProperty("updateTypeS");
+       updateTypeU           = environment.getProperty("updateTypeU");
+       selectSitListByUserNo = environment.getProperty("selectSitListByUserNo");
 	}
 	
-
+	
 	
 	public List<SitterVO> getSitList(SitterVO svo) {
 		
@@ -62,10 +66,10 @@ public class SitterDAO {
 		
 	}
 	
-	public SitterVO getSitter(int sit_no) {
-		Object[] args = {sit_no};
-		return (SitterVO) jdbcTemplate.query(selectSitter, args, new SitRowMapper());
-		
+	
+	public SitterVO getSitter(SitterVO svo) {
+		Object[] args = {svo.getSit_no() };
+		return jdbcTemplate.queryForObject(selectSitterInfo, args, new SitRowMapper());
 	}
 	
 	public SitterVO insertSitter(SitterVO svo) {

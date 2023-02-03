@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lec.amigo.common.PagingVO;
 import com.lec.amigo.common.SearchVO;
+import com.lec.amigo.dao.SitterDAO;
 import com.lec.amigo.impl.BookServiceImpl;
+import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.vo.HeartVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
@@ -35,6 +37,10 @@ public class BookController {
 	
 	@Autowired
 	BookServiceImpl bookService;
+	
+	@Autowired
+	SitterServiceImpl sitterService;
+	
 	
 	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.GET })
 	public String book (HttpServletRequest req, Model model, SearchVO search, 
@@ -106,8 +112,16 @@ public class BookController {
 	
 	
 	@RequestMapping(value = "/view/book/sitter_profile.do", method = { RequestMethod.GET })
-	public String getSitterProfile (HttpServletRequest req, HttpServletResponse resp, UserVO userVO) {
-		System.out.println("예약폼");	
+	public String getSitterProfile (HttpServletRequest req, HttpServletResponse resp, SitterVO sitterVO) {
+
+		SitterVO s = sitterService.getSitter(sitterVO);
+		System.out.println(sitterVO.getSit_no()+"싯넘버 확인용");
+		
+		req.setAttribute("sitter", s);
+
+		
+		
+	
 		
 		return "/view/sitter/sitter_profile.jsp";
 	}

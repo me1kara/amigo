@@ -19,8 +19,6 @@
     <![endif]-->
 </head>
 <%
-	UserVO user = new UserVO();
-	SitterVO sit = new SitterVO();
 	
 
 %>
@@ -34,8 +32,8 @@
      			 <td>Profile Picture:</td>
      			 <td>
     			    <c:choose>
-     			     <c:when test="${not empty sit.sit_photo}">
-     			       <img src="${sit.sit_photo}" alt="Profile Picture"/>
+     			     <c:when test="${not empty sitter.sit_photo}">
+     			       <img src="${sitter.sit_photo}" alt="Profile Picture"/>
      			     </c:when>
      			     <c:otherwise>
      			       Profile picture not available.
@@ -46,7 +44,7 @@
 		 		   <tr>
     			  <td></td>
     			  <td>
-    			    <c:out value="${user.user_name;}"/> 펫시터
+    			    <c:out value="${sitter.user_name}"/> 펫시터
      			 </td>
   			  </tr>
 			
