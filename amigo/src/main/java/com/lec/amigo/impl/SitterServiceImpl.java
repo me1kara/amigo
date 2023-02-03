@@ -27,8 +27,14 @@ public class SitterServiceImpl implements SitterService {
 	}
 
 	@Override
-	public List<SitterVO> getSitList(SitterVO svo) {
-		return sitterDAO.getSitList(svo);
+	public List<SitterVO> getSitList(SearchVO searchVO) {
+		return sitterDAO.getSitList(searchVO);
+	}
+	
+	@Override
+	public int getTotalSitRowCount(SearchVO searchVO) {
+		
+		return 0;
 	}
 	
 	@Override
@@ -62,22 +68,12 @@ public class SitterServiceImpl implements SitterService {
 		
 	}
 
-	@Override
-	public int getTotalRowCount(SearchVO searchVO) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int getCateRowCount(SearchVO searchVO, SitterVO svo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-
-	
-
-	
 
 
 

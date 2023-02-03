@@ -37,19 +37,19 @@
 				<table class="table table-hover table-bordered">
 					<thead class="table-dark text-center">					
 						<th scope="col" class="col-1 text-center">사진</th>
-						<th scope="col" class="col-1 text-center">유저번호</th>
-						<th scope="col" class="col-1 text-center">유저명</th>
-						<th scope="col" class="col-1 text-center">시터번호 (또는 신청번호)</th>
-						<th scope="col" class="col-1 text-center">성별</th>
-						<th scope="col" class="col-1 text-center">흡연여부</th>
+						<th scope="col" class="col-0.5 text-center">유저No</th>
+						<th scope="col" class="col-0.5 text-center">유저명</th>
+						<th scope="col" class="col-0.5 text-center">시터No</th>
+						<th scope="col" class="col-0.5 text-center">성별</th>
+						<th scope="col" class="col-0.5 text-center">흡연여부</th>
 						<th scope="col" class="col-1 text-center">직업</th>
 						<th scope="col" class="col-1 text-center">가능일자</th>
 						<th scope="col" class="col-1 text-center">가능시간</th>			
-						<th scope="col" class="col-1 text-center">경력여부</th>			
-						<th scope="col" class="col-2 text-center">시터경험</th>			
-						<th scope="col" class="col-0.5 text-center">자기소개</th>
+						<th scope="col" class="col-0.5 text-center">경력여부</th>			
+						<th scope="col" class="col-1 text-center">시터경험</th>			
+						<th scope="col" class="col-2.5 text-center">자기소개</th>
 						<th scope="col" class="col-0.5 text-center">승인여부</th>						
-						<th scope="col" class="col-0.5 text-center">승인</th>							
+						<th scope="col" class="col-0.5 text-center">승인</th>													
 						<th scope="col" class="col-0.5 text-center">실격</th><!-- 시터에서 delete하면될듯. -->							
 					</thead>
 					 <tbody>
@@ -61,19 +61,20 @@
 								<td>${sit.getSit_no()}</td>
 				    			<td><c:choose><c:when test="${ sit.getSit_gender()=='m' }">남성</c:when>
 										      <c:when test="${ sit.getSit_gender()=='f' }">여성</c:when></c:choose></td>
-								<td><c:choose><c:when test="${ sit.isSit_smoking() }">예</c:when>
-										      <c:when test="${ !sit.isSit_smoking() }">아니오</c:when></c:choose></td>
+								<td><c:choose><c:when test="${ sit.isSit_smoking() }">O</c:when>
+										      <c:when test="${ !sit.isSit_smoking() }">X</c:when></c:choose></td>
 								<td>${ sit.getSit_job() }</td>
 								<td>${ sit.getSit_days() }</td>
 								<td>${ sit.getSit_time() }</td>
-				    			<td><c:choose><c:when test="${ sit.isSit_exp() }">유경력</c:when>
-										      <c:when test="${ !sit.isSit_exp() }">무경력</c:when></c:choose></td>
+				    			<td><c:choose><c:when test="${ sit.isSit_exp() }">유</c:when>
+										      <c:when test="${ !sit.isSit_exp() }">무</c:when></c:choose></td>
 				    			<td>${ sit.getSit_care_exp() }</td>
 				    			<td>${ sit.getSit_intro() }</td>
-				    			<td><c:choose><c:when test="${ sit.isSit_auth_is() }">승인완료</c:when>
-										      <c:when test="${ !sit.isSit_auth_is() }">승인대기</c:when></c:choose></td>
+				    			<td><c:choose><c:when test="${ sit.isSit_auth_is() }">승인</c:when>
+										      <c:when test="${ !sit.isSit_auth_is() }">대기</c:when></c:choose></td>
+								
 								<td><a href="updateSitter.do?sit_auth_is=true&user_no=${sit.getUser_no() }" class="btn btn-primary">승인</a></td>
-								<td><a href="deleteSitter.do?user_no=${sit.getUser_no() }" class="btn btn-primary">실격 (자격해제)</a></td>		
+								<td><a href="deleteSitter.do?user_no=${sit.getUser_no() }" class="btn btn-primary">실격</a></td>		
 						 </tr>	 
 					   </c:forEach>									
 					</tbody>
@@ -81,6 +82,58 @@
 			</div>                                      <!-- 승인 -> forEach문의 a태그 :  매서드.do?불리언세팅값=true&유저넘버(쿼리의 where)=달러 중괄 리스트의.유저넘버 얻어오기 중괄호  -->
 		 </c:otherwise>
 		</c:choose>
+		
+		<div class="row align-items-start mt-3">
+			<ul class="col pagination justify-content-center">
+			
+				<c:set var="cp" value="${searchVO.getCurPage()}"/>
+				<c:set var="rp" value="${searchVO.getRowSizePerPage()}"/>
+				<c:set var="fp" value="${searchVO.getFirstPage()}"/>
+				<c:set var="lp" value="${searchVO.getLastPage()}"/>
+				<c:set var="ps" value="${searchVO.getPageSize()}"/>
+				<c:set var="tp" value="${searchVO.getTotalPageCount()}"/>
+				<c:set var="sc" value="${searchVO.getSearchCategory()}"/>
+				<c:set var="st" value="${searchVO.getSearchType()}"/>
+				<c:set var="sw" value="${searchVO.getSearchWord()}"/>
+																
+				<c:if test="${ fp != 1 }">
+					<li class="page-item"><a href="getSitList.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
+					<li class="page-item"><a href="getSitList.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-backward"></i></a></li>				
+				</c:if>
+			
+				<c:forEach var="page" begin="${fp}" end="${lp}">
+					<li class="page-item ${cp==page ? 'active' : ''}"><a href="getSitList.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link">${page}</a></li>
+				</c:forEach>
+				
+				<c:if test="${ lp < tp }">
+					<li class="page-item "><a href="getSitList.do?curPage=${lp+ps}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-forward"></i></a></li>				
+					<li class="page-item"><a href="getSitList.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>				
+				</c:if>
+			</ul> <!-- pagination -->	
+	
+		</div> <!-- 페이징 -->
+		
+	
+		<!-- 하단 검색 시스템 -->
+		<form action="getSitList.do" method="get" id="sitForm">   
+				    	<div class="col-3 me-1">
+					<select class="form-select" id="searchType" name="searchType">
+				    	<option value="">검색</option>							
+				    	<option value="user_name" ${searchVO.getSearchType()=="user_name" ? "selected" : "" }>성명</option>							
+				    	<option value="sit_auth_is" ${searchVO.getSearchType()=="sit_auth_is" ? "selected" : ""}>승인여부</option>						
+				    	<option value="sit_gender" ${searchVO.getSearchType()=="sit_gender" ? "selected" : ""}>성별</option>						
+					</select>
+				</div>
+				<div class="col-3 me-1">			
+					<input class="form-control me-2" name="searchWord" type="text" placeholder="내용을 입력하세요." />
+				</div>
+				<div class="col-2 btn-group">
+			    	<input type="submit" class="col-1 btn btn-primary me-2" value="검색">
+	        	</div>
+
+	     </form>	
+		
+		
 		</div>
 
 	<!-- Bootstrap core JS-->
