@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.dao.SitterDAO;
 import com.lec.amigo.service.SitterService;
 import com.lec.amigo.vo.SitterVO;
@@ -20,9 +21,9 @@ public class SitterServiceImpl implements SitterService {
 	SitterDAO sitterDAO;
 	
 	@Override
-	public SitterVO getSitter(int sit_no) {
+	public SitterVO getSitter(SitterVO svo) {
 		// TODO Auto-generated method stub
-		return sitterDAO.getSitter(sit_no);
+		return sitterDAO.getSitter(svo);
 	}
 
 	@Override
@@ -60,6 +61,19 @@ public class SitterServiceImpl implements SitterService {
 		sitterDAO.updateTypeU(svo);
 		
 	}
+
+	@Override
+	public int getTotalRowCount(SearchVO searchVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getCateRowCount(SearchVO searchVO, SitterVO svo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 	
 

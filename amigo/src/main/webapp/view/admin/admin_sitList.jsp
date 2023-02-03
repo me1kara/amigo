@@ -39,7 +39,7 @@
 						<th scope="col" class="col-1 text-center">사진</th>
 						<th scope="col" class="col-1 text-center">유저번호</th>
 						<th scope="col" class="col-1 text-center">유저명</th>
-						<th scope="col" class="col-1 text-center">시터번호</th>
+						<th scope="col" class="col-1 text-center">시터번호 (또는 신청번호)</th>
 						<th scope="col" class="col-1 text-center">성별</th>
 						<th scope="col" class="col-1 text-center">흡연여부</th>
 						<th scope="col" class="col-1 text-center">직업</th>
