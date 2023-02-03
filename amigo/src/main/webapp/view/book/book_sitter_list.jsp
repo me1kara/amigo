@@ -37,18 +37,19 @@
 </head>
 <body>
 		 <script type="text/javascript">
+		 
+		 $(document).ready(function(){
+	    	 let b = ${calr}; 
+	    	 $('#bookDate').val(JSON.stringify(b)); 
+		 });
+		 
     	function sendJsonUrl(curPage,rowSize){
     		console.log('입장확인용');
     	    //let f = document.createElement('form');
     	    var f = document.f;
     	    f.curPage.value=curPage;
     	    f.rowSizePerPage.value=rowSize;
-    	    
-    	    let b = ${calr}; 
-    	    console.log(b);
-    	    $('#bookDate').val(JSON.stringify(b));
-    	    
-    	    
+
 /*    	    	let cur = document.createElement('input');
    	    	let row = document.createElement('input');
    	    	let address = document.address;
@@ -88,8 +89,8 @@
 		<div class="container">
 		
 			<p><%=addr%> 시터들 목록</p>
+					${calr}
 			<c:choose>
-
 			<c:when test="${sittList!=null }">
 				<c:forEach var="sit" items="${sittList }">
 					<c:forEach var="user" items="${sittNameList }">

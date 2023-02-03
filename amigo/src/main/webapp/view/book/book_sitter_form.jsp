@@ -1,3 +1,4 @@
+<%@page import="com.lec.amigo.vo.DogVO"%>
 <%@page import="com.lec.amigo.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -31,13 +32,29 @@
 
 <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
 
+<% List<DogVO> myDog_list = (List<DogVO>)session.getAttribute("myDog_list");
+	if(myDog_list==null || myDog_list.isEmpty()){
+		%>
+		<script>
+			alert('등록된 강아지가 없습니다!마이페이지에서 등록해주세요!');
+			history.go(-1);
+			
+		</script>
+		<% 
+	}
+%>
+
+   	 
+    
+   
+ 	
 
 <script
 	src='<%=request.getContextPath() %>/resources/fullcalendar-6.0.3/dist/index.global.js'></script>
 <script>
       var calendar = null;
       var g_info = null;
-      $(document).ready(function(){
+      $(document).ready(function(){  
         var calendarEl = document.getElementById('calendar');
         calendar = new FullCalendar.Calendar(calendarEl, {
           locale: "ko",
@@ -447,7 +464,7 @@ td {
     	  		sendBookDate();
     	  	}
     	  	
-    	  	if($("input[name=shop]:radio:checked").length<1){
+    	  	if($("input[name=res_visit_is]:radio:checked").length<1){
     	  		alert("방문여부를 선택해주세요!");
     	  		return false;
     	  	}
@@ -465,6 +482,15 @@ td {
 			    return false;
             }  */
         }
+        
+        $('#select1').click(function(){
+        	$('#select2').prop("checked", false);
+        	$('#select1').prop("checked", true);
+        });
+        $('#select2').click(function(){
+        	$('#select2').prop("checked", true);
+        	$('#select1').prop("checked", false);
+        });
 </script>
 </head>
 
@@ -536,9 +562,9 @@ td {
 
 		<form action="book.do" onsubmit="return checkResult();">
 			<div class="select" style="display: flex; justify-content: space-between; margin-top: 100px;">
-				<input type="radio" id="select1" name="shop" value="visit">
+				<input type="radio" id="select1" name="res_visit_is" value="true" checked="checked">
 				<label class="ctn_btn" for="select1">방문</label> 
-				<input type="radio" id="select2" name="shop" value="consign">
+				<input type="radio" id="select2" name="res_visit_is" value="false">
 				<label class="ctn_btn" for="select2">위탁</label>
 			</div>
 
@@ -582,10 +608,12 @@ td {
 			</script>
 			
 			
-			<br> <b>이용주소</b> <input type="text" name="address" id="address" required="required" readonly="readonly" style="width :300px;"/>
+			
+			<br> <b>이용주소</b> <input type="text" name="res_addr" id="address" required="required" readonly="readonly" style="width :300px;"
+			value="<%=user.getUser_addr()%>"/>
 			<button type="button" class="item_change" onclick="open_address_modal()">변경</button>
 			<br> <br> <b>특이사항</b><br>
-			<textarea class="etc_content" name="etc_content" rows="5" cols="16"
+			<textarea class="etc_content" name="res_etc" rows="5" cols="16"
 				placeholder="펫시터분이 알아야 할 우리 아이에 대한 특이사항을 적어주세요!"></textarea>
 			<br>
 			
@@ -630,12 +658,12 @@ td {
 		
 			<div class="inline_box">
 				<b style="margin: 0 auto;">비용</b><span id="show_money"> 0원</span>
-				<input type="hidden" id="money" name="price"></input>
+				<input type="hidden" id="money" name="res_pay"></input>
 			</div>
 			
 
 			<br> <label for="term" class="term_css"> <input
-				type="checkbox" id="term" name="term" required="required"> <span>개인정보 이용
+				type="checkbox" id="term" name="res_term_is" required="required"> <span>개인정보 이용
 					동의<strong>(필수)</strong>
 			</span>
 			</label>
@@ -650,7 +678,6 @@ td {
 				정보를 포함하고 있습니다. amigo 서비스를 이용하시거나 amig 펫시터 서비스를 예약하실 경우 여러분은 본 약관 및 관련
 				운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.</div>
 			<br>
-			
 			<div style="display: flex; justify-content: space-between;">
 				<button class="btn btn-primary ctn_btn" onclick="history.back(-1)">이전</button>
 				<button type="submit" class="btn btn-primary ctn_btn">확인</button>
@@ -668,10 +695,17 @@ td {
 	<div class="modal" id="eventModifyForm" style="display: none;">
 		<div class="modal-content">
 			<div>
+				
+				
+				
+				<c:set var="myDog_list" value="<%=myDog_list %>"></c:set>
 				<p>강아지</p>
 				<select name="selectDog" id="eventDog">
-					<option value="푸들">푸들</option>
-					<option value="백구">백구</option>
+						<c:if test="${myDog_list!=null }">					
+							<c:forEach var="dog" items="${myDog_list }">
+								<option value="${dog.getDog_name() }">${dog.getDog_name() }</option>	
+							</c:forEach>
+						</c:if>
 				</select>
 				<p>시간선택</p>
 				<div >
