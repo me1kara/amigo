@@ -54,7 +54,6 @@ public class BookController {
 		
 		System.out.println(bookVO.toString());
 		
-		
 		String[] addrList = address.split("\\s");
 		String secondeAddr = addrList[1];
 		

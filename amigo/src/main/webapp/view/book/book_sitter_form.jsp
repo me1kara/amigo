@@ -6,32 +6,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
 
+<!-- 제이쿼리 -->
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-	integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 	crossorigin="anonymous"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
-
+<!-- 부트스트랩 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- 풀캘린더 -->
+<script src='/amigo/resources/fullcalendar-6.0.3/dist/index.global.js'></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/amigo/resources/css/calendar.css" type="text/css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- 타임피커 -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-
-
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/amigo/resources/css/calendar.css"
-	type="text/css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
 
+<!-- 신청자격확인 -->
 <% List<DogVO> myDog_list = (List<DogVO>)session.getAttribute("myDog_list");
 	if(myDog_list==null || myDog_list.isEmpty()){
 		%>
@@ -44,14 +37,8 @@
 	}
 %>
 
-   	 
-    
-   
- 	
-
-<script
-	src='<%=request.getContextPath() %>/resources/fullcalendar-6.0.3/dist/index.global.js'></script>
 <script>
+	//예약기능 달력 스크립트
       var calendar = null;
       var g_info = null;
       $(document).ready(function(){  
@@ -64,39 +51,8 @@
           editable: false,
           droppable: true,
           firstDay : 1,
-		
-/*           events: [
-        	    {
-        	      title: 'Event1',
-        	      start: '2023-01-07'
-        	    },
-        	    {
-        	      title: 'gg',
-        	      start: '2023-01-05',
-              	  color: 'yellow',   // an option!
-                  textColor: 'black'
-        	    }
-           ], */
           eventClick:function(info) {
         	  modalOpen('modify',info);
-        	  
-        	
-        	  
-/*     		  $('#modifyEvent').click(function(){ 			  
-    			console.log(info.event);
-    			let title ="";
-    			title = $('#eventDog').val() + $('#eventTime').val();
-    			console.log(title+"타이틀입니다");
-      		  	info.event.setProp('title', title);
-      		  	modalClose();
-    		  });
-    		  $('#deleteEvent').click(function(){
-    			info.event.remove();
-    			modalClose();
-      		  });
-    		  
-    		  $('#eventDog').val('');
-      		  $('#eventTime').val(''); */
           },
 
           select: function(info) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
@@ -108,30 +64,7 @@
         		  alert(arim.substr(0,arim.length-1)+"부터 예약가능합니다");
         		  
         	  }
-              /* var title = prompt('시간입력', '13:20~15:00');
-              if (title) {
-                  calendar.addEvent({
-                  title: title,
-                  start: arg.start,
-                  end: arg.end,
-                  allDay: arg.allDay
-                })
-              }
-              calendar.unselect(); */
-            }
-        
-          /*
-          dateClick: function(info) {
-        	  
-      	    alert('Clicked on: ' + info.dateStr);
-      	  	alert('Clicked on: ' + info.dayEl);
-      	  	alert('Clicked on: ' + info.view);
-      	  	
-      	  	
-      	    // change the day's background color just for fun
-      	    info.dayEl.style.backgroundColor = 'blue';
-        }*/
-        });
+        }});
         calendar.render();
    		$('#eventStartTime').timepicker({
    			timeFormat: 'HH:mm',
@@ -159,24 +92,40 @@
         
         $('#eventStartTime').time
       });
-      
-      function sendBookDate(){
-    	  var allEvent = calendar.getEvents();   	  
-    	  console.log(allEvent);
-    	  var events = new Array();
-    	  for(let i=0; i< allEvent.length; i++){
-    		  var obj = new Object();
-    		  console.log(allEvent[i]);
-    		  obj.title = allEvent[i]._def.title;
-    		  obj.allday = allEvent[i]._def.allDay;
-    		  obj.start = allEvent[i].startStr;
-    		  obj.end = allEvent[i].endStr;		  
-    		  events.push(obj);
-    	  }
-    	  let bookDate = JSON.stringify(events);
-    	  $('#reciveBookData').val(bookDate);
-      }
-      
+     
+      //예약추가하기
+      function addEvent(g_info){
+    	  	let title = $('#eventDog').val() + "," + $('#eventStartTime').val() + "~" + $('#eventEndTime').val();
+			if($('#eventStartTime').val()=='' || $('#eventEndTime').val()==''){
+				alert('시간을 입력해주세요!');
+			}else{
+				let startTime = $('#eventStartTime').val();
+				let endTime = $('#eventEndTime').val();
+ 				let startTimeList = startTime.split(':');
+				let endTimeList = endTime.split(':');		
+				startTime = startTimeList[0] + startTimeList[1];
+				endTime = endTimeList[0] + endTimeList[1];
+				
+				console.log("스타트:"+startTime);
+				console.log("엔드:"+endTime);
+				
+				if(Number(startTime)+200>Number(endTime)){
+					alert('2시간 간격으로 입력해주세요!');
+				}else{
+		            calendar.addEvent({
+		            title: title,
+		            start: g_info.start,
+		            end: g_info.end,
+		            allDay: g_info.allDay
+		            })
+		            calendar.unselect();
+		            modalClose();
+		            cost_cal();
+				}
+
+			}
+     }
+      //예약정보변경
       function modifyEvent(g_info){
 			console.log(g_info.event);
 			let start = $('#eventStartTime').val();
@@ -214,53 +163,51 @@
 			
 	
       }
-      
+      //예약내용지우기
       function deleteEvent(g_info){
 			g_info.event.remove();
 			modalClose();
 			cost_cal();
       }
       
-      function addEvent(g_info){
-    	  	let title = $('#eventDog').val() + "," + $('#eventStartTime').val() + "~" + $('#eventEndTime').val();
-			if($('#eventStartTime').val()=='' || $('#eventEndTime').val()==''){
-				alert('시간을 입력해주세요!');
-			}else{
-				let startTime = $('#eventStartTime').val();
-				let endTime = $('#eventEndTime').val();
- 				let startTimeList = startTime.split(':');
-				let endTimeList = endTime.split(':');		
-				startTime = startTimeList[0] + startTimeList[1];
-				endTime = endTimeList[0] + endTimeList[1];
-				
-				console.log("스타트:"+startTime);
-				console.log("엔드:"+endTime);
-				
-				if(Number(startTime)+200>Number(endTime)){
-					alert('2시간 간격으로 입력해주세요!');
-				}else{
-		            calendar.addEvent({
-		            title: title,
-		            start: g_info.start,
-		            end: g_info.end,
-		            allDay: g_info.allDay
-		            })
-		            calendar.unselect();
-		            modalClose();
-		            cost_cal();
-				}
-
-			}
-     }
+      //예약내용검수
+      function checkResult() {
+    	  	var allEvent = calendar.getEvents();   	  
+  	  	if(allEvent.length==0){
+  	  		alert('예약일정을 등록해주세요!');
+  	  		return false;
+  	  	}else{
+  	  		sendBookDate();
+  	  	}
+  	  	
+  	  	if($("input[name=res_visit_is]:radio:checked").length<1){
+  	  		alert("방문여부를 선택해주세요!");
+  	  		return false;
+  	  	}
+      }
       
-
-
+      //예약정보 백단에 넘기기
+      function sendBookDate(){
+    	  var allEvent = calendar.getEvents();   	  
+    	  console.log(allEvent);
+    	  var events = new Array();
+    	  for(let i=0; i< allEvent.length; i++){
+    		  var obj = new Object();
+    		  console.log(allEvent[i]);
+    		  obj.title = allEvent[i]._def.title;
+    		  obj.allday = allEvent[i]._def.allDay;
+    		  obj.start = allEvent[i].startStr;
+    		  obj.end = allEvent[i].endStr;		  
+    		  events.push(obj);
+    	  }
+    	  let bookDate = JSON.stringify(events);
+    	  $('#reciveBookData').val(bookDate);
+      }
     </script>
 <title>펫시터02_펫시터예약폼</title>
 <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
-
 
 <style>
    	body {
@@ -397,13 +344,10 @@ td {
 	z-index: 1056;
 }
 
-
-
-
-
 </style>
 
-<script>   
+<script> 
+		//약관동의 토글
     	function term_text_toggle(){
     		$('.term_text').toggle();
     	}
@@ -454,34 +398,6 @@ td {
     		$('#eventStartTime').val('');
 			$('#eventEndTime').val('');
     	}
-    	
-        function checkResult() {
-      	  	var allEvent = calendar.getEvents();   	  
-    	  	if(allEvent.length==0){
-    	  		alert('예약일정을 등록해주세요!');
-    	  		return false;
-    	  	}else{
-    	  		sendBookDate();
-    	  	}
-    	  	
-    	  	if($("input[name=res_visit_is]:radio:checked").length<1){
-    	  		alert("방문여부를 선택해주세요!");
-    	  		return false;
-    	  	}
-    	  	
-    	  	
-
-    	  	
-/*             if ($('#address').val() == ''){
-			    $('#address').focus();
-			    return false;
-            }
-            if ($('#term').is(':checked') == 'false'){
-			    $('#term').focus();
-			    alert($('#term').is(':checked'));
-			    return false;
-            }  */
-        }
         
         $('#select1').click(function(){
         	$('#select2').prop("checked", false);
@@ -492,13 +408,67 @@ td {
         	$('#select1').prop("checked", false);
         });
 </script>
+
+
+<script>
+//모달 스크립트
+	function open_address_modal(){
+		console.log('입장확인');
+		$('#address_modal').show();
+	}
+	function close_address_modal(){
+		$('#address_modal').hide();	
+	}
+</script>
+
+<script>
+	function cost_cal() {
+		var allEvent = calendar.getEvents();
+		console.log(allEvent);
+		var events = new Array();
+
+		if (allEvent.length > 0) {
+			for (let i = 0; i < allEvent.length; i++) {
+				var obj = new Object();
+				console.log(allEvent[i]);
+				obj.title = allEvent[i]._def.title;
+				obj.allday = allEvent[i]._def.allDay;
+				obj.start = allEvent[i].startStr;
+				obj.end = allEvent[i].endStr;
+				events.push(obj);
+			}
+			let bookDate = JSON.stringify(events);
+			$.ajax({
+				url : 'ajax/calMoney.do',
+				type : 'POST',
+				data : {
+					'book_date' : bookDate
+				},
+				success : function(result) {
+					//that.prop('name', data);
+					console.log('결과:' + result);
+					if (result != 0) {
+						$('#money').val(result); //$('#heart').prop("src","resources/img/heart_fill.svg");
+						$('#show_money').text(result + '원');
+					} else {
+						$('#money').val('');
+						$('#show_money').text(' 0원');
+					}
+				}
+			});
+		} else {
+			$('#money').val('');
+		}
+	}
+</script>
+
 </head>
 
 <% UserVO user=(UserVO)session.getAttribute("user");%>
 
 <body>
 
-		<div class="container">
+	<div class="container">
 	<nav
       class="navbar navbar fixed-top navbar-light bg-light navbar-expand-custom navbar-mainbg"
     >	
@@ -557,137 +527,91 @@ td {
     <!-- Core theme JS-->
     <script src="/amigo/resources/js/script.js"></script>
 	<div class="container" style="width: 480px;">
-
-
-
-		<form action="book.do" onsubmit="return checkResult();">
-			<div class="select" style="display: flex; justify-content: space-between; margin-top: 100px;">
-				<input type="radio" id="select1" name="res_visit_is" value="true" checked="checked">
-				<label class="ctn_btn" for="select1">방문</label> 
-				<input type="radio" id="select2" name="res_visit_is" value="false">
-				<label class="ctn_btn" for="select2">위탁</label>
-			</div>
-
-			<!-- 
-			<br>
-			<b>예약날짜</b>
-			<br>
-			<div class="sec_cal">
-			  <div class="cal_nav">
-			    <a href="javascript:;" class="nav-btn go-prev">prev</a>
-			    <div class="year-month"></div>
-			    <a href="javascript:;" class="nav-btn go-next">next</a>
-			  </div>
-			  <div class="cal_wrap">
-			    <div class="days">
-			      <div class="day">월</div>
-			      <div class="day">화</div>
-			      <div class="day">수</div>
-			      <div class="day">목</div>
-			      <div class="day">금</div>
-			      <div class="day">토</div>
-			      <div class="day">일</div>
-			    </div>
-			    <div class="dates"></div>
-			  </div>
-			</div>
-			 -->
-
-			<div id='calendar-container'>
-				<div id='calendar' name="calendar"></div>
-			</div>
-			
-			<script>
-				function open_address_modal(){
-					console.log('입장확인');
-					$('#address_modal').show();
-				}
-				function close_address_modal(){
-					$('#address_modal').hide();	
-				}
-			</script>
-			
-			
-			
-			<br> <b>이용주소</b> <input type="text" name="res_addr" id="address" required="required" readonly="readonly" style="width :300px;"
-			value="<%=user.getUser_addr()%>"/>
-			<button type="button" class="item_change" onclick="open_address_modal()">변경</button>
-			<br> <br> <b>특이사항</b><br>
-			<textarea class="etc_content" name="res_etc" rows="5" cols="16"
-				placeholder="펫시터분이 알아야 할 우리 아이에 대한 특이사항을 적어주세요!"></textarea>
-			<br>
-			
-			<script>
-				function cost_cal(){
-		    	  var allEvent = calendar.getEvents();   	  
-		    	  console.log(allEvent);
-		    	  var events = new Array();
-		    	  
-		    	  if(allEvent.length >0){
-		    	  for(let i=0; i< allEvent.length; i++){
-		    		  var obj = new Object();
-		    		  console.log(allEvent[i]);
-		    		  obj.title = allEvent[i]._def.title;
-		    		  obj.allday = allEvent[i]._def.allDay;
-		    		  obj.start = allEvent[i].startStr;
-		    		  obj.end = allEvent[i].endStr;		  
-		    		  events.push(obj);
-		    	  }
-		    	  let bookDate = JSON.stringify(events);
-			  	    $.ajax({
-				    	url :'ajax/calMoney.do',
-				        type :'POST',
-				        data : {'book_date':bookDate},
-				    	success : function(result){
-				    		//that.prop('name', data);
-				    		console.log('결과:'+result);
-				        	if(result!=0) {
-				        		$('#money').val(result);				            	     //$('#heart').prop("src","resources/img/heart_fill.svg");
-				        		$('#show_money').text(result+'원');
-				        	} else {
-				        		$('#money').val('');
-				        		$('#show_money').text(' 0원');
-				        	}  
-			            	}
-				    });
-		    	  }else{
-		    		  $('#money').val('');
-		    	  }
-				}
-			</script>
-		
-			<div class="inline_box">
-				<b style="margin: 0 auto;">비용</b><span id="show_money"> 0원</span>
-				<input type="hidden" id="money" name="res_pay"></input>
-			</div>
-			
-
-			<br> <label for="term" class="term_css"> <input
-				type="checkbox" id="term" name="res_term_is" required="required"> <span>개인정보 이용
-					동의<strong>(필수)</strong>
-			</span>
-			</label>
-
-			<button type="button" class="btn" onclick="term_text_toggle()">더보기</button>		
-			<input type="hidden" id="reciveBookData" name="bookDate">
-			<br>
-			<div class="term_text" style="height: 100px; overflow: auto; display: none;">
-				여러분을 환영합니다. amigo 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 amigo
-				서비스의 이용과 관련하여 amigo 서비스를 제공하는 amigo 주식회사(이하 ‘amigo’)와 이를 이용하는 amigo 서비스
-				회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 amigo 서비스 이용에 도움이 될 수 있는 유익한
-				정보를 포함하고 있습니다. amigo 서비스를 이용하시거나 amig 펫시터 서비스를 예약하실 경우 여러분은 본 약관 및 관련
-				운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.</div>
-			<br>
-			<div style="display: flex; justify-content: space-between;">
-				<button class="btn btn-primary ctn_btn" onclick="history.back(-1)">이전</button>
-				<button type="submit" class="btn btn-primary ctn_btn">확인</button>
-			</div>
-		</form>
+		<section>
+			<form action="book.do" onsubmit="return checkResult();">
+				<article class="select" style="display: flex; justify-content: space-between; margin-top: 100px;">
+					<input type="radio" id="select1" name="res_visit_is" value="true" checked="checked">
+					<label class="ctn_btn" for="select1">방문</label> 
+					<input type="radio" id="select2" name="res_visit_is" value="false">
+					<label class="ctn_btn" for="select2">위탁</label>
+				</article>
+	
+				<!-- 
+				<br>
+				<b>예약날짜</b>
+				<br>
+				<div class="sec_cal">
+				  <div class="cal_nav">
+				    <a href="javascript:;" class="nav-btn go-prev">prev</a>
+				    <div class="year-month"></div>
+				    <a href="javascript:;" class="nav-btn go-next">next</a>
+				  </div>
+				  <div class="cal_wrap">
+				    <div class="days">
+				      <div class="day">월</div>
+				      <div class="day">화</div>
+				      <div class="day">수</div>
+				      <div class="day">목</div>
+				      <div class="day">금</div>
+				      <div class="day">토</div>
+				      <div class="day">일</div>
+				    </div>
+				    <div class="dates"></div>
+				  </div>
+				</div>
+				 -->
+				
+				<article id='calendar-container'>
+					<div id='calendar' name="calendar"></div>
+				</article>
+				
+				
+				<article>
+					<b>이용주소</b><input type="text" name="res_addr" id="address" required="required" readonly="readonly" style="width :300px;"
+					value="<%=user.getUser_addr()%>"/>
+					<button type="button" class="item_change" onclick="open_address_modal()">변경</button>
+				</article>
+				
+				<article>
+					<br> <br> <b>특이사항</b><br>
+					<textarea class="etc_content" name="res_etc" rows="5" cols="16"
+						placeholder="펫시터분이 알아야 할 우리 아이에 대한 특이사항을 적어주세요!"></textarea>
+					<br>
+				</article>
+				
+				<article class="inline_box">
+					<b style="margin: 0 auto;">비용</b><span id="show_money"> 0원</span>
+					<input type="hidden" id="money" name="res_pay"></input>
+				</article>
+				
+				
+				<article>
+					<br> <label for="term" class="term_css"> <input
+						type="checkbox" id="term" name="res_term_is" required="required"> <span>개인정보 이용
+							동의<strong>(필수)</strong>
+					</span>
+					</label>
+					<button type="button" class="btn" onclick="term_text_toggle()">더보기</button>		
+					<input type="hidden" id="reciveBookData" name="bookDate">
+					<br>
+					<div class="term_text" style="height: 100px; overflow: auto; display: none;">
+						여러분을 환영합니다. amigo 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 amigo
+						서비스의 이용과 관련하여 amigo 서비스를 제공하는 amigo 주식회사(이하 ‘amigo’)와 이를 이용하는 amigo 서비스
+						회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 amigo 서비스 이용에 도움이 될 수 있는 유익한
+						정보를 포함하고 있습니다. amigo 서비스를 이용하시거나 amig 펫시터 서비스를 예약하실 경우 여러분은 본 약관 및 관련
+						운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.</div>
+					<br>
+				</article>
+				<article style="display: flex; justify-content: space-between;">
+					<button class="btn btn-primary ctn_btn" onclick="history.back(-1)">이전</button>
+					<button type="submit" class="btn btn-primary ctn_btn">확인</button>
+				</article>
+			</form>
 
 
 
 
-
+		</section>
 	</div>	
 
 	<%@include file="/includes/footer.jsp"%>

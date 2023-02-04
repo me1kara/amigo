@@ -6,56 +6,33 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%
+	UserVO user = (UserVO) session.getAttribute("user");
+	int index = Integer.parseInt(request.getParameter("index"));
+	int user_no = user.getUser_no();
+	
+	boolean check = false;
+	check = (Boolean)request.getAttribute("checkRoom");
+	
+	if (!check) {
+	%>
+	<script>alert('잘못된 접근입니다!'); history.go(-3);</script>
+	<%
+	}
+	List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
-
-<%
-UserVO user = (UserVO) session.getAttribute("user");
-int index = Integer.parseInt(request.getParameter("index"));
-int user_no = user.getUser_no();
-
-boolean check = false;
-
-/*
-	if((int)request.getAttribute("idCheck")>0){
-		index = (int)request.getAttribute("idCheck");
-	     System.out.println(index+"로그인성공!");
-	     
-	}else{
-		System.out.println(index+"로그인실패!");
-	}
-*/
-
-check = (Boolean)request.getAttribute("checkRoom");
-
-if (!check) {
-%>
-<script>alert('잘못된 접근입니다!'); history.go(-3);</script>
-<%
-}
-List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
-%>
-
-
-
-
-
-
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 <style>
 .container {
 	width: 500px;
@@ -66,82 +43,18 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 	padding: 15px;
 	overflow: auto;
 }
-
-.page-header{
-	margin:20px 0 20px 0;
-	font-family:Jalnan;"
+.chat_right{
+	width:170px;
+	overflow-wrap: break-word;
+	overflow-x:hidden;
+	text-align: right;
 }
-.chat-body {
-      display: block;
-      margin: 10px 30px 0 0;
-      overflow: hidden
-  }
-  
-  .chat-body:first-child {
-      margin-top: 0
-  }
-  
-  .chat-content {
-      position: relative;
-      display: block;
-      float: right;
-      padding: 8px 15px;
-      margin: 0 20px 10px 0;
-      clear: both;
-      color: #fff;
-      background-color: #62a8ea;
-      border-radius: 4px;
-          -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
-      box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
-  }
-  
-  .chat-content:before {
-      position: absolute;
-      top: 10px;
-      right: -10px;
-      width: 0;
-      height: 0;
-      content: '';
-      border: 5px solid transparent;
-      border-left-color: #62a8ea
-  }
-  
-  .chat-content>p:last-child {
-      margin-bottom: 0
-  }
-  
-  .chat-content+.chat-content:before {
-      border-color: transparent
-  }
-  
-  .chat-left .chat-body {
-      margin-right: 0;
-      margin-left: 30px
-  }
-  
-  .chat-left .chat-content {
-      float: left;
-      margin: 0 0 10px 20px;
-      color: #76838f;
-      background-color: #dfe9ef
-  }
-  
-  .chat-left .chat-content:before {
-      right: auto;
-      left: -10px;
-      border-right-color: #dfe9ef;
-      border-left-color: transparent
-  }
-  
-  .chat-left .chat-content+.chat-content:before {
-      border-color: transparent
-  }
-  
-  .chat-left .chat-time {
-      color: #a3afb7
-  }
-  
-
+.chat_left{
+	width:170px;
+	overflow-wrap: break-word;
+	overflow-x:hidden;
+	text-align: left;
+}
 </style>
 <script>
 		$(document).ready(function(){
@@ -151,13 +64,13 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  function previewFile() {
 		  //var preview = document.getElementById('preimg');
 		  var preview = $('#msgTd');
-		  console.log(document.querySelector('input[type=file]'));
 		  var file = document.querySelector('input[type=file]').files[0];
-		  var reader = new FileReader();	
+		  var reader = new FileReader();
+		
 		  reader.addEventListener(
 		    'load',
 		    function () {
-		      preview.html("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
+		      preview.append("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
 		      preview.append("<button class='btn btn-danger preview_img_del' onclick='preview_del()'>이미지삭제</button>");
 		      $('#msg').val('');
 		      $('#msg').hide();
@@ -170,6 +83,9 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
 		}
 		
   	 	function imgPop(url){
+  	 		
+  	 	  window.open("URL", "팝업이름", "팝업 옵션");
+  	 	  console.log('확인용');
   		  var img=new Image();
   		  img.src=url;
   		  var img_width=img.width;
@@ -179,117 +95,79 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   		  var OpenWindow=window.open('','_blank', 'width='+img_width+', height='+img_height+', menubars=no, scrollbars=auto');
   		  OpenWindow.document.write("<style>body{margin:0px;}</style><img src='"+url+"' width='"+win_width+"'>");
   		 }
-  	  	
-  	  
-
 	</script>
 </head>
-
-<link rel="stylesheet" href=
-"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
-</link>
-
 <body>
 	<c:set var="user" value="<%=user%>" />
+	<%@include file="/includes/header.jsp" %>
 	<div class="container">
-		<h2 class="page-header">채팅방</h2>
-
-		  <body ng-app="elastichat">
-    	<ion-nav-bar class="bar-positive" no-tap-scroll="false">
-      	<ion-nav-back-button class="button-icon ion-arrow-left-c">
-     	 </ion-nav-back-button>
-   		 </ion-nav-bar>
-		<table class="table table-bordered" style="background: #81DAF5;">
-
-			<tr class="table-borderless">
-
-				<td colspan="6">
-					<ul id="list" style="list-style: none;">
-						<c:forEach var="chat" items="<%=chatList%>">
-							<c:choose>
-								<c:when test="${chat.getUser_nick()!=user.getUser_nick() }">
+		<section>
+			<article style="width:450px; margin: 0 auto;">
+				<h1 class="page-header">채팅방</h1>
+				<table class="table table-bordered" style="background: #81DAF5;">
+					<tr class="table-borderless" style="border: none;">
+						<td colspan="6">
+							<ul id="list" style="list-style: none;">
+								<c:forEach var="chat" items="<%=chatList%>">
 									<c:choose>
-										<c:when test="${chat.getFile()==null}">
-										<!-- 상대방 말풍선 -->
-										<div class="chat chat-left">
-										<span class="user-nickName" style="font-size:15px;">${chat.getUser_nick() }</span>
-										<div class="chat-body">
-										<div class="chat-content"> 
-											<li style="margin-bottom: 3px; clear: both;"
-												id="chat_no_${chat.getChat_no() }">
-												 ${chat.getContent()} 
-											</li>
-											<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
-											</div>
-										</div>
-										</div>
-										
-										</c:when>
-										<c:when test="${chat.getFile()!=null}">
-										<div class="chat chat-left">
-										<span class="user-nickName" style="font-size:15px;">${chat.getUser_nick() }</span>
-										<div class="chat-body">
-										<div class="chat-content"> 
-											<li style="margin-bottom: 3px; overflow: hidden; clear: both;"
-												id="chat_no_${chat.getChat_no() }" >
-												<span ondblclick="imgPop('/img/${chat.getFile() }')">
-
-												<img src="/img/${chat.getFile() }" width="200px" height="200px">
-												</span>
+									<c:when test="${chat.getUser_nick()!=user.getUser_nick() }">
+										<c:choose>
+											<c:when test="${chat.getFile()==null}">
 												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
-												</div>
-												</div>
-												</div>
-											</li>
-										</c:when>
+												<li class="chat_left" style="margin-bottom: 3px; clear: both;"
+													id="chat_no_${chat.getChat_no() }">
+													[${chat.getUser_nick() }] ${chat.getContent()} 
+												</li>
+											</c:when>
+											<c:when test="${chat.getFile()!=null}">
+												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
+												<li style="margin-bottom: 3px; overflow: hidden; clear: both;"
+													id="chat_no_${chat.getChat_no() }" >
+													[${chat.getUser_nick() }]
+													<span ondblclick="imgPop('/img/${chat.getFile() }')">
+													<img src="/img/${chat.getFile() }" width="200px" height="200px">
+													</span>
+												</li>
+											</c:when>
+										</c:choose>
+									</c:when>
+									<c:when test="${chat.getUser_nick()==user.getUser_nick() }">
+										<c:choose>
+											<c:when test="${chat.getFile()==null}">
+												<li class="chat_right" style="margin-bottom: 3px; float: right;"
+													id="chat_no_${chat.getChat_no() }">
+													<span class="chat_right"onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()">${chat.getContent()}</span>
+												</li>
+											</c:when>
+											<c:when test="${chat.getFile()!=null}">
+												<li style="margin-bottom: 3px; float: right;"
+													id="chat_no_${chat.getChat_no() }">
+													<span class="chat_right" style="overflow: hedden;" onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" ondblclick="imgPop('/img/${chat.getFile() }')">
+													<img src="/img/${chat.getFile() }" width="200px" height="200px"></span>
+												</li>
+											</c:when>
+										</c:choose>
+										<li style="clear: both;"></li>
+									</c:when>
 									</c:choose>
-								</c:when>
-								<c:when test="${chat.getUser_nick()==user.getUser_nick() }">
-									<c:choose>
-										<c:when test="${chat.getFile()==null}">
-										<div class="chat-body">
-										<div class="chat-content"> 
-											<li style="margin-bottom: 3px; float: right;"
-												id="chat_no_${chat.getChat_no() }">
-												<span onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()">${chat.getContent()}</span>
-											</li>
-											</div>
-											</div>
-										</c:when>
-										<c:when test="${chat.getFile()!=null}">
-										<div class="chat-body">
-										<div class="chat-content"> 
-											<li style="margin-bottom: 3px; float: right;"
-												id="chat_no_${chat.getChat_no() }">
-												<span style="overflow: hedden;" onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" onclick="imgPop('/img/${chat.getFile() }')">
-												<img src="/img/${chat.getFile() }" width="200px" height="200px"></span>
-											</li>
-											</div>
-											</div>
-										</c:when>
-									</c:choose>
-									<li style="clear: both;"></li>
-								</c:when>
-							</c:choose>
-
-
-
-						</c:forEach>
-					</ul>
-				</td>
-			</tr>
-			<tr class="table-borderless">
-				<td colspan="5" id="msgTd" scroll=auto style="width: 376.5px; height:62px; overflow-x:hidden;"><textarea style="width: 100%;" type="text" name="msg" id="msg"
-					placeholder="대화 내용을 입력하세요." class="form-control"></textarea>
-					</td>
-				<td colspan="1" style="text-align: rigth;"><button
-						class="btn btn-success" style="width: 100px; height:62px;" id="chat_submit_btn">보내기</button></td>
-			</tr>
-			<tr>
-				<th><input type="file" id="fileUpload" onchange="previewFile()"></th>
-			</tr>
-		</table>
-
+								</c:forEach>
+							</ul>
+						</td>
+					</tr>
+					
+					<tr class="table-borderless" style="border: none;">
+						<td colspan="5" id="msgTd" scroll=auto style="width: 376.5px; height:62px; overflow-x:hidden;"><textarea style="width: 100%;" type="text" name="msg" id="msg"
+							placeholder="대화 내용을 입력하세요." class="form-control"></textarea>
+							<label for="fileUpload" style="position: relative; bottom: 25px; left:5px;"><i class="bi bi-card-image"></i>
+</label>
+							</td>
+						<td colspan="1" style="text-align: rigth;"><button
+								class="btn btn-success" style="width: 100px; height:62px;" id="chat_submit_btn">보내기</button></td>
+					</tr>		
+				</table>
+				<input type="file" id="fileUpload" onchange="previewFile()" style="display: none;">
+			</article>
+		</section>
 	</div>
 	<script>
 //채팅 서버 주소
@@ -357,27 +235,29 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  			let type;
   	  			
   	  			
-  	  			if(jd.no=="4"){
-  	  				let delete_no = jd.chatNo;	
-  	  				roomIndex = jd.roomIndex;			
-  	  				console.log(index+":"+roomIndex);
-  			
-  	  				if(parseInt(roomIndex)==index){
-  	  					$('#chat_no_'+delete_no).remove();
-	  				}
-  	  					
-  	  			}else if(jd.no=="1"){
-  	  			    no = jd.no;
-  	  			    user = jd.userName;
-  	  			    roomIndex = jd.index;
-  	  			}else if(jd.no=="2"){
-  	  				no = jd.no;
-  	  				user = jd.userName;
-  	  				roomIndex = jd.roomIndex;			
-  	  				chat_no = jd.chatNo;
-  	  				type= jd.type;
-  	  			}
+  	  			switch(jd.no){
+  	  				case "1" : 
+	  	  				no = jd.no;
+	  	  			    user = jd.userName;
+	  	  			    roomIndex = jd.index;
+	  	  			    break; 
+  	  				case "2" : 
+  	  	  				no = jd.no;
+  	  	  				user = jd.userName;
+  	  	  				roomIndex = jd.roomIndex;			
+  	  	  				chat_no = jd.chatNo;
+  	  	  				type= jd.type;
+  	  					break;
+  	  				case "4":
+  	  	  				let delete_no = jd.chatNo;	
+  	  	  				roomIndex = jd.roomIndex;			
+  	  	  				console.log(index+":"+roomIndex);
   	  			
+  	  	  				if(parseInt(roomIndex)==index){
+  	  	  					$('#chat_no_'+delete_no).remove();
+  		  				}
+  	  	  				break;	
+  	  			}
   	  			console.log('인덱스:'+index+'룸인덱스:'+roomIndex);		
   	  			if (no == '1') {
   	  				if(parseInt(roomIndex)==index){
@@ -400,13 +280,11 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  			}else if(jd.type=='file'){
   	  				let fileName = jd.fileName;
   	  				console.log(fileName);
-  	  				if(parseInt(roomIndex)==index){
-		  				if(user=='<%=user.getUser_nick()%>') {
-	  	  					printImageMe(fileName, chat_no);
-	  	  				}else{
-	  	  					printImage(user, fileName, chat_no);
-	  	  						
-	  	  				}
+	  				if(user=='<%=user.getUser_nick()%>') {
+  	  					printImageMe(fileName, chat_no);
+  	  				}else{
+  	  					printImage(user, fileName, chat_no);
+  	  						
   	  				}
   	  			}
   	  			else if (no == '3') {
@@ -444,10 +322,10 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
     	    	
     	    	let realFile ="/img/"+fileName;
     	    	console.log(realFile);
+    	    	temp += ' <span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
     	    	temp += '<li style="margin-bottom:3px; clear: both;" id="chat_no_'+chat_no+'">';
     	    	temp += '[' + user + '] ';
-    	   	  	temp += '<img width="200px" height="200px" src='+realFile+' onclick="imgPop('+"'"+realFile+"'"+')">';
-    	   	  	temp += ' <span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
+    	   	  	temp += '<img width="200px" height="200px" src='+realFile+' ondblclick="imgPop('+"'"+realFile+"'"+')">';
     	   	  	temp += '</li>';
     	   	  			
     	    	$('#list').append(temp);
@@ -460,7 +338,7 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  	  	let temp = '';
   	  	
   	  	  	temp += '<li style="margin-bottom:3px; float:right;" id="chat_no_'+chat_no+'">';
-  	  		temp += '<span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" onclick="imgPop('+"'"+realFile+"'"+')"><img width="200px" height="200px" src=' + realFile + '><span>';
+  	  		temp += '<span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" ondblclick="imgPop('+"'"+realFile+"'"+')"><img width="200px" height="200px" src=' + realFile + '><span>';
   	  	  	temp += '</li>';
   	  	  	temp += '<li style="clear: both;"></li';
   	  	  
@@ -472,13 +350,11 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  	  // 메세지 전송 및 아이디
   	  	  function print(user, txt, chat_no) {
   	  	  	let temp = '';
-  	  	
-  	  	  	temp += '<li style="margin-bottom:3px; clear: both;" id="chat_no_'+chat_no+'">';
+  	  		temp += '<span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
+  	  	  	temp += '<li class="chat_left" style="margin-bottom:3px; clear: both;" id="chat_no_'+chat_no+'">';
   	  	  	temp += '[' + user + '] ';
   	  	  	temp += txt;
-  	  	  	temp += ' <span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
-  	  	  	temp += '</li>';
-  	  	  			
+  	  	  	temp += '</li>';		
   	  	  	$('#list').append(temp);
   	  	  	$('#list').scrollTop($('#list').prop('scrollHeight'));
   	  	  }
@@ -486,7 +362,7 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  		  	
   	  		  	console.log('확인용숫자'+chat_no);
     	  	  	let temp = '';
-    	  	  	temp += '<li style="margin-bottom:3px; float:right;" id="chat_no_'+chat_no+'">';
+    	  	  	temp += '<li class="chat_right" style="margin-bottom:3px; float:right;" id="chat_no_'+chat_no+'">';
     	  	  	temp += '<span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()">'+txt+'</span>';
     	  	  	temp += '</li>';
     	  	  	temp += '<li style="clear: both;"></li';
@@ -533,9 +409,9 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   	  	  	}
   	  	  	);
   	  	  
-  	  	  $('#msg').keydown(function() {
-    	  	  	if (event.keyCode == 13) {	
-      	  		  	console.log('입장확인');
+  	  	  $('#msg').keydown(function(e) {
+    	  	  	if (event.keyCode == 13) {
+      	  		  	console.log('엔터');
       	  		  	let message = $('#msg').val();
       	  			let fileVal = $('#fileUpload').val();
       	  			
@@ -544,11 +420,12 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
       	  			}if(message!=''){
       	  				console.log(message);
       	  				send_text();
-      	  			} 	  		
+      	  			}
       	  	  		//printMe($('#msg').val()); //본인 대화창에
-      	  	    	preview_del();
       	  	    	$('#msg').val('');
-      	  	  		$('#msg').focus();
+      	  	  		e.preventDefault();
+      	  	    	preview_del();	
+      	  	    	$('#msg').focus();
     	  	  	}
     	  });
   	  	  
