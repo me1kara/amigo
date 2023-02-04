@@ -15,7 +15,7 @@
 <meta charset="UTF-8">
 <title>게시판01_유저커뮤니티</title>
 <!-- 
-			사용시 에러발생 
+         사용시 에러발생 
    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
@@ -52,7 +52,7 @@
       
       .udb-header-menu {
       font-family: "Jalnan";
-      	padding:15px;	
+         padding:15px;   
       }
       
       .ubd-header-title{
@@ -82,76 +82,76 @@
 </link>
 
 
-	<div class="container" align="left">
-		<div class="mt-4 p-5">
-			<p class="ubd-header-title">유저 커뮤니티</p>
-		</div> 
-		<hr/>
-					
-			<!-- 상단 메뉴 -->
-	   		<div class="row justify-content-between">
-	   			<div class="col-auto">
-					<a class="ubd-header-menu" href="user_board_list.do">전체글</a>&nbsp;&nbsp;
-	   				<a class="ubd-header-menu" href="user_board_list_like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a>&nbsp;&nbsp;
-	   				<a class="ubd-header-menu" href="">펫시터커뮤니티</a>
-	   			</div>
-	   			   	<div class="col-auto">
-					<select class="form-select" id="searchCategory" name="searchCategory" onchange="chageSelect()">
-				    	<option value="말머리">말머리</option>							
-				    	<option value="자랑글">자랑글</option>						
-				    	<option value="자유글">자유글</option>							
-				    	<option value="질문">질문</option>										
-					</select>
-	   			  </div>
-	   		
-	
-					
-					<script type="text/javascript">
-					
-					function chageSelect(){ 
-						
-						var selectList = document.getElementById("searchCategory")
-						
-						if(selectList.options[selectList.selectedIndex].value == "말머리"){
-							location.href = "user_board_list.do?";
-						}
-						if(selectList.options[selectList.selectedIndex].value == "자랑글"){
-							location.href = "user_board_cate.do?ubd_cate=자랑글";
-						}
-						if(selectList.options[selectList.selectedIndex].value == "자유글"){
-							location.href = "user_board_cate.do?ubd_cate=자유글";
-						}
-						if(selectList.options[selectList.selectedIndex].value == "질문"){
-							location.href = "user_board_cate.do?ubd_cate=질문";
-						}
-					}
-					</script>			
-				
-			</div>
+   <div class="container col-md-6" align="left">
+      <div class="mt-4 p-5">
+         <p class="ubd-header-title">유저 커뮤니티</p>
+      </div> 
+      <hr/>
+               
+         <!-- 상단 메뉴 -->
+            <div class="row justify-content-between">
+               <div class="col-auto">
+               <a class="ubd-header-menu" href="user_board_list.do">전체글</a>&nbsp;&nbsp;
+                  <a class="ubd-header-menu" href="user_board_list_like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a>&nbsp;&nbsp;
+                  <a class="ubd-header-menu" href="">펫시터커뮤니티</a>
+               </div>
+                     <div class="col-auto">
+               <select class="form-select" id="searchCategory" name="searchCategory" onchange="chageSelect()">
+                   <option value="말머리">말머리</option>                     
+                   <option value="자랑글">자랑글</option>                  
+                   <option value="자유글">자유글</option>                     
+                   <option value="질문">질문</option>                              
+               </select>
+                 </div>
+            
+   
+               
+               <script type="text/javascript">
+               
+               function chageSelect(){ 
+                  
+                  var selectList = document.getElementById("searchCategory")
+                  
+                  if(selectList.options[selectList.selectedIndex].value == "말머리"){
+                     location.href = "user_board_list.do?";
+                  }
+                  if(selectList.options[selectList.selectedIndex].value == "자랑글"){
+                     location.href = "user_board_cate.do?ubd_cate=자랑글";
+                  }
+                  if(selectList.options[selectList.selectedIndex].value == "자유글"){
+                     location.href = "user_board_cate.do?ubd_cate=자유글";
+                  }
+                  if(selectList.options[selectList.selectedIndex].value == "질문"){
+                     location.href = "user_board_cate.do?ubd_cate=질문";
+                  }
+               }
+               </script>         
+            
+         </div>
 
-		<div class="container">					
-			<c:if test="${ boardList.isEmpty() }">
-				<h6><p>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</p></h6>
-			</c:if>
-					<c:forEach  var="board" items="${ boardList }">
-                    <div class="container">
+      <div class="container">               
+         <c:if test="${ boardList.isEmpty() }">
+            <h6><p>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</p></h6>
+         </c:if>
+               <c:forEach  var="board" items="${ boardList }">
+                    <div class="container" style="cursor: pointer;"  onclick="location.href='user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
+                &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+                &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc';">
             <!-- Forum List -->
             <!-- div를 눌러서 접속 될수 있게 만듦 -->
-            <div class="inner-main-body p-2 p-sm-3 forum-content show"  style="cursor: pointer;" onclick="location.href='ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
-                &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-                &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}'">
+            <div class="inner-main-body p-2 p-sm-3 forum-content show" >
               <div class="card mb-2">
                 <div class="card-body p-2 p-sm-3">
                   <div class="media forum-item">
                   <!-- user profile 아직 미완성이라 여기 완성되면 다른 리스트에도 복붙!!-->
                    <c:choose>
-			          	<c:when test="${board.getUser_photo()!=null and board.getUser_photo()!=''}">
-			          	<img src="/img/${board.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
-			            </c:when>
-			            <c:otherwise>
-			            <img src="resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>
-			            </c:otherwise>
-          			</c:choose>
+                      <c:when test="${board.getUser_photo()!=null and board.getUser_photo()!=''}">
+                      <img src="/img/${board.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
+                     </c:when>
+                     <c:otherwise>
+                     <img src="resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>
+                     </c:otherwise>
+                   </c:choose>
                     <!-- user profile/ -->
                     <div class="media-body">
                       <!-- 말머리 -->
@@ -172,74 +172,74 @@
                         <span class="text-secondary font-weight-bold">
                         <fmt:formatDate value="${board.ubd_date}" pattern="yyyy-MM-dd"/></span>
                         &nbsp;<span><i class="fa-solid fa-dog"></i>${board.getDog_kind()}</span>
-                   		<!-- 작성일자/ -->   	
+                         <!-- 작성일자/ -->      
                       </p>
                     </div>
                     <div class="text-muted small text-center align-self-center">
                       <span class=""><i class="fa fa-eye"></i>${ board.ubd_cnt }</span>&nbsp;&nbsp;
                       <span><i class="fa fa-heart" aria-hidden="true"></i>${ board.getLike_cnt() }</span>
-                    	</div>
-                 		</div>
-                		</div>
-              			</div>
- 			        </div>
- 			    </div>
- 			</c:forEach>
- 			</div>
-		<div class="row align-items-start mt-3">
-			<ul class="col pagination justify-content-center">
-			
-				<c:set var="cp" value="${searchVO.getCurPage()}"/>
-				<c:set var="rp" value="${searchVO.getRowSizePerPage()}"/>
-				<c:set var="fp" value="${searchVO.getFirstPage()}"/>
-				<c:set var="lp" value="${searchVO.getLastPage()}"/>
-				<c:set var="ps" value="${searchVO.getPageSize()}"/>
-				<c:set var="tp" value="${searchVO.getTotalPageCount()}"/>
-				<c:set var="sc" value="${searchVO.getSearchCategory()}"/>
-				<c:set var="st" value="${searchVO.getSearchType()}"/>
-				<c:set var="sw" value="${searchVO.getSearchWord()}"/>
-																
-				<c:if test="${ fp != 1 }">
-					<li class="page-item"><a href="user_board_list.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
-					<li class="page-item"><a href="user_board_list.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-backward"></i></a></li>				
-				</c:if>
-			
-				<c:forEach var="page" begin="${fp}" end="${lp}">
-					<li class="page-item ${cp==page ? 'active' : ''}"><a href="user_board_list.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link">${page}</a></li>
-				</c:forEach>
-				
-				<c:if test="${ lp < tp }">
-					<li class="page-item "><a href="user_board_list.do?curPage=${lp+1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-forward"></i></a></li>				
-					<li class="page-item"><a href="user_board_list.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>				
-				</c:if>
-			</ul> <!-- pagination -->	
-	
-		</div> <!-- 페이징 -->
-		
-	
-		<!-- 하단 검색 시스템 -->
-		<form action="user_board_list.do" method="post" >  
-				<div class="col-3 me-1">
-					<select class="form-select" id="searchType" name="searchType">
-				    	<option value="">검색</option>							
-				    	<option value="ubd_title" ${searchVO.getSearchType()=="ubd_title" ? "selected" : "" }>제목</option>							
-				    	<option value="user_nick" ${searchVO.getSearchType()=="user_nick" ? "selected" : ""}>작성자</option>						
-				    	<option value="ubd_cont" ${searchVO.getSearchType()=="ubd_cont" ? "selected" : ""}>글내용</option>						
-					</select>
-				</div>
-				<div class="col-3 me-1">			
-					<input class="form-control me-2" name="searchWord" type="text" placeholder="내용은 입력하세요." />
-				</div>
-				<div class="col-2 btn-group">
-			    	<input type="submit" class="col-1 btn btn-primary me-2" value="검색">
-	        	</div>
-	        	<div class="col-2 btn-group">
-			    <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
-		        </div>
-	     </form>		
-	</div> <!— main  —>
-	    
-	    
+                       </div>
+                       </div>
+                      </div>
+                       </div>
+                  </div>
+              </div>
+          </c:forEach>
+          </div>
+      <div class="row align-items-start mt-3">
+         <ul class="col pagination justify-content-center">
+         
+            <c:set var="cp" value="${searchVO.getCurPage()}"/>
+            <c:set var="rp" value="${searchVO.getRowSizePerPage()}"/>
+            <c:set var="fp" value="${searchVO.getFirstPage()}"/>
+            <c:set var="lp" value="${searchVO.getLastPage()}"/>
+            <c:set var="ps" value="${searchVO.getPageSize()}"/>
+            <c:set var="tp" value="${searchVO.getTotalPageCount()}"/>
+            <c:set var="sc" value="${searchVO.getSearchCategory()}"/>
+            <c:set var="st" value="${searchVO.getSearchType()}"/>
+            <c:set var="sw" value="${searchVO.getSearchWord()}"/>
+                                                
+            <c:if test="${ fp != 1 }">
+               <li class="page-item"><a href="user_board_list.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
+               <li class="page-item"><a href="user_board_list.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-backward"></i></a></li>            
+            </c:if>
+         
+            <c:forEach var="page" begin="${fp}" end="${lp}">
+               <li class="page-item ${cp==page ? 'active' : ''}"><a href="user_board_list.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link">${page}</a></li>
+            </c:forEach>
+            
+            <c:if test="${ lp < tp }">
+               <li class="page-item "><a href="user_board_list.do?curPage=${lp+1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-forward"></i></a></li>            
+               <li class="page-item"><a href="user_board_list.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>            
+            </c:if>
+         </ul> <!-- pagination -->   
+   
+      </div> <!-- 페이징 -->
+      
+   
+      <!-- 하단 검색 시스템 -->
+      <form action="user_board_list.do" method="post" >  
+            <div class="col-3 me-1">
+               <select class="form-select" id="searchType" name="searchType">
+                   <option value="">검색</option>                     
+                   <option value="ubd_title" ${searchVO.getSearchType()=="ubd_title" ? "selected" : "" }>제목</option>                     
+                   <option value="user_nick" ${searchVO.getSearchType()=="user_nick" ? "selected" : ""}>작성자</option>                  
+                   <option value="ubd_cont" ${searchVO.getSearchType()=="ubd_cont" ? "selected" : ""}>글내용</option>                  
+               </select>
+            </div>
+            <div class="col-3 me-1">         
+               <input class="form-control me-2" name="searchWord" type="text" placeholder="내용은 입력하세요." />
+            </div>
+            <div class="col-2 btn-group">
+                <input type="submit" class="col-1 btn btn-primary me-2" value="검색">
+              </div>
+              <div class="col-2 btn-group">
+             <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
+              </div>
+        </form>      
+   </div> <!— main  —>
+       
+       
 <%@include file="/includes/footer.jsp" %>
 </body>
 </html>

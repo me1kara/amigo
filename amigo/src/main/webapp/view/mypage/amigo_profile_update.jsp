@@ -41,7 +41,7 @@
 	            <h3>업데이트</h3>	            
 	         </div>
 
-			
+				
 					<div class="form-group">
 						<label for="dog_name">이름</label>
 						<input type="text" name="dog_name" id="dog_name" class="form-control" value="${dog.getDog_name()}" required>
@@ -104,7 +104,7 @@
 		<!-- dog_no 벨류값 받아서 폼에 기입해야함-->
 		<input class="form-control" type="hidden" name="dog_no" value="${dog.getDog_no()}">
 				    
-				<div class="col-md-6 text-center">           
+				<div class="text-center mb-5">           
 				<button type="submit" class="btn btn-primary text-center">수정완료</button>
 			    </div>
 		</form>

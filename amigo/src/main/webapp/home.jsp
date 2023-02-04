@@ -47,7 +47,7 @@
 		
 		 <!-- 메인 화면-->
     <!-- icon -->
-    <div class="container mb-5">
+    <div class="container col-md-6 mb-5">
     <div class="contaier mt-5 text-center">
       <img
         class="img-responsive"

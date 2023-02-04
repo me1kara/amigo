@@ -25,31 +25,30 @@
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-				
+		<h2> 시터 프로필 정보</h2>
 			<div class="container text-center">
-			<h2> 시터 프로필 정보</h2>
-				<table>
-					<tr>
-	     			 <td>Profile Picture:</td>
-	     			 <td>
-	    			    <c:choose>
-	     			     <c:when test="${not empty sitter.sit_photo}">
-	     			       <img src="${sitter.sit_photo}" alt="Profile Picture"/>
-	     			     </c:when>
-	     			     <c:otherwise>
-	     			       Profile picture not available.
-	     			     </c:otherwise>
-	    			    </c:choose>
-	  			   	 </td>
-	   				</tr>
-			 		   <tr>
-	    			  <td></td>
-	    			  <td>
-	    			    <c:out value="${sitter.user_name}"/> 펫시터
-	     			 </td>
-	  			  </tr>
-				</table>
-				<button class="btn btn-primary"><a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }" style="color: white;">신청하기</a> </button>
+			<table>
+				<tr>
+     			 <td>Profile Picture:</td>
+     			 <td>
+    			    <c:choose>
+     			     <c:when test="${not empty sitter.sit_photo}">
+     			       <img src="${sitter.sit_photo}" alt="Profile Picture"/>
+     			     </c:when>
+     			     <c:otherwise>
+     			       Profile picture not available.
+     			     </c:otherwise>
+    			    </c:choose>
+  			   	 </td>
+   				</tr>
+		 		   <tr>
+    			  <td></td>
+    			  <td>
+    			    <c:out value="${sitter.user_name}"/> 펫시터
+     			 </td>
+  			  </tr>
+			
+			</table>
 			</div>
 	<%@include file="/includes/footer.jsp" %>
 

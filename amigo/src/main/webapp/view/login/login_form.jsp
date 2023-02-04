@@ -25,7 +25,7 @@
     <![endif]-->
 </head>
 <body>
-		<div class="container">
+		<div class="container col-md-6">
 		  <!-- header -->
   	  <div class="container text-center mt-5 mb-5">
       <a class="logo" href="#home.jsp"
