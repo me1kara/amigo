@@ -35,6 +35,7 @@
 			<input name="rowSizePerPage" type="hidden" value="${searchVO.getRowSizePerPage()}"/>
 			<input name="searchType" type="hidden" value="${searchVO.getSearchType()}"/>
 			<input name="searchWord" type="hidden" value="${searchVO.getSearchWord()}"/>
+			<input name="cnt" type="hidden" value="${cnt}"/>
 
 			<div class="input-group mb-3">
 			<!-- 글제목 -->

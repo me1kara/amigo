@@ -91,13 +91,7 @@
 			<p class="ubd-header-title">유저 커뮤니티</p>
 		</div> 
 		<hr/>
-		
-			
-		<form action="user_board_list.do" method="post" id="boardForm">   
-			<input type="hidden" id="curPage" name="curPage" value="${searchVO.getCurPage()}"> 
-			<input type="hidden" id="rowSizePerPage" name="rowSizePerPage" value="${searchVO.getRowSizePerPage()}">
-			
-				
+
 				
 			<!-- 상단 메뉴 -->
 	   		<div class="row justify-content-between">
@@ -173,8 +167,8 @@
                       <!-- 제목 -->
                       <h6>
                       <a class="text-body" style="font-size:25px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
-                      &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=2">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
+                      &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc&cnt=2">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
+
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
@@ -231,7 +225,7 @@
 	
 		<!-- 하단 검색 시스템 -->
 		
-		<form action="user_board_list.do" method="post" id="boardForm">   
+		<form action="user_board_list.do" method="post" >   
 				    	<div class="col-3 me-1">
 					<select class="form-select" id="searchType" name="searchType">
 				    	<option value="">검색</option>							

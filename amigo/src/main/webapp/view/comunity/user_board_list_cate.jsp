@@ -93,12 +93,6 @@
 		<hr/>
 		
 			
-		<form action="user_board_list.do" method="post" id="boardForm">   
-			<input type="hidden" id="curPage" name="curPage" value="${searchVO.getCurPage()}"> 
-			<input type="hidden" id="rowSizePerPage" name="rowSizePerPage" value="${searchVO.getRowSizePerPage()}">
-			
-				
-				
 			<!-- 상단 메뉴 -->
 	   		<div class="row justify-content-between">
 	   			<div class="col-auto">
@@ -173,8 +167,8 @@
                       <!-- 제목 -->
                       <h6>
                       <a class="text-body" style="font-size:25px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
-                      &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=3">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
+                      &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc&cnt=3">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
+
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
