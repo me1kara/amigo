@@ -136,11 +136,11 @@ public class BoardController {
 	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, 
 			                        @RequestParam int ubd_no, HttpServletRequest req, 
 			                        @RequestParam("updateCount_is") String updateCount_is,
-			                        
-			                        ReplyVO replyVO, UserVO userVO) {
+			                        @RequestParam int cnt, ReplyVO replyVO, UserVO userVO) {
 			
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
+		model.addAttribute("cnt", cnt);
 		
 		// 조회수 올리는 로직
 		if(updateCount_is.equals("abc")) { 
@@ -167,14 +167,16 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value= "/user_board_update.do", method=RequestMethod.GET)
-	public String user_board_update_form(Model model, BoardVO board, SearchVO searchVO) {
+	public String user_board_update_form(Model model, BoardVO board, SearchVO searchVO, @RequestParam int cnt) {
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
+		model.addAttribute("cnt", cnt);
+		
 		return "view/comunity/user_board_update.jsp";
 	}
 	
 	@RequestMapping(value="/user_board_update.do", method=RequestMethod.POST)
-	public String user_board_update(Model model, BoardVO board, SearchVO searchVO) {	
+	public String user_board_update(Model model, BoardVO board, SearchVO searchVO, @RequestParam int cnt) {	
 		
 		if(board.getUploadFile() != null) {
 		List<MultipartFile> uploadFile = board.getUploadFile(); 
@@ -228,7 +230,7 @@ public class BoardController {
 		boardService.updateBoard(board);
 		model.addAttribute("msg","글이 정상적으로 수정되었습니다.");
 		model.addAttribute("url","user_board_detail.do?&ubd_no="+board.getUbd_no()+"&curPage="+searchVO.getCurPage()+"&rowSizePerPage="+searchVO.getRowSizePerPage()
-							+"&searchType="+searchVO.getSearchType()+"&searchWord="+searchVO.getSearchWord()+"&updateCount_is=xyz");
+							+"&searchType="+searchVO.getSearchType()+"&searchWord="+searchVO.getSearchWord()+"&updateCount_is=xyz"+"&cnt="+cnt);
 		return "view/comunity/alert.jsp";
 	}
 	

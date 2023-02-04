@@ -99,7 +99,7 @@
 								<script>
 									function deleteReply(ubd_r_no) {
 									if(confirm("이 댓글을 삭제하겠습니까?")) {
-									self.location.href = "deleteReply.do?ubd_r_no="+ubd_r_no+"&ubd_no=${reply.ubd_no}&user_no=${reply.user_no}";
+									self.location.href = "deleteReply.do?ubd_r_no="+ubd_r_no+"&ubd_no=${reply.ubd_no}&user_no=${reply.user_no}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=${cnt}";
 										}
 									}
 								</script>
@@ -113,7 +113,7 @@
 		     				</c:if>
 		     				
 		     				<c:if test="${reply.user_no == user.getUser_no()}">
-		     					<a href="updateReply.do?ubd_r_no=${reply.ubd_r_no}&user_no=${reply.user_no}">수정</a>
+		     					<a href="updateReply.do?ubd_r_no=${reply.ubd_r_no}&user_no=${reply.user_no}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=${cnt}">수정</a>
 		     				</c:if>	
 
 								<P>${reply.ubd_r_content}</P>
@@ -127,31 +127,57 @@
 			
 			
 			<div>
-				<form action="insertReply.do" method="POST">
+				<form action="insertReply.do" method="POST" >
 				
 				<p>
 					<!-- cols 30에서 50으로 수정 -->
 					<textarea rows="3" cols="50" name="ubd_r_content" placeholder="댓글을 입력하세요"></textarea>
 				</p>
 				<p>
-					<button type="submit">댓글 작성</button>
+					<button type="submit" onclick="reload();">댓글 작성</button>
 				</p>
 					<input type="hidden" name="ubd_no" value="${board.getUbd_no()}"/>
-					<input type="hidden" name="user_no" value="${user.getUser_no()}"/>	
+					<input type="hidden" name="user_no" value="${user.getUser_no()}"/>		
+					<input type="hidden" name="searchType" value="${searchVO.getSearchType()}"/>	
+					<input type="hidden" name="searchWord" value="${searchVO.getSearchWord()}"/>	
+					<input type="hidden" name="curPage" value="${searchVO.getCurPage()}"/>	
+					<input type="hidden" name="rowSizePerPage" value="${searchVO.getRowSizePerPage()}"/>	
+					<input type="hidden" name="cnt" value="${cnt}"/>	
 
 				</form>
 			</div>
+			<script type="text/javascript">
+			function reload() {
+				location.reload();
+			}
+			</script>
 			
 			
 			<div class="container" align="center">
 			
 				<c:if test="${board.getUser_no() == user.getUser_no()}">
 				<a href="user_board_update.do?ubd_no=${board.getUbd_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-warning mt-3">수정</a>
+				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=${cnt}" class="btn btn-warning mt-3">수정</a>
 				</c:if>
 				
+				<c:choose>
 				
-				<a href="user_board_list.do" class="btn btn-primary mt-3">목록</a>
+				<c:when test="${cnt==1}">
+				<a href="user_board_list.do?&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-3">목록</a>
+				</c:when>
+				
+				<c:when test="${cnt==2}">
+				<a href="user_board_list_like.do?&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-3">목록</a>
+				</c:when>
+				
+				<c:when test="${cnt==3}">
+				<a href="user_board_cate.do?&ubd_cate=${board.getUbd_cate()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-3">목록</a>
+				</c:when>
+				
+				</c:choose>
 
 				<c:if test="${board.getUser_no() == user.getUser_no() || user.getUser_type() == 'A'}">
 				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ubddelete"

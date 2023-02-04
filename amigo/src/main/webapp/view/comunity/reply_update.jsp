@@ -19,6 +19,11 @@
 					<input type="hidden" name="ubd_no" value="${reply.getUbd_no()}"/>
 					<input type="hidden" name="user_no" value="${reply.getUser_no()}"/>	
 					<input type="hidden" name="ubd_r_no" value="${reply.getUbd_r_no()}"/>	
+					<input type="hidden" name="searchType" value="${searchVO.getSearchType()}"/>	
+					<input type="hidden" name="searchWord" value="${searchVO.getSearchWord()}"/>	
+					<input type="hidden" name="curPage" value="${searchVO.getCurPage()}"/>	
+					<input type="hidden" name="rowSizePerPage" value="${searchVO.getRowSizePerPage()}"/>	
+					<input type="hidden" name="cnt" value="${cnt}"/>
 				</form>
 </body>
 </html>
