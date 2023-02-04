@@ -15,7 +15,9 @@
 <style>
 	
 	.CsTitleColor {
-		color:rgb(88, 150, 187);
+		color:rgb(87, 160, 227);
+		font-family: "Jalnan";
+        font-size:40px;
 	}
 
 </style>
@@ -28,8 +30,8 @@
 	
 	<%@include file="/includes/header.jsp" %>
 		   <!-- 타이틀 -->
-		   <div class="container">
-<div class="container text-center" id="csHeader">
+ <div class="container">
+<div class="container text-center">
 <div class="CsTitleColor">
     <h1>AM!GO입니다.</h1>
 </div>
@@ -76,14 +78,14 @@
       </div>
     </div>
   </div>
+  <hr/>
   </div>
 <!-- 메뉴내용 end -->
 
-<hr class="pill">
 <!-- 상담 -->
-<div class="form-outline form-white mt-5 mb-5 text-center ">
-  <button type="button" class="btn btn-secondary btn-lg" onclick="#"> 게시판 문의</button>
-  <button type="button" class="btn btn-secondary btn-lg" onclick="#">채팅 문의</button>
+<div class="row justify-content-around mt-5 mb-5 text-center ">
+  <button type="button" class="btn btn-secondary col-3 btn-md" onclick="#">게시판 문의</button>
+  <button type="button" class="btn btn-secondary col-3 btn-md" onclick="#">채팅 문의</button>
 </div>
 
 <!-- 상담 end -->

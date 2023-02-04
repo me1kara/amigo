@@ -64,7 +64,7 @@
 
     <article class="container">
         <div class="page-header">
-            <div class="">
+            <div>
             <h4 class="signup-header">AM!GO에 오신걸 환영합니다!</h4>
             <h4>회원님의 정보를 입력해주세요.</h4>
             </div>
