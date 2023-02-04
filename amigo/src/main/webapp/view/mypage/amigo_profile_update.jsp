@@ -41,7 +41,7 @@
 	            <h3>업데이트</h3>	            
 	         </div>
 
-			
+				
 					<div class="form-group">
 						<label for="dog_name">이름</label>
 						<input type="text" name="dog_name" id="dog_name" class="form-control" value="${dog.getDog_name()}" required>

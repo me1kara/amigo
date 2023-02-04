@@ -70,9 +70,9 @@
       <c:otherwise>
       <div class="container text-center">
       <p style="color:#498dcc; font-weight:bold; font-family: Jalnan; font-size: 35px;">당신의 AM!GO</p>
-      <p></p>
+      <p style="font-family: jalnan; font-size: 20px;">클릭하시면 프로필 수정이 가능합니다.</p>
       </div>
-         <div class="mt-4">
+         <div class="container col-md-6 ">
             <table class="table table-hover table-bordered">
                
                <!-- 수정본  -->
@@ -116,8 +116,8 @@
                     </div>
                  		</div>
                  		<div class="container text-center">
-                 		<button type="button" class="btn btn-danger text-center col-2" data-bs-toggle="modal" data-bs-target="#dogdelete"
-                        data-dog_no="${dog.getDog_no()}" data-dog_image_file="${dog.getDog_image_file()}">삭제</button>
+                 		<button type="button" class="btn btn-danger text-center" data-bs-toggle="modal" data-bs-target="#dogdelete"
+                        data-dog_no="${dog.getDog_no()}" data-dog_image_file="${dog.getDog_image_file()}">삭 제</button>
                 		</div>
                 		</div>
               			</div>
@@ -127,10 +127,10 @@
  			</div>
  			
             </table>
-         </div>
+         
          <!-- 반려동물 추가 -->   
-            <div class="low text-center mb-5 mt-5">
-               <a href="amigo_profile_insert.jsp" class="col-md-2 btn btn-primary">반려동물 추가</a>
+            <div class="text-center mb-5 mt-5">
+               <a href="amigo_profile_insert.jsp" class="btn btn-primary">반려동물 추가</a>
             </div>
        </c:otherwise>
       </c:choose>
@@ -151,6 +151,7 @@
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
                   </div>
                 </div>
+              </div>
               </div>
               </div>
       <!--삭제 modal form script dog_no전달-->     

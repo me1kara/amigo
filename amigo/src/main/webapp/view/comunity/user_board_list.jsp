@@ -82,7 +82,7 @@
 </link>
 
 
-   <div class="container" align="left">
+   <div class="container col-md-6" align="left">
       <div class="mt-4 p-5">
          <p class="ubd-header-title">유저 커뮤니티</p>
       </div> 

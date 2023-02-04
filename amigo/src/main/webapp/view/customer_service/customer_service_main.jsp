@@ -30,7 +30,7 @@
 	
 	<%@include file="/includes/header.jsp" %>
 		   <!-- 타이틀 -->
- <div class="container">
+ <div class="container col-md-6">
 <div class="container text-center">
 <div class="CsTitleColor">
     <h1>AM!GO입니다.</h1>
@@ -79,7 +79,7 @@
     </div>
   </div>
   <hr/>
-  </div>
+  
 <!-- 메뉴내용 end -->
 
 <!-- 상담 -->
@@ -87,7 +87,7 @@
   <button type="button" class="btn btn-secondary col-3 btn-md" onclick="#">게시판 문의</button>
   <button type="button" class="btn btn-secondary col-3 btn-md" onclick="#">채팅 문의</button>
 </div>
-
+</div>
 <!-- 상담 end -->
        <!-- Footer -->
        <footer class="container text-center text-white" style="background-color: rgb(87, 160, 227);">
@@ -103,7 +103,7 @@
         
         <!-- Copyright -->
         <div class="text-center p-3" style="background-color: rgb(87, 160, 227);">
-          © 2022 Copyright:
+          © 2023 Copyright:
           <a class="text-white" href="#">amigo.com</a>
         </div>
         <!-- Copyright -->

@@ -77,7 +77,7 @@
 
  <!-- 약관 동의문서 -->
 <form action="signup.do">
-<div class="container">
+<div class="container col-md-6">
     <div class="welcome">
         <h2>어서오세요</h2>
         <h4>약관동의가 필요해요</h4>

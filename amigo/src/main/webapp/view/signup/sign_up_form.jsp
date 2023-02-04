@@ -69,7 +69,7 @@
             <h4>회원님의 정보를 입력해주세요.</h4>
             </div>
         </div>
-        <div class="container">
+        <div class="container col-md-6">
             <form role="form" action="signup.do" method="post" onSubmit="return checkResult();">
                 <div class="form-group">
                     <label for="user_email" class="sighup-group">이메일주소*</label>
