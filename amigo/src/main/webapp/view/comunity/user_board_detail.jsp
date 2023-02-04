@@ -57,7 +57,7 @@
 			<!-- 추천 -->
 			<span>좋아요 ${board.getLike_cnt()}</span>
 			<!-- 추천 -->
-			<span>견종 : ${board.getDog_kind()}</span>
+			<span>견종 ${board.getDog_kind()}</span>
 			</div>	
 			</div>		
 		</div>		
@@ -161,7 +161,6 @@
 				</c:if>
 				
 				<c:choose>
-				
 				<c:when test="${cnt==1}">
 				<a href="user_board_list.do?&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
 				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-3">목록</a>
@@ -175,8 +174,7 @@
 				<c:when test="${cnt==3}">
 				<a href="user_board_cate.do?&ubd_cate=${board.getUbd_cate()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
 				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-3">목록</a>
-				</c:when>
-				
+				</c:when>	
 				</c:choose>
 
 				<c:if test="${board.getUser_no() == user.getUser_no() || user.getUser_type() == 'A'}">
