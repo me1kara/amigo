@@ -46,7 +46,8 @@ public class ReplyController {
 		redirectAttributes.addAttribute("updateCount_is", "xyz");
 		
 		replyService.deleteReply(reply);
-		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no") + "&user_no=" + req.getParameter("user_no")+"&cnt="+cnt
+		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no") 
+		+ "&user_no=" + req.getParameter("user_no")+"&cnt="+cnt
 		+ "&curPage="+searchVO.getCurPage() + "&rowSizePerPage="+searchVO.getRowSizePerPage()
 		+ "&searchType="+searchVO.getSearchType() + "&searchWord="+ searchVO.getSearchWord();
 	}
@@ -68,7 +69,8 @@ public class ReplyController {
 		redirectAttributes.addAttribute("updateCount_is", "xyz");
 		
 		replyService.updateReply(reply);
-		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no") + "&user_no=" + req.getParameter("user_no")+"&cnt="+cnt
+		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no") 
+				+ "&user_no=" + req.getParameter("user_no")+"&cnt="+cnt
 				+ "&curPage="+searchVO.getCurPage() + "&rowSizePerPage="+searchVO.getRowSizePerPage()
 				+ "&searchType="+searchVO.getSearchType() + "&searchWord="+ searchVO.getSearchWord();
 	}
