@@ -16,15 +16,27 @@
     <script src="js/html5shiv.js"></script>
     <![endif]-->
     <style>
+		.sitter_service{
+			margin: auto 0;
+			padding: 20px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;	
+		}
+		.sitter_item{
+			width: 70%;
+			margin-top: 30px;
+			
+		}
+		
     </style>
 <title>펫시터01_펫시터화면</title>    
 </head>
 <body>
 	<%@include file="/includes/header.jsp" %>
-		
 		<div class="container">		
-			<section>
-				<article>
+			<section class="sitter_service">
+				<article class="sitter_service_photo sitter_item">
 					<h3>펫시터서비스(활동사진)</h3>
 <br>
 					<img src="https://via.placeholder.com/150x100"" alt="돌봄" class="sitt_action_image"/>
@@ -32,7 +44,7 @@
 					<img src="https://via.placeholder.com/150x100"" alt="케어" class="sitt_action_image"/>
 				</article>
 			
-				<article>
+				<article class="sitter_card sitter_item"">
 					<h3>대표펫시터사진들</h3>
 					<div id="demo" class="carousel slide" data-bs-ride="carousel">
 					  <!-- Indicators/dots -->
@@ -73,8 +85,8 @@
 					</div>
 				</article>
 				
-				<article>	
-					<button type="button" class="btn btn-primary"><a href="/amigo/view/book/book_sitter_form.jsp">신청하기</a></button>
+				<article class="service_btn sitter_item"">	
+					<button type="button" class="btn btn-primary" ><a href="/amigo/view/book/book_sitter_form.jsp" style="color: white;">신청하기</a></button>
 				</article>
 			</section>
 		</div>
