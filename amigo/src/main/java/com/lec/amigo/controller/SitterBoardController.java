@@ -7,6 +7,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lec.amigo.common.SearchVO;
@@ -49,31 +50,26 @@ public class SitterBoardController {
 	
 			
 	
-//	@RequestMapping(value= "/user_board_detail.do", method=RequestMethod.GET)
-//	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, 
-//			                        @RequestParam int ubd_no, HttpServletRequest req, 
-//			                        @RequestParam("updateCount_is") String updateCount_is,
-//			                        @RequestParam int cnt, ReplyVO replyVO, UserVO userVO) {
-//			
-//		model.addAttribute("searchVO", searchVO);
-//		model.addAttribute("board", boardService.getBoard(board));
-//		
-//		// 전체글, 인기글, 말머리 구분해서 list 가려고 쓴 변수
-//		model.addAttribute("cnt", cnt);
-//		
-//		// 조회수 올리는 로직
-//		if(updateCount_is.equals("abc")) { 
-//			boardService.updateCount(ubd_no);
-//		}
-//		
-//		// 파일 가져오는 로직
-//		BoardVO boardUser = boardService.getBoard(board);  // 파일명 가져오기 위해 boardUser에 담아줌
-//		if(boardUser.getUbd_file()!=null) {
-//		String[] fileSplit = boardUser.getUbd_file().split(","); // ,를 기준으로 파일명 나눠서 배열에 담음
-//		
-//		model.addAttribute("fileSplit", fileSplit); // jsp 파일에 파일 보냄
-//		} 
-//		
+	@RequestMapping(value= "/sitter_board_detail.do", method=RequestMethod.GET)
+	public String user_board_detail(Model model, SitterBoardVO sboard, SearchVO searchVO, 
+			                        @RequestParam int sbd_no,
+			                        @RequestParam("updateCount_is") String updateCount_is) {
+			
+		model.addAttribute("searchVO", searchVO);
+		model.addAttribute("sboard", sitterboardService.getSitterBoard(sboard));
+		System.out.println(sboard.getSbd_no());
+		System.out.println(sboard.getSbd_cont());
+		System.out.println(sboard.getSbd_title());
+		System.out.println(sboard.getUser_nick());
+		
+		
+		
+		// 조회수 올리는 로직
+		if(updateCount_is.equals("abc")) { 
+			sitterboardService.updateCount(sbd_no);
+		}
+		
+		
 //		// 댓글 가져오는 로직
 //		List<ReplyVO> replyList = null; // 댓글 리스트 가져오기 위해 객체생성
 //		replyList = replyService.getReplyList(replyVO.getUbd_no()); // 게시글 번호에 맞는 댓글 리스트 가져옴
@@ -82,8 +78,8 @@ public class SitterBoardController {
 //		// 이미 좋아요했는지 확인하는 로직
 //		model.addAttribute("findHeart", boardService.findHeart(userVO.getUser_no(), ubd_no));
 //
-//		return "view/comunity/user_board_detail.jsp";
-//	}
+		return "view/comunity/sitter_board_detail.jsp";
+	}
 //	
 //	@RequestMapping(value= "/user_board_update.do", method=RequestMethod.GET)
 //	public String user_board_update_form(Model model, BoardVO board, SearchVO searchVO, @RequestParam int cnt) {

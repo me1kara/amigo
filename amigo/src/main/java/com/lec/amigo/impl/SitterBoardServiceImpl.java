@@ -29,7 +29,7 @@ public class SitterBoardServiceImpl implements SitterBoardService{
 
 	@Override
 	public SitterBoardVO getSitterBoard(SitterBoardVO sboard) {
-		return null;
+		return sitterboardDAO.getSitterBoard(sboard);
 	}
 
 	@Override

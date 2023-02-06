@@ -112,15 +112,15 @@
           			
           		<!-- 
                    <c:choose>
-                      <c:when test="${board.getUser_photo()!=null and board.getUser_photo()!=''}">
-                      <img src="/userimg/${board.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
+                      <c:when test="${sboard.getSit_photo()!=null and sboard.getSit_photo()!=''}">
+                      <img src="/userimg/${sboard.getSit_photo()}" alt="sitterProfile" width="50px" class="mr-3 rounded-circle" />
                       </c:when>
                       
                       <c:otherwise>
                       <img src="resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>
                       </c:otherwise>
                    </c:choose>
-                 -->
+                 --> 
                  
                     <div class="media-body">
                       <!-- 제목 -->

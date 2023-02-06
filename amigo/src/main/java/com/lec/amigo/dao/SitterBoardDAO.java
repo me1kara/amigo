@@ -11,7 +11,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.lec.amigo.common.SearchVO;
+import com.lec.amigo.mapper.BoardRowMapper;
 import com.lec.amigo.mapper.SitterBoardRowMapper;
+import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.SitterBoardVO;
 
 @Repository("sitterboardDAO")
@@ -29,6 +31,8 @@ public class SitterBoardDAO {
 	private String selectSitterBoardListByUserNick = "";
 	private String selectSitterBoardListBySbdCont = "";
 	private String sitterBoardTotalRowCount = "";
+	private String selectBySbdNo = "";
+	private String updateCount = "";
 	
 	@PostConstruct
 	public void getSqlPropeties() {
@@ -37,6 +41,8 @@ public class SitterBoardDAO {
 		selectSitterBoardListByUserNick = environment.getProperty("selectSitterBoardListByUserNick");
 		selectSitterBoardListBySbdCont  = environment.getProperty("selectSitterBoardListBySbdCont");
 		sitterBoardTotalRowCount        = environment.getProperty("sitterBoardTotalRowCount");
+		selectBySbdNo                   = environment.getProperty("selectBySbdNo");
+		updateCount                     = environment.getProperty("updateCount");
 		
 	}
 	
@@ -78,7 +84,14 @@ public class SitterBoardDAO {
 		return jdbcTemplate.queryForObject(sql, Integer.class);
 	} 
 	
+	public SitterBoardVO getSitterBoard(SitterBoardVO sboard) {
+		Object[] args = { sboard.getSbd_no() };		
+		return (SitterBoardVO) jdbcTemplate.queryForObject(selectBySbdNo, args, new SitterBoardRowMapper());
+	}
 	
+	public void updateCount(int sbd_no) {
+		jdbcTemplate.update(updateCount, sbd_no);
+	}
 	
 
 }
