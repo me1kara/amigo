@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.dao.SitterDAO;
 import com.lec.amigo.service.SitterService;
 import com.lec.amigo.vo.SitterVO;
@@ -26,8 +27,14 @@ public class SitterServiceImpl implements SitterService {
 	}
 
 	@Override
-	public List<SitterVO> getSitList(SitterVO svo) {
-		return sitterDAO.getSitList(svo);
+	public List<SitterVO> getSitList(SearchVO searchVO) {
+		return sitterDAO.getSitList(searchVO);
+	}
+	
+	@Override
+	public int getTotalSitRowCount(SearchVO searchVO) {
+		
+		return 0;
 	}
 	
 	@Override
@@ -55,15 +62,20 @@ public class SitterServiceImpl implements SitterService {
 	}
 
 	@Override
-	public void updateTypeU(SitterVO svo) {
+	public void updateTypeU(SitterVO svo, boolean sit_auth_is) {
 		
-		sitterDAO.updateTypeU(svo);
+		sitterDAO.updateTypeU(svo, sit_auth_is);
 		
 	}
 
-	
 
-	
+	@Override
+	public int getCateRowCount(SearchVO searchVO, SitterVO svo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 
 
 

@@ -42,7 +42,7 @@ prefix="c"%>
     <%@include file="/includes/header.jsp" %>
 
     <!-- 마이페이지 시작 -->
-    <div class="container mb-5" align="center" id="myPageTop">
+    <div class="container col-md-6 " align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
         <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
           <li class="list-group-item">
@@ -55,7 +55,14 @@ prefix="c"%>
             class="mypage_link"
             >내 프로필 관리</a
           >
-          <img src="../images/codeit.png" alt="코드잇 이미지" />
+          <c:choose>
+          	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
+          	<img src="/img/${user.getUser_photo()}" alt="userphoto" width="20px" height="20px"/>
+            </c:when>
+            <c:otherwise>
+            <img src="../../resources/img/logo2.png" alt="logo2" width="20px" height="20px"/>
+            </c:otherwise>
+          </c:choose>
         </li>
         <li class="list-group-item">
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>

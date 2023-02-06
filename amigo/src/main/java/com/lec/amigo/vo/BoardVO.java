@@ -18,6 +18,7 @@ public class BoardVO {
 	private String dog_kind;
 	private List<MultipartFile> uploadFile;
 	private String user_nick;
+	private String user_photo;
 	private int like_cnt;
 	private int reply_cnt;
 	
@@ -101,11 +102,21 @@ public class BoardVO {
 	public void setReply_cnt(int reply_cnt) {
 		this.reply_cnt = reply_cnt;
 	}
+	public String getUser_photo() {
+		return user_photo;
+	}
+	public void setUser_photo(String user_photo) {
+		this.user_photo = user_photo;
+	}
 	@Override
 	public String toString() {
-		return "BoardVO [ubd_no=" + ubd_no + ", ubd_title=" + ubd_title + ", ubd_cont=" + ubd_cont + ", ubd_cate="
-				+ ubd_cate + ", user_no=" + user_no + ", dog_kind=" + dog_kind + "]";
+		return "BoardVO [ubd_no=" + ubd_no + ", ubd_title=" + ubd_title + ", ubd_date=" + ubd_date + ", ubd_file="
+				+ ubd_file + ", ubd_cont=" + ubd_cont + ", ubd_cnt=" + ubd_cnt + ", ubd_cate=" + ubd_cate + ", user_no="
+				+ user_no + ", dog_kind=" + dog_kind + ", uploadFile=" + uploadFile + ", user_nick=" + user_nick
+				+ ", user_photo=" + user_photo + ", like_cnt=" + like_cnt + ", reply_cnt=" + reply_cnt + "]";
 	}
+	
+	
 	
 
 }

@@ -77,12 +77,13 @@ public class BoardController {
 			List<BoardVO> boardList = boardService.getBoardList(searchVO);
 			model.addAttribute("searchVO", searchVO);
 			model.addAttribute("boardList", boardList);
+			
 			return "view/comunity/user_board_list.jsp";
 	}
 	
 	
 	// 인기글 목록
-	@RequestMapping("/user_board_list_Like.do")
+	@RequestMapping("/user_board_list_like.do")
 	public String getBoardListLike (Model model, SearchVO searchVO,
 			@RequestParam(defaultValue="1") int curPage,
 			@RequestParam(defaultValue="10") int rowSizePerPage,
@@ -134,13 +135,15 @@ public class BoardController {
 	@RequestMapping(value= "/user_board_detail.do", method=RequestMethod.GET)
 	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, 
 			                        @RequestParam int ubd_no, HttpServletRequest req, 
-			                        ReplyVO replyVO, UserVO userVO) {
+			                        @RequestParam("updateCount_is") String updateCount_is,
+			                        @RequestParam int cnt, ReplyVO replyVO, UserVO userVO) {
 			
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
-
+		model.addAttribute("cnt", cnt);
+		
 		// 조회수 올리는 로직
-		if(req.getAttribute("updateCount_is")==null) { 
+		if(updateCount_is.equals("abc")) { 
 			boardService.updateCount(ubd_no);
 		}
 		
@@ -164,14 +167,16 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value= "/user_board_update.do", method=RequestMethod.GET)
-	public String user_board_update(Model model, BoardVO board, SearchVO searchVO) {
+	public String user_board_update_form(Model model, BoardVO board, SearchVO searchVO, @RequestParam int cnt) {
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
+		model.addAttribute("cnt", cnt);
+		
 		return "view/comunity/user_board_update.jsp";
 	}
 	
 	@RequestMapping(value="/user_board_update.do", method=RequestMethod.POST)
-	public String user_board_update(Model model, BoardVO board) {	
+	public String user_board_update(Model model, BoardVO board, SearchVO searchVO, @RequestParam int cnt) {	
 		
 		if(board.getUploadFile() != null) {
 		List<MultipartFile> uploadFile = board.getUploadFile(); 
@@ -224,7 +229,8 @@ public class BoardController {
 		
 		boardService.updateBoard(board);
 		model.addAttribute("msg","글이 정상적으로 수정되었습니다.");
-		model.addAttribute("url","user_board_list.do");
+		model.addAttribute("url","user_board_detail.do?&ubd_no="+board.getUbd_no()+"&curPage="+searchVO.getCurPage()+"&rowSizePerPage="+searchVO.getRowSizePerPage()
+							+"&searchType="+searchVO.getSearchType()+"&searchWord="+searchVO.getSearchWord()+"&updateCount_is=xyz"+"&cnt="+cnt);
 		return "view/comunity/alert.jsp";
 	}
 	
@@ -303,7 +309,6 @@ public class BoardController {
 	public int heart(@ModelAttribute HeartVO heart) {
 		int data = boardService.insertHeart(heart);
 		return data;
-		
 	}
 	
 }

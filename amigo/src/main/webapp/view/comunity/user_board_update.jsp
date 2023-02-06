@@ -30,7 +30,13 @@
 
 	<div class="container mt-3" align="center">
 		<form action="user_board_update.do" method="post" enctype="multipart/form-data">
-					<input name="user_no" type="hidden" value="${user.user_no}" />
+			<input name="ubd_no" type="hidden" value="${board.ubd_no}" />
+			<input name="curPage" type="hidden" value="${searchVO.getCurPage()}"/>
+			<input name="rowSizePerPage" type="hidden" value="${searchVO.getRowSizePerPage()}"/>
+			<input name="searchType" type="hidden" value="${searchVO.getSearchType()}"/>
+			<input name="searchWord" type="hidden" value="${searchVO.getSearchWord()}"/>
+			<input name="cnt" type="hidden" value="${cnt}"/>
+
 			<div class="input-group mb-3">
 			<!-- 글제목 -->
   			<!--   <span class="insert-font">글제목</span>&nbsp;&nbsp; -->

@@ -32,7 +32,7 @@
        <!-- Profile nav -->
     <!-- user의 프로필 정보를 가져와야합니다. -->
     <form action="updateUser.do" method="post" enctype="multipart/form-data" onSubmit="return checkResult();">
-    <div class="myProfileMainBox">
+    <div class="container col-md-5">
       <div class="container text-center">
           <a class="user-name"> ${ user.getUser_name() } </a> 님
         <!-- 이곳에 유저의 이름이 들어와야합니다. -->
@@ -42,11 +42,20 @@
         <div class="container">
           <div class="picture-container">
             <div class="picture">
-            
-				<img src="/img/${user.getUser_photo()}"
-				 	 class="picture-src"
-				 	 id="wizardPicturePreview"
-				 	 title="">
+            	          <c:choose>
+				          	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
+				          		<img src="/img/${user.getUser_photo()}"
+								 	 class="picture-src"
+								 	 id="wizardPicturePreview"
+								 	 title="">
+				            </c:when>
+				            <c:otherwise>
+				            	<img src="https://lh3.googleusercontent.com/LfmMVU71g-HKXTCP_QWlDOemmWg4Dn1rJjxeEsZKMNaQprgunDTtEuzmcwUBgupKQVTuP0vczT9bH32ywaF7h68mF-osUSBAeM6MxyhvJhG6HKZMTYjgEv3WkWCfLB7czfODidNQPdja99HMb4qhCY1uFS8X0OQOVGeuhdHy8ln7eyr-6MnkCcy64wl6S_S6ep9j7aJIIopZ9wxk7Iqm-gFjmBtg6KJVkBD0IA6BnS-XlIVpbqL5LYi62elCrbDgiaD6Oe8uluucbYeL1i9kgr4c1b_NBSNe6zFwj7vrju4Zdbax-GPHmiuirf2h86eKdRl7A5h8PXGrCDNIYMID-J7_KuHKqaM-I7W5yI00QDpG9x5q5xOQMgCy1bbu3St1paqt9KHrvNS_SCx-QJgBTOIWW6T0DHVlvV_9YF5UZpN7aV5a79xvN1Gdrc7spvSs82v6gta8AJHCgzNSWQw5QUR8EN_-cTPF6S-vifLa2KtRdRAV7q-CQvhMrbBCaEYY73bQcPZFd9XE7HIbHXwXYA=s200-no"
+								 	 class="picture-src"
+								 	 id="wizardPicturePreview"
+								 	 title="">
+				            </c:otherwise>
+				          </c:choose>
 
               <input type="file" name="uploadFile" id="wizard-picture" class="" aria-describedby="uploadFile" aria-label="Upload"/>
             </div>
@@ -59,26 +68,26 @@
 
       <!-- 프로필 상세 -->     
       <!-- 이메일 // 이메일 정보가 가져와져야합니다. -->
-      <label for="userEmail" class="form-label">이메일 아이디</label>
+      <label for="userEmail" class="form-label">&nbsp;이메일 아이디</label>
       <div class="input-group mb-3">
         <input type="email" class="form-control" id="userEmail" name="user_email" value="${ user.getUser_email() }" disabled>
       </div>
       <!-- 이메일 end -->
       <!-- 닉네임 변경 // 유저의 닉네임을 불러와줘야합니다. -->
-      <label for="userNickname" class="form-label">닉네임 변경</label>
+      <label for="userNickname" class="form-label">&nbsp;닉네임 변경</label>
       <div class="input-group mb-3">
         <input type="text" class="form-control" id="userNickname" name="user_nick" value="${ user.getUser_nick() }" onKeyup="checkNick();" check_nick="success">
       </div>
-        <span id="confirmNick"></span><br>
+       <span id="confirmNick"></span>
       <!-- 닉네임 변경 end -->
       <!-- 비밀번호 변경 -->
-      <label for="userPassword" class="form-label">비밀번호 변경</label>
+      <label for="userPassword" class="form-label">&nbsp;비밀번호 변경</label>
       <div class="input-group mb-3">
         <input type="password" class="form-control" id="userPassword" name="user_pw" value="${ user.getUser_pw() }">
       </div>
       <!-- 비밀번호 변경 end -->
       <!-- 후대폰 번호 변경 -->
-      <label for="userPhone" class="form-label">핸드폰 번호</label>
+      <label for="userPhone" class="form-label">&nbsp;핸드폰 번호</label>
       <div class="input-group mb-3">
         <input type="tel" class="form-control" id="phone" name="user_phone" value="${ user.getUser_phone() }">
       </div>
@@ -86,13 +95,14 @@
        <!-- 주소 변경 -->
        <!-- 다음 api 적용예정 -->
 
-           <label for="sample4_roadAddress" class="sighup-group">내 주소</label><br>
+           <label for="sample4_roadAddress" class="sighup-group">&nbsp;내 주소</label><br>
            <div class="input-group mb-3">
                <input type="text" id="sample4_postcode" placeholder="우편번호">
                <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기"><br>
                <input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" value="${ user.getUser_addr() }">
             </div>
-               <br><small>상세주소를 꼭 입력해주세요. 예약 시에 반영됩니다.</small>
+            &nbsp;<span>상세주소를 꼭 입력해주세요. 예약 시에 반영됩니다.</span>
+            
                 
                 
             <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -147,6 +157,7 @@
                 }
             </script>
        
+       
       </div>    
       
       <!-- 주소 변경 end -->
@@ -157,8 +168,12 @@
         <input type="hidden" name="user_email" value="${ user.getUser_email()}"/>
         <input type="hidden" name="user_name" value="${ user.getUser_name()}"/>
         <input type="hidden" name="user_type" value="${ user.getUser_type()}"/>
+        <input type="hidden" name="user_photo" value="${ user.getUser_photo()}"/>
+      </div>
 
   </form>
+
+  
   
 			     <script type="text/javascript">
 			     function checkResult() {
@@ -202,19 +217,19 @@
 				};
 				</script>
     
-    
-    <!-- profile page 종료 -->
-    <!-- Footer -->
-    <footer class="bg-primary text-center text-white" style="background-color: rgb(87, 160, 227);>
+    <footer class="bg-primary text-center text-white" style="background-color: rgb(87, 160, 227);">   
       <!-- Grid container -->
       <!-- Grid container -->
       <!-- Copyright -->
-      <div class="text-center p-3"">
+      <div class="text-center p-3">
         © 2022 Copyright:
         <a class="text-white" href="#">amigo.com</a>
       </div>
       <!-- Copyright -->
     </footer>
+    <!-- profile page 종료 -->
+    <!-- Footer -->
+   
     <!-- Footer 끝 -->
 
    

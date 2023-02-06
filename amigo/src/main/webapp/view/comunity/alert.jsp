@@ -12,7 +12,7 @@
    var msg = "<c:out value='${msg}'/>";
    var url = "<c:out value='${url}'/>";
    alert(msg);
-   location.href=url;
+   location.href=url.replace(/&amp;/gi,'&');
    </script> 
 </body>
 </html>

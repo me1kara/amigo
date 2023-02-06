@@ -31,17 +31,63 @@
   color: black;
   font-family: "Jalnan";
   font-size: 90%;
- }
- 
- .navbar-toggler {
- 	margin-left:20px;
- }
- 
- .main-big-logo {
- width:180px;
-   display: flex;
- justify-content: center;
- }
+  
+}
+
+.navbar-toggler {
+	margin-left:20px;
+	  border: none;
+}
+
+.menu-trigger,
+.menu-trigger span {
+  display: inline-block;
+  transition: all .4s;
+  box-sizing: border-box;
+}
+
+.menu-trigger {
+  position: relative;
+  width: 40px;
+  height: 34px;
+}
+
+.menu-trigger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: gray;
+  border-radius: 4px;
+}
+
+.menu-trigger span:nth-of-type(1) {
+  top: 0;
+}
+
+.menu-trigger span:nth-of-type(2) {
+  top: 15px;
+}
+
+.menu-trigger span:nth-of-type(3) {
+  bottom: 0;
+}
+
+/* type-01 */
+/* 중앙 라인이 고정된 자리에서 투명하게 사라지며 상하라인 회전하며 엑스자 만들기 */
+.menu-trigger.active-1 span:nth-of-type(1) {
+  -webkit-transform: translateY (15px) rotate (-45deg);
+  transform: translateY(15px) rotate(-45deg);
+}
+
+.menu-trigger.active-1 span:nth-of-type(2) {
+  opacity: 0;
+}
+
+.menu-trigger.active-1 span:nth-of-type(3) {
+  -webkit-transform: translateY(-15px) rotate(45deg);
+  transform: translateY(-15px) rotate(45deg);
+}
     </style>
 </head>
 <body>
@@ -57,11 +103,14 @@
         aria-expanded="false"
         aria-label="Toggle navigation">
         <!-- 햄버거 -->
-        <span class="navbar-toggler-icon"></span>
+   <a class="menu-trigger" href="#">
+    <span></span>
+    <span></span>
+    <span></span>
+</a>
         <!-- 햄버거/ -->
       </button>
-      <a class="logo" href="<%=request.getContextPath() %>/view/main.jsp"><img class="main-big-logo" alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
-      /></a>
+      <a class="logo" href="<%=request.getContextPath()%>/main_home.do"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"/></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <div class="hori-selector">
@@ -70,14 +119,14 @@
           </div>
           <hr/>
           <li class="nav-nickName">
-          	<a class="nav-link" hraf="<%=request.getContextPath() %>/my_profile.do">${ user.getUser_nick() }</a>
+          	<a class="nav-link" href="<%=request.getContextPath() %>/my_profile.do">${ user.getUser_nick() }</a>
           </li>
           <hr/>
           <li class="nav-item">
             <a class="nav-link" href="<%=request.getContextPath() %>/view/mypage/my_page_list.jsp">마이페이지</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#"
+            <a class="nav-link" href="/amigo/book_check.do"
               >예약확인</a
             >
           </li>
@@ -104,6 +153,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="/amigo/resources/js/script.js"></script>
-	
+	<script>
+	var burger = $('.menu-trigger');
+
+	burger.each(function(index){
+	  var $this = $(this);
+	  
+	  $this.on('click', function(e){
+	    e.preventDefault();
+	    $(this).toggleClass('active-' + (index+1));
+	  })
+	});
+	</script>
 </body>
 </html>

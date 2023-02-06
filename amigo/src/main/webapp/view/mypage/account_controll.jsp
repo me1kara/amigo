@@ -77,7 +77,7 @@
               <div class="modal-footer">
                 <button
                   type="button"
-                  onclick="location.href='logout.do';"
+                  onclick="location.href='';"
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
