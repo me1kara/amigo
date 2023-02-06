@@ -1,12 +1,18 @@
 package com.lec.amigo.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,9 +21,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.dao.SitterDAO;
 import com.lec.amigo.impl.SitterServiceImpl;
+import com.lec.amigo.service.DogService;
 import com.lec.amigo.service.SitterService;
 import com.lec.amigo.vo.SitPageInfo;
 import com.lec.amigo.vo.SitterVO;
@@ -26,10 +34,21 @@ import com.lec.amigo.vo.UserVO;
 
 
 @Controller
+@PropertySource("classpath:config/uploadpath.properties")
 public class SitterController {
 	
 	@Autowired
 	private SitterServiceImpl sitterService;
+	
+	@Autowired
+	Environment environment;
+	
+	private String uploadFolder = "";
+	
+	@PostConstruct
+	public void getUploadPathPropeties() {
+		uploadFolder = environment.getProperty("uploadFolder");
+	}
 	
 	@RequestMapping("/view/apply/getSitter.do")                    // 유저가 보는 시터정보(승인된시터만 get)
 	public String getSitter(HttpSession sess, Model model, SitterVO svo) {
@@ -49,16 +68,27 @@ public class SitterController {
 	}
 	
 	@PostMapping("/view/apply/sitter_join.do") //펫시터 개인정보가 있어 패킷을 숨겨 전송하고 싶어 post씀
-	public String insertSitter(HttpSession sess, Model model, SitterVO svo) {				// 도메인에 데이터 등을 노출시키지 않으려고.
-		System.out.println("시터등록");
+	public String insertSitter(HttpSession sess, Model model, SitterVO svo) throws IOException {				// 도메인에 데이터 등을 노출시키지 않으려고.
+		
+		MultipartFile uploadFile = svo.getUploadFile();
+		if(!uploadFile.isEmpty()) {
+			String fileName = uploadFile.getOriginalFilename();  // 파일 진짜 이름 가져오기
+			if(fileName != "") {
+				String fileExtension = fileName.substring(fileName.lastIndexOf("."),fileName.length()); // 확장자명 구하기
+				UUID uuid = UUID.randomUUID();
+				String[] uuids = uuid.toString().split("-");
+				fileName = uuids[0] + fileExtension; // 랜덤 글자 생성
+			}
+			uploadFile.transferTo(new File(uploadFolder+fileName));
+			svo.setSit_photo(fileName);
+		}
+		
+		
+		System.out.println("시터등록");				
 		System.out.println(svo.toString());													// VO 에 데이터가 제대로 담겼는지 테스트 해봄
 		sitterService.insertSitter(svo);
 	
-//		
-//	
-//		List<SitterVO> sitList = sitterService.getSitList();
-//		System.out.println("시터 리스트를 가져옵니다");                                 // 기능확인콘솔
-//		model.addAttribute("sitList", sitList);
+
 		return "/view/main.jsp";
 	}
 /*
