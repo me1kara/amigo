@@ -55,7 +55,8 @@
 					 <tbody>
 						<c:forEach var="sit" items="${ sitList }">
 						 <tr>
-								<td align="center">${ sit.getSit_photo()}</td>
+								<td><c:if test="${sit.getSit_photo()!=null and sit.getSit_photo()!=''}">
+								    <img src="/img/${sit.getSit_photo()}" width="100px" height="100px"></c:if></td>
 								<td>${sit.getUser_no()}</td>
 								<td>${sit.getUser_name()}</td>
 								<td>${sit.getSit_no()}</td>
@@ -74,7 +75,7 @@
 										      <c:when test="${ !sit.isSit_auth_is() }">대기</c:when></c:choose></td>
 								
 								<td><a href="updateSitter.do?sit_auth_is=true&user_no=${sit.getUser_no() }" class="btn btn-primary">승인</a></td>
-								<td><a href="deleteSitter.do?user_no=${sit.getUser_no() }" class="btn btn-primary">실격</a></td>		
+								<td><a href="updateTypeU.do?user_no=${sit.getUser_no() }" class="btn btn-primary">실격</a></td>		
 						 </tr>	 
 					   </c:forEach>									
 					</tbody>

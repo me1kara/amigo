@@ -2,6 +2,8 @@ package com.lec.amigo.vo;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class SitterVO {
 
 	// 여러개 쓸수 있을지?  예)  insertSitter(SittereVO svo , UserVO uvo)  이렇게..
@@ -21,6 +23,7 @@ private String sit_intro;
 private String sit_photo;
 private boolean sit_auth_is;
 private String user_type;
+private MultipartFile uploadFile;
 public int getSit_no() {
 	return sit_no;
 }
@@ -111,23 +114,21 @@ public String getUser_type() {
 public void setUser_type(String user_type) {
 	this.user_type = user_type;
 }
+public MultipartFile getUploadFile() {
+	return uploadFile;
+}
+public void setUploadFile(MultipartFile uploadFile) {
+	this.uploadFile = uploadFile;
+}
 @Override
 public String toString() {
 	return "SitterVO [sit_no=" + sit_no + ", user_no=" + user_no + ", user_name=" + user_name + ", sit_gender="
 			+ sit_gender + ", sit_birth=" + sit_birth + ", sit_smoking=" + sit_smoking + ", sit_job=" + sit_job
 			+ ", sit_days=" + sit_days + ", sit_time=" + sit_time + ", sit_exp=" + sit_exp + ", sit_care_exp="
 			+ sit_care_exp + ", sit_intro=" + sit_intro + ", sit_photo=" + sit_photo + ", sit_auth_is=" + sit_auth_is
-			+ ", user_type=" + user_type + "]";
+			+ ", user_type=" + user_type + ", uploadFile=" + uploadFile + "]";
 }
 
 
-
-
-
-
-
-
-
-	
 	
 }
