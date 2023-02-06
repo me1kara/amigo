@@ -24,6 +24,29 @@
 		cursor : pointer;
 		
 	}
+	
+	ul{
+		list-style-type:none;	
+	}
+	
+	#reply_user {
+		color: #189cc4;
+		font-weight: bold;
+	}
+	
+	#reply_form {
+		text-align:center;
+	}
+	
+	textarea {
+		border: solid 1px #1E90FF;
+		border-radius: 5px;
+		}
+	
+	textarea::placeholder {
+		padding : 10px;
+		font-size: 14px;
+	}
 
 </style>
 <title>게시판04_글상세내용~05_글삭제</title>
@@ -71,7 +94,7 @@
 		<a>
 		<c:if test="${board.getUbd_file()!=null and board.getUbd_file()!=''}">
 			<c:forEach items="${fileSplit}" var="file">
-				<img src="/img/${file}" width="300px" height="300px"><br><br>
+				<img src="/boardimg/${file}" width="300px" height="300px"><br><br>
 			</c:forEach>
 		</c:if>
 		</a>
@@ -106,7 +129,7 @@
 					<li>
 						<div>
 							<div>
-							${reply.user_nick} / <fmt:formatDate value="${reply.ubd_r_regdate}" type="date"/>
+							<span id="reply_user">${reply.user_nick}</span> / <fmt:formatDate value="${reply.ubd_r_regdate}" type="date"/>
 							
 							<c:if test="${reply.user_no == user.getUser_no() || user.getUser_type() == 'A'}">
 		     					<a href="#" onclick="deleteReply(${reply.ubd_r_no})">삭제</a>
@@ -126,16 +149,17 @@
 			</div>
 			
 			
-			<div>
+			<div id="reply_form">
 				<form action="insertReply.do" method="POST" >
 				
-				<p>
-					<!-- cols 30에서 50으로 수정 -->
-					<textarea rows="3" cols="50" name="ubd_r_content" placeholder="댓글을 입력하세요"></textarea>
+				
+					<!-- cols 30에서 60으로 수정 -->
+				<p id = "reply_input">
+					<textarea style="margin:0 auto;" rows="2" cols="50" name="ubd_r_content" placeholder="댓글을 입력하세요." required></textarea>		
 				</p>
-				<p>
-					<button type="submit" onclick="reload();">댓글 작성</button>
-				</p>
+					<p><button type="submit" onclick="reload();" class="btn btn-sm btn-secondary col-2" >댓글입력</button></p>
+
+		
 					<input type="hidden" name="ubd_no" value="${board.getUbd_no()}"/>
 					<input type="hidden" name="user_no" value="${user.getUser_no()}"/>		
 					<input type="hidden" name="searchType" value="${searchVO.getSearchType()}"/>	
@@ -153,37 +177,37 @@
 			</script>
 			
 			
-			<div class="container" align="center">
+			<div class="container col-md-5 " align="center">
 			
 				<c:if test="${board.getUser_no() == user.getUser_no()}">
 				<a href="user_board_update.do?ubd_no=${board.getUbd_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=${cnt}" class="btn btn-warning mt-3">수정</a>
+				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=${cnt}" class="btn btn-primary mt-5 mb-5">수정</a>
 				</c:if>
 				
 				<c:choose>
 				<c:when test="${cnt==1}">
 				<a href="user_board_list.do?&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-3">목록</a>
+				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-5 mb-5">목록</a>
 				</c:when>
 				
 				<c:when test="${cnt==2}">
 				<a href="user_board_list_like.do?&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-3">목록</a>
+				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-5 mb-5">목록</a>
 				</c:when>
 				
 				<c:when test="${cnt==3}">
 				<a href="user_board_cate.do?&ubd_cate=${board.getUbd_cate()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-3">목록</a>
+				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-5 mb-5">목록</a>
 				</c:when>	
 				</c:choose>
 
 				<c:if test="${board.getUser_no() == user.getUser_no() || user.getUser_type() == 'A'}">
-				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ubddelete"
+				<button type="button" class="btn btn-danger mt-5 mb-5" data-bs-toggle="modal" data-bs-target="#ubddelete"
 				data-ubd_no="${board.getUbd_no()}" data-ubd_file="${board.getUbd_file()}" 
 				data-cur_page="${searchVO.getCurPage()}" data-rowsize_perpage="${searchVO.getRowSizePerPage()}">삭제</button>
 				</c:if>
 				
-			</div>
+			</div>	
 		
 	</div>
 	

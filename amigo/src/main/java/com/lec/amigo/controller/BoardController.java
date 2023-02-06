@@ -174,6 +174,14 @@ public class BoardController {
 		model.addAttribute("board", boardService.getBoard(board));
 		model.addAttribute("cnt", cnt);
 		
+		// 파일 가져오는 로직
+		BoardVO boardUser = boardService.getBoard(board);  // 파일명 가져오기 위해 boardUser에 담아줌
+			if(boardUser.getUbd_file()!=null) {
+			String[] fileSplit = boardUser.getUbd_file().split(","); // ,를 기준으로 파일명 나눠서 배열에 담음
+							
+			model.addAttribute("fileSplit", fileSplit); // jsp 파일에 파일 보냄
+		}
+		
 		return "view/comunity/user_board_update.jsp";
 	}
 	

@@ -9,6 +9,8 @@
   integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
   crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- far fa icon 불러오기 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"></link>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
@@ -29,7 +31,7 @@
 	<%@include file="/includes/header.jsp" %>
 
 	<div class="container mt-3" align="center">
-		<form action="user_board_update.do" method="post" enctype="multipart/form-data">
+		<form action="user_board_update.do" method="post" enctype="multipart/form-data" onSubmit="return checkResult()">
 			<input name="ubd_no" type="hidden" value="${board.ubd_no}" />
 			<input name="curPage" type="hidden" value="${searchVO.getCurPage()}"/>
 			<input name="rowSizePerPage" type="hidden" value="${searchVO.getRowSizePerPage()}"/>
@@ -43,14 +45,14 @@
   			<!-- 글제목 label로 해서 폼을 둥글게 만들어줌. -->
   			 <label for="ubd_title" class="col-md-1 control-label" style="font-size:18px; font-weight:bold;" >글제목&nbsp;</label>
   			 <div class="col">
-  			 <input type="text" class="form-control" name="ubd_title" id="ubd_title" value="${ board.ubd_title }">
+  			 <input type="text" class="form-control" name="ubd_title" id="ubd_title" value="${ board.getUbd_title() }">
   			 </div>  			 
   			 <!-- 글제목 끝 -->
 			</div>
 			<div class="input-group mb-3">
 			<label for="searchCategory" class="col-md-1 control-label" style="font-size:18px; font-weight:bold;" >말머리&nbsp;</label>
 			 <div class="col-3">
-  			 	<select class="form-select" id="searchCategory" name="ubd_cate" value="${ board.ubd_cate }">							
+  			 	<select class="form-select" id="searchCategory" name="ubd_cate" value="${ board.getUbd_cate() }">							
 				    <option value="자랑글">자랑글</option>						
 				    <option value="자유글">자유글</option>							
 				    <option value="Q&A">Q&A</option>										
@@ -60,7 +62,7 @@
 			<!--  <span class="insert-font">견종</span>&nbsp;&nbsp; -->
 			  <label for="dog_kind" class="col-md-1 control-label" style="font-size:18px; font-weight:bold;">&nbsp;견종&nbsp;</label>
 			   <div class="col">
-			  <input type="text" class="form-control" id="dog_kind" name="dog_kind" value="${ board.dog_kind }"  >
+			  <input type="text" class="form-control" id="dog_kind" name="dog_kind" value="${ board.getDog_kind() }"  >
 			  </div>
 			  <!--  견종  끝 --> 
 			</div>
@@ -74,35 +76,40 @@
 			<hr/>
 			
 			<div class="input-group mb-3">
-			   <textarea class="form-control" id="ubd_cont" name="ubd_cont" rows="15" required >${ board.ubd_cont }</textarea>		 
+			   <textarea class="form-control" id="ubd_cont" name="ubd_cont" rows="15" required >${ board.getUbd_cont() }</textarea>		 
 			</div>	
-			<div>
-			  <b>사진업로드</b><br>
+			
+			  <b>사진업로드(최대 5장/300*300)</b><br><br> 
 			  
- 			  	<c:if test="${board.getUbd_file()!=null and board.getUbd_file()!=''}">
-						<c:forEach items="${fileSplit}" var="file">
-							<img src="/img/${file}" width="80px" height="80px">
-				    	 </c:forEach>
-				</c:if>
-				
-				    <input type="file" class="form-control fu" onchange="previewFile(0)"
-				     name="uploadFile" multiple id="uploadFile0" aria-describedby="uploadFile" aria-label="Upload">
-				     <div id="msgTd0"></div>
- 				  	<input type="file" class="form-control fu" onchange="previewFile(1)" 
-				     name="uploadFile" multiple id="uploadFile1" aria-describedby="uploadFile" aria-label="Upload">
-				     <div id="msgTd1"></div>
-				    <input type="file" class="form-control fu" onchange="previewFile(2)" 
-				     name="uploadFile" multiple id="uploadFile2" aria-describedby="uploadFile" aria-label="Upload">
-				     <div id="msgTd2"></div>
-				    <input type="file" class="form-control fu" onchange="previewFile(3)" 
-				     name="uploadFile" multiple id="uploadFile3" aria-describedby="uploadFile" aria-label="Upload">
-				     <div id="msgTd3"></div>
-				     <input type="file" class="form-control fu" onchange="previewFile(4)" 
-				     name="uploadFile" multiple id="uploadFile4" aria-describedby="uploadFile" aria-label="Upload">
-				     <div id="msgTd4"></div>        
+			  <button type="button" id="add_File" onClick="addFile()" class="btn btn-outline-warning btn-sm" style="text-align: center;">&nbsp;&nbsp;<i class="fa-sharp fa-solid fa-plus"></i></button>
+			  <button type="button" id="remove_File" onClick="removeFile()" class="btn btn-outline-warning btn-sm" style="text-align: center;">&nbsp;&nbsp;<i class="fa-sharp fa-solid fa-minus"></i></button>
+			  <br>
+			  <br>
+			  
+			<!-- 파일 추가 & 삭제 -->
+			<script type="text/javascript">
+			var i = 0;
+			function addFile() {
+				if(i > 4) return; 
+				var str = "<input type='file' class='form-control fu' onchange='previewFile("+i+")'name='uploadFile' multiple id='uploadFile"+i+"' aria-describedby='uploadFile' aria-label='Upload'><div id='msgTd"+i+"'></div>";
+				$("#divFile").append(str);
+				i++;
+			}
+			
+			function removeFile() {
+				$('#uploadFile'+(i-1)).remove();
+				$('#msgTd'+(i-1)).remove();
+				if(i < 1) return;
+				i--;
+			}
+			</script>
+			  
+			<div id="divFile">
+
 			</div>
-			 
-			<!-- 이미지 프리뷰 -->
+			
+
+				<!-- 이미지 프리뷰 -->
 				<script>
 				function previewFile(no) {
 			        var preview = $('#msgTd'+no);
@@ -129,10 +136,20 @@
 			     }
 				</script>
 			
-			<input type="hidden" value="${board.getUbd_file()}"  name="ubd_file"/>
+				<script>
+				function checkResult() {
+					for(var i=0; i<5; i++){
+						if($('#uploadFile'+i).val() == ''){
+							alert('사진을 모두 등록해주세요.');
+							return false;
+						}
+					}
+					return true;
+				}
+				</script>
 			
 			
-			<input type="hidden" name="ubd_file" value=""/>	
+			<input type="hidden" name="ubd_file" value="${board.getUbd_file()}"/>	
 			<div class="row justify-content-evenly mt-5 mb-5">
 				<input type="button" class="btn btn-primary col-2" value="취소" onclick="history.go(-1)"/>
 				<input type="submit" class="btn btn-primary col-2" value="등록완료"/>
