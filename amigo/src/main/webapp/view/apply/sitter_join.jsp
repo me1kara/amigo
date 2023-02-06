@@ -18,13 +18,6 @@
 <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
 
 <%
-	UserVO user = (UserVO)session.getAttribute("user");
-
-	user.setUser_name(user.getUser_name());  // 일단 이곳은 유저 VO를 가져오도록 동작->유저네임 임의 세팅 후 동작 시켜봄, 즉 더미
-	user.setUser_phone(user.getUser_phone());
-	user.setUser_addr(user.getUser_addr());
-
-	System.out.println("안녕?"); // 일단 데이
 
 %><!-- 스크립트는 중간에 작성하였습니다 230127 현재 흡연여부, 현재직종만 적용. -->
 	      <!-- input : 테이블의 not null 부분에 Required 작성, 유저가 시터 지원정보를 입력하면 관리자에게 전송하는 폼 -->
@@ -48,7 +41,7 @@
 		<div class="container col-md-6">
 		
 			<hr>
-			<form role="form" action="/amigo/view/apply/sitter_join.do" method="post" onSubmit="return checkData();">
+			<form role="form" action="/amigo/view/apply/sitter_join.do" method="post" enctype="multipart/form-data" onSubmit="return checkData();">
 			
 				<input type="hidden" class="form-control" name="user_no" value="${ sessionScope.user.getUser_no() }">
 				<input type="hidden" class="form-control" name="user_name" value="${ sessionScope.user.getUser_name() }" >
@@ -63,17 +56,12 @@
 				</div>
 				
 				<!-- 프로필 사진 업로드 -->
-				<div class="form-group text-center">
-						<label for="sit_photo"></label>
-						<img
-                src="https://lh3.googleusercontent.com/LfmMVU71g-HKXTCP_QWlDOemmWg4Dn1rJjxeEsZKMNaQprgunDTtEuzmcwUBgupKQVTuP0vczT9bH32ywaF7h68mF-osUSBAeM6MxyhvJhG6HKZMTYjgEv3WkWCfLB7czfODidNQPdja99HMb4qhCY1uFS8X0OQOVGeuhdHy8ln7eyr-6MnkCcy64wl6S_S6ep9j7aJIIopZ9wxk7Iqm-gFjmBtg6KJVkBD0IA6BnS-XlIVpbqL5LYi62elCrbDgiaD6Oe8uluucbYeL1i9kgr4c1b_NBSNe6zFwj7vrju4Zdbax-GPHmiuirf2h86eKdRl7A5h8PXGrCDNIYMID-J7_KuHKqaM-I7W5yI00QDpG9x5q5xOQMgCy1bbu3St1paqt9KHrvNS_SCx-QJgBTOIWW6T0DHVlvV_9YF5UZpN7aV5a79xvN1Gdrc7spvSs82v6gta8AJHCgzNSWQw5QUR8EN_-cTPF6S-vifLa2KtRdRAV7q-CQvhMrbBCaEYY73bQcPZFd9XE7HIbHXwXYA=s200-no"
-                class="picture-src"
-                id="wizardPicturePreview"
-                name="sit_photo"
-                title=""
-              />
-					<input type="file" class="form-control" name="sit_photo" value="이미지없어" required> 
-				</div>
+			<div style="text-align: center" id="msgTd"></div>
+               <div class="form-group" style="width:90px; margin: 0 auto;" >             		
+			        <label class="input-group-text" for="sit_photo">사진등록</label>
+				    <input type="file" style="display:none" class="form-control" onchange="previewFile()"
+				     name="uploadFile" id="sit_photo" aria-describedby="uploadFile" aria-label="Upload">
+		      </div>
 				<br>
 				
 				<div class="form-group">
@@ -254,10 +242,32 @@
 		
 		</form>
 	</div>					
-			
-			
-		
 	<%@include file="/includes/footer.jsp" %>
+			
+	<script>
+	function previewFile() {
+        var preview = $('#msgTd');
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader();
+        preview_del();
+        reader.addEventListener(
+          'load',
+              function () {
+                 preview.append("<img src="+reader.result+" width='400px' height='400px' class='preview_img_del'/><br>");
+                 preview.append("<button class='btn btn-danger preview_img_del' onclick='preview_del()'>이미지삭제</button>");
+                },false
+         );
+      
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+     }
+    function preview_del(){
+        $('.preview_img_del').remove();
+        $('#sit_image').val('');
+     }
+	</script>			
+		
 
 	
 </body>
