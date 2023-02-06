@@ -15,26 +15,35 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.common.PagingVO;
 import com.lec.amigo.common.SearchVO;
+import com.lec.amigo.mapper.BoardRowMapper;
+import com.lec.amigo.mapper.BookContentRowMapper;
 import com.lec.amigo.mapper.BookRowMapper;
 import com.lec.amigo.mapper.SitterRowMapper;
 import com.lec.amigo.mapper.UserRowMapper;
 import com.lec.amigo.vo.BoardVO;
+import com.lec.amigo.vo.BookContentVO;
 import com.lec.amigo.vo.BookVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
 @Repository("bookDAO")
+@PropertySource("classpath:config/booksql.properties")
 public class BookDAO {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-
+	
+	@Autowired
+	Environment environment;
+	
 	public int calMoney(int days, int time) {
 		String sql = "select sit_price from sit_price where sit_time=1";
 		int price = jdbcTemplate.queryForObject(sql, Integer.class);
@@ -207,10 +216,42 @@ public class BookDAO {
 		return 0;
 	}
 
-	public List<BookVO> getBookList(int user_no) {
-		String sql = "select * from reservation where user_no=?";
-		Object[] args = {user_no};
+	public List<BookVO> getBookList(int user_no, SearchVO search) {
+		String sql = "select * from reservation where user_no=? limit ?,?";
+		Object[] args = {user_no, search.getFirstRow(), search.getRowSizePerPage()};
 		return jdbcTemplate.query(sql, args, new BookRowMapper());
+	}
+
+	public List<BookContentVO> getBookDetailList(int rno) {
+		String sql = "select * from res_content where res_no=?";
+		Object[] args = {rno};
+		
+		try {
+			return jdbcTemplate.query(sql, args, new BookContentRowMapper());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		 
+		return null;
+	}
+
+	public List<BookVO> getSitBookList(int user_no) {
+		String sql = "select * from reservation where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?)";
+		Object[] args = {user_no};
+		
+		try {
+			return jdbcTemplate.query(sql, args, new BookRowMapper());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	public int getMyBookCount(int user_no) {
+		String sql = "select count(*) from reservation where user_no=?";
+		Object[] args = {user_no};
+		return jdbcTemplate.queryForObject(sql, args, Integer.class);
 	}
 	
 	

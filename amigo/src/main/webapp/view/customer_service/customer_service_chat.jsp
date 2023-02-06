@@ -61,40 +61,18 @@
 						<p><b>채팅방이 없습니다</b></p>
 					</div>
 						</c:when>
-					
 						<c:when test="<%=checkRoom!=null %>">
 							<ul style="list-style: none;">
-								<!-- 
-								<c:choose>	
-								<c:when test="${!chatList.isEmpty() }">			
-									<c:forEach var="chat" items="${chatList }">
-										<tr class="btn btn-outline-dark" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
-										<td><b>이름 ${chat.getUser_nick()}</b></td>
-										<td style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">${chat.getContent() }</td>				
-										<c:if test="${!chat.isRead_is() }"> 
-										<td>new</td>
-										</c:if>
-										</tr>
-										<br/>						
-									</c:forEach>
-								</c:when>
-								<c:when test="${chatList.isEmpty() }">
-									<tr>
-										<td><a href="/amigo/chatList.do?index=<%=checkRoom.getChat_index() %>">방번호:<%=checkRoom.getChat_index() %></a></td>
-									</tr>
-								</c:when>
-								</c:choose>
-								 -->
-								 
-								 
-						
 							<c:forEach var="chat" items="${chatList }">
 										<li class="btn btn-outline-dark RL_item" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
-										
 											<table>
 												<tr>
 													<td>
-														<img src="#" >	
+														<c:forEach var="us" items="${userList }">
+															<c:if test="${us.user_no==chat.user_no }">
+																<img src="/img/${us.user_photo }" width="50px;" height="50px;" > <!-- 파일나중에 저장할 것--> 
+															</c:if>
+														</c:forEach>
 													</td>
 													<td>
 														<ul style="list-style: none;" >

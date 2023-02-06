@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +30,8 @@ import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.dao.SitterDAO;
 import com.lec.amigo.impl.BookServiceImpl;
 import com.lec.amigo.impl.SitterServiceImpl;
+import com.lec.amigo.impl.UserServiceImpl;
+import com.lec.amigo.vo.BookContentVO;
 import com.lec.amigo.vo.BookVO;
 import com.lec.amigo.vo.HeartVO;
 import com.lec.amigo.vo.SitterVO;
@@ -42,6 +45,9 @@ public class BookController {
 	
 	@Autowired
 	SitterServiceImpl sitterService;
+	
+	@Autowired
+	UserServiceImpl userService;
 	
 	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.GET })
 	public String book (HttpServletRequest req, Model model, SearchVO search, 
@@ -200,12 +206,50 @@ public class BookController {
 		
 	}
 	
+	@PostMapping("/ajax/getBook_detail.do")
+	@ResponseBody 
+	public List<BookContentVO> getBook_datail(HttpServletRequest req) {
+		int rno = Integer.parseInt(req.getParameter("rno")) ;
+		
+		List<BookContentVO> bookDetailList = bookService.getBookDetailList(rno);
+		
+		System.out.println(rno);
+		
+		for (BookContentVO bookContentVO : bookDetailList) {
+			System.out.println(bookContentVO.getRes_time()+"확인용시간");
+		}
+		
+		return bookDetailList;
+	}
+	
 	
 	@RequestMapping(value = "/book_check.do", method = { RequestMethod.GET })
-	public String myBookList (Model model, HttpSession sess) {
+	public String myBookList (Model model, HttpSession sess,SearchVO searchVO,
+			@RequestParam(defaultValue="1") int curPage,
+			@RequestParam(defaultValue="10") int rowSizePerPage,
+			@RequestParam(defaultValue="") String searchCategory,
+			@RequestParam(defaultValue="") String searchType,
+			@RequestParam(defaultValue="") String searchWord) {
 		
-		int user_no = ((UserVO)sess.getAttribute("user")).getUser_no(); 
-		List<BookVO> myBookList = bookService.getBookList(user_no);
+		UserVO user = (UserVO)sess.getAttribute("user");
+		int user_no = user.getUser_no();
+		
+		if(user.getUser_type().equals("S")) {
+			List<BookVO> sitBookList = bookService.getSitBookList(user_no);
+			List<UserVO> userList  = userService.getUserList();
+			model.addAttribute("userList", userList);
+			model.addAttribute("sitBookList", sitBookList);
+		}
+		
+		searchVO.setTotalRowCount(bookService.getMyBookCount(user_no));
+		searchVO.setCurPage(curPage);
+		searchVO.setRowSizePerPage(rowSizePerPage);
+		searchVO.setSearchCategory(searchCategory);
+		searchVO.setSearchType(searchType);
+		searchVO.setSearchWord(searchWord);
+		searchVO.pageSetting();
+		
+		List<BookVO> myBookList = bookService.getBookList(user_no,searchVO);
 		List<SitterVO> sitList = sitterService.getSitList(new SearchVO());
 		
 		model.addAttribute("myBookList", myBookList);

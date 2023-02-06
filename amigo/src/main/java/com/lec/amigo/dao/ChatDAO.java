@@ -331,7 +331,7 @@ public class ChatDAO {
 	}
 	
 	public ChatVO getLastChat(int index) {
-		String sql = "select sitt_chat_no, sitt_chat_index,user_nick, sitt_chat_content,sitt_chat_regdate,sitt_chat_readis,sitt_chat_file,sitt_chat_emo from sit_chat s,user u where sitt_chat_index=? and u.user_no=s.user_no order by sitt_chat_no desc limit 1";
+		String sql = "select sitt_chat_no, s.user_no, sitt_chat_index,user_nick, sitt_chat_content,sitt_chat_regdate,sitt_chat_readis,sitt_chat_file,sitt_chat_emo from sit_chat s,user u where sitt_chat_index=? and u.user_no=s.user_no order by sitt_chat_no desc limit 1";
 		
 
 		ChatVO chat = new ChatVO();
@@ -346,6 +346,7 @@ public class ChatDAO {
 			
 			if(rs.next()) {
 				chat.setChat_no(rs.getInt("sitt_chat_no"));
+				chat.setUser_no(rs.getInt("user_no"));
 				chat.setIndex(rs.getInt("sitt_chat_index"));
 				chat.setUser_nick(rs.getString("user_nick"));
 				chat.setContent(rs.getString("sitt_chat_content"));

@@ -1,5 +1,6 @@
 package com.lec.amigo.impl;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -157,5 +158,11 @@ public class UserServiceImpl implements UserService{
 		return userDAO.updateUser(userVO);
 		
 	}
+
+	public List<UserVO> getUserList() {
+		// TODO Auto-generated method stub
+		return userDAO.getUserList();
+	}
+
 	
 }

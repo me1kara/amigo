@@ -5,6 +5,7 @@ import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -110,6 +111,16 @@ public class UserDAO {
 	public UserVO updateUser(UserVO userVO) {
 		jdbcTemplate.update(updateUser, userVO.getUser_email(), userVO.getUser_pw(), userVO.getUser_nick(), userVO.getUser_addr(), userVO.getUser_phone(), userVO.getUser_photo(), userVO.getUser_no());
 		return userVO;
+	}
+
+	public List<UserVO> getUserList() {
+		String sql = "select * from user";
+		try {
+			return jdbcTemplate.query(sql, new UserRowMapper());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 	
 

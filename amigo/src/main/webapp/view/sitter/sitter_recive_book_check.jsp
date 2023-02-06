@@ -18,10 +18,9 @@
 <title>파트너04_예약신청~03예약확인</title>
 </head>
 <body>
-	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
-
+			
 		</div>
 	<%@include file="/includes/footer.jsp" %>
 
