@@ -43,44 +43,11 @@
 		 
     	function sendJsonUrl(curPage,rowSize){
     		console.log('입장확인용');
-    	    //let f = document.createElement('form');
     	    var f = document.f;
     	    f.curPage.value=curPage;
     	    f.rowSizePerPage.value=rowSize;
-
-/*    	    	let cur = document.createElement('input');
-   	    	let row = document.createElement('input');
-   	    	let address = document.address;
-   	    	let book_date = document.createElement('input');
-   	    
-       	    cur.setAttribute('type', 'hidden');
-       	    cur.setAttribute('name', 'curPage');
-       	    cur.setAttribute('value', curPage);
-       	    
-       	    row.setAttribute('type', 'hidden');
-       	    row.setAttribute('name', 'rowSizePerPage');
-       	 	row.setAttribute('value', rowSize);
-       	 	      	
-    	 address.setAttribute('type', 'hidden');
-    	    address.setAttribute('name', 'address');
-    	    address.setAttribute('value', ${address}); 
-    	    
-    	    book_date.setAttribute('type', 'hidden');
-    	    book_date.setAttribute('name', 'book_date');
-    	    book_date.setAttribute('value', ${calr});
-    	    
-    	    f.appendChild(cur);
-    	    f.appendChild(row);
-    	    f.appendChild(address);
-    	    f.appendChild(book_date); */
-    	    
-/*     	    f.setAttribute('method', 'get');
-    	    f.setAttribute('action', 'book.do'); */
-    	    //document.body.appendChild(f);
     	    f.submit();
     	}
-    	
-
     </script>
 
 	<%-- <%@include file="/includes/header.jsp"%> --%>
@@ -95,7 +62,7 @@
 						<c:forEach var="user" items="${sittNameList }">		
 						<c:if test="${user.getUser_no() == sit.getUser_no() }">
 							<div class="row">
-								<img src="https://via.placeholder.com/100x100" " class="col-sm-4" />
+								<img src="https://via.placeholder.com/100x100" " class="col-sm-4" width=""/>
 								<div class="col-sm-4">
 									<h4>이름:${user.getUser_name() }</h4>
 									<p>경력사항,특기</p>

@@ -18,7 +18,6 @@
     <![endif]-->
 </head>
 <body>
-	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
 			<a href="createChat.do?name=한준호">완료</a>
