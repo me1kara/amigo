@@ -175,7 +175,7 @@ prefix="c"%>
 		-->
 
       <!-- Am!go 소개 -->
-      <div class="container text-center" id="AmigoTop">
+      <div class="container col-md-6 text-center" id="AmigoTop">
         <figure class="snip0015">
           <img
             src="/amigo/resources/img/MainPageImg.png"
@@ -198,7 +198,7 @@ prefix="c"%>
 
       <!-- AM!GO 서비스 -->
       <!-- 차후에 아이콘으로 대체할것임.-->
-      <div class="container overflow-hidden mb-5 mt-5">
+      <div class="container overflow-hidden col-md-6 mb-5 mt-5">
         <h4>AM!GO서비스</h4>
         <div class="row gy-5">
           <!-- 펫시터 -->
@@ -259,7 +259,7 @@ prefix="c"%>
       </div>
       <hr />
       <!-- 커뮤니티 -->
-      <div class="container mt-5">
+      <div class="container  col-md-6 mt-5">
         <div class="row justify-content-between">
           <div class="col-4">
             <h4>커뮤니티</h4>
@@ -291,7 +291,8 @@ prefix="c"%>
       <!-- 커뮤니티 종료-->
       <br />
       <!-- 실시간 후기 -->
-      <div class="row justify-content-between mt-5">
+      <div class="container col-md-6 mt-5">
+      <div class="row justify-content-between">
         <div class="col-4">
           <h4>실시간 후기</h4>
         </div>
@@ -382,9 +383,11 @@ prefix="c"%>
           <span class="visually-hidden">Next</span>
         </button>
       </div>
+      </div>
       <!-- 후기 종료 -->
       <br />
       <!-- Q&A -->
+      <div class="container col-md-6">
       <div class="row justify-content-between mt-5">
         <div class="col-4">
           <h4>Q&A</h4>
@@ -401,6 +404,7 @@ prefix="c"%>
             bulk of the card's content.
           </p>
         </div>
+      </div>
       </div>
       <br />
       <!-- Q&A 종료 -->

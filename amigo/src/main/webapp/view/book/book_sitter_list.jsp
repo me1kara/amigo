@@ -8,8 +8,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
-	
 	<%
 		String addr = request.getParameter("addr");
 	%>
@@ -87,68 +85,62 @@
 
 	<%-- <%@include file="/includes/header.jsp"%> --%>
 		<div class="container">
-		
-			<p><%=addr%> 시터들 목록</p>
-					${calr}
-			<c:choose>
-			<c:when test="${sittList!=null }">
-				<c:forEach var="sit" items="${sittList }">
-					<c:forEach var="user" items="${sittNameList }">
-					
-						<c:if test="${user.getUser_no() == sit.getUser_no() }">
-						<div class="row">
-							<img src="https://via.placeholder.com/100x100" " class="col-sm-4" />
-							<div class="col-sm-4">
-								<h4>이름:${user.getUser_name() }</h4>
-								<p>경력사항,특기</p>
-								<p>시간:${sit.getSit_time() }</p>
-							</div>
-							<div class="col-sm-4">
-								<button class="btn btn-secondary"
-									onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }'">자세히보기</button>
-							</div>
-						</div>
-						</c:if>
-					</c:forEach>
-				</c:forEach>
-				<div class="row align-items-start mt-3">
-					<ul class="col pagination justify-content-center">
-					
-						<c:set var="cp" value="${searchVO.getCurPage()}"/>
-						<c:set var="rp" value="${searchVO.getRowSizePerPage()}"/>
-						<c:set var="fp" value="${searchVO.getFirstPage()}"/>
-						<c:set var="lp" value="${searchVO.getLastPage()}"/>
-						<c:set var="ps" value="${searchVO.getPageSize()}"/>
-						<c:set var="tp" value="${searchVO.getTotalPageCount()}"/>										
-						<c:if test="${ fp != 1 }">
-							<li class="page-item"><button class="btn" onclick="sendJsonUrl(1,${rp})"><i class="fas fa-fast-backward"></i></button></li>
-							<li class="page-item"><button class="btn" onclick="sendJsonUrl(${fp-rp},${rp})"><i class="fas fa-backward"></i></button></li>				
-						</c:if>
-						<c:forEach var="page" begin="${fp}" end="${lp}">
-							<li class="page-item ${cp==page ? 'active' : ''}">
-							<button class="btn" onclick="sendJsonUrl(${page},${rp})">${page}</button>
-							</li>
-						</c:forEach>				
-						<c:if test="${ lp < tp }">
-							<li class="page-item "><span class="btn" onclick="sendJsonUrl(${lp+1},${rp})"><i class="fas fa-forward"></i></span></li>
-							<button class="btn" onclick="sendJsonUrl(${tp},${rp})"><i class="fas fa-fast-forward"></i></button>				
-						</c:if>
-					</ul> <!-- pagination -->	
-				</div> <!-- 페이징 -->
-			</c:when>
-			<c:otherwise>
-					<h>해당한 지역의 펫시터가 없습니다!</h>
-				</c:otherwise>
-			</c:choose>
 			
-			<form name="f" action="book.do">
-			<input type="hidden" name="address" value="${address }"/>
-			<input type="hidden" name="rowSizePerPage"/>
-			<input type="hidden" name="curPage" />
-			<input type="hidden" id="bookDate" name="bookDate"/>
-			</form>
-
-
+			<section>
+				<article>
+					<h2><%=addr%> 시터들 목록</h2>
+					<c:choose>
+					<c:when test="${sittList!=null }">
+					<c:forEach var="sit" items="${sittList }">
+						<c:forEach var="user" items="${sittNameList }">		
+						<c:if test="${user.getUser_no() == sit.getUser_no() }">
+							<div class="row">
+								<img src="https://via.placeholder.com/100x100" " class="col-sm-4" />
+								<div class="col-sm-4">
+									<h4>이름:${user.getUser_name() }</h4>
+									<p>경력사항,특기</p>
+									<p>시간:${sit.getSit_time() }</p>
+								</div>
+								<div class="col-sm-4">
+									<button class="btn btn-secondary"
+										onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }'">자세히보기</button>
+								</div>
+							</div>
+						</c:if>
+						</c:forEach>
+					</c:forEach>
+						<div class="row align-items-start mt-3">
+							<ul class="col pagination justify-content-center">
+							<c:set var="cp" value="${searchVO.getCurPage()}"/>
+							<c:set var="rp" value="${searchVO.getRowSizePerPage()}"/>
+							<c:set var="fp" value="${searchVO.getFirstPage()}"/>
+							<c:set var="lp" value="${searchVO.getLastPage()}"/>
+							<c:set var="ps" value="${searchVO.getPageSize()}"/>
+							<c:set var="tp" value="${searchVO.getTotalPageCount()}"/>										
+							<c:if test="${ fp != 1 }">
+								<li class="page-item"><button class="btn" onclick="sendJsonUrl(1,${rp})"><i class="fas fa-fast-backward"></i></button></li>
+								<li class="page-item"><button class="btn" onclick="sendJsonUrl(${fp-rp},${rp})"><i class="fas fa-backward"></i></button></li>				
+							</c:if>
+							<c:forEach var="page" begin="${fp}" end="${lp}">
+								<li class="page-item ${cp==page ? 'active' : ''}">
+									<button class="btn" onclick="sendJsonUrl(${page},${rp})">${page}</button>
+								</li>
+							</c:forEach>				
+							<c:if test="${ lp < tp }">
+								<li class="page-item ">
+									<span class="btn" onclick="sendJsonUrl(${lp+1},${rp})"><i class="fas fa-forward"></i></span></li>
+									<button class="btn" onclick="sendJsonUrl(${tp},${rp})"><i class="fas fa-fast-forward">
+								</i></button>				
+							</c:if>
+							</ul> <!-- pagination -->	
+						</div> <!-- 페이징 -->
+					</c:when>
+					<c:otherwise>
+						<h>해당한 지역의 펫시터가 없습니다!</h>
+					</c:otherwise>
+					</c:choose>
+				</article>
+			</section>
 	</div>
 	<%-- <a href="book.do?curPage=${lp+1}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-forward"></i></a> --%>
 	<%-- <a href="book.do?curPage=${page}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link">${page}</a> --%>
@@ -156,7 +148,14 @@
 	<%-- <a href="book.do?curPage=1&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"></a> --%>
 	<%-- <a href="book.do?curPage=${fp-rp}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}" class="page-link"><i class="fas fa-backward"></i></a> --%>
 	<%@include file="/includes/footer.jsp" %>
-
+	
+	<!-- json보내기용 -->
+	<form name="f" action="book.do">
+		<input type="hidden" name="res_addr" value="${address }"/>
+		<input type="hidden" name="rowSizePerPage"/>
+		<input type="hidden" name="curPage" />
+		<input type="hidden" id="bookDate" name="bookDate"/>
+	</form>
 
 
 </body>

@@ -42,7 +42,7 @@ prefix="c"%>
     <%@include file="/includes/header.jsp" %>
 
     <!-- 마이페이지 시작 -->
-    <div class="container mb-5" align="center" id="myPageTop">
+    <div class="container col-md-6 " align="center" id="myPageTop">
       <ul class="list-group list-group-flush" align="left">
         <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
           <li class="list-group-item">

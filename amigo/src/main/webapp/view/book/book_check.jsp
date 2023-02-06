@@ -20,7 +20,57 @@
 <body>
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
+			<section>	
+				<article>
+					<h3>예약확인</h3>
+					<p>펫시터</p>
+				</article>
 				
+				<c:choose>
+				<c:when test='${user.getUser_type().equals("U") }'>
+					<article>
+						<c:choose>
+						<c:when test="${myBookList!=null}">	
+							<c:forEach var="book" items="${myBookList }">
+								<c:forEach var="sit" items="${sitList }">
+								<c:if test="${ book.getSit_no()==sit.getSit_no()}">
+								<li>
+									<table>
+										<tr><td colspan="2">${sit.getUser_name() } 펫시터</td></tr>
+										<tr>
+											<td>예약장소</td><td>${book.getRes_addr() }</td>
+										</tr>
+										<tr>
+											<td>예약날짜</td><td>${book.getRes_date() }</td>
+										</tr>
+										<tr>
+											<td>예약시간</td><td>${book.getRes_time() }</td>
+										</tr>
+										<tr>
+											<td>결제금액</td><td>${book.getRes_pay() }</td>
+										</tr>
+										<tr>
+											<td>특이사항</td><td>${book.getRes_etc() }</td>
+										</tr>
+									</table>
+								</li>
+												
+								</c:if>	
+								</c:forEach>
+							</c:forEach>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<h2>예약사항이 없습니다</h2>
+						</c:otherwise>
+						</c:choose>
+					</article>
+					</c:choose>
+				</c:when>
+				<c:when test='${user.getUser_type().equals("P") }'>
+					<h1>시터전용</h1>
+				</c:when>
+			</section>	
 		</div>
 	<%@include file="/includes/footer.jsp" %>
 

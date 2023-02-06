@@ -43,7 +43,6 @@ public class BookController {
 	@Autowired
 	SitterServiceImpl sitterService;
 	
-	
 	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.GET })
 	public String book (HttpServletRequest req, Model model, SearchVO search, 
 			@RequestParam(defaultValue="1") int curPage,
@@ -53,7 +52,6 @@ public class BookController {
 		String address = req.getParameter("res_addr"); //주소
 		
 		System.out.println(bookVO.toString());
-		
 		
 		String[] addrList = address.split("\\s");
 		String secondeAddr = addrList[1];
@@ -204,10 +202,15 @@ public class BookController {
 	
 	
 	@RequestMapping(value = "/book_check.do", method = { RequestMethod.GET })
-	public String myBookList (Model model,UserVO user) {
+	public String myBookList (Model model, HttpSession sess) {
 		
-		int user_no = user.getUser_no();
+		int user_no = ((UserVO)sess.getAttribute("user")).getUser_no(); 
 		List<BookVO> myBookList = bookService.getBookList(user_no);
+		List<SitterVO> sitList = sitterService.getSitList(new SearchVO());
+		
+		model.addAttribute("myBookList", myBookList);
+		model.addAttribute("sitList", sitList);
+
 		
 		return "/view/book/book_check.jsp";
 	}
