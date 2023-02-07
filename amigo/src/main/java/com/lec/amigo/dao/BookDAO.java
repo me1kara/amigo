@@ -56,7 +56,7 @@ public class BookDAO {
 		
 		System.out.println(secondeAddr);
 
-		String sql = "select u.user_no, s.sit_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_intro from user u,petsitter s"+ 
+		String sql = "select u.user_no, s.sit_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_intro, s.sit_care_exp from user u,petsitter s"+ 
 				" where u.user_no = s.user_no and u.user_type='S' and user_addr like ? limit ?,?";
 		
 		String sqlinput = "%"+secondeAddr+"%";
@@ -84,6 +84,7 @@ public class BookDAO {
 				si.setSit_time(rs.getString("sit_time"));
 				si.setSit_photo(rs.getString("sit_photo"));
 				si.setSit_intro(rs.getString("sit_intro"));
+				si.setSit_care_exp(rs.getString("sit_care_exp"));
 				sitList.add(si);
 				
 				System.out.println(si.getSit_no()+"sit_no 확인용");
@@ -217,9 +218,43 @@ public class BookDAO {
 	}
 
 	public List<BookVO> getBookList(int user_no, SearchVO search) {
-		String sql = "select * from reservation where user_no=? limit ?,?";
-		Object[] args = {user_no, search.getFirstRow(), search.getRowSizePerPage()};
-		return jdbcTemplate.query(sql, args, new BookRowMapper());
+		String sql = "select r.*, rs.res_date  from reservation r, (select res_no, \r\n"
+				+ "IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date from res_content GROUP BY res_no) rs \r\n"
+				+ "where user_no=? and r.res_no = rs.res_no limit ?,?";
+		Connection conn = JDBCUtility.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BookVO> bookList = new ArrayList<BookVO>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_no);
+			pstmt.setInt(2, search.getFirstRow());
+			pstmt.setInt(3, search.getRowSizePerPage());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BookVO book = new BookVO();
+				book.setRes_no(rs.getInt("res_no"));
+				book.setUser_no(user_no);
+				book.setSit_no(rs.getInt("sit_no"));
+				book.setRes_regdate(rs.getDate("res_regdate"));
+				book.setRes_is(rs.getBoolean("res_is"));
+				book.setRes_etc(rs.getString("res_etc"));
+				book.setRes_pay(rs.getInt("res_pay"));
+				book.setRes_visit_is(rs.getBoolean("res_visit_is"));
+				book.setRes_date(rs.getString("res_date"));
+				bookList.add(book);
+			}
+			
+			JDBCUtility.commit(conn);
+		} catch (SQLException e) {
+			JDBCUtility.rollback(conn);
+			e.printStackTrace();
+		}finally {
+			JDBCUtility.close(conn, rs, pstmt);
+		}
+
+		return bookList; 
 	}
 
 	public List<BookContentVO> getBookDetailList(int rno) {
@@ -249,9 +284,21 @@ public class BookDAO {
 	}
 
 	public int getMyBookCount(int user_no) {
-		String sql = "select count(*) from reservation where user_no=?";
+		String sql = "select count(distinct r.res_no) from reservation r, res_content rs where user_no=? and r.res_no = rs.res_no";
 		Object[] args = {user_no};
 		return jdbcTemplate.queryForObject(sql, args, Integer.class);
+	}
+
+	public int deleteBook(int rno) {
+		String sql ="delete from reservation where res_no=?";
+		int row = 0;
+		row = jdbcTemplate.update(sql, rno);
+		if(row>0) {
+			sql = "delete from res_content where res_no=?";
+			row = jdbcTemplate.update(sql,rno);
+		}
+
+		return row;
 	}
 	
 	

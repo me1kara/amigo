@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +23,9 @@
 		 margin-bottom: 20px;
 		 padding: 20px;
 	}
+	.book_item:hover{
+		cursor:pointer;
+	}
 	.modal{
 		 position: absolute; top:0;left:0;
 		 width:100%; height:100%;
@@ -30,7 +34,7 @@
 	}
 	.modal_body {
 		 position:absolute; top:50%;left:50%;
-		 width: 400px;height: 600px;
+		 width: 400px;height: 400px;
 		
 		 padding: 40px;		
 		 text-align: center;
@@ -42,8 +46,26 @@
 		 transform: translateX(-50%) translateY(-50%);
 	}
 	.book_content{
-		width: 100%;height: 100%;
+		width: 100%;height: 90%;
 	}
+	
+	
+	table {
+	  border-radius: 10px;
+	  border-style: hidden;
+	  box-shadow: 0 0 0 1.5px #000;
+	  overflow: hidden;
+
+	}
+	#main_table{
+	box-shadow: 5px 2px 20px rgb(0 0 0 / 20%);
+	}
+	.modal_tTitle{
+		background:rgb(87, 160, 227);
+		color:white;
+	 
+	}
+	
 </style>
 
 <script>
@@ -59,6 +81,7 @@
 	function close_book_modal(){
 		$('.modal').fadeOut();
 		$('.book_content').remove();
+		$('.book_btn').remove();	
 		$('body').css("overflow", "auto");
 	}
 	
@@ -72,15 +95,16 @@
 			success : function(result) {
 				let modalBody = $('.modal_body');
 				if (result != null) {
-					let temp='<ul class="book_content" style="overflow: auto;">';
+					let temp='<ul class="book_content list-group" style="overflow: auto;">';
 					result.forEach((content, index) =>{
-						temp += '<li><table>';
-						temp += '<tr><td>일자:</td><td>' + content.res_date +'</td></tr>';
-						temp += '<tr><td>시간:</td><td>' + content.res_time +'</td></tr>';
-						temp += '<tr><td>장소:</td><td>' + content.res_addr +'</td></tr>';
+						temp += '<li style="padding:5px;"><table class="table-sm table-bordered" border="2" style="width:95%;">';
+						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:50%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
+						temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">시간</td><td>' + content.res_time +'</td></tr>';
+						temp += '<tr style="border-bottom:1px solid black; vertical-align: middle;"><td class="modal_tTitle">장소</td><td>' + content.res_addr +'</td></tr>';
 						temp += '</table></li>';
 					});
 					temp+='</ul>';
+					temp+='<button class="btn btn-danger book_btn" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
 					modalBody.append(temp);
 				} else {
 					alert('예약정보가 없습니다! 다시 시도해주세요!');
@@ -90,6 +114,34 @@
 		});
 		
 	}
+	
+	function book_delete(rno){
+		if(confirm('정말로 취소하시겠습니까?')){
+			$.ajax({
+				url  : '/amigo/ajax/deleteBook.do',
+				type : 'POST',
+				data : {
+					'rno' : rno	
+				},
+				success : function(result){
+					if(result>0){
+						alert('성공적으로 삭제됐습니다!');
+						history.go(0);
+					}else{
+						alert('삭제에 실패했습니다!');
+					    close_book_modal();
+					}
+				},
+			    error : function(request, status, error) { // 결과 에러 콜백함수
+			        console.log(error);
+			        alert('삭제에 실패했습니다!');
+			        close_book_modal();
+			    }
+			});
+			
+		}
+	}
+	
 </script>
 </head>
 <body>
@@ -109,8 +161,9 @@
 								<c:forEach var="usr" items="${userList }">
 								<c:if test="${ book.getUser_no()==usr.getUser_no()}">
 								<li class="book_item">
-									<table>
-										<tbody onclick="open_book_modal(this)" value="히">
+									<div>
+									<table class="table">
+										<tbody onclick="open_book_modal(this)">
 										<tr><th colspan="2" style="text-align: center;">${usr.getUser_name() } 유저</th></tr>
 										<tr>
 											<th>예약번호</th><td id="book_res_no">${book.res_no }</td>
@@ -168,19 +221,20 @@
 				<c:otherwise>
 					<article>
 						<c:choose>
-						<c:when test="${myBookList!=null}">	
+						<c:when test="${!myBookList.isEmpty()}">	
 							<ul style="list-style: none;">
 							<c:forEach var="book" items="${myBookList }">
 								<c:forEach var="sit" items="${sitList }">
 								<c:if test="${ book.getSit_no()==sit.getSit_no()}">
 								<li class="book_item">
-									<table>
-										<tbody onclick="open_book_modal(this)" value="히">
-										<tr><th colspan="2" style="text-align: center;">${sit.getUser_name() } 펫시터</th></tr>
+									<table class="table" id="main_table">
+										<tbody onclick="open_book_modal(this)">
+										<tr style="background:rgb(87, 160, 227);"><th colspan="2" style="text-align: center; color:white;">${sit.getUser_name() } 펫시터</th></tr>
 										<tr>
-											<th>예약번호</th><td id="book_res_no">${book.res_no }</td>
+											<th class="tTitle" style="width:35%;">예약번호</th><td id="book_res_no" style="width:65%;">${book.res_no }</td>
 										</tr>
 										<tr>
+											<th class="tTitle">방문여부</th>
 											<th colspan="2" style="color:blue;'">
 												
 												<c:choose>
@@ -195,17 +249,23 @@
 											</th>
 										</tr>
 										<tr>
-											<th>결제금액</th><td>${book.getRes_pay() }원</td>
+											<th class="tTitle">예약일자</th><td>${book.res_regdate }</td>
 										</tr>
 										<tr>
-											<th>승인여부</th>
+											<th class="tTitle">예약날짜</th><td>${book.getRes_date() }</td>
+										</tr>
+										<tr>
+											<th class="tTitle">결제금액</th><td><fmt:formatNumber value="${book.getRes_pay() }" pattern="#,###"/>원</td>
+										</tr>
+										<tr style="border-bottom: 1px solid">
+											<th class="tTitle">승인여부</th>
 											<td>
 												<c:choose>
 													<c:when test="${book.res_is }">
 														완료
 													</c:when>
 													<c:otherwise>
-														대기
+														<mark>대기</mark>
 													</c:otherwise>
 												</c:choose>
 											</td>
