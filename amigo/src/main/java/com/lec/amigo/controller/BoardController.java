@@ -139,6 +139,8 @@ public class BoardController {
 			
 		model.addAttribute("searchVO", searchVO);
 		model.addAttribute("board", boardService.getBoard(board));
+		
+		// 전체글, 인기글, 말머리 구분해서 list 가려고 쓴 변수
 		model.addAttribute("cnt", cnt);
 		
 		// 조회수 올리는 로직
@@ -171,6 +173,14 @@ public class BoardController {
 		model.addAttribute("board", boardService.getBoard(board));
 		model.addAttribute("cnt", cnt);
 		
+		// 파일 가져오는 로직
+		BoardVO boardUser = boardService.getBoard(board);  // 파일명 가져오기 위해 boardUser에 담아줌
+			if(boardUser.getUbd_file()!=null) {
+			String[] fileSplit = boardUser.getUbd_file().split(","); // ,를 기준으로 파일명 나눠서 배열에 담음
+							
+			model.addAttribute("fileSplit", fileSplit); // jsp 파일에 파일 보냄
+		}
+		
 		return "view/comunity/user_board_update.jsp";
 	}
 	
@@ -199,7 +209,6 @@ public class BoardController {
 			map.put("uniqueName", uniqueName);
 			
 			uploadFileList.add(map);
-			
 				}
 			}			
 				
@@ -259,25 +268,24 @@ public class BoardController {
 			String fileRealName = uploadFile.get(i).getOriginalFilename(); // 파일 진짜 이름 가져오기
 				if(fileRealName != "") {
 
-			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length()); // 확장자명 구하기
+					String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length()); // 확장자명 구하기
+				
+					UUID uuid = UUID.randomUUID();
+					String[] uuids = uuid.toString().split("-");
+					String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
+							
+					Map<String, String> map = new HashMap<>();
+					map.put("fileRealName", fileRealName);
+					map.put("uniqueName", uniqueName);
 			
-			UUID uuid = UUID.randomUUID();
-			String[] uuids = uuid.toString().split("-");
-			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
-			
-			Map<String, String> map = new HashMap<>();
-			map.put("fileRealName", fileRealName);
-			map.put("uniqueName", uniqueName);
-			
-			uploadFileList.add(map);
-			
+					uploadFileList.add(map);
 				}
-			}			
+			}
 				
 			try {
 				for(int i=0; i<uploadFileList.size(); i++) {
 					File saveFile = new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName"));
-					uploadFile.get(i).transferTo(saveFile);
+						uploadFile.get(i).transferTo(saveFile);
 				}
 				
 			} catch (Exception e) {
