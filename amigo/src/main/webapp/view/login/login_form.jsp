@@ -62,7 +62,7 @@
         <br>
         
         <a href="#">다른 방식으로 로그인 할게요.</a>
-		
+		<input type="hidden" name="ubd_no" value="5"/>
 		</form>
 		</div>
 		

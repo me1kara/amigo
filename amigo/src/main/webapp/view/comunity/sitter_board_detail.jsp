@@ -122,7 +122,7 @@
 					</li>
 					</c:forEach>
 				</ul>
-			</div>
+			</div>	
 			
 			
 			<div id="sreply_form">
@@ -186,7 +186,7 @@
 				</div>
 				</div>
 				  
-		<!--삭제 modal form script ubd_no전달-->	
+		<!--삭제 modal form script sbd_no전달-->	
 		<script>
 		var SBDNO="";
 

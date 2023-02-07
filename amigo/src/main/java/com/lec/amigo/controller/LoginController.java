@@ -26,9 +26,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.dao.UserDAO;
+import com.lec.amigo.impl.BoardServiceImpl;
 import com.lec.amigo.impl.ChatServiceImpl;
 import com.lec.amigo.impl.DogServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
+import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.UserVO;
@@ -39,6 +41,9 @@ public class LoginController {
 	
 	@Autowired
 	UserServiceImpl userService;
+	
+	@Autowired
+	BoardServiceImpl boardService;
 	
 	@Autowired
 	DogServiceImpl dogService;
@@ -64,7 +69,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess) {
+	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess, BoardVO boardVO, Model model) {
 			
 		UserVO user = userDAO.getUser(userVO.getUser_email()); // 사용자가 입력한 이메일을 getUser메서드로 DB 있는지 찾기
 
@@ -103,6 +108,9 @@ public class LoginController {
 			} else {
 				sess.setAttribute("isAdmin", false);
 			}
+			
+			model.addAttribute("board", boardService.getBoard(boardVO));
+			
 			return "view/main.jsp";
 		} else {
 			sess.setAttribute("isLoginSuccess", false);
@@ -207,7 +215,8 @@ public class LoginController {
 	
 	// 로고 클릭시 메인가기
 	@RequestMapping(value="/main_home.do", method = RequestMethod.GET) 
-	public String main_home() {
+	public String main_home(BoardVO boardVO, Model model) {
+		model.addAttribute("board", boardService.getBoard(boardVO));
 		return "view/main.jsp"; 
 	}
 	

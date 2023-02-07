@@ -57,7 +57,7 @@ prefix="c"%>
           >
           <c:choose>
           	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
-          	<img src="/userimg/${user.getUser_photo()}" alt="userphoto" width="20px" height="20px"/>
+          	<img src="/userimg/${user.getUser_photo()}" alt="userphoto" width="20px" height="20px" style="border-radius:10px" />
             </c:when>
             <c:otherwise>
             <img src="../../resources/img/logo2.png" alt="logo2" width="20px" height="20px"/>
