@@ -3,8 +3,8 @@ package com.lec.amigo.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,6 @@ import com.lec.amigo.service.ReplyService;
 import com.lec.amigo.vo.ReplyVO;
 
 @Controller
-@PropertySource("classpath:config/replysql.properties")
 public class ReplyController {
 
 	@Autowired
@@ -46,7 +45,8 @@ public class ReplyController {
 		redirectAttributes.addAttribute("updateCount_is", "xyz");
 		
 		replyService.deleteReply(reply);
-		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no") + "&user_no=" + req.getParameter("user_no")+"&cnt="+cnt
+		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no") 
+		+ "&user_no=" + req.getParameter("user_no")+"&cnt="+cnt
 		+ "&curPage="+searchVO.getCurPage() + "&rowSizePerPage="+searchVO.getRowSizePerPage()
 		+ "&searchType="+searchVO.getSearchType() + "&searchWord="+ searchVO.getSearchWord();
 	}
@@ -68,7 +68,8 @@ public class ReplyController {
 		redirectAttributes.addAttribute("updateCount_is", "xyz");
 		
 		replyService.updateReply(reply);
-		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no") + "&user_no=" + req.getParameter("user_no")+"&cnt="+cnt
+		return "redirect:/user_board_detail.do?ubd_no=" + req.getParameter("ubd_no") 
+				+ "&user_no=" + req.getParameter("user_no")+"&cnt="+cnt
 				+ "&curPage="+searchVO.getCurPage() + "&rowSizePerPage="+searchVO.getRowSizePerPage()
 				+ "&searchType="+searchVO.getSearchType() + "&searchWord="+ searchVO.getSearchWord();
 	}

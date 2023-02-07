@@ -2,6 +2,8 @@ package com.lec.amigo.controller;
 
 
 import java.io.File;
+
+
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.lec.amigo.dao.ChatDAO;
 import com.lec.amigo.dao.UserDAO;
 import com.lec.amigo.impl.ChatServiceImpl;
 import com.lec.amigo.impl.DogServiceImpl;
@@ -32,6 +34,7 @@ import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
+@PropertySource("classpath:config/uploadpathUser.properties")
 public class LoginController {
 	
 	@Autowired
@@ -43,14 +46,14 @@ public class LoginController {
 	@Autowired
 	ChatServiceImpl chatService;
 	
-	private String uploadFolder = "";
+	private String uploadFolderUser = "";
 	
 	@Autowired
 	Environment environment;
 	
 	@PostConstruct
 	public void getUploadPathPropeties() {
-		uploadFolder = environment.getProperty("uploadFolder");
+		uploadFolderUser = environment.getProperty("uploadFolderUser");
 	}
 	
 	
@@ -226,7 +229,7 @@ public class LoginController {
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
 			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
-			uploadFile.transferTo(new File(uploadFolder + uniqueName));
+			uploadFile.transferTo(new File(uploadFolderUser + uniqueName));
 			userVO.setUser_photo(uniqueName);
 		}
 		
