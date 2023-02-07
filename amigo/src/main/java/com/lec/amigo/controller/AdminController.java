@@ -2,11 +2,14 @@ package com.lec.amigo.controller;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
+import com.lec.amigo.service.DogService;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
 
 
 @Controller
+@PropertySource("classpath:config/uploadpath.properties")
 public class AdminController {
 	
 	@Autowired
@@ -32,6 +37,16 @@ public class AdminController {
 	
 	@Autowired
 	private SitterServiceImpl sitterService;
+	
+	@Autowired
+	Environment environment;
+	
+	private String uploadFolder = "";
+	
+	@PostConstruct
+	public void getUploadPathPropeties() {
+		uploadFolder = environment.getProperty("uploadFolder");
+	}
 	
 	// 펫시터 신청인 전체 리스트
 	@RequestMapping(value="/view/admin/getSitList.do", method=RequestMethod.GET) //
@@ -71,30 +86,15 @@ public class AdminController {
 		return "/view/admin/getSitList.do";  // 실제로 DAO의 매서드가 먹힘.
 	}
 	
-	//@RequestMapping(value="")
-	
- 
-//	@RequestMapping(value="/view/admin/updateSitter.do", method=RequestMethod.POST) 
-//	public String updateSitter(Model model, SitterVO svo, boolean sit_auth_is) {
 
-//		System.out.println(svo.toString());
-//		sitterService.updateSitter(svo, svo.isSit_auth_is());
-		
-//		UserVO user = (UserVO)sess.getAttribute("user");        대상이 로그인한 상태가 아니어도 상관x
-//		int user_no = user.getUser_no();
-//		List<SitterVO> sitList = sitterService.getSitList();
-//		model.addAttribute("sitList", sitList);
-		
-//		return "/view/admin/admin_sitList.jsp";
-//	}
 	
-	@RequestMapping(value="/view/admin/deleteSitter.do", method=RequestMethod.GET) 
-	public String deleteSitter(Model model, int user_no, SitterVO svo) {
+	@RequestMapping(value="/view/admin/updateTypeU.do", method=RequestMethod.GET) 
+	public String updateTypeU(Model model, int user_no, SitterVO svo, boolean sit_auth_is) {
 
 		
 		System.out.println("삭제합니다");
+		sitterService.updateTypeU(svo, sit_auth_is);
 		sitterService.deleteSitter(user_no);
-		sitterService.updateTypeU(svo);
 		
 
 		return "/view/admin/getSitList.do"; 
@@ -105,22 +105,3 @@ public class AdminController {
 
 }
 	
-/*	int sit_smoking = request.getParameter("sit_smoking").equals("true") ? 1 : 0;
-		int sit_exp = request.getParameter("sit_exp").equals("true") ? 1 : 0;
-		int sit_auth_is = request.getParameter("sit_auth_is").equals("true") ? 1 : 0;
-		 sittervo.setSit_smoking(sit_smoking);
-		 sittervo.setSit_exp(sit_exp);
-		 sittervo.setSit_auth_is(sit_auth_is);*/
-/*@RequestMapping("/view/mypage/getSitterList.do")
-	
-	public String getSitList (HttpSession sess, Model model, SitterVO sittervo) {
-		   
-		int user_no = 4; //?��?��
-		List<SitterVO> sitList = sitterService.getSitList(user_no);
-		model.addAttribute("sitList", sitList); 
-		   
-		System.out.println(sittervo.toString());
-		System.out.println("gggggggggggggggggggggggggggggggggggg");
-			
-		return "my_page_list.jsp";
-	}*/

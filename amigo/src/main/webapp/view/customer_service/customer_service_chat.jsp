@@ -48,92 +48,68 @@
 	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container" style="margin-top:100px;">
-			<div style="text-align: center">
-			
-			<c:set var="chatList" value="<%=chatList %>"/>
-			<c:set var="elseRoomList" value="<%=elseRoomList %>"></c:set>
-			
-			<c:choose>
-				<c:when test="<%=checkRoom==null %>">	
-				<p><b>채팅방이 없습니다</b></p>
-				</div>
-				</c:when>
-			
-				<c:when test="<%=checkRoom!=null %>">
-					<ul style="list-style: none;">
-						<!-- 
-						<c:choose>	
-						<c:when test="${!chatList.isEmpty() }">			
-							<c:forEach var="chat" items="${chatList }">
-								<tr class="btn btn-outline-dark" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
-								<td><b>이름 ${chat.getUser_nick()}</b></td>
-								<td style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">${chat.getContent() }</td>				
-								<c:if test="${!chat.isRead_is() }"> 
-								<td>new</td>
-								</c:if>
-								</tr>
-								<br/>						
-							</c:forEach>
-						</c:when>
-						<c:when test="${chatList.isEmpty() }">
-							<tr>
-								<td><a href="/amigo/chatList.do?index=<%=checkRoom.getChat_index() %>">방번호:<%=checkRoom.getChat_index() %></a></td>
-							</tr>
-						</c:when>
-						</c:choose>
-						 -->
-						 
-						 
-				
-					<c:forEach var="chat" items="${chatList }">
-								<li class="btn btn-outline-dark RL_item" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
-								
-									<table>
-										<tr>
-											<td>
-												<img src="#" >	
-											</td>
-											<td>
-												<ul style="list-style: none;" >
-												<li><b>${chat.getUser_nick()}</b></li>
-												<c:choose>									
-													<c:when test="${chat.getContent()=='file' }">
-														<li style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">&nbsp;이미지..</li>
-													</c:when>
-													<c:otherwise>
-														<li style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis;"> ${chat.getContent() }</li>
-													</c:otherwise>
-													
-												</c:choose>
-												</ul>
-											</td>
-										</tr>
-									</table>	
-							<!-- 				
-								<c:if test="${!chat.isRead_is() }"> 
-								<td>new</td>
-								</c:if>
-								 -->
-								</li>
-								<hr><br>						
-					</c:forEach>
+		
+			<section>
+				<article>
+					<div style="text-align: center; width: 500px; margin: 0 auto;" >
 					
-					<% for(ChatRoom room :elseRoomList){
-					%>
-						<li class="btn btn-outline-dark" onclick="location.href='/amigo/chatList.do?index=<%=room.getChat_index()%>'"><%=room.getChat_index()%>번방, 등록된 글이 없습니다!</li>
-						<hr><br>
-					<% 
-					} %>							
-				</ul>
-				</c:when>
-			</c:choose>
-			
-			
-
-			
-			
-			
-	
+					<c:set var="chatList" value="<%=chatList %>"/>
+					<c:set var="elseRoomList" value="<%=elseRoomList %>"></c:set>
+					
+					<c:choose>
+						<c:when test="<%=checkRoom==null %>">	
+						<p><b>채팅방이 없습니다</b></p>
+					</div>
+						</c:when>
+						<c:when test="<%=checkRoom!=null %>">
+							<ul style="list-style: none;">
+							<c:forEach var="chat" items="${chatList }">
+										<li class="btn btn-outline-dark RL_item" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
+											<table>
+												<tr>
+													<td>
+														<c:forEach var="us" items="${userList }">
+															<c:if test="${us.user_no==chat.user_no }">
+																<img src="/img/${us.user_photo }" width="50px;" height="50px;" > <!-- 파일나중에 저장할 것--> 
+															</c:if>
+														</c:forEach>
+													</td>
+													<td>
+														<ul style="list-style: none;" >
+														<li style="width:250px; text-align: left;"><b>${chat.getUser_nick()}</b></li>
+														<c:choose>									
+															<c:when test="${chat.getContent()=='file' }">
+																<li style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;">이미지..</li>
+															</c:when>
+															<c:otherwise>
+																<li style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis; width:250px; text-align: left;"> ${chat.getContent() }</li>
+															</c:otherwise>
+															
+														</c:choose>
+														</ul>
+													</td>
+												</tr>
+											</table>	
+									<!-- 				
+										<c:if test="${!chat.isRead_is() }"> 
+										<td>new</td>
+										</c:if>
+										 -->
+										</li>
+										<hr><br>						
+							</c:forEach>
+							
+							<% for(ChatRoom room :elseRoomList){
+							%>
+								<li class="btn btn-outline-dark" style="height:62px; width:308.88px; text-align: center; line-height: 45px;" onclick="location.href='/amigo/chatList.do?index=<%=room.getChat_index()%>'"><%=room.getChat_index()%>번방, 등록된 글이 없습니다!</li>
+								<hr><br>
+							<% 
+							} %>							
+						</ul>
+						</c:when>
+					</c:choose>
+				</article>
+			</section>
 		</div>
 	<%@include file="/includes/footer.jsp" %>
 

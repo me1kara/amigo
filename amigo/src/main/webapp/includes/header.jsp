@@ -126,7 +126,7 @@
             <a class="nav-link" href="<%=request.getContextPath() %>/view/mypage/my_page_list.jsp">마이페이지</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#"
+            <a class="nav-link" href="/amigo/book_check.do"
               >예약확인</a
             >
           </li>

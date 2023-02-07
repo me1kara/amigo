@@ -132,6 +132,7 @@
         if (file) {
           reader.readAsDataURL(file);
         }
+        console.log(previewFile(this));
      }
     function preview_del(){
         $('.preview_img_del').remove();
