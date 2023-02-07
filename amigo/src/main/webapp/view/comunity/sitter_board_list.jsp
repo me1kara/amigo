@@ -92,7 +92,6 @@
             <div class="row justify-content-between">
                <div class="col-auto">
                <a class="ubd-header-menu" href="sitter_board_list.do">전체글</a>&nbsp;&nbsp;
-                  <a class="ubd-header-menu" href="#">인기글</a>&nbsp;&nbsp;
                   <a class="ubd-header-menu" href="user_board_list.do">유저커뮤니티</a>
                </div>
             </div>
@@ -101,11 +100,11 @@
          <c:if test="${ sboardList.isEmpty() }">
             <h6><p>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</p></h6>
          </c:if>
-               <c:forEach  var="sboard" items="${ sboardList }">
-                    <div class="container" style="cursor: pointer;"  onclick="">
+           <c:forEach  var="sboard" items="${ sboardList }">
+            <div class="container" style="cursor: pointer;"  onclick="">
             <!-- Forum List -->
             <!-- div를 눌러서 접속 될수 있게 만듦 -->
-            <div class="inner-main-body p-2 p-sm-3 forum-content show" >
+             <div class="inner-main-body p-2 p-sm-3 forum-content show" >
               <div class="card mb-2">
                 <div class="card-body p-2 p-sm-3">
                   <div class="media forum-item">
@@ -123,31 +122,34 @@
                  --> 
                  
                     <div class="media-body">
-                      <!-- 제목 -->
-                      <h6>
-                      <a class="text-body" style="font-size:20px;" href="sitter_board_detail.do?sbd_no=${sboard.getSbd_no()}&user_no=${user.getUser_no()}
-                      &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc">${sboard.getSbd_title()}</a><span> [${sboard.getReply_cnt()}]</span>
-                      </h6>
-                      <!-- 제목/ -->
-                      <p class="text-muted">
-                      <!-- 작성자 -->
-                        <span class="nickName" style="color:#498dcc; font-weight:bold">${ sboard.getUser_nick() }</span>&nbsp;
-                       <!-- 작성자/ -->
-                       <!-- 작성일 -->
-                        <span class="text-secondary font-weight-bold">
-                        <fmt:formatDate value="${sboard.getSbd_date()}" pattern="yyyy-MM-dd"/></span>
-                         <!-- 작성일자/ -->      
-                      </p>
+	                   <!-- 제목 -->
+	                   <h6>
+	                      <a class="text-body" style="font-size:20px;" href="sitter_board_detail.do?sbd_no=${sboard.getSbd_no()}&user_no=${user.getUser_no()}
+	                      &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+	                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc">${sboard.getSbd_title()}</a><span> [${sboard.getReply_cnt()}]</span>
+	                   </h6>
+	                   <!-- 제목/ -->
+	                   
+	                   <p class="text-muted">
+	                   <!-- 작성자 -->
+	                       <span class="nickName" style="color:#498dcc; font-weight:bold">${ sboard.getUser_nick() }</span>&nbsp;
+	                   <!-- 작성자/ -->
+	                   
+	                   <!-- 작성일 -->
+	                       <span class="text-secondary font-weight-bold">
+	                       <fmt:formatDate value="${sboard.getSbd_date()}" pattern="yyyy-MM-dd"/></span>
+	                   <!-- 작성일자/ -->      
+	                   </p>
                     </div>
+                    
                     <div class="text-muted small text-center align-self-center">
                       <span class=""><i class="fa fa-eye"></i>${ sboard.getSbd_cnt() }</span>
-                       </div>
-                       </div>
-                      </div>
-                       </div>
+                    </div>
                   </div>
+                </div>
               </div>
+             </div>
+            </div>
           </c:forEach>
           </div>
       <div class="row align-items-start mt-3">
@@ -182,7 +184,7 @@
       
    
       <!-- 하단 검색 시스템 -->
-      <form action="user_board_list.do" method="post" >  
+      <form action="sitter_board_list.do" method="post" >  
       	<div class="row align-items-center mt-3 mb-3">
             <div class="col-3 ms-auto mb-3">
                <select class="form-select" id="searchType" name="searchType">

@@ -34,32 +34,22 @@ public class SitterBoardServiceImpl implements SitterBoardService{
 
 	@Override
 	public SitterBoardVO insertSitterBoard(SitterBoardVO sboard) {
-		return null;
+		return sitterboardDAO.insertSitterBoard(sboard);
 	}
 
 	@Override
 	public int updateSitterBoard(SitterBoardVO sboard) {
-		return 0;
+		return sitterboardDAO.updateSitterBoard(sboard);
 	}
 
 	@Override
 	public int deleteSitterBoard(SitterBoardVO sboard) {
-		return 0;
+		return sitterboardDAO.deleteSitterBoard(sboard);
 	}
 
 	@Override
-	public int findHeart(int user_no, int ubd_no) {
-		return 0;
-	}
-
-	@Override
-	public int insertHeart(HeartVO heart) {
-		return 0;
-	}
-
-	@Override
-	public void updateCount(int ubd_no) {
-		
+	public void updateSbdCount(int sbd_no) {
+		sitterboardDAO.updateSbdCount(sbd_no);
 	}
 
 

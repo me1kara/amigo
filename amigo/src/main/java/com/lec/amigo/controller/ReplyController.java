@@ -3,8 +3,8 @@ package com.lec.amigo.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,6 @@ import com.lec.amigo.service.ReplyService;
 import com.lec.amigo.vo.ReplyVO;
 
 @Controller
-@PropertySource("classpath:config/replysql.properties")
 public class ReplyController {
 
 	@Autowired

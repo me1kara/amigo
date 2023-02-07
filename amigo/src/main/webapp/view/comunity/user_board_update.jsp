@@ -152,7 +152,7 @@
 			<input type="hidden" name="ubd_file" value="${board.getUbd_file()}"/>	
 			<div class="row justify-content-evenly mt-5 mb-5">
 				<input type="button" class="btn btn-primary col-2" value="취소" onclick="history.go(-1)"/>
-				<input type="submit" class="btn btn-primary col-2" value="등록완료"/>
+				<input type="submit" class="btn btn-primary col-2" value="수정완료"/>
 			</div>
 		</form>			
 	</div>

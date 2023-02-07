@@ -23,14 +23,8 @@ public interface SitterBoardService {
 	// 시터 게시글 삭제
 	int deleteSitterBoard(SitterBoardVO sboard);
 	
-	// 좋아요 했는지 찾기
-	int findHeart(int user_no, int ubd_no);
-
-	// 좋아요 등록
-	int insertHeart(HeartVO heart);
-	
 	// 조회수
-	void updateCount(int ubd_no);
+	void updateSbdCount(int sbd_no);
 
 	// 페이징 관련
 	int getTotalRowCount(SearchVO searchVO);

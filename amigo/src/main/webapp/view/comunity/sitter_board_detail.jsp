@@ -20,21 +20,17 @@
 		
 	}
 	
-	.heart{
-		cursor : pointer;
-		
-	}
 	
 	ul{
 		list-style-type:none;	
 	}
 	
-	#reply_user {
+	#sreply_user {
 		color: #189cc4;
 		font-weight: bold;
 	}
 	
-	#reply_form {
+	#sreply_form {
 		text-align:center;
 	}
 	
@@ -77,70 +73,49 @@
 			<span>${ sboard.getSbd_date() }</span>
 			<!-- 조회 -->
 			<span>조회수 ${ sboard.getSbd_cnt() }</span>
-			<!-- 추천 
-			<span>좋아요 ${sboard.getLike_cnt()}</span>
-			-->
+
 			</div>	
 			</div>		
 		</div>		
 		<hr/>
 		<br/>
-		<!-- 수정본 글쓰기 end -->
+
 		<!-- 글작성 내용 start -->
 		<div>
-		<a>${ sboard.getSbd_cont() }</a>
-		<br/>
-		<a>
-		<!-- 
-		<c:if test="${board.getUbd_file()!=null and board.getUbd_file()!=''}">
-			<c:forEach items="${fileSplit}" var="file">
-				<img src="/boardimg/${file}" width="300px" height="300px"><br><br>
-			</c:forEach>
-		</c:if>
-		 -->
-		</a>
-		
+		<a>${ sboard.getSbd_cont() }</a>	
 		</div>
 		<!-- 글작성 내용 end -->
 		
-		<!--  추천  -->
-			<br>
-			<div class="container text-center">
-				<a class="heart" style="text-decoration-line: none;">
-					<img id="heart" src="resources/img/heart.svg">
-					좋아요
-				</a>
-			</div>
-		<!-- 추천 -->
+
 		<hr/>
 		
 		
 			
 			<div align="left">
-				댓글(${ board.getReply_cnt() }) <hr> 
+				댓글(${ sboard.getReply_cnt() }) <hr> 
 				<ul>
-					<c:forEach items="${replyList}" var="reply">
+					<c:forEach items="${sreplyList}" var="sreply">
 								<script>
-									function deleteReply(ubd_r_no) {
+									function deleteSitterReply(sbd_r_no) {
 									if(confirm("이 댓글을 삭제하겠습니까?")) {
-									self.location.href = "deleteReply.do?ubd_r_no="+ubd_r_no+"&ubd_no=${reply.ubd_no}&user_no=${reply.user_no}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=${cnt}";
+									self.location.href = "deleteSitterReply.do?sbd_r_no="+sbd_r_no+"&sbd_no=${sreply.sbd_no}&user_no=${sreply.user_no}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}";
 										}
 									}
 								</script>
 					<li>
 						<div>
 							<div>
-							<span id="reply_user">${reply.user_nick}</span> / <fmt:formatDate value="${reply.ubd_r_regdate}" type="date"/>
+							<span id="sreply_user">${sreply.user_nick}</span> / <fmt:formatDate value="${sreply.sbd_r_regdate}" type="date"/>
 							
-							<c:if test="${reply.user_no == user.getUser_no() || user.getUser_type() == 'A'}">
-		     					<a href="#" onclick="deleteReply(${reply.ubd_r_no})">삭제</a>
+							<c:if test="${sreply.user_no == user.getUser_no() || user.getUser_type() == 'A'}">
+		     					<a href="#" onclick="deleteSitterReply(${sreply.sbd_r_no})">삭제</a>
 		     				</c:if>
 		     				
-		     				<c:if test="${reply.user_no == user.getUser_no()}">
-		     					<a href="updateReply.do?ubd_r_no=${reply.ubd_r_no}&user_no=${reply.user_no}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=${cnt}">수정</a>
+		     				<c:if test="${sreply.user_no == user.getUser_no()}">
+		     					<a href="updateSitterReply.do?sbd_r_no=${sreply.sbd_r_no}&user_no=${sreply.user_no}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">수정</a>
 		     				</c:if>	
 
-								<P>${reply.ubd_r_content}</P>
+								<P>${sreply.sbd_r_cont}</P>
 							</div>
 		
 						</div>
@@ -150,58 +125,42 @@
 			</div>
 			
 			
-			<div id="reply_form">
-				<form action="insertReply.do" method="POST" >
+			<div id="sreply_form">
+				<form action="insertSitterReply.do" method="POST" >
 				
 				
 					<!-- cols 30에서 60으로 수정 -->
-				<p id = "reply_input">
-					<textarea style="margin:0 auto;" rows="2" cols="50" name="ubd_r_content" placeholder="댓글을 입력하세요." required></textarea>		
+				<p id = "sreply_input">
+					<textarea style="margin:0 auto;" rows="2" cols="50" name="sbd_r_cont" placeholder="댓글을 입력하세요." required></textarea>		
 				</p>
-					<p><button type="submit" onclick="reload();" class="btn btn-sm btn-secondary col-2" >댓글입력</button></p>
+					<p><button type="submit" class="btn btn-sm btn-secondary col-2" >댓글입력</button></p>
 
 		
-					<input type="hidden" name="ubd_no" value="${board.getUbd_no()}"/>
+					<input type="hidden" name="sbd_no" value="${sboard.getSbd_no()}"/>
 					<input type="hidden" name="user_no" value="${user.getUser_no()}"/>		
 					<input type="hidden" name="searchType" value="${searchVO.getSearchType()}"/>	
 					<input type="hidden" name="searchWord" value="${searchVO.getSearchWord()}"/>	
 					<input type="hidden" name="curPage" value="${searchVO.getCurPage()}"/>	
 					<input type="hidden" name="rowSizePerPage" value="${searchVO.getRowSizePerPage()}"/>	
-					<input type="hidden" name="cnt" value="${cnt}"/>	
 
 				</form>
 			</div>
-			<script type="text/javascript">
-			function reload() {
-				location.reload();
-			}
-			</script>
-			
+
 			
 			<div class="container col-md-5 " align="center">
 			
 				<c:if test="${sboard.getUser_no() == user.getUser_no()}">
-				<a href="sitter_board_update.do?ubd_no=${board.getUbd_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+				<a href="sitter_board_update.do?sbd_no=${sboard.getSbd_no()}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
 				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=${cnt}" class="btn btn-primary mt-5 mb-5">수정</a>
 				</c:if>
 				
-				<c:choose>
-				<c:when test="${cnt==1}">
 				<a href="sitter_board_list.do?&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
 				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-5 mb-5">목록</a>
-				</c:when>
-				
-				<c:when test="${cnt==2}">
-				<a href="sitter_board_list_like.do?&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-				&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}" class="btn btn-primary mt-5 mb-5">목록</a>
-				</c:when>
-				
-				</c:choose>
+
 
 				<c:if test="${sboard.getUser_no() == user.getUser_no() || user.getUser_type() == 'A'}">
-				<button type="button" class="btn btn-danger mt-5 mb-5" data-bs-toggle="modal" data-bs-target="#ubddelete"
-				data-ubd_no="${board.getUbd_no()}" data-ubd_file="${board.getUbd_file()}" 
-				data-cur_page="${searchVO.getCurPage()}" data-rowsize_perpage="${searchVO.getRowSizePerPage()}">삭제</button>
+				<button type="button" class="btn btn-danger mt-5 mb-5" data-bs-toggle="modal" data-bs-target="#sbddelete"
+				data-sbd_no="${sboard.getSbd_no()}">삭제</button>
 				</c:if>
 				
 			</div>	
@@ -209,18 +168,18 @@
 	</div>
 	
 		<!--삭제 modal form  -->
-				<div id="ubddelete" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ubddeleteLabel" aria-hidden="true">
+				<div id="sbddelete" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="sbddeleteLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 				   <div class="modal-content">
 				     <div class="modal-header">
-				        <h5 class="modal-title" id="ubddeleteLabel">게시글 삭제</h5>
+				        <h5 class="modal-title" id="sbddeleteLabel">게시글 삭제</h5>
 				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				     </div>
 				      <div class="modal-body">
 				        게시글을 정말 삭제하시겠습니까?
 				      </div>
 				      <div class="modal-footer">
-				      	<button type="button" class="btn btn-danger" onclick="deleteBoard();">삭제</button>
+				      	<button type="button" class="btn btn-danger" onclick="deletesBoard();">삭제</button>
 				       	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
 				      </div>
 				   </div>
@@ -229,58 +188,17 @@
 				  
 		<!--삭제 modal form script ubd_no전달-->	
 		<script>
-		var UBDNO="";
-		var USERFILE="";
-		var CURPAGE ="";
-		var ROWPAGE ="";
+		var SBDNO="";
+
 		$(document).ready(function() {     
-	        $('#ubddelete').on('show.bs.modal', function(event) {          
-	        	UBDNO    = $(event.relatedTarget).data('ubd_no');
-	        	USERFILE = $(event.relatedTarget).data('ubd_file');  
-	        	CURPAGE  = $(event.relatedTarget).data('cur_page');
-	        	ROWPAGE  = $(event.relatedTarget).data('rowsize_perpage');
+	        $('#sbddelete').on('show.bs.modal', function(event) {          
+	        	SBDNO    = $(event.relatedTarget).data('sbd_no');  
+
 	        });
 	    });
-		function deleteBoard() {location.href='user_board_delete.do?ubd_no='+UBDNO+'&ubd_file='+USERFILE+'&curPage='+CURPAGE+'&rowSizePerPage='+ROWPAGE;}
+		function deletesBoard() {location.href='sitter_board_delete.do?sbd_no='+SBDNO;}
 		</script>
 
-	<script>
-    $(document).ready(function () {
-	// 좋아요가 있는지 확인한 값을 findLike에 저장
-        var findHeart = ${findHeart};
-        // findHeart이 1이면 좋아요가 이미 되있는것이므로 heart-fill.svg를 출력하는 코드
-        if(findHeart>0) {
-        	console.log(findHeart);
-            $("#heart").prop("src", "resources/img/heart_fill.svg");
-            $(".heart").prop('name', findHeart);
-        }
-        else {
-        	console.log(findHeart);
-            $("#heart").prop("src", "resources/img/heart.svg");
-            $(".heart").prop('name', findHeart);
-        }
-    });
-	</script>
-	
-	<script>
-	// 좋아요 버튼을 클릭 시 실행되는 코드
-        $(".heart").click(function() { 
-           var that = $(".heart");
-	    $.ajax({
-	    	url :'heart.do',
-	        type :'POST',
-	        data : {'user_no':${user.getUser_no()}, 'ubd_no':${board.getUbd_no()}},
-	    	success : function(data){
-	    		that.prop('name', data);
-	        	if(data==1) {
-	            	     $('#heart').prop("src","resources/img/heart_fill.svg");
-	        	} else {
-                   	     $('#heart').prop("src","resources/img/heart.svg");
-	        	}
-            	}
-	    });
-       });
-</script>
 
 	<!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
