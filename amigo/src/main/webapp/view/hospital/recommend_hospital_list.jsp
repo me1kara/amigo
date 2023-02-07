@@ -18,11 +18,9 @@
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:20px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {position:relative;width:100%;height:500px;}
-#menu_wrap {position:relative;top:0;left:0;bottom:0;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+#menu_wrap {position:relative;top:10px;left:0;bottom:0;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
-#menu_wrap .option{text-align: center;}
-#menu_wrap .option p {margin:10px 0;}  
 #menu_wrap .option button {margin-left:5px;}
 #placesList li {list-style: none;}
 #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
@@ -51,6 +49,16 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+.placeinfo_wrap {position:absolute;bottom:28px;left:-150px;width:300px;}
+.placeinfo {position:relative;width:100%;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;padding-bottom: 10px;background: #fff;}
+.placeinfo:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+.placeinfo_wrap .after {content:'';position:relative;margin-left:-12px;left:50%;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+.placeinfo a, .placeinfo a:hover, .placeinfo a:active{color:#fff;text-decoration: none;}
+.placeinfo a, .placeinfo span {display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.placeinfo span {margin:5px 5px 0 5px;cursor: default;font-size:13px;}
+.placeinfo .title {font-weight: bold; font-size:14px;border-radius: 6px 6px 0 0;margin: -1px -1px 0 -1px;padding:10px; color: #fff;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+.placeinfo .tel {color:#0f7833;}
+.placeinfo .jibun {color:#999;font-size:11px;margin-top:0;}
 </style>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -62,14 +70,17 @@
 				<div id="map" style="width:100%;height:600px;"></div>
 					<div id="menu_wrap" class="bg_white">
 					      
-					   		 <div class="option">
-					            	<div>
-						                <form onsubmit="searchPlaces(); return false;">
-						                    키워드 : <input type="text" value="동물병원" id="keyword" size="15"> 
-						                    <button type="submit">검색하기</button> 
-						                </form>
-					           	    </div>
-					       		 </div> 
+					         	
+						          <form class="row row-cols-lg-auto g-3 align-items-center" onsubmit="searchPlaces(); return false;">
+					   		 		<div class="col-12">
+					   				 <div class="input-group">
+						                    <label class="sr-only" for="keyword">현재위치에서</label>
+						                    <input class="form-control" type="text" value="동물병원" id="keyword"> 
+						                    <button type="submit" class='btn btn-primary'>검색하기</button> 
+						                  </div>
+					       			 </div> 
+						           </form>
+					           	   
 							        <hr>  
 							        <ul id="placesList"></ul>
 							        <div id="pagination"></div>
@@ -197,23 +208,23 @@
 	        // 마커와 검색결과 항목에 mouseover 했을때
 	        // 해당 장소에 인포윈도우에 장소명을 표시합니다
 	        // mouseout 했을 때는 인포윈도우를 닫습니다
-	        (function(marker, title) {
-	            kakao.maps.event.addListener(marker, 'mouseover', function() {
-	                displayInfowindow(marker, title);
+	        (function(marker, places) {
+	            kakao.maps.event.addListener(marker, 'click', function() {
+	                displayInfowindow(marker, places);
 	            });
 
-	            kakao.maps.event.addListener(marker, 'mouseout', function() {
+	        /*    kakao.maps.event.addListener(marker, 'mouseout', function() {
 	                infowindow.close();
-	            });
+	            });*/
 	             
 	            itemEl.onmouseover =  function () {
-	                displayInfowindow(marker, title);
+	                displayInfowindow(marker, places);
 	            };
 
 	            itemEl.onmouseout =  function () {
 	                infowindow.close();
 	            };
-	        })(marker, places[i].place_name);
+	        })(marker, places[i]);
 	          	        
 	        fragment.appendChild(itemEl);
 	    }
@@ -312,8 +323,20 @@
 
 	// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 	// 인포윈도우에 장소명을 표시합니다
-	function displayInfowindow(marker, title) {
-	    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+	function displayInfowindow(marker, place) {
+	    var content = '<div class="placeinfo">' +
+        '   <a class="title" href="' + place.place_url + '" target="_blank" title="' + place.place_name + '">' + place.place_name + '</a>';   
+
+	    if (place.road_address_name) {
+	        content += '    <span title="' + place.road_address_name + '">' + place.road_address_name + '</span>' +
+	                    '  <span class="jibun" title="' + place.address_name + '">(지번 : ' + place.address_name + ')</span>';
+	    }  else {
+	        content += '    <span title="' + place.address_name + '">' + place.address_name + '</span>';
+	    }                
+	   
+	    content += '    <span class="tel">' + place.phone + '</span>' + 
+	                '</div>' + 
+	                '<div class="after"></div>';
 
 	    infowindow.setContent(content);
 	    infowindow.open(map, marker);
