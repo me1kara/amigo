@@ -65,11 +65,11 @@
 						</c:otherwise>
 						</c:choose>
 					</article>
-					</c:choose>
-				</c:when>
-				<c:when test='${user.getUser_type().equals("P") }'>
+					</c:when>
+				<c:when test='${user.getUser_type().equals("S") }'>
 					<h1>시터전용</h1>
 				</c:when>
+				</c:choose>
 			</section>	
 		</div>
 	<%@include file="/includes/footer.jsp" %>

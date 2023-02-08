@@ -50,6 +50,7 @@
 	  			  </tr>
 				</table>
 				<button class="btn btn-primary"><a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }" style="color: white;">신청하기</a> </button>
+				<button class="btn btn-primary"><a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }" style="color: white;">신청하기</a> </button>
 			</div>
 	<%@include file="/includes/footer.jsp" %>
 

@@ -39,7 +39,7 @@ public interface SitterService {
 	void updateTypeS(SitterVO svo);
 	
 	// 펫시터 삭제하면 회원타입 원복시키기 (아직 보류)
-	void updateTypeU(SitterVO svo, boolean sit_auth_is);
+	void updateTypeU(SitterVO svo);
 
 	
 	

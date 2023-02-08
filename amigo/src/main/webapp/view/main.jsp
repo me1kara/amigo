@@ -297,7 +297,7 @@ prefix="c"%>
           <h4>실시간 후기</h4>
         </div>
         <div class="col-4 text-end">
-          <a href="#" class="all-view">전체보기</a>
+          <a href="user_review_list.do" class="all-view">전체보기</a>
         </div>
       </div>
       <div id="carouselExampleDark" class="carousel carousel-dark slide">

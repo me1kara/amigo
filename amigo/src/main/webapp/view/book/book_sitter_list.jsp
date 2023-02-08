@@ -98,12 +98,16 @@
 								<img src="https://via.placeholder.com/100x100" " class="col-sm-4" />
 								<div class="col-sm-4">
 									<h4>이름:${user.getUser_name() }</h4>
-									<p>경력사항,특기</p>
+									<p>경력사항: ${sit.getSit_intro() },특기</p>
 									<p>시간:${sit.getSit_time() }</p>
 								</div>
 								<div class="col-sm-4">
 									<button class="btn btn-secondary"
 										onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }'">자세히보기</button>
+								</div>
+								<div class="col-sm-4">
+									<button class="btn btn-secondary"
+										onclick="location.href='user_review_insert.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }'">리뷰작성</button>
 								</div>
 							</div>
 						</c:if>
