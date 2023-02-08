@@ -64,6 +64,11 @@ public class BookServiceImpl implements BookService{
 	public int getMyBookCount(int user_no) {
 		return bookDao.getMyBookCount(user_no);
 	}
+
+	public int deleteBook(int rno) {
+		// TODO Auto-generated method stub
+		return bookDao.deleteBook(rno);
+	}
 	
 	
 	

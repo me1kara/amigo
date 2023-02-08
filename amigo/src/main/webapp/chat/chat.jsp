@@ -66,10 +66,11 @@
 		  var preview = $('#msgTd');
 		  var file = document.querySelector('input[type=file]').files[0];
 		  var reader = new FileReader();
-		
+		  console.log(file);
 		  reader.addEventListener(
 		    'load',
 		    function () {
+		    	
 		      $('#photo').hide();
 		   	  $('#msg').val('').hide();
 		      preview.prepend("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
@@ -195,7 +196,6 @@
 			$('#msg').show();
 			$('#photo').show();
 			$('#fileUpload').val('');
-			
 		}
 	  	  function chat_delete(chat_no){
 		  		let option ={

@@ -221,6 +221,15 @@ public class BookController {
 		
 		return bookDetailList;
 	}
+	@PostMapping("/ajax/deleteBook.do")
+	@ResponseBody 
+	public int deleteBook(HttpServletRequest req) {
+		int rno = Integer.parseInt(req.getParameter("rno")) ;
+		int result = bookService.deleteBook(rno);
+
+		return result;
+	}
+	
 	
 	
 	@RequestMapping(value = "/book_check.do", method = { RequestMethod.GET })
