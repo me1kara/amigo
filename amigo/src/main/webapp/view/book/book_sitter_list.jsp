@@ -30,6 +30,26 @@
     	a:active {color: white; text-decoration: none;}
     	a:visited {color: white; text-decoration: none;}
     	a:link{color: white; text-decoration: none;}
+    	
+    	.container{
+    		width:70%;
+    	}
+    	
+    	*{
+    		margin: 0 auto;
+    	}
+    	
+    	.sitter_list{
+    		text-align:center;
+    		margin:0 auto;
+    		padding: 10px;
+    	}
+    	.sitter_item{
+    		display: flex;
+    		justify-content: center;
+    		margin: 0 auto; 
+    		border: 1px solid;
+    	}
     </style>
     
 </head>
@@ -50,25 +70,27 @@
     	}
     </script>
 
-	<%-- <%@include file="/includes/header.jsp"%> --%>
+	<%@include file="/includes/header.jsp"%>
 		<div class="container">
 			
 			<section>
-				<article>
+				<article class="sitter_list">
 					<h2><%=addr%> 시터들 목록</h2>
 					<c:choose>
 					<c:when test="${sittList!=null }">
 					<c:forEach var="sit" items="${sittList }">
 						<c:forEach var="user" items="${sittNameList }">		
 						<c:if test="${user.getUser_no() == sit.getUser_no() }">
-							<div class="row">
-								<img src="https://via.placeholder.com/100x100" " class="col-sm-4" width=""/>
-								<div class="col-sm-4">
-									<h4>이름:${user.getUser_name() }</h4>
-									<p>경력사항,특기</p>
-									<p>시간:${sit.getSit_time() }</p>
+							<div class="sitter_item">
+								<div class="col-sm-3">
+									<img src="https://via.placeholder.com/100x100" width="100px" height="100px"/>
 								</div>
-								<div class="col-sm-4">
+								<table class="col-sm-6" >
+									<tr><th colspan="1">이름</th><td colspan="3">${user.getUser_name() }</td></tr>									
+									<tr><th>경력사항,특기</th><td>${sit.sit_care_exp }</td></tr>
+									<tr><th>시간</th><td>${sit.getSit_time() }</td></tr>
+								</table>
+								<div class="col-sm-3" style="display: flex; justify-content: center; align-items: center;">
 									<button class="btn btn-secondary"
 										onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }'">자세히보기</button>
 								</div>
@@ -76,6 +98,7 @@
 						</c:if>
 						</c:forEach>
 					</c:forEach>
+						<c:if test="${searchVO.totalPageCount>1 }">
 						<div class="row align-items-start mt-3">
 							<ul class="col pagination justify-content-center">
 							<c:set var="cp" value="${searchVO.getCurPage()}"/>
@@ -90,7 +113,7 @@
 							</c:if>
 							<c:forEach var="page" begin="${fp}" end="${lp}">
 								<li class="page-item ${cp==page ? 'active' : ''}">
-									<button class="btn" onclick="sendJsonUrl(${page},${rp})">${page}</button>
+									<button class="btn page-link" onclick="sendJsonUrl(${page},${rp})">${page}</button>
 								</li>
 							</c:forEach>				
 							<c:if test="${ lp < tp }">
@@ -101,11 +124,15 @@
 							</c:if>
 							</ul> <!-- pagination -->	
 						</div> <!-- 페이징 -->
+						</c:if>
 					</c:when>
 					<c:otherwise>
 						<h>해당한 지역의 펫시터가 없습니다!</h>
 					</c:otherwise>
 					</c:choose>
+				</article>
+				<article style="text-align: center;">
+					<button class="btn btn-dark" onclick="history.go(-1)">이전</button>
 				</article>
 			</section>
 	</div>
