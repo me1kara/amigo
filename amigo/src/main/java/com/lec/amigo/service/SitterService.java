@@ -17,7 +17,7 @@ public interface SitterService {
 	
 	
 	// 펫시터상세정보
-	SitterVO getSitter(SitterVO svo);
+	SitterVO sitterInfo(SitterVO svo);
 	
 	// 펫시터(신청)리스트(승인무관)
 	List<SitterVO> getSitList(SearchVO searchVO);

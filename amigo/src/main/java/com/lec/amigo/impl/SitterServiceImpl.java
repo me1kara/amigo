@@ -21,9 +21,9 @@ public class SitterServiceImpl implements SitterService {
 	SitterDAO sitterDAO;
 	
 	@Override
-	public SitterVO getSitter(SitterVO svo) {
+	public SitterVO sitterInfo(SitterVO svo) {
 		// TODO Auto-generated method stub
-		return sitterDAO.getSitter(svo);
+		return sitterDAO.sitterInfo(svo);
 	}
 
 	@Override

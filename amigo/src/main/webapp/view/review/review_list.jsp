@@ -189,7 +189,7 @@
                     <!-- 유저 프로필 end -->
                   </div>
                   <!-- 별 -->
-                  <!-- 
+                 
                   <div class="star-ratings">
                     <div 
                       class="star-ratings-fill space-x-2 text-lg"
@@ -200,7 +200,7 @@
                     <div class="star-ratings-base space-x-2 text-lg">
                       <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                     </div>
-                  -->
+                  
                   <div class="text-center">
                     <div class="wrap-star">
                       <!-- 100 % -->

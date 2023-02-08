@@ -33,41 +33,29 @@ public class ReviewDAO {
 	
 	private String sql = "";
 	private String selectReviewList = "";                      // 펫시터 개인의 리뷰 전체 리스트
-	private String selectReviewListByUserNoLike = "";          //               리뷰 별점순
-	private String selectStarCount = "";
-	private String insertReview = "";
-	private String deleteReview = "";
-	private String reviewTotalRowCount = "";
-	private String reviewCateRowCount = "";
-//	private String selectReviewListByUserAddrLike = "";        // 펫시터 개인 vs 상대적으로 다양한 지역의 유저(동 단위)             
+	private String selectReviewListByUserAddr = "";            // 상세주소 가까운순             
+	private String selectStarCount = "";                       // 리뷰쓴 인원수  (별점 n개당)
+	private String insertReview = "";                          // 리뷰 작성하기
+	private String deleteReview = "";                          // 리뷰 삭제하기
 	
-	
-	
-	
-	
-	private String selectReviewListByUbdTitle = "";
-	private String selectReviewListByUserNick = "";
-
 
 	@PostConstruct
 	public void getSqlPropeties() {
 		selectReviewList                  = environment.getProperty("selectReviewList");
-		selectReviewListByUserNoLike      = environment.getProperty("selectReviewListByUserNoLike");
+		selectReviewListByUserAddr        = environment.getProperty("selectReviewListByUserAddr");
 		selectStarCount                   = environment.getProperty("selectStarCount");
 		insertReview                      = environment.getProperty("insertReview ");
 		deleteReview                      = environment.getProperty("deleteReview");
-		reviewTotalRowCount               = environment.getProperty("reviewTotalRowCount ");
-		reviewCateRowCount                = environment.getProperty("reviewCateRowCount");
-//		selectReviewListByUserAddrLike    = environment.getProperty("selectReviewListByUserAddrLike");
 	}
 	
-	
+	// 총 리뷰 다뜨게하기
 	public List<ReviewVO> getReviewList(ReviewVO review) {
 		
 		System.out.println(selectReviewList);
 		return jdbcTemplate.query(selectReviewList, new ReviewRowMapper());
 	}
 
+	//  리뷰 쓰기 아래는 별점 매기기???
 	public ReviewVO insertReview(ReviewVO review) {
 		
 //		Map stars = new HashMap();
@@ -86,9 +74,10 @@ public class ReviewDAO {
 		return review;	
 	}
 	
-	public int deleteReview(int user_no) {
+	//  리뷰 삭제하기
+	public int deleteReview(int rev_no) {
 		System.out.println(deleteReview + "번 삭제");
-		int delRev = jdbcTemplate.update(deleteReview, user_no);
+		int delRev = jdbcTemplate.update(deleteReview, rev_no);
 		return delRev;	
 	}
 	

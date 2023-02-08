@@ -279,7 +279,7 @@ prefix="c"%>
         </div>
         <br />
         <div class="row text-center">
-          <a href="#">
+          <a href="apply/sitter_join.do">
             <img
               src="/amigo/resources/img/needYou.png"
               class="img-fluid"

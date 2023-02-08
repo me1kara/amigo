@@ -16,13 +16,36 @@
 	<!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
+<style>
+
+      .sit-header-title{
+       font-family: "Jalnan";
+       font-size:40px; 
+      }
+
+</style>
+
+
+<script>
+$(document).ready(function() {
+	
+	  $('#myModal').on('hide.bs.modal', function (e) {
+		  //alert("test");
+	    $(this).removeData();
+	  });
+	}); 
+	  
+</script>
+
+
 </head>
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container mt-3">
-		
-		
+			<div class="mt-4 p-5">
+				<p class="sit-header-title">파트너 신청 관리</p>
+			</div>
 		<c:choose>
 		    <c:when test="${ sitList.isEmpty() || sitList == null }">
 		        <div class="text-center">
@@ -32,7 +55,6 @@
 			</c:when>
 		
 	   <c:otherwise>
-		<p>파트너 신청 관리</p>
 			<div class="row mt-4">
 				<table class="table table-hover table-bordered">
 					<thead class="table-dark text-center">					
@@ -46,7 +68,8 @@
 						<th scope="col" class="col-0.5 text-center">경력</th>			
 						<th scope="col" class="col-2 text-center">경험</th>			
 						<th scope="col" class="col-2 text-center">소개</th>
-						<th scope="col" class="col-0.5 text-center">여부</th>						
+						<th scope="col" class="col-0.5 text-center">여부</th>
+						<th scope="col" class="col-0.5 text-center">상세</th>					
 						<th scope="col" class="col-0.5 text-center">승인</th>													
 						<th scope="col" class="col-0.5 text-center">실격</th>						
 					</thead>
@@ -54,10 +77,10 @@
 						<c:forEach var="sit" items="${ sitList }">
 						 <tr>
 								<td align="center"><c:if test="${sit.getSit_photo()!=null and sit.getSit_photo()!=''}">
-                           <img class="sit-photo" src="/img/${sit.getSit_photo()}" width="60px" height="40px"></c:if> 
-                           </div></td>
-								<td>${sit.getUser_no()}</td>
-								<td>${sit.getUser_name()}</td>
+                         		   <img class="sit-photo" src="/img/${sit.getSit_photo()}" width="60px" height="40px"></c:if> 
+                           		</td>
+								<td onclick="sit_list_modal(this)">${sit.getUser_no()}</td>
+								<td>${sit.getUser_name()}</td>								
 				    			<td><c:choose><c:when test="${ sit.getSit_gender()=='m' }">M</c:when>
 										      <c:when test="${ sit.getSit_gender()=='f' }">F</c:when></c:choose></td>
 								<td>${ sit.getSit_job() }</td>
@@ -69,7 +92,41 @@
 				    			<td>${ sit.getSit_intro() }</td>
 				    			<td><c:choose><c:when test="${ sit.isSit_auth_is() }">O</c:when>
 										      <c:when test="${ !sit.isSit_auth_is() }">X</c:when></c:choose></td>
-								
+								<td>
+								<!-- Trigger the modal with a button -->
+								<button type="button" class="btn btn-info btn-lg" id="read"
+										data-toggle="modal" data-target="#myModal">상세보기</button> 
+								<!-- Modal -->
+								<div class="modal fade" id="myModal" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title">상세정보</h4>
+											</div>
+											<div class="modal-body">
+												<p>${ sit.getSit_photo() }</p>
+												<p>${ sit.getUser_no() }</p>
+												<p>${ sit.getUser_name() }</p>
+												<p>${ sit.getSit_gender() }</p>
+												<p>${ sit.getSit_job() }</p>
+												<p>${ sit.getSit_days() }</p>
+												<p>${ sit.getSit_time() }</p>
+												<p>${ sit.isSit_exp() }</p>
+												<p>${ sit.getSit_care_exp() }</p>
+												<p>${ sit.getSit_intro() }</p>
+												<p>${ sit.isSit_auth_is() }</p>	
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</td>			
 								<td><a href="updateSitter.do?sit_auth_is=true&user_no=${sit.getUser_no() }" class="btn btn-primary">승인</a></td>
 								<td><a href="deleteSitter.do?user_no=${sit.getUser_no() }" class="btn btn-primary">실격</a></td>		
 						 </tr>	 
@@ -132,6 +189,35 @@
 		
 		
 		</div>
+		
+		<!-- 모달 -->
+		
+<div class="modal" id="myModal" onclick="close_">
+ 	<div class="modal-dialog">
+   		<div class="modal-content">
+
+      <!-- Modal Header -->
+   		   <div class="modal-header">
+  		      <h4 class="modal-title">Modal Heading</h4>
+   			     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  		</div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+       
+       
+       
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+		
 
 	<!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

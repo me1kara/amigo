@@ -46,8 +46,7 @@
 			 <span class="insert-font col-md-1" style="font-size:18px; font-weight:bold;" >펫시터 </span> &nbsp;<p class="insert-sitter-name" style="font-size:18px; font-weight:bold;">${ svo.getUser_name() }</p>
 			</div>
 			<!-- 작성자  끝 -->
-	<div class="input-group mb-3">
-	<fieldset>
+	<div class="star-rating space-x-4 mx-auto">
 		<span class="text-bold">별점을 선택해주세요</span>
 		<input type="radio" name="star_cnt" value="5" id="rate1"><label
 			for="rate1">★</label>
@@ -59,7 +58,6 @@
 			for="rate4">★</label>
 		<input type="radio" name="star_cnt" value="1" id="rate5"><label
 			for="rate5">★</label>
-	</fieldset>
 	</div>
 			<!-- 상단 끝 -->
 			

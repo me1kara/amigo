@@ -68,8 +68,8 @@ public class SitterDAO {
 	}
 	
 
-	public SitterVO getSitter(SitterVO svo) {
-		Object[] args = { svo.getSit_no() };
+	public SitterVO sitterInfo(SitterVO svo) {
+		Object[] args = { svo.getUser_no() };
 		return (SitterVO) jdbcTemplate.query(selectSitterInfo, args, new SitRowMapper());
 		
 	}

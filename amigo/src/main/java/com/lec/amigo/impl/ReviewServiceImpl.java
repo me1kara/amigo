@@ -32,8 +32,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
-	public int deleteReview(int user_no) {
-		return reviewDAO.deleteReview(user_no);
+	public int deleteReview(int rev_no) {
+		return reviewDAO.deleteReview(rev_no);
 	}
 
 

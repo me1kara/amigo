@@ -13,7 +13,7 @@ public interface ReviewService {
 	ReviewVO insertReview(ReviewVO review);
 	
 	// 게시글 삭제
-	int deleteReview(int user_no);
+	int deleteReview(int rev_no);
 	
 	// 별점순 리스트
 	//List<ReviewVO> getReviewListStar(ReviewVO review);

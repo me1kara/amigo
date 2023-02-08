@@ -61,6 +61,8 @@ public class ReviewController {
 //		return "view/review/review_list.jsp";
 //	}
 	
+	
+	// 리뷰 작성하는 페이지로 들어가기
 	@RequestMapping(value="/view/review/user_review_insert.do", method=RequestMethod.GET) 
 	public String insertReview() {
 		
@@ -68,7 +70,7 @@ public class ReviewController {
 		return "view/review/review_insert.jsp";
 	}
 	
-	
+	// 리뷰 작성해서 Submit 하기.
 	@RequestMapping(value="/view/review/user_review_insert.do", method=RequestMethod.POST) 
 	public String insertReview(ReviewVO review) {
 		
@@ -77,7 +79,7 @@ public class ReviewController {
 		return "view/review/review_list.jsp";
 	}
 	
-
+	// 리뷰 삭제하기
 	@RequestMapping(value="/user_review_delete.do", method=RequestMethod.GET)
 	public String user_review_delete(Model model, int user_no, ReviewVO review) {
 		
