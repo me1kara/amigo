@@ -15,7 +15,7 @@
 <meta charset="UTF-8">
 <title>게시판01_유저커뮤니티</title>
 <!-- 
-			사용시 에러발생 
+         사용시 에러발생 
    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
@@ -52,7 +52,7 @@
       
       .udb-header-menu {
       font-family: "Jalnan";
-      	padding:15px;	
+         padding:15px;   
       }
       
       .ubd-header-title{
@@ -71,10 +71,6 @@
         color: #189cc4;
       }
       
-      .text-body{
-      	
-      }
-      
     </style>
 </head>
 <body>
@@ -86,7 +82,7 @@
 </link>
 
 
-	<div class="container" align="left">
+	<div class="container col-md-6" align="left">
 		<div class="mt-4 p-5">
 			<p class="ubd-header-title">유저 커뮤니티</p>
 		</div> 
@@ -153,7 +149,7 @@
                   <!-- user profile 아직 미완성이라 여기 완성되면 다른 리스트에도 복붙!!-->
                    <c:choose>
 			          	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
-			          	<img src="/img/${user.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
+			          	<img src="/userimg/${user.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
 			            </c:when>
 			            <c:otherwise>
 			            <img src="resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>
@@ -166,7 +162,7 @@
                       <!-- 말머리/ -->
                       <!-- 제목 -->
                       <h6>
-                      <a class="text-body" style="font-size:25px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
+                      <a class="text-body" style="font-size:20px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
                       &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc&cnt=3">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
 
                       </h6>
@@ -224,27 +220,28 @@
 		
 	
 		<!-- 하단 검색 시스템 -->
-		
-		<form action="user_board_list.do" method="post" id="boardForm">   
-				    	<div class="col-3 me-1">
-					<select class="form-select" id="searchType" name="searchType">
-				    	<option value="">검색</option>							
-				    	<option value="ubd_title" ${searchVO.getSearchType()=="ubd_title" ? "selected" : "" }>제목</option>							
-				    	<option value="user_nick" ${searchVO.getSearchType()=="user_nick" ? "selected" : ""}>작성자</option>						
-				    	<option value="ubd_cont" ${searchVO.getSearchType()=="ubd_cont" ? "selected" : ""}>글내용</option>						
-					</select>
-				</div>
-				<div class="col-3 me-1">			
-					<input class="form-control me-2" name="searchWord" type="text" placeholder="내용은 입력하세요." />
-				</div>
-				<div class="col-2 btn-group">
-			    	<input type="submit" class="col-1 btn btn-primary me-2" value="검색">
-	        	</div>
-	        	<div class="col-2 btn-group">
-			    <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
-		        </div>
-	     </form>		
-	</div> <!— main  —>
+      <form action="user_board_list.do" method="post" >  
+      	<div class="row align-items-center mt-3 mb-3">
+            <div class="col-3 ms-auto mb-3">
+               <select class="form-select" id="searchType" name="searchType">
+                   <option value="">검색</option>                     
+                   <option value="ubd_title" ${searchVO.getSearchType()=="ubd_title" ? "selected" : "" }>제목</option>                     
+                   <option value="user_nick" ${searchVO.getSearchType()=="user_nick" ? "selected" : ""}>작성자</option>                  
+                   <option value="ubd_cont" ${searchVO.getSearchType()=="ubd_cont" ? "selected" : ""}>글내용</option>                  
+               </select>
+            </div>
+            <div class="col-5 ms-auto mb-3">
+               <input class="form-control me-2 col-6" name="searchWord" type="text" placeholder="내용을 입력하세요." />
+			</div>
+            <div class="col-2 me-auto mb-3">
+                <input type="submit" class="btn btn-primary" value="검색">
+            </div>         
+       </div>
+			
+            <div class="container" align="center">
+             	<a href="user_board_insert.do" class="btn btn-primary">글 작성하기</a>
+            </div>
+      </form>      
 	    
 	    
 <%@include file="/includes/footer.jsp" %>

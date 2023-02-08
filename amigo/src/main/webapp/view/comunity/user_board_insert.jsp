@@ -27,6 +27,11 @@
 </head>
 <body>
 	
+	   <!-- far fa icon 불러오기 -->
+		<link rel="stylesheet" href=
+		"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+		</link>
+	
 	<%@include file="/includes/header.jsp" %>
 	<div class="container mt-5" align="center">
 		<form action="user_board_insert.do" method="post" enctype="multipart/form-data" onSubmit="return checkResult()">
@@ -70,26 +75,39 @@
 			<div class="input-group mb-3">
 			   <textarea class="form-control" id="ubd_cont" name="ubd_cont" rows="15" placeholder="글 내용을 입력하세요.." required ></textarea>		 
 			</div>	
-			<div>
-			  <b>사진업로드(최대 5장)</b><br>
-				    <input type="file" class="form-control fu" onchange="previewFile(0)"
-				     name="uploadFile" multiple id="uploadFile0" aria-describedby="uploadFile" aria-label="Upload">
-				     <div id="msgTd0"></div>
- 				  	<input type="file" class="form-control fu" onchange="previewFile(1)" 
-				     name="uploadFile" multiple id="uploadFile1" aria-describedby="uploadFile" aria-label="Upload">
-				     <div id="msgTd1"></div>
-				    <input type="file" class="form-control fu" onchange="previewFile(2)" 
-				     name="uploadFile" multiple id="uploadFile2" aria-describedby="uploadFile" aria-label="Upload">
-				     <div id="msgTd2"></div>
-				    <input type="file" class="form-control fu" onchange="previewFile(3)" 
-				     name="uploadFile" multiple id="uploadFile3" aria-describedby="uploadFile" aria-label="Upload">
-				     <div id="msgTd3"></div>
-				     <input type="file" class="form-control fu" onchange="previewFile(4)" 
-				     name="uploadFile" multiple id="uploadFile4" aria-describedby="uploadFile" aria-label="Upload">
-				     <div id="msgTd4"></div>
+			
+			  <b>사진업로드(최대 5장/300*300)</b><br><br> 
+			  
+			  <button type="button" id="add_File" onClick="addFile()" class="btn btn-outline-warning btn-sm" style="text-align: center;">&nbsp;&nbsp;<i class="fa-sharp fa-solid fa-plus"></i></button>
+			  <button type="button" id="remove_File" onClick="removeFile()" class="btn btn-outline-warning btn-sm" style="text-align: center;">&nbsp;&nbsp;<i class="fa-sharp fa-solid fa-minus"></i></button>
+			  <br>
+			  <br>
+			  
+			<!-- 파일 추가 & 삭제 -->
+			<script type="text/javascript">
+			var i = 0;
+			function addFile() {
+				if(i > 4) return; 
+				var str = "<input type='file' class='form-control fu' onchange='previewFile("+i+")'name='uploadFile' id='uploadFile"+i+"' aria-describedby='uploadFile' aria-label='Upload'><div id='msgTd"+i+"'></div>";
+				$("#divFile").append(str);
+				i++;
+			}
+			
+			function removeFile() {
+				$('#uploadFile'+(i-1)).remove();
+				$('#msgTd'+(i-1)).remove();
+				if(i < 1) return;
+				i--;
+			}
+			
+			
+			</script>
+			  
+			<div id="divFile">
+
 			</div>
-
-
+			
+		
 				<!-- 이미지 프리뷰 -->
 				<script>
 				function previewFile(no) {
@@ -115,6 +133,18 @@
 			        $('.preview_img_del'+no).remove();
 			        $('#uploadFile'+no).val('');
 			     }
+				</script>
+			
+				<script>
+				function checkResult() {
+					for(var i=0; i<5; i++){
+						if($('#uploadFile'+i).val() == ''){
+							alert('사진을 모두 등록해주세요.');
+							return false;
+						}
+					}
+					return true;
+				}
 				</script>
 			
 		  
