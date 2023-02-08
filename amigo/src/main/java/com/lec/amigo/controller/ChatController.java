@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.lec.amigo.dao.ChatDAO;
 import com.lec.amigo.impl.ChatServiceImpl;
+import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.service.ChatService;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.ChatVO;
@@ -33,6 +34,9 @@ public class ChatController {
 	@Autowired
 	@Qualifier("chatService")
 	ChatServiceImpl chatService; 
+	
+	@Autowired
+	UserServiceImpl userService;
 	
 	@RequestMapping(value = "/chat.do", method = { RequestMethod.GET })
 	public String chat (HttpServletRequest req, HttpServletResponse resp) {
@@ -69,9 +73,12 @@ public class ChatController {
 		ChatRoom checkRoom = chatService.getRoom(user_no);
 		List<ChatVO> myChatList = chatService.getMyChatList(user_no);
 		
+		List<UserVO> userList = userService.getUserList();
+		
 		req.setAttribute("elseRoomList", elseRoomList);
 		req.setAttribute("checkRoom", checkRoom);
 		req.setAttribute("myChatList", myChatList);
+		req.setAttribute("userList", userList);
 		
 		return "/view/customer_service/customer_service_chat.jsp";
 	}	

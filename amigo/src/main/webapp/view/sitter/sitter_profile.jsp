@@ -17,40 +17,51 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
+    
+    <style>
+    	ul{
+    		list-style: none;
+    	}
+    </style>
 </head>
-<%
-	
 
-%>
 <body>
-	
 	<%@include file="/includes/header.jsp" %>
-				
 			<div class="container text-center">
-			<h2> 시터 프로필 정보</h2>
-				<table>
-					<tr>
-	     			 <td>Profile Picture:</td>
-	     			 <td>
-	    			    <c:choose>
-	     			     <c:when test="${not empty sitter.sit_photo}">
-	     			       <img src="${sitter.sit_photo}" alt="Profile Picture"/>
-	     			     </c:when>
-	     			     <c:otherwise>
-	     			       Profile picture not available.
-	     			     </c:otherwise>
-	    			    </c:choose>
-	  			   	 </td>
-	   				</tr>
-			 		   <tr>
-	    			  <td></td>
-	    			  <td>
-	    			    <c:out value="${sitter.user_name}"/> 펫시터
-	     			 </td>
-	  			  </tr>
-				</table>
+				<section>
+					<h2> 시터 프로필 정보</h2>
+					<article>
+							<ul>
+								<li>
+				    			    <c:choose>
+				     			     <c:when test="${not empty sitter.sit_photo}">
+				     			       <img src="${sitter.sit_photo}" alt="Profile Picture"/>
+				     			     </c:when>
+				     			     <c:otherwise>
+				     			       <span>Profile picture not available</span>
+				     			     </c:otherwise>
+				    			    </c:choose>
+				   				</li>
+						 		<li><c:out value="${sitter.user_name}"/> 펫시터</li>
+						 		<li>
+							 		<ul>
+							 			<li>펫시터 전문가 교육 수료</li>
+							 			<li>전문 펫시터 자격증 보유</li>
+							 			<li>펫시터 직업훈련 교육 수료</li>
+							 		</ul>
+								</li>
+								<li>
+									<span>신원인증</span><span>인성검사</span><span>촬영동의</span>
+								</li>
+								<li style="border-top: 1px solid black;">
+									<div><span>후기</span></div>
+								</li>
+							</ul>
+					</article>
+				<article>
 				<button class="btn btn-primary"><a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }" style="color: white;">신청하기</a> </button>
-				<button class="btn btn-primary"><a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }" style="color: white;">신청하기</a> </button>
+				</article>
+				</section>
 			</div>
 	<%@include file="/includes/footer.jsp" %>
 

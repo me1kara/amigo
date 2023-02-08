@@ -54,6 +54,10 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated_tests"/>
                                                                                 		
         
         

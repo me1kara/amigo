@@ -15,26 +15,35 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.common.PagingVO;
 import com.lec.amigo.common.SearchVO;
+import com.lec.amigo.mapper.BoardRowMapper;
+import com.lec.amigo.mapper.BookContentRowMapper;
 import com.lec.amigo.mapper.BookRowMapper;
 import com.lec.amigo.mapper.SitterRowMapper;
 import com.lec.amigo.mapper.UserRowMapper;
 import com.lec.amigo.vo.BoardVO;
+import com.lec.amigo.vo.BookContentVO;
 import com.lec.amigo.vo.BookVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
 @Repository("bookDAO")
+@PropertySource("classpath:config/booksql.properties")
 public class BookDAO {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-
+	
+	@Autowired
+	Environment environment;
+	
 	public int calMoney(int days, int time) {
 		String sql = "select sit_price from sit_price where sit_time=1";
 		int price = jdbcTemplate.queryForObject(sql, Integer.class);
@@ -47,7 +56,7 @@ public class BookDAO {
 		
 		System.out.println(secondeAddr);
 
-		String sql = "select u.user_no, s.sit_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_intro from user u,petsitter s"+ 
+		String sql = "select u.user_no, s.sit_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_intro, s.sit_care_exp from user u,petsitter s"+ 
 				" where u.user_no = s.user_no and u.user_type='S' and user_addr like ? limit ?,?";
 		
 		String sqlinput = "%"+secondeAddr+"%";
@@ -75,6 +84,7 @@ public class BookDAO {
 				si.setSit_time(rs.getString("sit_time"));
 				si.setSit_photo(rs.getString("sit_photo"));
 				si.setSit_intro(rs.getString("sit_intro"));
+				si.setSit_care_exp(rs.getString("sit_care_exp"));
 				sitList.add(si);
 				
 				System.out.println(si.getSit_no()+"sit_no 확인용");
@@ -207,10 +217,88 @@ public class BookDAO {
 		return 0;
 	}
 
-	public List<BookVO> getBookList(int user_no) {
-		String sql = "select * from reservation where user_no=?";
+	public List<BookVO> getBookList(int user_no, SearchVO search) {
+		String sql = "select r.*, rs.res_date  from reservation r, (select res_no, \r\n"
+				+ "IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date from res_content GROUP BY res_no) rs \r\n"
+				+ "where user_no=? and r.res_no = rs.res_no limit ?,?";
+		Connection conn = JDBCUtility.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BookVO> bookList = new ArrayList<BookVO>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_no);
+			pstmt.setInt(2, search.getFirstRow());
+			pstmt.setInt(3, search.getRowSizePerPage());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BookVO book = new BookVO();
+				book.setRes_no(rs.getInt("res_no"));
+				book.setUser_no(user_no);
+				book.setSit_no(rs.getInt("sit_no"));
+				book.setRes_regdate(rs.getDate("res_regdate"));
+				book.setRes_is(rs.getBoolean("res_is"));
+				book.setRes_etc(rs.getString("res_etc"));
+				book.setRes_pay(rs.getInt("res_pay"));
+				book.setRes_visit_is(rs.getBoolean("res_visit_is"));
+				book.setRes_date(rs.getString("res_date"));
+				bookList.add(book);
+			}
+			
+			JDBCUtility.commit(conn);
+		} catch (SQLException e) {
+			JDBCUtility.rollback(conn);
+			e.printStackTrace();
+		}finally {
+			JDBCUtility.close(conn, rs, pstmt);
+		}
+
+		return bookList; 
+	}
+
+	public List<BookContentVO> getBookDetailList(int rno) {
+		String sql = "select * from res_content where res_no=?";
+		Object[] args = {rno};
+		
+		try {
+			return jdbcTemplate.query(sql, args, new BookContentRowMapper());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		 
+		return null;
+	}
+
+	public List<BookVO> getSitBookList(int user_no) {
+		String sql = "select * from reservation where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?)";
 		Object[] args = {user_no};
-		return jdbcTemplate.query(sql, args, new BookRowMapper());
+		
+		try {
+			return jdbcTemplate.query(sql, args, new BookRowMapper());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	public int getMyBookCount(int user_no) {
+		String sql = "select count(distinct r.res_no) from reservation r, res_content rs where user_no=? and r.res_no = rs.res_no";
+		Object[] args = {user_no};
+		return jdbcTemplate.queryForObject(sql, args, Integer.class);
+	}
+
+	public int deleteBook(int rno) {
+		String sql ="delete from reservation where res_no=?";
+		int row = 0;
+		row = jdbcTemplate.update(sql, rno);
+		if(row>0) {
+			sql = "delete from res_content where res_no=?";
+			row = jdbcTemplate.update(sql,rno);
+		}
+
+		return row;
 	}
 	
 	

@@ -66,14 +66,16 @@
 		  var preview = $('#msgTd');
 		  var file = document.querySelector('input[type=file]').files[0];
 		  var reader = new FileReader();
-		
+		  console.log(file);
 		  reader.addEventListener(
 		    'load',
 		    function () {
-		      preview.append("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
+		    	
+		      $('#photo').hide();
+		   	  $('#msg').val('').hide();
+		      preview.prepend("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
 		      preview.append("<button class='btn btn-danger preview_img_del' onclick='preview_del()'>이미지삭제</button>");
-		      $('#msg').val('');
-		      $('#msg').hide();
+		      
 		    },false
 		  );
 		
@@ -83,9 +85,6 @@
 		}
 		
   	 	function imgPop(url){
-  	 		
-  	 	  window.open("URL", "팝업이름", "팝업 옵션");
-  	 	  console.log('확인용');
   		  var img=new Image();
   		  img.src=url;
   		  var img_width=img.width;
@@ -102,8 +101,13 @@
 	<%@include file="/includes/header.jsp" %>
 	<div class="container">
 		<section>
-			<article style="width:450px; margin: 0 auto;">
-				<h1 class="page-header">채팅방</h1>
+			<article style="width:450px; margin: 0 auto; position: relative; left: 0;">
+				
+				<div style="display: flex;">
+					<h1 class="page-header">채팅방</h1>
+					<button class="btn btn-close" style="margin-left: auto;" onclick="history.back(-1)"></button>
+				</div>
+				
 				<table class="table table-bordered" style="background: #81DAF5;">
 					<tr class="table-borderless" style="border: none;">
 						<td colspan="6">
@@ -124,8 +128,8 @@
 												<li style="margin-bottom: 3px; overflow: hidden; clear: both;"
 													id="chat_no_${chat.getChat_no() }" >
 													[${chat.getUser_nick() }]
-													<span ondblclick="imgPop('/img/${chat.getFile() }')">
-													<img src="/img/${chat.getFile() }" width="200px" height="200px">
+													<span onclick="imgPop('/chatImg/${chat.getFile() }')">
+													<img src="/chatImg/${chat.getFile() }" width="200px" height="200px">
 													</span>
 												</li>
 											</c:when>
@@ -142,8 +146,8 @@
 											<c:when test="${chat.getFile()!=null}">
 												<li style="margin-bottom: 3px; float: right;"
 													id="chat_no_${chat.getChat_no() }">
-													<span class="chat_right" style="overflow: hedden;" onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" ondblclick="imgPop('/img/${chat.getFile() }')">
-													<img src="/img/${chat.getFile() }" width="200px" height="200px"></span>
+													<span class="chat_right" style="overflow: hedden;" onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" onclick="imgPop('/chatImg/${chat.getFile() }')">
+													<img src="/chatImg/${chat.getFile() }" width="200px" height="200px"></span>
 												</li>
 											</c:when>
 										</c:choose>
@@ -158,7 +162,7 @@
 					<tr class="table-borderless" style="border: none;">
 						<td colspan="5" id="msgTd" scroll=auto style="width: 376.5px; height:62px; overflow-x:hidden;"><textarea style="width: 100%;" type="text" name="msg" id="msg"
 							placeholder="대화 내용을 입력하세요." class="form-control"></textarea>
-							<label for="fileUpload" style="position: relative; bottom: 25px; left:5px;"><i class="bi bi-card-image"></i>
+							<label for="fileUpload" style="position: relative; bottom: 25px; left:5px;"><i class="bi bi-card-image" id="photo"></i>
 </label>
 							</td>
 						<td colspan="1" style="text-align: rigth;"><button
@@ -169,6 +173,7 @@
 			</article>
 		</section>
 	</div>
+
 	<script>
 //채팅 서버 주소
   		var url = "ws://localhost:8088/amigo/chatHandler.do?<%=index%>";
@@ -189,6 +194,7 @@
 		function preview_del(){
 			$('.preview_img_del').remove();
 			$('#msg').show();
+			$('#photo').show();
 			$('#fileUpload').val('');
 		}
 	  	  function chat_delete(chat_no){
@@ -320,12 +326,12 @@
     	  function printImage(user, fileName, chat_no) {
     	    	let temp = '';
     	    	
-    	    	let realFile ="/img/"+fileName;
+    	    	let realFile ="/chatImg/"+fileName;
     	    	console.log(realFile);
     	    	temp += ' <span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
     	    	temp += '<li style="margin-bottom:3px; clear: both;" id="chat_no_'+chat_no+'">';
     	    	temp += '[' + user + '] ';
-    	   	  	temp += '<img width="200px" height="200px" src='+realFile+' ondblclick="imgPop('+"'"+realFile+"'"+')">';
+    	   	  	temp += '<img width="200px" height="200px" src='+realFile+' onclick="imgPop('+"'"+realFile+"'"+')">';
     	   	  	temp += '</li>';
     	   	  			
     	    	$('#list').append(temp);
@@ -333,12 +339,12 @@
     	  }
   	  	  function printImageMe(fileName, chat_no){
 	  		
-  	    	let realFile ="/img/"+fileName;
+  	    	let realFile ="/chatImg/"+fileName;
 	    	console.log(realFile);
   	  	  	let temp = '';
   	  	
   	  	  	temp += '<li style="margin-bottom:3px; float:right;" id="chat_no_'+chat_no+'">';
-  	  		temp += '<span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" ondblclick="imgPop('+"'"+realFile+"'"+')"><img width="200px" height="200px" src=' + realFile + '><span>';
+  	  		temp += '<span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()" onclick="imgPop('+"'"+realFile+"'"+')"><img width="200px" height="200px" src=' + realFile + '><span>';
   	  	  	temp += '</li>';
   	  	  	temp += '<li style="clear: both;"></li';
   	  	  

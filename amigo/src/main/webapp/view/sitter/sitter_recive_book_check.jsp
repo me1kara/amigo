@@ -12,16 +12,15 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>파트너04_예약신청~03예약확인</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
+<title>파트너04_예약신청~03예약확인</title>
 </head>
 <body>
-	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
-
+			
 		</div>
 	<%@include file="/includes/footer.jsp" %>
 

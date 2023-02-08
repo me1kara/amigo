@@ -44,7 +44,7 @@
             <div class="picture">
             	          <c:choose>
 				          	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
-				          		<img src="/img/${user.getUser_photo()}"
+				          		<img src="/userimg/${user.getUser_photo()}"
 								 	 class="picture-src"
 								 	 id="wizardPicturePreview"
 								 	 title="">

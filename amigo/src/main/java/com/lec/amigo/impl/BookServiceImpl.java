@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.lec.amigo.common.PagingVO;
+import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.dao.BookDAO;
 import com.lec.amigo.service.BookService;
+import com.lec.amigo.vo.BookContentVO;
 import com.lec.amigo.vo.BookVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
@@ -44,9 +46,28 @@ public class BookServiceImpl implements BookService{
 		return bookDao.setBook(calr, book);
 	}
 
-	public List<BookVO> getBookList(int user_no) {
+	public List<BookVO> getBookList(int user_no, SearchVO search) {
 		// TODO Auto-generated method stub
-		return bookDao.getBookList(user_no);
+		return bookDao.getBookList(user_no,search);
+	}
+
+	public List<BookContentVO> getBookDetailList(int rno) {
+		// TODO Auto-generated method stub
+		return bookDao.getBookDetailList(rno);
+	}
+
+	public List<BookVO> getSitBookList(int user_no) {
+		
+		return bookDao.getSitBookList(user_no);
+	}
+
+	public int getMyBookCount(int user_no) {
+		return bookDao.getMyBookCount(user_no);
+	}
+
+	public int deleteBook(int rno) {
+		// TODO Auto-generated method stub
+		return bookDao.deleteBook(rno);
 	}
 	
 	

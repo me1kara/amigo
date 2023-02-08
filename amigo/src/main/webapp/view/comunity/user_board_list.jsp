@@ -76,7 +76,7 @@
 <body>
 <%@include file="/includes/header.jsp" %>
 
-   <!-- far fa icon 불러오기 -->
+<!-- far fa icon 불러오기 -->
 <link rel="stylesheet" href=
 "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
 </link>
@@ -93,7 +93,7 @@
                <div class="col-auto">
                <a class="ubd-header-menu" href="user_board_list.do">전체글</a>&nbsp;&nbsp;
                   <a class="ubd-header-menu" href="user_board_list_like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a>&nbsp;&nbsp;
-                  <a class="ubd-header-menu" href="">펫시터커뮤니티</a>
+                  <a class="ubd-header-menu" href="sitter_board_list.do">펫시터커뮤니티</a>
                </div>
                      <div class="col-auto">
                <select class="form-select" id="searchCategory" name="searchCategory" onchange="chageSelect()">
@@ -146,7 +146,7 @@
                   <!-- user profile 아직 미완성이라 여기 완성되면 다른 리스트에도 복붙!!-->
                    <c:choose>
                       <c:when test="${board.getUser_photo()!=null and board.getUser_photo()!=''}">
-                      <img src="/img/${board.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
+                      <img src="/userimg/${board.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
                      </c:when>
                      <c:otherwise>
                      <img src="resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>
@@ -219,7 +219,8 @@
    
       <!-- 하단 검색 시스템 -->
       <form action="user_board_list.do" method="post" >  
-            <div class="col-3 me-1">
+      	<div class="row align-items-center mt-3 mb-3">
+            <div class="col-3 ms-auto mb-3">
                <select class="form-select" id="searchType" name="searchType">
                    <option value="">검색</option>                     
                    <option value="ubd_title" ${searchVO.getSearchType()=="ubd_title" ? "selected" : "" }>제목</option>                     
@@ -227,17 +228,18 @@
                    <option value="ubd_cont" ${searchVO.getSearchType()=="ubd_cont" ? "selected" : ""}>글내용</option>                  
                </select>
             </div>
-            <div class="col-3 me-1">         
-               <input class="form-control me-2" name="searchWord" type="text" placeholder="내용은 입력하세요." />
+            <div class="col-5 ms-auto mb-3">
+               <input class="form-control me-2 col-6" name="searchWord" type="text" placeholder="내용을 입력하세요." />
+			</div>
+            <div class="col-2 me-auto mb-3">
+                <input type="submit" class="btn btn-primary" value="검색">
+            </div>         
+       </div>
+			
+            <div class="container" align="center">
+             	<a href="user_board_insert.do" class="btn btn-primary">글 작성하기</a>
             </div>
-            <div class="col-2 btn-group">
-                <input type="submit" class="col-1 btn btn-primary me-2" value="검색">
-              </div>
-              <div class="col-2 btn-group">
-             <a href="user_board_insert.do" class="col-1 btn btn-primary me-2">글등록</a>
-              </div>
-        </form>      
-   </div> <!— main  —>
+      </form>      
        
        
 <%@include file="/includes/footer.jsp" %>
