@@ -245,7 +245,8 @@
             <div class="container" align="center">
              	<a href="user_board_insert.do" class="btn btn-primary">글 작성하기</a>
             </div>
-      </form>      
+      </form>
+      </div>      
 	    
 	    
 <%@include file="/includes/footer.jsp" %>

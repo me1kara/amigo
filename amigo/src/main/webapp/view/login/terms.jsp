@@ -126,40 +126,10 @@
  <!-- 약관 동의문서 end -->
  
  <!-- Footer -->
- <footer class="bg-primary  text-center text-white">
-    <!-- Grid container -->
-    <div class="container p-4">
-      <!-- Section: Social media -->
-      <section class="mb-4">   
-      <!-- Section: Form -->
-      <section class="">
-        <form action="">
-          <!--Grid row-->
-          <div class="row d-flex justify-content-center">
-            <!--Grid column-->
-            <div class="col-auto">
-            </div>
-            <!--Grid column-->
-            <div class="col-md-5 col-12">
-              <!-- Email input -->
-              <div class="form-outline form-white mb-4">
-              </div>
-            </div>
-            <!--Grid column-->
-            <div class="col-auto">
-              <!-- Submit button -->   
-            </div>
-            <!--Grid column-->
-          </div>
-          <!--Grid row-->
-        </form>
-      </section>
-      <!-- Section: Form -->
-    </div>
-    <!-- Grid container -->
+ <footer class="bg-primary  text-center text-white mt-5">
     <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-      © 2022 Copyright:
+    <div class="text-center p-3" style="background-color: rgb(87, 160, 227)">
+      © 2023 Copyright:
       <a class="text-white" href="#">amigo.com</a>
     </div>
     <!-- Copyright -->

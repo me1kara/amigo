@@ -97,16 +97,7 @@
                	 </div>
                     <!-- 인증 시스템 -->
                     <button type="button" id="email_auth_btn" class="email_auth_btn" style="width: 130px;">인증번호 받기</button>
-                    <input type="text" placeholder="인증번호 입력" id="email_auth_key" style="padding-left: 10px;" onchange="email_auth_Confirm();">
-                    <script>
-                    function email_auth_Confirm() {
-                    if($('#email_auth_key').val() != email_auth_cd){
-            				alert("인증번호가 일치하지 않습니다.");
-            			} else {
-            				alert("인증번호 확인완료");
-            			}
-                    }
-                    </script>                  
+                    <input type="text" placeholder="인증번호 입력" id="email_auth_key" style="padding-left: 10px;" onchange="email_auth_Confirm();" disabled>
                 	<!-- 인증 시스템/ -->
                 <div class="form-group">
                     <label for="password" class="sighup-group">비밀번호*</label>
@@ -120,7 +111,8 @@
                      
          			<script type="text/javascript">  
     				/* 자바 스크립트 함수 선언(이메일 중복 확인) */
-					  		 $("#email_auth_btn").click(function(){	     	 
+					  		 $("#email_auth_btn").click(function(){	 
+					  		 $("#email_auth_key").attr("disabled", false);
 					    	 var user_email = $('#user_email').val();
 					    	 
 					    	 if(user_email == ''){
@@ -142,6 +134,16 @@
 							}); 
 						});
   				</script>
+  				
+                <script>
+                    function email_auth_Confirm() {
+                    if($('#email_auth_key').val() != email_auth_cd){
+            				alert("인증번호가 일치하지 않습니다.");
+            			} else {
+            				alert("인증번호 확인완료");
+            			}
+                    }
+                </script>                  
   				
 				<script type="text/javascript">
 				/* 자바 스크립트 함수 선언(비밀번호 확인) */
@@ -239,12 +241,12 @@
                     
                  <div class="form-group">
                  <label for="sample4_roadAddress" class="sighup-group">주소*</label><br>
-               <input type="text" id="sample4_postcode" style="padding-left: 10px;" placeholder="우편번호">
+               <input type="text" id="sample4_postcode" style="padding-left: 10px;" placeholder="우편번호" disabled>
                <input type="button" onclick="sample4_execDaumPostcode()" id="sample4_find" style="width: 100px;" value="주소 찾기"><br>
-               <input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" placeholder="도로명주소">
-               <input type="hidden" id="sample4_jibunAddress" class="form-control" placeholder="지번주소">
+               <input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" placeholder="도로명주소" disabled>
+               <input type="hidden" id="sample4_jibunAddress" class="form-control" placeholder="지번주소" required>
                <span id="guide" style="color:#999;display:none"></span>
-               <input type="text" id="sample4_detailAddress" class="form-control" name="user_addr2" placeholder="상세주소">
+               <input type="text" id="sample4_detailAddress" class="form-control" name="user_addr2" placeholder="상세주소" required>
                 </div>
                 
                 
@@ -252,6 +254,8 @@
             <script>
                 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
                 function sample4_execDaumPostcode() {
+                	$("#sample4_postcode").attr("disabled", false);
+                	$("#sample4_roadAddress").attr("disabled", false);
                     new daum.Postcode({
                         oncomplete: function(data) {
                             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -311,7 +315,6 @@
                 </div>
                 
                 <script>
-                
                 function checkResult() {
                 	
                 if ($('#user_email').attr("check_email") == "fail"){
@@ -332,11 +335,16 @@
 				    return false;
                 }
                 
-                if($('#email_auth_key').val() == '' || $('#email_auth_key').val() != email_auth_cd){
+                if($('#email_auth_key').val() == '' || $('#email_auth_key').val() != email_auth_cd ){
         			alert("이메일 인증을 해주시기 바랍니다.");
         			$('#email_auth_key').focus();
         			return false;
-        		}
+                }       
+                
+                if($("#sample4_postcode").val() == '' || $("#sample4_roadAddress").val() == ''){
+                	alert("주소 찾기를 통해 주소를 입력해주시기 바랍니다.");
+                	return false;
+                }
                 
                 	return true;
                 }
@@ -344,6 +352,8 @@
 		</form>
         </div>
     </article>
+    
+    <%@include file="/includes/footer.jsp" %>
 </body>
 </html>
     <!-- Bootstrap core JS-->
