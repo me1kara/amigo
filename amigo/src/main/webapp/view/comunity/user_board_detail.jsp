@@ -105,7 +105,7 @@
 			<div class="container text-center">
 				<a class="heart" style="text-decoration-line: none;">
 					<img id="heart" src="resources/img/heart.svg">
-					좋아요 <span id="LikeCntView">${board.getLike_cnt()}</span>
+					좋아요 <span id="LikeCntView"></span>
 				</a>
 			</div>
 		<!-- 추천 -->
@@ -268,14 +268,28 @@
 	    		that.prop('name', data);
 	        	if(data==1) {
 	            	     $('#heart').prop("src","resources/img/heart_fill.svg");
-	            	     $('#LikeCntView').html(${board.getLike_cnt()}+1)
+	            	     LikeCount();
 	        	} else {
                    	     $('#heart').prop("src","resources/img/heart.svg");
-                   	  	 $('#LikeCntView').html(${board.getLike_cnt()})
+                   	  	 LikeCount();
 	        	}
             	}
 	    });
        });
+	
+	  	function LikeCount() {
+	  		$.ajax({
+	  			url :'countHeart.do',
+	  			type : 'POST',
+	  			data : {'ubd_no' : ${board.getUbd_no()} },
+	  			success : function(data){
+	  				$('#LikeCntView').html(data);
+	  			}
+	  		});
+	    }
+	  	
+	  	LikeCount();
+	
 </script>
 
 	<!-- Bootstrap core JS-->

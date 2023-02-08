@@ -98,7 +98,7 @@
         <div class="container text-center mt-2">
           <div class="row justify-content-between">
             <div class="col-5"><a href="#">가입/로그인이 안되요</a></div>
-            <div class="col-4"><a href="main_tour.do">둘러보기</a></div>
+            <div class="col-4"><a href="main_tour.do?ubd_no=5">둘러보기</a></div>
           </div>
         </div>
       </form>

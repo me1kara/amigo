@@ -20,6 +20,28 @@
  	  font-size:20px;
  	  color:rgb(87, 160, 227);
   }
+  .form-group {
+  	  margin-top: 20px;
+  }
+  
+  #addrETC {
+  	font-size : 14px;
+  	color:rgb(87, 160, 227);
+  }
+  
+  label {
+  	font-weight: bold;	 
+  	font-family: 'Jalnan'; 
+  }
+  
+  #sample4_postcode, #sample4_find {
+  	margin: 5px 0;	
+  	font-size:12pt;
+  	border : 1px solid #CED4DA; 
+  	border-radius: 5px;
+  	height : 30px;
+  }
+  
 </style>
 <title>Insert title here</title>
     <!--[if lt IE 9]>
@@ -68,40 +90,43 @@
 
       <!-- 프로필 상세 -->     
       <!-- 이메일 // 이메일 정보가 가져와져야합니다. -->
-      <label for="userEmail" class="form-label">&nbsp;이메일 아이디</label>
-      <div class="input-group mb-3">
+      <div class="form-group">
+      	<label for="userEmail" class="form-label">&nbsp;이메일 아이디</label>
         <input type="email" class="form-control" id="userEmail" name="user_email" value="${ user.getUser_email() }" disabled>
       </div>
       <!-- 이메일 end -->
+      
       <!-- 닉네임 변경 // 유저의 닉네임을 불러와줘야합니다. -->
-      <label for="userNickname" class="form-label">&nbsp;닉네임 변경</label>
-      <div class="input-group mb-3">
+      <div class="form-group">
+        <label for="userNickname" class="form-label">&nbsp;닉네임 변경</label>
         <input type="text" class="form-control" id="userNickname" name="user_nick" value="${ user.getUser_nick() }" onKeyup="checkNick();" check_nick="success">
+        <span id="confirmNick"></span>
       </div>
-       <span id="confirmNick"></span>
       <!-- 닉네임 변경 end -->
+      
       <!-- 비밀번호 변경 -->
-      <label for="userPassword" class="form-label">&nbsp;비밀번호 변경</label>
-      <div class="input-group mb-3">
+      <div class="form-group">
+        <label for="userPassword" class="form-label">&nbsp;비밀번호 변경</label>
         <input type="password" class="form-control" id="userPassword" name="user_pw" value="${ user.getUser_pw() }">
       </div>
       <!-- 비밀번호 변경 end -->
-      <!-- 후대폰 번호 변경 -->
-      <label for="userPhone" class="form-label">&nbsp;핸드폰 번호</label>
-      <div class="input-group mb-3">
-        <input type="tel" class="form-control" id="phone" name="user_phone" value="${ user.getUser_phone() }">
+      
+      <!-- 휴대폰 번호 변경 -->
+      <div class="form-group">
+        <label for="userPhone" class="form-label">&nbsp;핸드폰 번호</label>
+        <input type="tel" class="form-control" id="userPhone" name="user_phone" value="${ user.getUser_phone() }">
       </div>
        <!-- 후대폰 번호 변경 end -->
        <!-- 주소 변경 -->
        <!-- 다음 api 적용예정 -->
 
-           <label for="sample4_roadAddress" class="sighup-group">&nbsp;내 주소</label><br>
-           <div class="input-group mb-3">
-               <input type="text" id="sample4_postcode" placeholder="우편번호">
-               <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기"><br>
+           <div class="form-group">
+               <label for="sample4_roadAddress" class="sighup-group">&nbsp;내 주소</label><br>
+               <input type="text" id="sample4_postcode" size = 20 style="padding-left: 10px;" placeholder="우편번호">
+               <input type="button" onclick="sample4_execDaumPostcode()" id="sample4_find" style="width: 100px;" value="주소 찾기"><br>
                <input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" value="${ user.getUser_addr() }">
-            </div>
-            &nbsp;<span>상세주소를 꼭 입력해주세요. 예약 시에 반영됩니다.</span>
+           </div>
+            &nbsp;<span id ="addrETC">상세주소를 꼭 입력해주세요. 예약 시에 반영됩니다.</span>
             
                 
                 
@@ -163,7 +188,7 @@
       <!-- 주소 변경 end -->
     <!-- 프로필 상세 end-->
     <div class="container text-center mb-5">
-        <button class="btn btn-outline-secondary" type="submit">변경 완료</button>  
+        <button class="btn btn-outline-dark" type="submit">변경 완료</button>  
         <input type="hidden" name="user_no" value="${ user.getUser_no()}"/>
         <input type="hidden" name="user_email" value="${ user.getUser_email()}"/>
         <input type="hidden" name="user_name" value="${ user.getUser_name()}"/>
@@ -172,8 +197,6 @@
       </div>
 
   </form>
-
-  
   
 			     <script type="text/javascript">
 			     function checkResult() {

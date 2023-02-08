@@ -209,7 +209,8 @@ public class LoginController {
 	
 	// 둘러보기
 	@RequestMapping(value="/main_tour.do", method = RequestMethod.GET) 
-	public String main_tour() {
+	public String main_tour(BoardVO boardVO, Model model) {
+		model.addAttribute("board", boardService.getBoard(boardVO));
 		return "view/main_tour.jsp"; 
 	}
 	

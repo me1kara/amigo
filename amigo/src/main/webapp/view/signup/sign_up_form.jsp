@@ -40,8 +40,27 @@
    	
    	.sighup-group {
    		font-family: 'Jalnan';
-   		font-size:15px;
    	}
+   	
+   	  .form-group {
+  	  margin-top: 20px;
+  }
+  
+    #sample4_postcode, #sample4_find {
+  	margin: 5px 0;	
+  	font-size:12pt;
+  	border : 1px solid #CED4DA; 
+  	border-radius: 5px;
+  	height : 30px;
+  }
+  
+  	#email_auth_btn, #email_auth_key {
+  	margin: 5px 0;	
+  	font-size:12pt;
+  	border : 1px solid #CED4DA; 
+  	border-radius: 5px;
+  	height : 30px;
+  	}
    	
    	
    	
@@ -77,8 +96,8 @@
                     <span id="confirmEmail"></span>
                	 </div>
                     <!-- 인증 시스템 -->
-                    <button type="button" id="email_auth_btn" class="email_auth_btn">인증번호 받기</button>
-                    <input type="text" placeholder="인증번호 입력" id="email_auth_key" onchange="email_auth_Confirm();">
+                    <button type="button" id="email_auth_btn" class="email_auth_btn" style="width: 130px;">인증번호 받기</button>
+                    <input type="text" placeholder="인증번호 입력" id="email_auth_key" style="padding-left: 10px;" onchange="email_auth_Confirm();">
                     <script>
                     function email_auth_Confirm() {
                     if($('#email_auth_key').val() != email_auth_cd){
@@ -220,8 +239,8 @@
                     
                  <div class="form-group">
                  <label for="sample4_roadAddress" class="sighup-group">주소*</label><br>
-               <input type="text" id="sample4_postcode" placeholder="우편번호">
-               <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+               <input type="text" id="sample4_postcode" style="padding-left: 10px;" placeholder="우편번호">
+               <input type="button" onclick="sample4_execDaumPostcode()" id="sample4_find" style="width: 100px;" value="주소 찾기"><br>
                <input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" placeholder="도로명주소">
                <input type="hidden" id="sample4_jibunAddress" class="form-control" placeholder="지번주소">
                <span id="guide" style="color:#999;display:none"></span>

@@ -319,6 +319,13 @@ public class BoardController {
 		return data;
 	}
 	
+	@PostMapping("countHeart.do")
+	@ResponseBody 
+	public int countheart(HeartVO heartVO) {
+		int data = boardService.countHeart(heartVO.getUbd_no());
+		return data;
+	}
+	
 }
 
 

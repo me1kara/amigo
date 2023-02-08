@@ -23,6 +23,12 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
+<style>
+	#idpwcheck {
+		color: red;
+	}
+
+</style>
 </head>
 <body>
 		<div class="container col-md-6">
@@ -39,10 +45,9 @@
        	<br>
         
         <input type="password" name="user_pw" class="form-control" id="user_pw" placeholder="비밀번호" autoComplete="off"> 
-        <br>
-		
+		<br>
        	<c:if test="${ !sessionScope.isLoginSuccess and sessionScope.isLoginSuccess != null || sessionScope.matchedPassword != null and !sessionScope.matchedPassword}">
-         	<h6>아이디와 비밀번호를 확인해주세요.</h6>
+         	<h6 id ="idpwcheck">&nbsp;&nbsp;* 아이디와 비밀번호를 확인해주세요.</h6>
         </c:if>
         <div class="text-end">
 		<a href="search_pwd.do">비밀번호를 잊으셨나요?</a>
