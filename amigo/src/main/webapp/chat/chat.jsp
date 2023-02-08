@@ -55,6 +55,14 @@
 	overflow-x:hidden;
 	text-align: left;
 }
+
+.page-header {
+	font-family: "Jalnan";
+    font-size:35px;
+
+}
+
+
 </style>
 <script>
 		$(document).ready(function(){
@@ -108,10 +116,10 @@
 					<button class="btn btn-close" style="margin-left: auto;" onclick="history.back(-1)"></button>
 				</div>
 				
-				<table class="table table-bordered" style="background: #81DAF5;">
+				<table class="table table-bordered" style="background: rgb(87, 160, 227); height:700px;">
 					<tr class="table-borderless" style="border: none;">
 						<td colspan="6">
-							<ul id="list" style="list-style: none;">
+							<ul id="list" style="list-style: none; height:550px;"" >
 								<c:forEach var="chat" items="<%=chatList%>">
 									<c:choose>
 									<c:when test="${chat.getUser_nick()!=user.getUser_nick() }">
