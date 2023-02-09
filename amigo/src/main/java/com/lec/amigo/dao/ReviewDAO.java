@@ -37,6 +37,7 @@ public class ReviewDAO {
 	private String selectStarCount = "";                       // 리뷰쓴 인원수  (별점 n개당)
 	private String insertReview = "";                          // 리뷰 작성하기
 	private String deleteReview = "";                          // 리뷰 삭제하기
+	private String starsTotalCount ="";
 	
 
 	@PostConstruct
@@ -46,6 +47,7 @@ public class ReviewDAO {
 		selectStarCount                   = environment.getProperty("selectStarCount");
 		insertReview                      = environment.getProperty("insertReview ");
 		deleteReview                      = environment.getProperty("deleteReview");
+		starsTotalCount                   = environment.getProperty("starsTotalCount");
 	}
 	
 	// 총 리뷰 다뜨게하기
@@ -80,6 +82,42 @@ public class ReviewDAO {
 		int delRev = jdbcTemplate.update(deleteReview, rev_no);
 		return delRev;	
 	}
+	
+	//  강아지 마릿수, 총리뷰수, 별점당 리뷰갯수 세기
+	
+	
+	public int dogRowCount() {
+		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM dog", Integer.class);
+		}
+	
+	public double starsAverage() {
+		return jdbcTemplate.queryForObject("select round(AVG(star_cnt),2) from sit_review", Double.class);
+	}
+	
+	public int starsTotalCount() {
+		return jdbcTemplate.queryForObject("select count(*) from sit_review", Integer.class);
+	}
+	
+	public int ssrc1() { 
+		return jdbcTemplate.queryForObject("select count(*) from sit_review where star_cnt = ?", Integer.class, 1);
+	}
+	
+	public int ssrc2() {
+		return jdbcTemplate.queryForObject("select count(*) from sit_review where star_cnt = ?", Integer.class, 2);
+	}
+	
+	public int ssrc3() {
+		return jdbcTemplate.queryForObject("select count(*) from sit_review where star_cnt = ?", Integer.class, 3);
+	}
+	
+	public int ssrc4() {
+		return jdbcTemplate.queryForObject("select count(*) from sit_review where star_cnt = ?", Integer.class, 4);
+	}
+	
+	public int ssrc5() {
+		return jdbcTemplate.queryForObject("select count(*) from sit_review where star_cnt = ?", Integer.class, 5);
+	}
+	
 	
 //	public void starCat(int star_cnt) {
 //		

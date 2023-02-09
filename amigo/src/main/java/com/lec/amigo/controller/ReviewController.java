@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.impl.ReviewServiceImpl;
+import com.lec.amigo.service.DogService;
+import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.ReviewVO;
+import com.lec.amigo.vo.UserVO;
 
 
 
@@ -30,6 +33,7 @@ public class ReviewController {
 	
 	@Autowired
 	private ReviewServiceImpl reviewService;
+
 	
 	@Autowired
 	Environment environment;
@@ -46,6 +50,23 @@ public class ReviewController {
 	public String getReviewList (Model model, ReviewVO review) {
 		
 		System.out.println("리뷰리스트");
+		int dogCount = reviewService.dogRowCount();
+		double starsAverage = reviewService.starsAverage();
+		int ssrc1 = reviewService.ssrc1();
+		int ssrc2 = reviewService.ssrc2();
+		int ssrc3 = reviewService.ssrc3();
+		int ssrc4 = reviewService.ssrc4();
+		int ssrc5 = reviewService.ssrc5();
+		int starsTotalCount = reviewService.starsTotalCount();
+		model.addAttribute("dogCount", dogCount);
+		model.addAttribute("starsAverage", starsAverage);
+		model.addAttribute("ssrc1", ssrc1);
+		model.addAttribute("ssrc2", ssrc2);
+		model.addAttribute("ssrc3", ssrc3);
+		model.addAttribute("ssrc4", ssrc4);
+		model.addAttribute("ssrc5", ssrc5);
+		model.addAttribute("starsTotalCount", starsTotalCount);
+		
 		List<ReviewVO> revList = reviewService.getReviewList(review);	
 		model.addAttribute("revList", revList);
 		return "view/review/review_list.jsp";

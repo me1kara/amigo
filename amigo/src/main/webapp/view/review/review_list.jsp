@@ -26,7 +26,10 @@
     		width:100%;
     		text-align: center;
     	}
-    	
+    	.text-uppercase {
+    	 font-family: "Jalnan";
+      	 font-size:40px; 
+    	}
     </style>
 <title>후기01_실시간 후기</title>
 
@@ -50,20 +53,20 @@
           >
             <div class="rating-card">
               <div class="text-center m-b-30">
-                <!-- 몇마리의 표현은 정보를 가져와줘야함 -->
+                <!-- 몇마리의 표현은 정보를 가져와줘야함. 02/09 백단에서 가져옴 -->
                 <div class="review-member">
-                  <a href="#">${fn:length(dogList)}</a>마리의 친구들이 AM!GO와 함께했어요!
+                  <a href="#">${dogCount}</a>마리의 친구들이 AM!GO와 함께했어요!
                 </div>
                 <br />
                 <!-- 점수 -->
-                <h1 class="rating-number">4.3<small>/5</small></h1>
+                <h1 class="rating-number">${starsAverage}<small>/5</small></h1>
                 <div class="rating-stars d-inline-block position-relative mr-2">
                   <!-- 별 이미지 일뿐 구동은 백엔드쪽에서 만들어 줘야할거 같습니다. -->
                   <img src="amigo/resources/img/grey-star.svg" alt="" />
                   <div class="filled-star" style="width: 86%"></div>
                 </div>
                 <!-- 총 레이팅 -->
-                <div class="text-muted">2,145 ratings</div>
+                <div class="text-muted">${starsTotalCount } ratings</div>
               </div>
               <div class="rating-divided">
                 <div class="rating-progress">
@@ -80,7 +83,7 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <span class="rating-value">1,985</span>
+                  <span class="rating-value">${ssrc5}</span>
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
@@ -96,7 +99,7 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <span class="rating-value">356</span>
+                  <span class="rating-value">${ssrc4}</span>
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
@@ -112,7 +115,7 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <span class="rating-value">130</span>
+                  <span class="rating-value">${ssrc3}</span>
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
@@ -128,7 +131,7 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <span class="rating-value">90</span>
+                  <span class="rating-value">${ssrc2}</span>
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
@@ -144,7 +147,7 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <span class="rating-value">33</span>
+                  <span class="rating-value">${ssrc1}</span>
                 </div>
               </div>
             </div>
@@ -188,7 +191,8 @@
                     <span class="nickName" style="color:#498dcc; font-weight:bold">${ rev.getUser_nick() }</span>&nbsp;
                     <!-- 유저 프로필 end -->
                   </div>
-                  <!-- 별 -->
+                  
+                  <!-- 별 
                  
                   <div class="star-ratings">
                     <div 
@@ -200,7 +204,7 @@
                     <div class="star-ratings-base space-x-2 text-lg">
                       <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                     </div>
-                  
+                  -->
                   <div class="text-center">
                     <div class="wrap-star">
                       <!-- 100 % -->
@@ -226,12 +230,12 @@
               <br />
               <div class="reviewMain text-center">
                 <div class="review-user-addr">
-                  <a href="#">"${ rev.getUser_addr() }"  서울 강남구</a>
+                  <a href="#">${ rev.getUser_addr() }</a>
                 </div>
                 <br />
                 <br />
                 <div class="review-main">
-                  <a href="#"></a>"${ rev.getRev_content() }" 늘 믿고 맡기는 시터분이에요 항상 감사드려요!
+                  <a href="#"></a>${ rev.getRev_content() }
                 </div>
               </div>
             </div>

@@ -33,8 +33,57 @@ $(document).ready(function() {
 		  //alert("test");
 	    $(this).removeData();
 	  });
-	}); 
-	  
+});
+
+function sit_list_modal(e){
+	console.log('입장확인');
+	let userno = $(e).text();
+	$('.modal').fadeIn();
+	console.log(e);
+	getSit_info(userno);
+}
+function close_sit_modal(){
+	console.log('모달 닫기');
+	$('.sit_information').remove();
+	$('.modal').fadeOut();
+}
+
+function getSit_info(userno){
+	console.log(userno);
+	
+	$.ajax({
+		url : '/amigo/ajax/getSit_info.do',
+		type : 'POST',
+		data : {
+			'userno' : userno
+		},
+		success : function(result) {
+			console.log('불러오기');
+			let modalBody = $('.modal-body');
+			if (result != null) {
+				let temp='<ul class="sit_information" style="overflow: auto;">';
+				result.forEach((svo, index) => {
+					temp += '<li style="padding:5px;"><table class="table-sm table-bordered" border="1" style="width:95%;">';
+					temp += '<tr style="border-bottom:solid 1px black;"><td style="width:50%;" class="modal_tTitle">이름</td><td style="width:50%;">' + svo.user_name +'</td></tr>';
+					temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">회원번호</td><td>' + svo.user_no +'</td></tr>';
+					temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">생년월일</td><td>' + svo.sit_birth +'</td></tr>';
+					temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">직업</td><td>' + svo.sit_job +'</td></tr>';
+					temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">가능일수</td><td>' + svo.sit_days +'</td></tr>';
+					temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">가능시간</td><td>' + svo.sit_time +'</td></tr>';
+					temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">경력여부</td><td>' + svo.sit_exp +'</td></tr>';
+					temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">반려경험</td><td>' + svo.sit_care_exp +'</td></tr>';
+					temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">자기소개</td><td>' + svo.sit_intro +'</td></tr>';
+				});
+				temp +='</ul>';
+				modalBody.append(temp);			
+			} else {
+				alert('유효하지 않은 요청입니다!')
+				close_sit_modal();
+			}
+		}
+	})
+}
+
 </script>
 
 
@@ -44,7 +93,7 @@ $(document).ready(function() {
 	<%@include file="/includes/header.jsp" %>
 		<div class="container mt-3">
 			<div class="mt-4 p-5">
-				<p class="sit-header-title">파트너 신청 관리</p>
+				<p class="sit-header-title"><a href="<%=request.getContextPath() %>/view/admin/getSitList.do">파트너 신청 관리</a></p>
 			</div>
 		<c:choose>
 		    <c:when test="${ sitList.isEmpty() || sitList == null }">
@@ -59,76 +108,28 @@ $(document).ready(function() {
 				<table class="table table-hover table-bordered">
 					<thead class="table-dark text-center">					
 						<th scope="col" class="col-1 text-center">사진</th>
-						<th scope="col" class="col-0.5 text-center">회원no</th>
+						<th scope="col" class="col-0.5 text-center">회원번호</th>
 						<th scope="col" class="col-1 text-center">성명</th>
 						<th scope="col" class="col-0.5 text-center">성별</th>
-						<th scope="col" class="col-1 text-center">직업</th>
-						<th scope="col" class="col-0.5 text-center">일수</th>
-						<th scope="col" class="col-0.5 text-center">시간대</th>			
-						<th scope="col" class="col-0.5 text-center">경력</th>			
-						<th scope="col" class="col-2 text-center">경험</th>			
-						<th scope="col" class="col-2 text-center">소개</th>
-						<th scope="col" class="col-0.5 text-center">여부</th>
-						<th scope="col" class="col-0.5 text-center">상세</th>					
+						<th scope="col" class="col-0.5 text-center">여부</th>					
 						<th scope="col" class="col-0.5 text-center">승인</th>													
 						<th scope="col" class="col-0.5 text-center">실격</th>						
 					</thead>
+				
 					 <tbody>
 						<c:forEach var="sit" items="${ sitList }">
 						 <tr>
 								<td align="center"><c:if test="${sit.getSit_photo()!=null and sit.getSit_photo()!=''}">
                          		   <img class="sit-photo" src="/img/${sit.getSit_photo()}" width="60px" height="40px"></c:if> 
                            		</td>
-								<td onclick="sit_list_modal(this)">${sit.getUser_no()}</td>
+								<td id="sit_user_no" onclick="sit_list_modal(this)">${sit.getUser_no()}</td>
 								<td>${sit.getUser_name()}</td>								
 				    			<td><c:choose><c:when test="${ sit.getSit_gender()=='m' }">M</c:when>
 										      <c:when test="${ sit.getSit_gender()=='f' }">F</c:when></c:choose></td>
-								<td>${ sit.getSit_job() }</td>
-								<td>${ sit.getSit_days() }</td>
-								<td>${ sit.getSit_time() }</td>
-				    			<td><c:choose><c:when test="${ sit.isSit_exp() }">유</c:when>
-										      <c:when test="${ !sit.isSit_exp() }">무</c:when></c:choose></td>
-				    			<td>${ sit.getSit_care_exp() }</td>
-				    			<td>${ sit.getSit_intro() }</td>
 				    			<td><c:choose><c:when test="${ sit.isSit_auth_is() }">O</c:when>
-										      <c:when test="${ !sit.isSit_auth_is() }">X</c:when></c:choose></td>
-								<td>
-								<!-- Trigger the modal with a button -->
-								<button type="button" class="btn btn-info btn-lg" id="read"
-										data-toggle="modal" data-target="#myModal">상세보기</button> 
-								<!-- Modal -->
-								<div class="modal fade" id="myModal" role="dialog">
-									<div class="modal-dialog">
-
-										<!-- Modal content-->
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-												<h4 class="modal-title">상세정보</h4>
-											</div>
-											<div class="modal-body">
-												<p>${ sit.getSit_photo() }</p>
-												<p>${ sit.getUser_no() }</p>
-												<p>${ sit.getUser_name() }</p>
-												<p>${ sit.getSit_gender() }</p>
-												<p>${ sit.getSit_job() }</p>
-												<p>${ sit.getSit_days() }</p>
-												<p>${ sit.getSit_time() }</p>
-												<p>${ sit.isSit_exp() }</p>
-												<p>${ sit.getSit_care_exp() }</p>
-												<p>${ sit.getSit_intro() }</p>
-												<p>${ sit.isSit_auth_is() }</p>	
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default"
-													data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</td>			
+										      <c:when test="${ !sit.isSit_auth_is() }">X</c:when></c:choose></td>	
 								<td><a href="updateSitter.do?sit_auth_is=true&user_no=${sit.getUser_no() }" class="btn btn-primary">승인</a></td>
-								<td><a href="deleteSitter.do?user_no=${sit.getUser_no() }" class="btn btn-primary">실격</a></td>		
+								<td><a href="deleteSitter.do?user_no=${sit.getUser_no() }" class="btn btn-danger">실격</a></td>		
 						 </tr>	 
 					   </c:forEach>									
 					</tbody>
@@ -136,7 +137,7 @@ $(document).ready(function() {
 			</div>                                      <!-- 승인 -> forEach문의 a태그 :  매서드.do?불리언세팅값=true&유저넘버(쿼리의 where)=달러 중괄 리스트의.유저넘버 얻어오기 중괄호  -->
 		 </c:otherwise>
 		</c:choose>
-		
+								
 		<div class="row align-items-start mt-3">
 			<ul class="col pagination justify-content-center">
 			
@@ -192,26 +193,26 @@ $(document).ready(function() {
 		
 		<!-- 모달 -->
 		
-<div class="modal" id="myModal" onclick="close_">
+	<div class="modal" id="myModal" onclick="close_sit_modal()">
  	<div class="modal-dialog">
    		<div class="modal-content">
 
       <!-- Modal Header -->
    		   <div class="modal-header">
-  		      <h4 class="modal-title">Modal Heading</h4>
-   			     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  		      <h4 class="modal-title">신청인의 상세정보</h4>
+   			    
   		</div>
 
       <!-- Modal body -->
       <div class="modal-body">
-       
+       		
        
        
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" onclick="close_sit_modal()">Close</button>
       </div>
 
     </div>
