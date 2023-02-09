@@ -16,13 +16,36 @@
 	<!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
+<style>
+
+      .sit-header-title{
+       font-family: "Jalnan";
+       font-size:40px; 
+      }
+
+</style>
+
+
+<script>
+$(document).ready(function() {
+	
+	  $('#myModal').on('hide.bs.modal', function (e) {
+		  //alert("test");
+	    $(this).removeData();
+	  });
+	}); 
+	  
+</script>
+
+
 </head>
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container mt-3">
-		
-		
+			<div class="mt-4 p-5">
+				<p class="sit-header-title">파트너 신청 관리</p>
+			</div>
 		<c:choose>
 		    <c:when test="${ sitList.isEmpty() || sitList == null }">
 		        <div class="text-center">
@@ -32,48 +55,80 @@
 			</c:when>
 		
 	   <c:otherwise>
-		<p>파트너 신청 관리</p>
 			<div class="row mt-4">
 				<table class="table table-hover table-bordered">
 					<thead class="table-dark text-center">					
 						<th scope="col" class="col-1 text-center">사진</th>
-						<th scope="col" class="col-1 text-center">유저번호</th>
-						<th scope="col" class="col-1 text-center">유저명</th>
-						<th scope="col" class="col-1 text-center">시터번호 (또는 신청번호)</th>
-						<th scope="col" class="col-1 text-center">성별</th>
-						<th scope="col" class="col-1 text-center">흡연여부</th>
+						<th scope="col" class="col-0.5 text-center">회원no</th>
+						<th scope="col" class="col-1 text-center">성명</th>
+						<th scope="col" class="col-0.5 text-center">성별</th>
 						<th scope="col" class="col-1 text-center">직업</th>
-						<th scope="col" class="col-1 text-center">가능일자</th>
-						<th scope="col" class="col-1 text-center">가능시간</th>			
-						<th scope="col" class="col-1 text-center">경력여부</th>			
-						<th scope="col" class="col-2 text-center">시터경험</th>			
-						<th scope="col" class="col-0.5 text-center">자기소개</th>
-						<th scope="col" class="col-0.5 text-center">승인여부</th>						
-						<th scope="col" class="col-0.5 text-center">승인</th>							
-						<th scope="col" class="col-0.5 text-center">실격</th><!-- 시터에서 delete하면될듯. -->							
+						<th scope="col" class="col-0.5 text-center">일수</th>
+						<th scope="col" class="col-0.5 text-center">시간대</th>			
+						<th scope="col" class="col-0.5 text-center">경력</th>			
+						<th scope="col" class="col-2 text-center">경험</th>			
+						<th scope="col" class="col-2 text-center">소개</th>
+						<th scope="col" class="col-0.5 text-center">여부</th>
+						<th scope="col" class="col-0.5 text-center">상세</th>					
+						<th scope="col" class="col-0.5 text-center">승인</th>													
+						<th scope="col" class="col-0.5 text-center">실격</th>						
 					</thead>
 					 <tbody>
 						<c:forEach var="sit" items="${ sitList }">
 						 <tr>
-								<td align="center">${ sit.getSit_photo()}</td>
-								<td>${sit.getUser_no()}</td>
-								<td>${sit.getUser_name()}</td>
-								<td>${sit.getSit_no()}</td>
-				    			<td><c:choose><c:when test="${ sit.getSit_gender()=='m' }">남성</c:when>
-										      <c:when test="${ sit.getSit_gender()=='f' }">여성</c:when></c:choose></td>
-								<td><c:choose><c:when test="${ sit.isSit_smoking() }">예</c:when>
-										      <c:when test="${ !sit.isSit_smoking() }">아니오</c:when></c:choose></td>
+								<td align="center"><c:if test="${sit.getSit_photo()!=null and sit.getSit_photo()!=''}">
+                         		   <img class="sit-photo" src="/img/${sit.getSit_photo()}" width="60px" height="40px"></c:if> 
+                           		</td>
+								<td onclick="sit_list_modal(this)">${sit.getUser_no()}</td>
+								<td>${sit.getUser_name()}</td>								
+				    			<td><c:choose><c:when test="${ sit.getSit_gender()=='m' }">M</c:when>
+										      <c:when test="${ sit.getSit_gender()=='f' }">F</c:when></c:choose></td>
 								<td>${ sit.getSit_job() }</td>
 								<td>${ sit.getSit_days() }</td>
 								<td>${ sit.getSit_time() }</td>
-				    			<td><c:choose><c:when test="${ sit.isSit_exp() }">유경력</c:when>
-										      <c:when test="${ !sit.isSit_exp() }">무경력</c:when></c:choose></td>
+				    			<td><c:choose><c:when test="${ sit.isSit_exp() }">유</c:when>
+										      <c:when test="${ !sit.isSit_exp() }">무</c:when></c:choose></td>
 				    			<td>${ sit.getSit_care_exp() }</td>
 				    			<td>${ sit.getSit_intro() }</td>
-				    			<td><c:choose><c:when test="${ sit.isSit_auth_is() }">승인완료</c:when>
-										      <c:when test="${ !sit.isSit_auth_is() }">승인대기</c:when></c:choose></td>
+				    			<td><c:choose><c:when test="${ sit.isSit_auth_is() }">O</c:when>
+										      <c:when test="${ !sit.isSit_auth_is() }">X</c:when></c:choose></td>
+								<td>
+								<!-- Trigger the modal with a button -->
+								<button type="button" class="btn btn-info btn-lg" id="read"
+										data-toggle="modal" data-target="#myModal">상세보기</button> 
+								<!-- Modal -->
+								<div class="modal fade" id="myModal" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title">상세정보</h4>
+											</div>
+											<div class="modal-body">
+												<p>${ sit.getSit_photo() }</p>
+												<p>${ sit.getUser_no() }</p>
+												<p>${ sit.getUser_name() }</p>
+												<p>${ sit.getSit_gender() }</p>
+												<p>${ sit.getSit_job() }</p>
+												<p>${ sit.getSit_days() }</p>
+												<p>${ sit.getSit_time() }</p>
+												<p>${ sit.isSit_exp() }</p>
+												<p>${ sit.getSit_care_exp() }</p>
+												<p>${ sit.getSit_intro() }</p>
+												<p>${ sit.isSit_auth_is() }</p>	
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</td>			
 								<td><a href="updateSitter.do?sit_auth_is=true&user_no=${sit.getUser_no() }" class="btn btn-primary">승인</a></td>
-								<td><a href="deleteSitter.do?user_no=${sit.getUser_no() }" class="btn btn-primary">실격 (자격해제)</a></td>		
+								<td><a href="deleteSitter.do?user_no=${sit.getUser_no() }" class="btn btn-primary">실격</a></td>		
 						 </tr>	 
 					   </c:forEach>									
 					</tbody>
@@ -81,7 +136,88 @@
 			</div>                                      <!-- 승인 -> forEach문의 a태그 :  매서드.do?불리언세팅값=true&유저넘버(쿼리의 where)=달러 중괄 리스트의.유저넘버 얻어오기 중괄호  -->
 		 </c:otherwise>
 		</c:choose>
+		
+		<div class="row align-items-start mt-3">
+			<ul class="col pagination justify-content-center">
+			
+				<c:set var="cp" value="${searchVO.getCurPage()}"/>
+				<c:set var="rp" value="${searchVO.getRowSizePerPage()}"/>
+				<c:set var="fp" value="${searchVO.getFirstPage()}"/>
+				<c:set var="lp" value="${searchVO.getLastPage()}"/>
+				<c:set var="ps" value="${searchVO.getPageSize()}"/>
+				<c:set var="tp" value="${searchVO.getTotalPageCount()}"/>
+				<c:set var="sc" value="${searchVO.getSearchCategory()}"/>
+				<c:set var="st" value="${searchVO.getSearchType()}"/>
+				<c:set var="sw" value="${searchVO.getSearchWord()}"/>
+																
+				<c:if test="${ fp != 1 }">
+					<li class="page-item"><a href="getSitList.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
+					<li class="page-item"><a href="getSitList.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-backward"></i></a></li>				
+				</c:if>
+			
+				<c:forEach var="page" begin="${fp}" end="${lp}">
+					<li class="page-item ${cp==page ? 'active' : ''}"><a href="getSitList.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link">${page}</a></li>
+				</c:forEach>
+				
+				<c:if test="${ lp < tp }">
+					<li class="page-item "><a href="getSitList.do?curPage=${lp+ps}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-forward"></i></a></li>				
+					<li class="page-item"><a href="getSitList.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>				
+				</c:if>
+			</ul> <!-- pagination -->	
+	
+		</div> <!-- 페이징 -->
+		
+	
+		<!-- 하단 검색 시스템 -->
+		<form action="getSitList.do" method="get" id="sitForm">   
+				    	<div class="col-3 me-1">
+					<select class="form-select" id="searchType" name="searchType">
+				    	<option value="">검색</option>							
+				    	<option value="user_name" ${searchVO.getSearchType()=="user_name" ? "selected" : "" }>성명</option>							
+				    	<option value="sit_auth_is" ${searchVO.getSearchType()=="sit_auth_is" ? "selected" : ""}>승인여부</option>						
+				    	<option value="sit_gender" ${searchVO.getSearchType()=="sit_gender" ? "selected" : ""}>성별</option>						
+					</select>
+				</div>
+				<div class="col-3 me-1">			
+					<input class="form-control me-2" name="searchWord" type="text" placeholder="내용을 입력하세요." />
+				</div>
+				<div class="col-2 btn-group">
+			    	<input type="submit" class="col-1 btn btn-primary me-2" value="검색">
+	        	</div>
+
+	     </form>	
+		
+		
 		</div>
+		
+		<!-- 모달 -->
+		
+<div class="modal" id="myModal" onclick="close_">
+ 	<div class="modal-dialog">
+   		<div class="modal-content">
+
+      <!-- Modal Header -->
+   		   <div class="modal-header">
+  		      <h4 class="modal-title">Modal Heading</h4>
+   			     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  		</div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+       
+       
+       
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+		
 
 	<!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
