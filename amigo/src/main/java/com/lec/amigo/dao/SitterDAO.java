@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.common.SearchVO;
+import com.lec.amigo.mapper.BookContentRowMapper;
 import com.lec.amigo.mapper.SitRowMapper;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
@@ -40,6 +41,7 @@ public class SitterDAO {
 	private String selectSitterByG = "";
 	private String selectSitterByUserName = "";
 	private String sitterTotalRowCount = "";
+	private String selectSitterByUserNo = "";
 	private String selectSitterInfo = "";   // 펫시터 개인의 상세정보
 	private String selectSitterCate = "";   // 승인/미승인 을 나눠서 정렬하기
 	private String insertSitter = "";
@@ -58,6 +60,7 @@ public class SitterDAO {
 		selectSitterByUserName  = environment.getProperty("selectSitterByUserName");
 		sitterTotalRowCount     = environment.getProperty("sitterTotalRowCount");
 		selectSitterInfo        = environment.getProperty("selectSitterInfo");
+		selectSitterByUserNo    = environment.getProperty("selectSitterByUserNo");
 		selectSitterCate        = environment.getProperty("selectSitterCate");
 		insertSitter            = environment.getProperty("insertSitter");
 		deleteSitter            = environment.getProperty("deleteSitter");
@@ -71,6 +74,21 @@ public class SitterDAO {
 	public SitterVO sitterInfo(SitterVO svo) {
 		Object[] args = { svo.getUser_no() };
 		return (SitterVO) jdbcTemplate.query(selectSitterInfo, args, new SitRowMapper());
+		
+	}
+	
+	public List<SitterVO> getSitInfoList(int userno) {
+		
+		sql = selectSitterByUserNo;
+		Object[] args = {userno};
+		
+		try {
+			return jdbcTemplate.query(sql, args, new SitRowMapper());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		 
+		return null;
 		
 	}
 	
