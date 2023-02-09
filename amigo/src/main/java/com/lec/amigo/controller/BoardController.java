@@ -244,6 +244,10 @@ public class BoardController {
 	
 	@RequestMapping(value="/user_board_delete.do", method=RequestMethod.GET)
 	public String user_board_delete(BoardVO board) {
+		String[] fileSplit = board.getUbd_file().split(",");
+		for(int i=0; i<fileSplit.length; i++) {
+			new File(uploadFolder+fileSplit[i]).delete();
+		}
 		boardService.deleteBoard(board);
 		return "user_board_list.do";
 	}
@@ -315,6 +319,13 @@ public class BoardController {
 	@ResponseBody 
 	public int heart(@ModelAttribute HeartVO heart) {
 		int data = boardService.insertHeart(heart);
+		return data;
+	}
+	
+	@PostMapping("countHeart.do")
+	@ResponseBody 
+	public int countheart(HeartVO heartVO) {
+		int data = boardService.countHeart(heartVO.getUbd_no());
 		return data;
 	}
 	

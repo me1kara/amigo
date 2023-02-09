@@ -251,28 +251,29 @@
     </div>
     <!-- 후기 종료 -->
     <br />
-    <!-- Q&A -->
-    <div>
-      <h4>Q&A</h4>
-      <a href="#" onclick="main_fail();">전체보기</a>
-    </div>
-    <div class="card text-center" style="width: 18rem">
-    <a href="#" onclick="main_fail();">
-      <img class="card-img-top" src="#" alt="Card image cap" />
-      </a>
-      <div class="card-body">
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
+     <!-- Q&A -->
+      <div class="container col-md-6">
+      <div class="row justify-content-between mt-5">
+        <div class="col-4">
+          <h4>Q&A</h4>
+        </div>
+        <div class="col-4 text-end">
+          <a href="#" onclick="main_fail();">전체보기</a>
+        </div>
       </div>
+      <div class="container card text-center" style="width: 25rem;" onclick="main_fail();">
+      	<h5 class="card-title"><b>Q ${ board.getUbd_title() }</b></h5>
+        	<small> ${ board.getUser_nick() } </small>
+        <div class="card-body">
+          <p class="card-text">
+            ${ board.getUbd_cont() }
+          </p>
+        </div>
+      </div>
+      </div>
+      <br />
+      <!-- Q&A 종료 -->
     </div>
-    <br />
-    <!-- Q&A 종료 -->
-		<hr/>
-		
-		<hr/>
-		
 		
 	<%@include file="/includes/footer.jsp" %>
 

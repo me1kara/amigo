@@ -48,28 +48,30 @@ public class BoardDAO {
 	private String findHeart = "";
 	private String insertHeart = "";
 	private String deleteHeart = "";
+	private String countHeart = "";
 	
 	@PostConstruct
 	public void getSqlPropeties() {
 		selectBoardListByUbdTitleLike = environment.getProperty("selectBoardListByUbdTitleLike");
 		selectBoardListByUserNickLike = environment.getProperty("selectBoardListByUserNickLike");
 		selectBoardListByUbdContLike  = environment.getProperty("selectBoardListByUbdContLike");
-		selectBoardListByUbdTitle = environment.getProperty("selectBoardListByUbdTitle");
-		selectBoardListByUserNick = environment.getProperty("selectBoardListByUserNick");
-		selectBoardListByUbdCont  = environment.getProperty("selectBoardListByUbdCont");
-		boardTotalRowCount        = environment.getProperty("boardTotalRowCount");
-		boardCateRowCount         = environment.getProperty("boardCateRowCount");
-		selectByUbdNo             = environment.getProperty("selectByUbdNo");
-		updateCount               = environment.getProperty("updateCount");
-		updateBoard               = environment.getProperty("updateBoard");
-		deleteBoard               = environment.getProperty("deleteBoard");
-		selectCateByUbdTitle      = environment.getProperty("selectCateByUbdTitle");
-		selectCateByUserNick      = environment.getProperty("selectCateByUserNick");
-		selectCateByUbdCont      = environment.getProperty("selectCateByUbdCont");
-		insertBoard               = environment.getProperty("insertBoard");
-		findHeart                 = environment.getProperty("findHeart");
-		insertHeart               = environment.getProperty("insertHeart");
-		deleteHeart               = environment.getProperty("deleteHeart");
+		selectBoardListByUbdTitle     = environment.getProperty("selectBoardListByUbdTitle");
+		selectBoardListByUserNick     = environment.getProperty("selectBoardListByUserNick");
+		selectBoardListByUbdCont      = environment.getProperty("selectBoardListByUbdCont");
+		boardTotalRowCount            = environment.getProperty("boardTotalRowCount");
+		boardCateRowCount             = environment.getProperty("boardCateRowCount");
+		selectByUbdNo                 = environment.getProperty("selectByUbdNo");
+		updateCount                   = environment.getProperty("updateCount");
+		updateBoard                   = environment.getProperty("updateBoard");
+		deleteBoard                   = environment.getProperty("deleteBoard");
+		selectCateByUbdTitle          = environment.getProperty("selectCateByUbdTitle");
+		selectCateByUserNick          = environment.getProperty("selectCateByUserNick");
+		selectCateByUbdCont           = environment.getProperty("selectCateByUbdCont");
+		insertBoard                   = environment.getProperty("insertBoard");
+		findHeart                     = environment.getProperty("findHeart");
+		insertHeart                   = environment.getProperty("insertHeart");
+		deleteHeart                   = environment.getProperty("deleteHeart");
+		countHeart                    = environment.getProperty("countHeart");
 	}
 	
 
@@ -213,5 +215,8 @@ public class BoardDAO {
 		jdbcTemplate.update(deleteHeart, heart.getUser_no(), heart.getUbd_no());
 	}
 	
+	public int countHeart(int ubd_no) {
+		return jdbcTemplate.queryForObject(countHeart, Integer.class, ubd_no);
+	}
 	
 }

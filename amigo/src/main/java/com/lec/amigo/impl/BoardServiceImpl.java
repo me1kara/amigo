@@ -87,5 +87,10 @@ public class BoardServiceImpl implements BoardService{
 		return result;
 	}
 
+	@Override
+	public int countHeart(int udb_no) {
+		return boardDAO.countHeart(udb_no);
+	}
+
 	
 }

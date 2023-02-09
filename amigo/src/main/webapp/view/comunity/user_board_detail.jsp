@@ -77,9 +77,7 @@
 			<span>${ board.getUbd_date() }</span>
 			<!-- 조회 -->
 			<span>조회수 ${ board.ubd_cnt }</span>
-			<!-- 추천 -->
-			<span>좋아요 ${board.getLike_cnt()}</span>
-			<!-- 추천 -->
+			<!-- 견종 -->
 			<span>견종 ${board.getDog_kind()}</span>
 			</div>	
 			</div>		
@@ -107,7 +105,7 @@
 			<div class="container text-center">
 				<a class="heart" style="text-decoration-line: none;">
 					<img id="heart" src="resources/img/heart.svg">
-					좋아요
+					좋아요 <span id="LikeCntView"></span>
 				</a>
 			</div>
 		<!-- 추천 -->
@@ -157,7 +155,7 @@
 				<p id = "reply_input">
 					<textarea style="margin:0 auto;" rows="2" cols="50" name="ubd_r_content" placeholder="댓글을 입력하세요." required></textarea>		
 				</p>
-					<p><button type="submit" onclick="reload();" class="btn btn-sm btn-secondary col-2" >댓글입력</button></p>
+					<p><button type="submit" class="btn btn-sm btn-secondary col-2" >댓글입력</button></p>
 
 		
 					<input type="hidden" name="ubd_no" value="${board.getUbd_no()}"/>
@@ -170,11 +168,6 @@
 
 				</form>
 			</div>
-			<script type="text/javascript">
-			function reload() {
-				location.reload();
-			}
-			</script>
 			
 			
 			<div class="container col-md-5 " align="center">
@@ -253,12 +246,10 @@
         var findHeart = ${findHeart};
         // findHeart이 1이면 좋아요가 이미 되있는것이므로 heart-fill.svg를 출력하는 코드
         if(findHeart>0) {
-        	console.log(findHeart);
             $("#heart").prop("src", "resources/img/heart_fill.svg");
             $(".heart").prop('name', findHeart);
         }
         else {
-        	console.log(findHeart);
             $("#heart").prop("src", "resources/img/heart.svg");
             $(".heart").prop('name', findHeart);
         }
@@ -277,12 +268,28 @@
 	    		that.prop('name', data);
 	        	if(data==1) {
 	            	     $('#heart').prop("src","resources/img/heart_fill.svg");
+	            	     LikeCount();
 	        	} else {
                    	     $('#heart').prop("src","resources/img/heart.svg");
+                   	  	 LikeCount();
 	        	}
             	}
 	    });
        });
+	
+	  	function LikeCount() {
+	  		$.ajax({
+	  			url :'countHeart.do',
+	  			type : 'POST',
+	  			data : {'ubd_no' : ${board.getUbd_no()} },
+	  			success : function(data){
+	  				$('#LikeCntView').html(data);
+	  			}
+	  		});
+	    }
+	  	
+	  	LikeCount();
+	
 </script>
 
 	<!-- Bootstrap core JS-->

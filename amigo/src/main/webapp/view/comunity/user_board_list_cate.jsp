@@ -94,7 +94,11 @@
 	   			<div class="col-auto">
 					<a class="ubd-header-menu" href="user_board_list.do">전체글</a>&nbsp;&nbsp;
 	   				<a class="ubd-header-menu" href="user_board_list_like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a>&nbsp;&nbsp;
-	   				<a class="ubd-header-menu" href="">펫시터커뮤니티</a>
+	   				
+	   			    <c:if test="${user.getUser_type() == 'S' || user.getUser_type() == 'A'}">
+                    <a class="ubd-header-menu" href="sitter_board_list.do">펫시터커뮤니티</a>
+                    </c:if>
+                    
 	   			</div>
 	   			   	<div class="col-auto">
 					<select class="form-select" id="searchCategory" name="searchCategory" onchange="chageSelect()">
@@ -241,7 +245,8 @@
             <div class="container" align="center">
              	<a href="user_board_insert.do" class="btn btn-primary">글 작성하기</a>
             </div>
-      </form>      
+      </form>
+      </div>      
 	    
 	    
 <%@include file="/includes/footer.jsp" %>

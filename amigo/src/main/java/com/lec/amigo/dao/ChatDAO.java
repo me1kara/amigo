@@ -315,7 +315,6 @@ public class ChatDAO {
 			
 			while(rs.next()) {
 				a = rs.getInt("sitt_chat_index");
-				System.out.println(a+"확인용");
 				myChatList.add(getLastChat(a));
 			}
 			return myChatList;

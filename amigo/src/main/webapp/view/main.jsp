@@ -393,15 +393,15 @@ prefix="c"%>
           <h4>Q&A</h4>
         </div>
         <div class="col-4 text-end">
-          <a href="#" class="all-view">전체보기</a>
+          <a href="user_board_cate.do?ubd_cate=질문" class="all-view">전체보기</a>
         </div>
       </div>
-      <div class="container card text-center" style="width: 18rem">
-        <img class="card-img-top" src="" alt="Card image cap" />
+      <div class="container card text-center" style="width: 25rem;" onclick="location.href='user_board_detail.do?ubd_no=5&updateCount_is=abd&cnt=3'">
+      	<h5 class="card-title"><b>Q ${ board.getUbd_title() }</b></h5>
+        	<small> ${ board.getUser_nick() } </small>
         <div class="card-body">
           <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            ${ board.getUbd_cont() }
           </p>
         </div>
       </div>
