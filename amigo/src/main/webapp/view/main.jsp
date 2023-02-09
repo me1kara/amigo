@@ -217,7 +217,7 @@ prefix="c"%>
           <!-- 추천산책루트  -->
           <div class="col-6">
             <div class="p-3">
-              <a href="#">
+              <a href="<%=request.getContextPath() %>/view/trail/recommend_trail_list.jsp">
                 <img
                   src="/amigo/resources/img/walking.png"
                   class="img-fluid"
@@ -230,7 +230,7 @@ prefix="c"%>
           <!-- 병원 -->
           <div class="col-6">
             <div class="p-3">
-              <a href="#">
+              <a href="<%=request.getContextPath() %>/view/hospital/recommend_hospital_list.jsp">
                 <img
                   src="/amigo/resources/img/hp.png"
                   class="img-fluid"

@@ -54,6 +54,7 @@
 
         linePath.push(new kakao.maps.LatLng(lat, lon));
 
+            
     	}
 
     	// 지도에 표시할 선을 생성합니다
