@@ -67,8 +67,8 @@ public class SitterDAO {
 		selectSitListByUserNo   = environment.getProperty("selectSitListByUserNo");
 	}
 	
-
-	public SitterVO sitterInfo(SitterVO svo) {
+	
+	public SitterVO getSitter(SitterVO svo) {
 		Object[] args = { svo.getUser_no() };
 		return (SitterVO) jdbcTemplate.query(selectSitterInfo, args, new SitRowMapper());
 		

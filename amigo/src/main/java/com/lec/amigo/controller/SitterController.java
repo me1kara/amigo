@@ -44,7 +44,7 @@ public class SitterController {
 	@RequestMapping("/view/apply/getSitter.do")                    // 유저가 보는 시터정보(승인된시터만 get)
 	public String sitterInfo(HttpSession sess, Model model, SitterVO svo) {
 		System.out.println("시터의 상세 프로필");
-		sitterService.sitterInfo(svo);
+		sitterService.getSitter(svo);
 		return "sitter_profile.jsp";
 		
 	}
