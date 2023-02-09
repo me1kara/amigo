@@ -36,7 +36,7 @@ import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
-@PropertySource("classpath:config/uploadpathUser.properties")
+@PropertySource("classpath:config/uploadpath.properties")
 public class LoginController {
 	
 	@Autowired
@@ -51,14 +51,14 @@ public class LoginController {
 	@Autowired
 	ChatServiceImpl chatService;
 	
-	private String uploadFolderUser = "";
+	private String uploadFolder = "";
 	
 	@Autowired
 	Environment environment;
 	
 	@PostConstruct
 	public void getUploadPathPropeties() {
-		uploadFolderUser = environment.getProperty("uploadFolderUser");
+		uploadFolder = environment.getProperty("uploadFolderUser");
 	}
 	
 	
@@ -129,7 +129,12 @@ public class LoginController {
 	// 회원탈퇴
 	@RequestMapping(value="/revoke.do", method = RequestMethod.GET)
 	public String revoke(UserVO userVO) {
+		if(userVO.getUser_photo() != "" || userVO.getUser_photo() != null) {
+		String filename = userVO.getUser_photo();
+		new File(uploadFolder+filename).delete();
+		}
 		userService.revokeUser(userVO.getUser_no());
+		
 		return "home.jsp";
 	}
 	
@@ -234,14 +239,15 @@ public class LoginController {
 		MultipartFile uploadFile = userVO.getUploadFile();
 		
 		if (!uploadFile.isEmpty()) {
+			new File(uploadFolder+userVO.getUser_photo()).delete();
 			String fileName = uploadFile.getOriginalFilename();
 			String fileExtension = fileName.substring(fileName.lastIndexOf("."),fileName.length());
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
 			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
-			uploadFile.transferTo(new File(uploadFolderUser + uniqueName));
+			uploadFile.transferTo(new File(uploadFolder + uniqueName));
 			userVO.setUser_photo(uniqueName);
-		}
+		} 
 		
 		// 바뀐 정보로 세션 정보 업데이트!
 		sess.setAttribute("user", userService.updateUser(userVO));

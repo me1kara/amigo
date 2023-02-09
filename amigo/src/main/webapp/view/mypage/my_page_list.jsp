@@ -68,7 +68,7 @@ prefix="c"%>
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">찜 목록 & 예약 확인</a>
+          <a href="#" class="mypage_link">예약 확인</a>
         </li>
         <li class="list-group-item">
           <a

@@ -26,6 +26,7 @@
     <![endif]-->
     
     <style>
+    
     	a:hover{color: white; text-decoration: none;}
     	a:active {color: white; text-decoration: none;}
     	a:visited {color: white; text-decoration: none;}
@@ -40,16 +41,31 @@
     	}
     	
     	.sitter_list{
-    		text-align:center;
+    		text-align:left;
     		margin:0 auto;
     		padding: 10px;
+    		margin-top:80px;
+
     	}
+    	
     	.sitter_item{
     		display: flex;
-    		justify-content: center;
-    		margin: 0 auto; 
-    		border: 1px solid;
+    		justify-content: space-around;
+    		margin: 50px auto; 
+			padding-right : 10px;
+			border-radius: 10px;
+			box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
     	}
+    	
+    	h2 {
+    		font-family: "Jalnan";
+       		font-size:40px;
+    	}
+    	
+    	th {
+    		font-family: "Jalnan";
+    	}
+    	
     </style>
     
 </head>
@@ -75,24 +91,24 @@
 			
 			<section>
 				<article class="sitter_list">
-					<h2><%=addr%> 시터들 목록</h2>
+					<h2><%=addr%> 펫시터 목록</h2> <hr>
 					<c:choose>
 					<c:when test="${sittList!=null }">
 					<c:forEach var="sit" items="${sittList }">
 						<c:forEach var="user" items="${sittNameList }">		
 						<c:if test="${user.getUser_no() == sit.getUser_no() }">
 							<div class="sitter_item">
-								<div class="col-sm-3">
+								<div>
 									<img src="https://via.placeholder.com/100x100" width="100px" height="100px"/>
 								</div>
-								<table class="col-sm-6" >
-									<tr><th colspan="1">이름</th><td colspan="3">${user.getUser_name() }</td></tr>									
-									<tr><th>경력사항,특기</th><td>${sit.sit_care_exp }</td></tr>
+								<table>
+									<tr><th style="width:100px;">이름</th><td>${user.getUser_name() }</td></tr>									
 									<tr><th>시간</th><td>${sit.getSit_time() }</td></tr>
+									<tr><th>경력 및 특기</th><td>${sit.sit_care_exp }</td></tr>
 								</table>
-								<div class="col-sm-3" style="display: flex; justify-content: center; align-items: center;">
-									<button class="btn btn-secondary"
-										onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }'">자세히보기</button>
+								<div style="display: flex; justify-content: center; align-items: center;">
+									<button class="btn btn-outline-secondary"
+										onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }'">상세보기</button>
 								</div>
 							</div>
 						</c:if>

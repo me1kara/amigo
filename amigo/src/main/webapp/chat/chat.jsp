@@ -174,7 +174,7 @@
 </label>
 							</td>
 						<td colspan="1" style="text-align: rigth;"><button
-								class="btn btn-success" style="width: 100px; height:62px;" id="chat_submit_btn">보내기</button></td>
+								class="btn btn-light" style="width: 100px; height:62px; color:rgb(87, 160, 227); font-weight:bold;" id="chat_submit_btn">보내기</button></td>
 					</tr>		
 				</table>
 				<input type="file" id="fileUpload" onchange="previewFile()" style="display: none;">
