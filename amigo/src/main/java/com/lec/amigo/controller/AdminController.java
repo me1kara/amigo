@@ -2,14 +2,11 @@ package com.lec.amigo.controller;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,14 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
-import com.lec.amigo.service.DogService;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
 
 
 @Controller
-@PropertySource("classpath:config/uploadpath.properties")
 public class AdminController {
 	
 	@Autowired
@@ -37,16 +32,6 @@ public class AdminController {
 	
 	@Autowired
 	private SitterServiceImpl sitterService;
-	
-	@Autowired
-	Environment environment;
-	
-	private String uploadFolder = "";
-	
-	@PostConstruct
-	public void getUploadPathPropeties() {
-		uploadFolder = environment.getProperty("uploadFolder");
-	}
 	
 	// 펫시터 신청인 전체 리스트
 	@RequestMapping(value="/view/admin/getSitList.do", method=RequestMethod.GET) //
@@ -86,15 +71,14 @@ public class AdminController {
 		return "/view/admin/getSitList.do";  // 실제로 DAO의 매서드가 먹힘.
 	}
 	
-
 	
-	@RequestMapping(value="/view/admin/updateTypeU.do", method=RequestMethod.GET) 
-	public String updateTypeU(Model model, int user_no, SitterVO svo, boolean sit_auth_is) {
+	@RequestMapping(value="/view/admin/deleteSitter.do", method=RequestMethod.GET) 
+	public String deleteSitter(Model model, int user_no, SitterVO svo) {
 
 		
 		System.out.println("삭제합니다");
-		sitterService.updateTypeU(svo, sit_auth_is);
 		sitterService.deleteSitter(user_no);
+		sitterService.updateTypeU(svo);
 		
 
 		return "/view/admin/getSitList.do"; 
@@ -104,4 +88,3 @@ public class AdminController {
 	
 
 }
-	
