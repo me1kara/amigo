@@ -1,13 +1,13 @@
 package com.lec.amigo.controller;
 
 import java.io.File;
+
 import java.io.IOException;
-import java.util.List;
+
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +15,13 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.lec.amigo.dao.SitterDAO;
 import com.lec.amigo.impl.SitterServiceImpl;
-import com.lec.amigo.service.DogService;
-import com.lec.amigo.service.SitterService;
-import com.lec.amigo.vo.SitPageInfo;
 import com.lec.amigo.vo.SitterVO;
-import com.lec.amigo.vo.UserVO;
-
 
 
 @Controller
@@ -47,7 +38,7 @@ public class SitterController {
 	
 	@PostConstruct
 	public void getUploadPathPropeties() {
-		uploadFolder = environment.getProperty("uploadFolder");
+		uploadFolder = environment.getProperty("uploadFolderSitter");
 	}
 	
 	@RequestMapping("/view/apply/getSitter.do")                    // 유저가 보는 시터정보(승인된시터만 get)

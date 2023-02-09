@@ -72,14 +72,15 @@
       }
       
     </style>
-</head>
+    
+	<!-- far fa icon 불러오기 -->
+	<link rel="stylesheet" href=
+	"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+	</head>
+
 <body>
 <%@include file="/includes/header.jsp" %>
 
-<!-- far fa icon 불러오기 -->
-<link rel="stylesheet" href=
-"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
-</link>
 
 
    <div class="container col-md-6" align="left">
@@ -93,7 +94,11 @@
                <div class="col-auto">
                <a class="ubd-header-menu" href="user_board_list.do">전체글</a>&nbsp;&nbsp;
                   <a class="ubd-header-menu" href="user_board_list_like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a>&nbsp;&nbsp;
+                  
+                  <c:if test="${user.getUser_type() == 'S' || user.getUser_type() == 'A'}">
                   <a class="ubd-header-menu" href="sitter_board_list.do">펫시터커뮤니티</a>
+                  </c:if>
+                  
                </div>
                      <div class="col-auto">
                <select class="form-select" id="searchCategory" name="searchCategory" onchange="chageSelect()">
@@ -128,10 +133,11 @@
                </script>         
             
          </div>
+      
 
       <div class="container">               
          <c:if test="${ boardList.isEmpty() }">
-            <h6><p>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</p></h6>
+            <h6>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</h6>
          </c:if>
                <c:forEach  var="board" items="${ boardList }">
                     <div class="container" style="cursor: pointer;"  onclick="location.href='user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
@@ -239,7 +245,8 @@
             <div class="container" align="center">
              	<a href="user_board_insert.do" class="btn btn-primary">글 작성하기</a>
             </div>
-      </form>      
+      </form>
+    </div>      
        
        
 <%@include file="/includes/footer.jsp" %>

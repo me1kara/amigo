@@ -140,7 +140,7 @@
                 >
                   머물기
                 </button>
-                <button type="button" class="btn btn-primary" onclick="location.href='../../revoke.do?user_no=${user.getUser_no()}';" >이별하기</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='../../revoke.do?user_no=${user.getUser_no()}&user_photo=${user.getUser_photo()}';" >이별하기</button>
               </div>
             </div>
           </div>

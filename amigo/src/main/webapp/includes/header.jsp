@@ -110,7 +110,7 @@
 </a>
         <!-- 햄버거/ -->
       </button>
-      <a class="logo" href="<%=request.getContextPath()%>/main_home.do"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"/></a>
+      <a class="logo" href="<%=request.getContextPath()%>/main_home.do?ubd_no=5"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"/></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <div class="hori-selector">
