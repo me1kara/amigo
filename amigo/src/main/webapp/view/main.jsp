@@ -279,7 +279,7 @@ prefix="c"%>
         </div>
         <br />
         <div class="row text-center">
-          <a href="#">
+          <a href="apply/sitter_join.do">
             <img
               src="/amigo/resources/img/needYou.png"
               class="img-fluid"
@@ -297,7 +297,7 @@ prefix="c"%>
           <h4>실시간 후기</h4>
         </div>
         <div class="col-4 text-end">
-          <a href="#" class="all-view">전체보기</a>
+          <a href="user_review_list.do" class="all-view">전체보기</a>
         </div>
       </div>
       <div id="carouselExampleDark" class="carousel carousel-dark slide">
