@@ -71,8 +71,9 @@
 <script>
 	function open_book_modal(e){
 		console.log("입장확인");
-		let rno = $(e).find("#book_res_no").text();		
-		getBook_detail(rno);
+		let rno = $(e).find("#book_res_no").text();
+		let res_is = $(e).find("#book_res_is").text();
+		getBook_detail(rno,res_is);
 		$('.modal').fadeIn();
 		$('body').css("overflow", "hidden");
 		
@@ -85,7 +86,7 @@
 		$('body').css("overflow", "auto");
 	}
 	
-	function getBook_detail(rno){
+	function getBook_detail(rno,res_is){
  		$.ajax({
 			url : '/amigo/ajax/getBook_detail.do',
 			type : 'POST',
@@ -104,7 +105,10 @@
 						temp += '</table></li>';
 					});
 					temp+='</ul>';
-					temp+='<button class="btn btn-danger book_btn" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
+					console.log(res_is);
+					if(res_is.trim() == '대기'){
+						temp+='<button class="btn btn-danger book_btn" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
+					}
 					modalBody.append(temp);
 				} else {
 					alert('예약정보가 없습니다! 다시 시도해주세요!');
@@ -135,91 +139,30 @@
 			    error : function(request, status, error) { // 결과 에러 콜백함수
 			        console.log(error);
 			        alert('삭제에 실패했습니다!');
-			        close_book_modal();
+			        history.go(0);
 			    }
 			});
 			
 		}
 	}
-	
+
 </script>
 </head>
 <body>
 	<%@include file="/includes/header.jsp" %>
+	
+		<script>
+			
+		</script>
 		<div class="container">
 			<section>	
 				<article>
 					<h3>예약확인</h3>
+					<c:if test='${user.getUser_type().equals("S") }'>
+						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do'">시터모드</button>
+					</c:if>
 				</article>
-				<c:choose>
-				<c:when test='${user.getUser_type().equals("S") }'>
-					<h1>시터전용</h1>
-					<c:choose>
-						<c:when test="${sitBookList!=null }">
-							<ul style="list-style: none;">
-							<c:forEach var="book" items="${sitBookList }">
-								<c:forEach var="usr" items="${userList }">
-								<c:if test="${ book.getUser_no()==usr.getUser_no()}">
-								<li class="book_item">
-									<div>
-									<table class="table">
-										<tbody onclick="open_book_modal(this)">
-										<tr><th colspan="2" style="text-align: center;">${usr.getUser_name() } 유저</th></tr>
-										<tr>
-											<th>예약번호</th><td id="book_res_no">${book.res_no }</td>
-										</tr>
-										<tr>
-											<th colspan="2" style="color:blue;'">
-												
-												<c:choose>
-													<c:when test="${book.res_visit_is }">
-														방문
-													</c:when> 
-													<c:otherwise>
-														위탁
-													</c:otherwise>
-												</c:choose>
-												
-											</th>
-										</tr>
-										<tr>
-											<th>결제금액</th><td>${book.getRes_pay() }원</td>
-										</tr>
-										<tr>
-											<th>승인여부</th>
-											<td>
-												<c:choose>
-													<c:when test="${book.res_is }">
-														완료
-													</c:when>
-													<c:otherwise>
-														대기
-													</c:otherwise>
-												</c:choose>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2">
-											
-											</td>
-										</tr>
-										
-										</tbody>
-									</table>
-								</li>
-												
-								</c:if>	
-								</c:forEach>
-							</c:forEach>
-							</ul>
-						</c:when>
-						<c:otherwise>
-							<h2>예약된 정보가 없습니다!</h2>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<article>
+					<article id="user_book">
 						<c:choose>
 						<c:when test="${!myBookList.isEmpty()}">	
 							<ul style="list-style: none;">
@@ -259,13 +202,11 @@
 										</tr>
 										<tr style="border-bottom: 1px solid">
 											<th class="tTitle">승인여부</th>
-											<td>
+											<td id="book_res_is">
 												<c:choose>
-													<c:when test="${book.res_is }">
-														완료
+													<c:when test="${book.res_is }">승인
 													</c:when>
-													<c:otherwise>
-														<mark>대기</mark>
+													<c:otherwise><mark>대기</mark>
 													</c:otherwise>
 												</c:choose>
 											</td>
@@ -293,25 +234,25 @@
 
 										<c:if test="${ fp != 1 }">
 											<li class="page-item"><a
-												href="book_check.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="book_check.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-fast-backward"></i></a></li>
 											<li class="page-item"><a
-												href="book_check.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="book_check.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-backward"></i></a></li>
 										</c:if>
 
 										<c:forEach var="page" begin="${fp}" end="${lp}">
 											<li class="page-item ${cp==page ? 'active' : ''}"><a
-												href="book_check.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="book_check.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
 												class="page-link">${page}</a></li>
 										</c:forEach>
 
 										<c:if test="${ lp < tp }">
 											<li class="page-item "><a
-												href="book_check.do?curPage=${lp+1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="book_check.do?curPage=${lp+1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-forward"></i></a></li>
 											<li class="page-item"><a
-												href="book_check.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="book_check.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-fast-forward"></i></a></li>
 										</c:if>
 									</ul>
@@ -321,12 +262,11 @@
 								<!-- 페이징 -->
 							</c:when>
 						<c:otherwise>
-							<h2>예약사항이 없습니다</h2>
+							<h2 id="user_book">예약사항이 없습니다</h2>
 						</c:otherwise>
 						</c:choose>
 					</article>
-				</c:otherwise>
-				</c:choose>
+				
 			</section>	
 		</div>
 		
