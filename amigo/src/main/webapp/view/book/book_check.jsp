@@ -12,6 +12,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  
+  <!-- 아임포트 -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>my02_예약확인~예약취소</title>
@@ -72,8 +75,8 @@
 	function open_book_modal(e){
 		console.log("입장확인");
 		let rno = $(e).find("#book_res_no").text();
-		let res_is = $(e).find("#book_res_is").text();
-		getBook_detail(rno,res_is);
+		//let res_state = $(e).find("#book_res_state").text();
+		getBook_detail(rno);
 		$('.modal').fadeIn();
 		$('body').css("overflow", "hidden");
 		
@@ -86,7 +89,7 @@
 		$('body').css("overflow", "auto");
 	}
 	
-	function getBook_detail(rno,res_is){
+	function getBook_detail(rno){
  		$.ajax({
 			url : '/amigo/ajax/getBook_detail.do',
 			type : 'POST',
@@ -105,10 +108,8 @@
 						temp += '</table></li>';
 					});
 					temp+='</ul>';
-					console.log(res_is);
-					if(res_is.trim() == '대기'){
-						temp+='<button class="btn btn-danger book_btn" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
-					}
+					temp+='<button class="btn btn-danger book_btn" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
+					
 					modalBody.append(temp);
 				} else {
 					alert('예약정보가 없습니다! 다시 시도해주세요!');
@@ -127,9 +128,10 @@
 				data : {
 					'rno' : rno	
 				},
-				success : function(result){
-					if(result>0){
-						alert('성공적으로 삭제됐습니다!');
+				success : function(payment){
+					if(payment!=null){
+						
+						
 						history.go(0);
 					}else{
 						alert('삭제에 실패했습니다!');
@@ -145,7 +147,23 @@
 			
 		}
 	}
-
+	
+	function cancelPay() {
+	    jQuery.ajax({
+	      "url": "{환불요청을 받을 서비스 URL}", // 예: http://www.myservice.com/payments/cancel
+	      "type": "POST",
+	      "contentType": "application/json",
+	      "data": JSON.stringify({
+	        "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
+	        "cancel_request_amount": 2000, // 환불금액
+	        "reason": "테스트 결제 환불" // 환불사유
+	        "refund_holder": "홍길동", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+	        "refund_bank": "88" // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+	        "refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+	      }),
+	      "dataType": "json"
+	    });
+	  }
 </script>
 </head>
 <body>
@@ -200,17 +218,17 @@
 										<tr>
 											<th class="tTitle">결제금액</th><td><fmt:formatNumber value="${book.getRes_pay() }" pattern="#,###"/>원</td>
 										</tr>
-										<tr style="border-bottom: 1px solid">
+<%-- 										<tr style="border-bottom: 1px solid">
 											<th class="tTitle">승인여부</th>
-											<td id="book_res_is">
+											<td id="book_res_state">
 												<c:choose>
-													<c:when test="${book.res_is }">승인
-													</c:when>
+													<c:when test="${book.res_state eq '0'}">승인
+													</c:when>					
 													<c:otherwise><mark>대기</mark>
 													</c:otherwise>
 												</c:choose>
 											</td>
-										</tr>
+										</tr> --%>
 										
 										</tbody>
 									</table>
@@ -219,11 +237,11 @@
 								</c:if>	
 								</c:forEach>
 							</c:forEach>
-							</ul>
+							</u		<c:set var="rp" value="${searchVO.getRowSizePerPage()}" />
+								l>
 								<div class="row align-items-start mt-3">
 									<ul class="col pagination justify-content-center">
 										<c:set var="cp" value="${searchVO.getCurPage()}" />
-										<c:set var="rp" value="${searchVO.getRowSizePerPage()}" />
 										<c:set var="fp" value="${searchVO.getFirstPage()}" />
 										<c:set var="lp" value="${searchVO.getLastPage()}" />
 										<c:set var="ps" value="${searchVO.getPageSize()}" />

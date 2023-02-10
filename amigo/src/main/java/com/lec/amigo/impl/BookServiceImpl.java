@@ -28,9 +28,9 @@ public class BookServiceImpl implements BookService{
 		return bookDao.calMoney(days, time);
 	}
 
-	public List<SitterVO> getArroundSitter(String address,PagingVO page) {
+	public List<SitterVO> getArroundSitter(String address,PagingVO page, String calr) {
 		
-		return bookDao.getArroudSitter(address,page);
+		return bookDao.getArroudSitter(address,page, calr);
 	}
 
 	public List<UserVO> getUserNameList(String address) {
@@ -84,6 +84,15 @@ public class BookServiceImpl implements BookService{
 	public int payBook(Payment payment) {
 		// TODO Auto-generated method stub
 		return bookDao.payBook(payment);
+	}
+
+	public List<Payment> getPayList(SearchVO search) {
+		return null;//bookDao.getPaylist(search);
+	}
+
+	public Payment getPayment(int rno) {
+		// TODO Auto-generated method stub
+		return bookDao.getPayment(rno);
 	}
 
 
