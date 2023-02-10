@@ -109,6 +109,7 @@
 								<div style="display: flex; justify-content: center; align-items: center;">
 									<button class="btn btn-outline-secondary"
 										onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }'">상세보기</button>
+									<a href="/view/review/user_review_insert.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }">리뷰작성</a>
 								</div>
 							</div>
 						</c:if>

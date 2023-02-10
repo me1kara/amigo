@@ -72,17 +72,7 @@ public class ReviewController {
 		return "view/review/review_list.jsp";
 	}
 	
-	// 전체글  목록 (별점 또는 가까운순)
-//	@RequestMapping("/user_review_list.do")
-//	public String getReviewList (Model model, ReviewVO review) {
-//		
-//		System.out.println("리뷰리스트");
-//		List<ReviewVO> revList = reviewService.getReviewList(review);	
-//		model.addAttribute("revList", revList);
-//		return "view/review/review_list.jsp";
-//	}
-	
-	
+
 	// 리뷰 작성하는 페이지로 들어가기
 	@RequestMapping(value="/view/review/user_review_insert.do", method=RequestMethod.GET) 
 	public String insertReview() {

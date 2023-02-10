@@ -151,6 +151,7 @@
             <input name="user_photo" type="hidden" value="${sessionScope.user.user_photo}" />
 			<input name="user_no" type="hidden" value="${sessionScope.user.user_no}" />
 			<input name="user_addr" type="hidden" value="${sessionScope.user.user_addr}" />
+			<input name="user_name" type="hidden" value="${sessionScope.user.user_name}" />
 
 			<!-- 작성자  -->
 			<div class="input-group mb-3">
