@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<% UserVO user=(UserVO)session.getAttribute("user");%>
 <!-- 제이쿼리 -->
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"
 integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
@@ -23,6 +23,7 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
+
 
 <!-- 신청자격확인 -->
 <% List<DogVO> myDog_list = (List<DogVO>)session.getAttribute("myDog_list");
@@ -464,8 +465,6 @@ td {
 
 </head>
 
-<% UserVO user=(UserVO)session.getAttribute("user");%>
-
 <body>
 
 	<div class="container">
@@ -535,31 +534,7 @@ td {
 					<input type="radio" id="select2" name="res_visit_is" value="false">
 					<label class="ctn_btn" for="select2">위탁</label>
 				</article>
-	
-				<!-- 
-				<br>
-				<b>예약날짜</b>
-				<br>
-				<div class="sec_cal">
-				  <div class="cal_nav">
-				    <a href="javascript:;" class="nav-btn go-prev">prev</a>
-				    <div class="year-month"></div>
-				    <a href="javascript:;" class="nav-btn go-next">next</a>
-				  </div>
-				  <div class="cal_wrap">
-				    <div class="days">
-				      <div class="day">월</div>
-				      <div class="day">화</div>
-				      <div class="day">수</div>
-				      <div class="day">목</div>
-				      <div class="day">금</div>
-				      <div class="day">토</div>
-				      <div class="day">일</div>
-				    </div>
-				    <div class="dates"></div>
-				  </div>
-				</div>
-				 -->
+
 				
 				<article id='calendar-container'>
 					<div id='calendar' name="calendar"></div>
@@ -568,7 +543,7 @@ td {
 				
 				<article>
 					<b>이용주소</b><input type="text" name="res_addr" id="address" required="required" readonly="readonly" style="width :300px;"
-					value="<%=user.getUser_addr()%>"/>
+					value="<%=user.getUser_addr() %>"/>
 					<button type="button" class="item_change" onclick="open_address_modal()">변경</button>
 				</article>
 				
@@ -583,7 +558,6 @@ td {
 					<b style="margin: 0 auto;">비용</b><span id="show_money"> 0원</span>
 					<input type="hidden" id="money" name="res_pay"></input>
 				</article>
-				
 				
 				<article>
 					<br> <label for="term" class="term_css"> <input

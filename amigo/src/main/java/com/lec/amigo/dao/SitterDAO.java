@@ -19,6 +19,7 @@ import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.mapper.BookContentRowMapper;
 import com.lec.amigo.mapper.SitRowMapper;
+import com.lec.amigo.mapper.SitterRowMapper;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
@@ -70,6 +71,17 @@ public class SitterDAO {
 		selectSitListByUserNo   = environment.getProperty("selectSitListByUserNo");
 	}
 	
+	public SitterVO getSitter(SitterVO svo) {
+		String sql = "select * from petsitter where sit_no=?";
+		Object[] args = {svo.getSit_no()};		
+		return jdbcTemplate.queryForObject(sql, args, new SitterRowMapper());
+	}
+	public SitterVO getSitter(int user_no) {
+		String sql = "select * from petsitter where user_no=?";
+		System.out.println(user_no+"유넘 확인용");
+		Object[] args = {user_no};		
+		return jdbcTemplate.queryForObject(sql, args, new SitterRowMapper());
+	}
 
 	public SitterVO sitterInfo(SitterVO svo) {
 		Object[] args = { svo.getUser_no() };
