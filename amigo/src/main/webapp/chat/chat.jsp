@@ -180,7 +180,7 @@
 								class="btn btn-light" style="width: 100px; height:62px; color:rgb(87, 160, 227); font-weight:bold;" id="chat_submit_btn">보내기</button></td>
 					</tr>		
 				</table>
-				<input type="file" id="fileUpload" onchange="previewFile()" style="display: none;">
+				<input type="file" id="fileUpload" onchange="previewFile()" style="display: none;" accept=".gif, .jpg, .png">
 			</article>
 		</section>
 	</div>

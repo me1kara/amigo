@@ -11,7 +11,6 @@ public class BookVO {
 	private int res_time;
 	private int dog_no;
 	private String res_addr;
-	private boolean res_is;
 	private String res_etc;
 	private int res_pay;
 	private boolean res_visit_is;
@@ -73,14 +72,6 @@ public class BookVO {
 		this.res_addr = res_addr;
 	}
 
-	public boolean isRes_is() {
-		return res_is;
-	}
-
-	public void setRes_is(boolean res_is) {
-		this.res_is = res_is;
-	}
-
 	public String getRes_etc() {
 		return res_etc;
 	}
@@ -125,8 +116,11 @@ public class BookVO {
 	public String toString() {
 		return "BookVO [res_no=" + res_no + ", user_no=" + user_no + ", sit_no=" + sit_no + ", res_regdate="
 				+ res_regdate + ", res_date=" + res_date + ", res_time=" + res_time + ", dog_no=" + dog_no
-				+ ", res_addr=" + res_addr + ", res_is=" + res_is + ", res_etc=" + res_etc + ", res_pay=" + res_pay
-				+ ", res_visit_is=" + res_visit_is + ", res_term_is=" + res_term_is + "]";
+				+ ", res_addr=" + res_addr + ", res_etc=" + res_etc + ", res_pay=" + res_pay + ", res_visit_is="
+				+ res_visit_is + ", res_term_is=" + res_term_is + "]";
 	}
+
+
+
 
 }

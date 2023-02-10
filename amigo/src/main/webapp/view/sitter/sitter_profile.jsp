@@ -11,7 +11,6 @@
   crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>프로필01_시터 프로필 확인</title>
@@ -132,8 +131,8 @@
 				<article>
 					<button type="button" class="btn btn-secondary" id="pay_btn" onclick="requestPay()">결제 및 신청</button>
 				</article>
+				<a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }">신청</a>
 				
-				<a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }">ㅁㄴㅇ</a>	
 		
 				</section>
 			</div>

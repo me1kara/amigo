@@ -72,7 +72,7 @@ public class SitterDAO {
 	}
 	
 	public SitterVO getSitter(SitterVO svo) {
-		String sql = "select p.*, u.user_name  from petsitter p, user u where p.user_no=u.user_no and sit_no=?";
+		String sql = "select p.*, u.user_name from petsitter p, user u WHERE u.user_no = p.user_no and p.sit_no=?";
 		Object[] args = {svo.getSit_no()};		
 		return jdbcTemplate.queryForObject(sql, args, new SitRowMapper());
 	}

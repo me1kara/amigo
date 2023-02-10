@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lec.amigo.common.SearchVO;
+import com.lec.amigo.impl.BookServiceImpl;
 import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
+import com.lec.amigo.vo.BookVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
@@ -33,6 +35,9 @@ public class AdminController {
 	
 	@Autowired
 	private SitterServiceImpl sitterService;
+	
+	@Autowired
+	private BookServiceImpl bookService;
 	
 	// 펫시터 신청인 전체 리스트
 	@RequestMapping(value="/view/admin/getSitList.do", method=RequestMethod.GET) //
@@ -59,6 +64,37 @@ public class AdminController {
 		return "/view/admin/admin_sitList.jsp";
 		
 	}
+	
+	@RequestMapping(value="/view/admin/getPayList.do", method=RequestMethod.GET) //
+	public String getPayList(Model model,SearchVO searchVO,
+			@RequestParam(defaultValue="1") int curPage,
+			@RequestParam(defaultValue="10") int rowSizePerPage,
+			@RequestParam(defaultValue="") String searchCategory,
+			@RequestParam(defaultValue="") String searchType,
+			@RequestParam(defaultValue="") String searchWord) {	
+		
+		
+		
+		/*
+		 * searchVO.setTotalRowCount(); searchVO.setCurPage(curPage);
+		 * searchVO.setRowSizePerPage(rowSizePerPage);
+		 * searchVO.setSearchCategory(searchCategory);
+		 * searchVO.setSearchType(searchType); searchVO.setSearchWord(searchWord);
+		 * searchVO.pageSetting();
+		 * 
+		 * List<BookVO> payList = bookService.getPayList(searchVO);
+		 */
+
+//		model.addAttribute("myBookList", payList);
+		
+
+		
+		
+		
+		return "/view/admin/admin_payList.jsp";
+		
+	}
+	
 	
 	// 펫시터 자격 승인해주기
 	@RequestMapping(value="/view/admin/updateSitter.do", method=RequestMethod.GET)

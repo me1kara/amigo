@@ -73,8 +73,8 @@
 	function open_book_modal(e){
 		console.log("입장확인");
 		let rno = $(e).find("#book_res_no").text();		
-		let res_is = $(e).find("#book_res_is").text();
-		getBook_detail(rno,res_is);
+		//let res_state = $(e).find("#book_res_state").text();
+		getBook_detail(rno);
 		$('.modal').fadeIn();
 		$('body').css("overflow", "hidden");
 		
@@ -87,7 +87,7 @@
 		$('body').css("overflow", "auto");
 	}
 	
-	function getBook_detail(rno,res_is){
+	function getBook_detail(rno){
  		$.ajax({
 			url : '/amigo/ajax/getBook_detail.do',
 			type : 'POST',
@@ -106,10 +106,10 @@
 						temp += '</table></li>';
 					});
 					temp+='</ul>';
-					if(res_is.trim()=='대기'){
-						temp+='<button class="btn btn-danger book_btn" onclick="book_delete('+rno+')" style="position:relative;">거부하기</button>';
-						temp+='<button class="btn btn-danger book_btn" onclick="book_update('+rno+')" style="position:relative;">승인하기</button>';
-					}
+/* 					if(res_state.trim()=='대기'){
+						temp+='<button class="btn btn-danger book_btn" onclick="book_refuse('+rno+')" style="position:relative;">거부하기</button>';
+						temp+='<button class="btn btn-danger book_btn" onclick="book_refuse('+rno+')" style="position:relative;">승인하기</button>';
+					} */
 					modalBody.append(temp);
 				} else {
 					alert('예약정보가 없습니다! 다시 시도해주세요!');
@@ -120,26 +120,26 @@
 		
 	}
 	
-	function book_delete(rno){
+	function book_refuse(rno){
 		if(confirm('정말로 거부하시겠습니까?')){
 			$.ajax({
-				url  : '/amigo/ajax/deleteBook.do',
+				url  : '/amigo/ajax/refuseBook.do',
 				type : 'POST',
 				data : {
 					'rno' : rno	
 				},
 				success : function(result){
 					if(result>0){
-						alert('성공적으로 삭제됐습니다!');
+						alert('성공적으로 거부됐습니다!');
 						history.go(0);
 					}else{
-						alert('삭제에 실패했습니다!');
+						alert('거부에 실패했습니다!');
 					    close_book_modal();
 					}
 				},
 			    error : function(request, status, error) { // 결과 에러 콜백함수
 			        console.log(error);
-			        alert('삭제에 실패했습니다!');
+			        alert('거부에 실패했습니다!');
 			        close_book_modal();
 			    }
 			});
@@ -224,11 +224,11 @@
 										<tr>
 											<th class="tTitle">결제금액</th><td><fmt:formatNumber value="${book.getRes_pay() }" pattern="#,###"/>원</td>
 										</tr>
-										<tr style="border-bottom: 1px solid">
+<%-- 										<tr style="border-bottom: 1px solid">
 											<th class="tTitle">승인여부</th>
 											<td>
 												<c:choose>
-													<c:when test="${book.res_is }">
+													<c:when test="${book.res_state eq '1' }">
 														<mark>승인</mark>
 													</c:when>
 													<c:otherwise>
@@ -236,7 +236,7 @@
 													</c:otherwise>
 												</c:choose>
 											</td>
-										</tr>
+										</tr> --%>
 										
 										</tbody>
 									</table>

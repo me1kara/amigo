@@ -20,10 +20,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.RequestScope;
 
 import com.lec.amigo.common.PagingVO;
 import com.lec.amigo.common.SearchVO;
@@ -66,7 +68,7 @@ public class BookController {
 		System.out.println(bookVO.toString());
 		
 		String[] addrList = address.split("\\s");
-		String secondeAddr = addrList[1];
+		String secondeAddr = addrList[0];
 		
 		search.setCurPage(curPage); // 현재페이지
 		search.setRowSizePerPage(rowSizePerPage); // 페이지당 담길 글 갯수
@@ -82,7 +84,7 @@ public class BookController {
 		search.setFirstPage(startPage);//현재 페이지기준 스타트페이지
 		search.setLastPage(endPage);//현재 페이지기준 엔드페이지
 		search.setPageSize(rowSizePerPage);
-		List<SitterVO> sittList = bookService.getArroundSitter(secondeAddr,search);
+		List<SitterVO> sittList = bookService.getArroundSitter(secondeAddr,search,calr);
 		List<UserVO> sittNameList = bookService.getUserNameList(secondeAddr);
 		
 		for(SitterVO sit : sittList) {
@@ -126,6 +128,8 @@ public class BookController {
 
 		SitterVO s = sitterService.getSitter(sitterVO);
 		BookVO book = (BookVO)sess.getAttribute("book");
+		
+		System.out.println(s.toString());
 		
 		req.setAttribute("sitter", s);
 		req.setAttribute("book", book);
@@ -252,12 +256,20 @@ public class BookController {
 	
 	@PostMapping("/ajax/deleteBook.do")
 	@ResponseBody 
-	public int deleteBook(HttpServletRequest req) {
+	public Payment deleteBook(HttpServletRequest req) {
 		int rno = Integer.parseInt(req.getParameter("rno")) ;
 		int result = bookService.deleteBook(rno);
+		
+		if(result>0) {
+			Payment payment = bookService.getPayment(rno);
+			return payment;
+		}else {
+			return null;
+		}
 
-		return result;
+
 	}
+	
 	
 	@PostMapping("/ajax/updateBook.do")
 	@ResponseBody 
@@ -288,6 +300,13 @@ public class BookController {
 		}else {
 			return "db삽입실패";
 		}
+	}
+	
+	@PostMapping("/auth/payment.do")
+	@ResponseBody 
+	public void hook(HttpServletRequest seq) {
+			System.out.println("pay");
+
 	}
 	
 	
