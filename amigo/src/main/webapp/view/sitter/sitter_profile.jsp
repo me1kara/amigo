@@ -38,9 +38,10 @@
     	}
     	
     	
-    	h2 {
+    	.sitter_profile_title {
     		font-family: "Jalnan";
-       		font-size:40px;
+       		font-size:30px;
+       		color: rgb(87, 160, 227);
     	}
     	
     	section {
@@ -103,7 +104,7 @@
 	<%@include file="/includes/header.jsp" %>
 			<div class="container text-center" >
 				<section>
-					<h2> 시터 프로필 정보</h2>
+					<h2 class="sitter_profile_title"> 시터 프로필 정보</h2><hr>
 					<article id="profile_card">
 						<div id="petsitter_title">
 							<div id="img_ex" style="border:1px solid; width:200px; height:200px; margin:0 auto;">
@@ -116,7 +117,7 @@
 				     		 </c:otherwise>
 				    		 </c:choose>
 				    		 </div>
-						 <p class="petsitter_name"><c:out value="${sitter.user_name}"/> 펫시터</p>
+						 <p class="petsitter_name"><c:out value="${sitter.getUser_name()}"/> 펫시터</p>
 				   		</div>	
 				   		<hr>
 						<div>
@@ -131,6 +132,8 @@
 				<article>
 					<button type="button" class="btn btn-secondary" id="pay_btn" onclick="requestPay()">결제 및 신청</button>
 				</article>
+				
+				<a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }">ㅁㄴㅇ</a>	
 		
 				</section>
 			</div>

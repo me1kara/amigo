@@ -152,8 +152,8 @@
                   <div class="media forum-item">
                   <!-- user profile 아직 미완성이라 여기 완성되면 다른 리스트에도 복붙!!-->
                    <c:choose>
-			          	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
-			          	<img src="/userimg/${user.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
+			          <c:when test="${board.getUser_photo()!=null and board.getUser_photo()!=''}">
+                      <img src="/userimg/${board.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
 			            </c:when>
 			            <c:otherwise>
 			            <img src="resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>

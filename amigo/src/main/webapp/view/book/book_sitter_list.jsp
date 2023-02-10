@@ -57,9 +57,11 @@
 			box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
     	}
     	
-    	h2 {
+    	.sitter_list_title {
     		font-family: "Jalnan";
-       		font-size:40px;
+       		font-size:30px;
+       		color: rgb(87, 160, 227);
+       		text-align: center;
     	}
     	
     	th {
@@ -88,10 +90,9 @@
 
 	<%@include file="/includes/header.jsp"%>
 		<div class="container">
-			
 			<section>
 				<article class="sitter_list">
-					<h2><%=addr%> 펫시터 목록</h2> <hr>
+					<h2 class="sitter_list_title"><%=addr%> 펫시터 목록</h2> <hr>
 					<c:choose>
 					<c:when test="${sittList!=null }">
 					<c:forEach var="sit" items="${sittList }">
