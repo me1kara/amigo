@@ -38,8 +38,6 @@ public class ChatDAO {
 		idCount = jdbcTemplate.queryForObject(sql, Integer.class);
 		
 		if(idCount>0) {
-			
-			System.out.println("성공!");
 			return idCount;
 		}
 		
@@ -120,9 +118,6 @@ public class ChatDAO {
 	}
 	
 	public int insertChat(int index, int user_no, String content) {
-
-		
-		
 		//Connection conn = JDBCUtility.getConnection();
 		String sql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,SYSDATE(),0,?,?)";
 		/*
@@ -315,7 +310,6 @@ public class ChatDAO {
 			
 			while(rs.next()) {
 				a = rs.getInt("sitt_chat_index");
-				System.out.println(a+"확인용");
 				myChatList.add(getLastChat(a));
 			}
 			return myChatList;

@@ -70,7 +70,6 @@
 		  reader.addEventListener(
 		    'load',
 		    function () {
-		    	
 		      $('#photo').hide();
 		   	  $('#msg').val('').hide();
 		      preview.prepend("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
@@ -108,7 +107,7 @@
 					<button class="btn btn-close" style="margin-left: auto;" onclick="history.back(-1)"></button>
 				</div>
 				
-				<table class="table table-bordered" style="background: #81DAF5;">
+				<table class="table table-bordered" style="background: rgb(87, 160, 227);">
 					<tr class="table-borderless" style="border: none;">
 						<td colspan="6">
 							<ul id="list" style="list-style: none;">
@@ -120,14 +119,18 @@
 												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
 												<li class="chat_left" style="margin-bottom: 3px; clear: both;"
 													id="chat_no_${chat.getChat_no() }">
-													[${chat.getUser_nick() }] ${chat.getContent()} 
+													<span class="text-bg-light" style="border-radius: 5px; overflow: hidden;">
+													[${chat.getUser_nick() }] ${chat.getContent()}
+													</span> 
 												</li>
 											</c:when>
 											<c:when test="${chat.getFile()!=null}">
 												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
 												<li style="margin-bottom: 3px; overflow: hidden; clear: both;"
 													id="chat_no_${chat.getChat_no() }" >
+													<span>
 													[${chat.getUser_nick() }]
+													</span>
 													<span onclick="imgPop('/chatImg/${chat.getFile() }')">
 													<img src="/chatImg/${chat.getFile() }" width="200px" height="200px">
 													</span>

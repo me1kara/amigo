@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.mapper.SitRowMapper;
+import com.lec.amigo.mapper.SitterRowMapper;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
@@ -67,6 +68,11 @@ public class SitterDAO {
 		selectSitListByUserNo   = environment.getProperty("selectSitListByUserNo");
 	}
 	
+	public SitterVO getSitter(int user_no) {
+		String sql = "select * from petsitter where user_no=?";
+		Object[] args = {user_no};		
+		return jdbcTemplate.queryForObject(sql, args, new SitterRowMapper());
+	}
 
 	public SitterVO getSitter(SitterVO svo) {
 		Object[] args = { svo.getSit_no() };

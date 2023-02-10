@@ -29,11 +29,14 @@ import com.lec.amigo.common.PagingVO;
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.dao.SitterDAO;
 import com.lec.amigo.impl.BookServiceImpl;
+import com.lec.amigo.impl.DogServiceImpl;
 import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.vo.BookContentVO;
 import com.lec.amigo.vo.BookVO;
+import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.HeartVO;
+import com.lec.amigo.vo.Payment;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
@@ -48,6 +51,9 @@ public class BookController {
 	
 	@Autowired
 	UserServiceImpl userService;
+	
+	@Autowired
+	DogServiceImpl dogSerice;
 	
 	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.GET })
 	public String book (HttpServletRequest req, Model model, SearchVO search, 
@@ -116,12 +122,30 @@ public class BookController {
 	
 	
 	@RequestMapping(value = "/view/book/sitter_profile.do", method = { RequestMethod.GET })
-	public String getSitterProfile (HttpServletRequest req, HttpServletResponse resp, SitterVO sitterVO) {
+	public String getSitterProfile (HttpServletRequest req, HttpServletResponse resp, SitterVO sitterVO, HttpSession sess) {
 
 		SitterVO s = sitterService.getSitter(sitterVO);
+		BookVO book = (BookVO)sess.getAttribute("book");
+		
 		req.setAttribute("sitter", s);
+		req.setAttribute("book", book);
 		return "/view/sitter/sitter_profile.jsp";
 	}
+	
+	@RequestMapping(value = "/view/book/book_sitter_form.do", method = { RequestMethod.GET })
+	public String book_from (HttpSession sess) {
+		UserVO user = (UserVO)sess.getAttribute("user");
+		List<DogVO> myDog_list = dogSerice.getDogList(user.getUser_no());
+		
+		if(!myDog_list.isEmpty()) {
+			sess.setAttribute("myDog_list", myDog_list);
+		}else {
+			sess.removeAttribute("myDog_list");
+		}
+		
+		return "/view/book/book_sitter_form.jsp";
+	}
+	
 	
 	@RequestMapping(value = "/requestBook.do", method = { RequestMethod.GET })
 	public String finalBook (HttpServletRequest req) {
@@ -131,10 +155,14 @@ public class BookController {
 		String calr = (String)sess.getAttribute("calr");
 		BookVO book = (BookVO)sess.getAttribute("book");
 		
+		String merchant_uid = req.getParameter("merchant_uid");
+		
+		System.out.println("확인확인확인영"+merchant_uid);
+		
 		book.setSit_no(sit_no);
 		book.setUser_no(user_no);
 		
-		int b = bookService.setBook(calr, book);
+		int b = bookService.setBook(calr, book, merchant_uid);
 		
 		
 		if(b>0) {
@@ -221,6 +249,7 @@ public class BookController {
 		
 		return bookDetailList;
 	}
+	
 	@PostMapping("/ajax/deleteBook.do")
 	@ResponseBody 
 	public int deleteBook(HttpServletRequest req) {
@@ -229,6 +258,38 @@ public class BookController {
 
 		return result;
 	}
+	
+	@PostMapping("/ajax/updateBook.do")
+	@ResponseBody 
+	public int updateBook(HttpServletRequest req) {
+		int rno = Integer.parseInt(req.getParameter("rno")) ;
+		int result = bookService.updateBook(rno);
+
+		return result;
+	}
+	
+	@PostMapping("/view/book/ajax/payment.do")
+	@ResponseBody 
+	public String payBook(HttpServletRequest req, Payment payment) {
+		int result=0;
+		
+		UserVO user = (UserVO)req.getSession().getAttribute("user");
+		
+		String money = req.getParameter("money"); //돈
+		String imp_uid = req.getParameter("imp_uid"); //고유번호
+		String merchant_uid = req.getParameter("merchant_uid"); //주문번호
+		
+		System.out.println(payment.toString());
+
+		result = bookService.payBook(payment);
+		
+		if(result>0) {
+			return payment.getMerchant_uid();
+		}else {
+			return "db삽입실패";
+		}
+	}
+	
 	
 	
 	
@@ -242,13 +303,6 @@ public class BookController {
 		
 		UserVO user = (UserVO)sess.getAttribute("user");
 		int user_no = user.getUser_no();
-		
-		if(user.getUser_type().equals("S")) {
-			List<BookVO> sitBookList = bookService.getSitBookList(user_no);
-			List<UserVO> userList  = userService.getUserList();
-			model.addAttribute("userList", userList);
-			model.addAttribute("sitBookList", sitBookList);
-		}
 		
 		searchVO.setTotalRowCount(bookService.getMyBookCount(user_no));
 		searchVO.setCurPage(curPage);
@@ -264,9 +318,34 @@ public class BookController {
 		model.addAttribute("myBookList", myBookList);
 		model.addAttribute("sitList", sitList);
 
-		
 		return "/view/book/book_check.jsp";
 	}
+	
+	@RequestMapping(value = "/receiveBook_check.do", method = { RequestMethod.GET })
+	public String myReceiveBookList (Model model, HttpSession sess,SearchVO searchVO,
+			@RequestParam(defaultValue="1") int curPage,
+			@RequestParam(defaultValue="10") int rowSizePerPage,
+			@RequestParam(defaultValue="") String searchCategory,
+			@RequestParam(defaultValue="") String searchType,
+			@RequestParam(defaultValue="") String searchWord) {
+		
+		UserVO user = (UserVO)sess.getAttribute("user");
+		int user_no = user.getUser_no();
+		
+		if(user.getUser_type().equals("S")) {
+			SitterVO sitter= (SitterVO)sess.getAttribute("sitter");	
+			searchVO.setTotalRowCount(bookService.getMyBookCount(sitter));
+			searchVO.pageSetting();
+			List<BookVO> sitBookList = bookService.getSitBookList(user_no,searchVO);
+			List<UserVO> userList  = userService.getUserList();
+			model.addAttribute("userList", userList);
+			model.addAttribute("sitBookList", sitBookList);
+		}
+					
+		return "/view/sitter/sitter_recive_book_check.jsp";
+	}
+		
+	
 		
 
 	

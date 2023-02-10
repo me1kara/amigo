@@ -28,9 +28,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lec.amigo.dao.UserDAO;
 import com.lec.amigo.impl.ChatServiceImpl;
 import com.lec.amigo.impl.DogServiceImpl;
+import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.DogVO;
+import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
@@ -45,6 +47,9 @@ public class LoginController {
 	
 	@Autowired
 	ChatServiceImpl chatService;
+	
+	@Autowired
+	SitterServiceImpl sitService;
 	
 	private String uploadFolderUser = "";
 	
@@ -85,17 +90,17 @@ public class LoginController {
 			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요! 싫은데용
 			
 			List<ChatRoom> room_list = chatService.getRoomList(user.getUser_no());
-			List<DogVO> myDog_list = dogService.getDogList(user.getUser_no());
+			
+			//시터인지 확인용
+			if(user.getUser_type().equals("S")) {
+				SitterVO sitter = sitService.getSitter(user.getUser_no());
+				sess.setAttribute("sitter", sitter);
+			}
 		
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);
 			}else {
 				sess.removeAttribute("chat_room_list");
-			}
-			if(!myDog_list.isEmpty()) {
-				sess.setAttribute("myDog_list", myDog_list);
-			}else {
-				sess.removeAttribute("myDog_list");
 			}
 				
 			if(user.getUser_type().equals("A")) {

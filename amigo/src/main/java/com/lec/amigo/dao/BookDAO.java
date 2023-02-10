@@ -31,6 +31,7 @@ import com.lec.amigo.mapper.UserRowMapper;
 import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.BookContentVO;
 import com.lec.amigo.vo.BookVO;
+import com.lec.amigo.vo.Payment;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
@@ -136,7 +137,7 @@ public class BookDAO {
 	
 	
 	
-	public int setBook(String calr, BookVO book) {
+	public int setBook(String calr, BookVO book, String merchant_uid) {
 		
 		String sql = "insert into reservation(user_no,sit_no,res_regdate,res_is,res_etc,res_pay,res_visit_is,res_term_is) "
 				+ "values(?,?,SYSDATE(),false, ?,?,?,?)";
@@ -208,6 +209,7 @@ public class BookDAO {
 
 
 			}
+			insertPayment(merchant_uid, res_no);
 			return row;
 		}
 		
@@ -219,8 +221,8 @@ public class BookDAO {
 
 	public List<BookVO> getBookList(int user_no, SearchVO search) {
 		String sql = "select r.*, rs.res_date  from reservation r, (select res_no, \r\n"
-				+ "IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date from res_content GROUP BY res_no) rs \r\n"
-				+ "where user_no=? and r.res_no = rs.res_no limit ?,?";
+				+ "IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date, DATEDIFF(max(res_date),sysdate()) df from res_content GROUP BY res_no) rs \r\n"
+				+ "where user_no=? and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date limit ?,?";
 		Connection conn = JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -270,17 +272,46 @@ public class BookDAO {
 		return null;
 	}
 
-	public List<BookVO> getSitBookList(int user_no) {
-		String sql = "select * from reservation where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?)";
-		Object[] args = {user_no};
-		
+	public List<BookVO> getSitBookList(int user_no, SearchVO search) {
+		String sql = "select r.res_no, res_etc, user_no, sit_no, res_regdate, res_is,res_date,res_pay, res_visit_is, res_term_is from reservation r, (select res_no, IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date,DATEDIFF(max(res_date), sysdate()) df from res_content GROUP BY res_no) rs where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?) and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date limit ?,?";
+		Connection conn = JDBCUtility.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BookVO> bookList = new ArrayList<BookVO>();
 		try {
-			return jdbcTemplate.query(sql, args, new BookRowMapper());
-		} catch (Exception e) {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_no);
+			pstmt.setInt(2, search.getFirstRow()); 
+			pstmt.setInt(3, search.getRowSizePerPage());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BookVO book = new BookVO();
+				book.setRes_no(rs.getInt("res_no"));
+				book.setUser_no(rs.getInt("user_no"));
+				book.setSit_no(rs.getInt("sit_no"));
+				book.setRes_regdate(rs.getDate("res_regdate"));
+				book.setRes_is(rs.getBoolean("res_is"));
+				book.setRes_etc(rs.getString("res_etc"));
+				book.setRes_pay(rs.getInt("res_pay"));
+				book.setRes_visit_is(rs.getBoolean("res_visit_is"));
+				book.setRes_date(rs.getString("res_date"));
+				bookList.add(book);;
+				System.out.println(rs.getString("res_date"));
+				System.out.println(rs.getString("res_regdate"));
+			}
+			
+			JDBCUtility.commit(conn);
+		} catch (SQLException e) {
+			JDBCUtility.rollback(conn);
 			e.printStackTrace();
+		}finally {
+			JDBCUtility.close(conn, rs, pstmt);
 		}
+
 		
-		return null;
+		return bookList;
 	}
 
 	public int getMyBookCount(int user_no) {
@@ -299,6 +330,68 @@ public class BookDAO {
 		}
 
 		return row;
+	}
+
+	public int updateBook(int rno) {
+		String sql ="update reservation set res_is=1 where res_no=?";
+		int row = 0;
+		try {		
+		row = jdbcTemplate.update(sql, rno);
+		if(row>0) {
+			sql = "select max(chat_index)+1 from chat_room";
+			int room_index = jdbcTemplate.queryForObject(sql, Integer.class);
+			sql = "select * from reservation where res_no=?";
+			Object[] a = {rno};
+			BookVO book = jdbcTemplate.queryForObject(sql, a, new BookRowMapper());
+			System.out.println(book.getUser_no()+"유넘확인");
+			sql="select user_no from petsitter where sit_no = ?";
+			Object[] args = {book.getSit_no()};
+			int suno = jdbcTemplate.queryForObject(sql, args, Integer.class);
+			sql = "insert into chat_room values(?,?)";
+			jdbcTemplate.update(sql, room_index, book.getUser_no());
+			row = jdbcTemplate.update(sql, room_index, suno);
+		}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return row; 
+	}
+
+	public int getMyBookCount(SitterVO sitter) {
+		String sql = "select count(distinct r.res_no) from reservation r, res_content rs where sit_no=? and r.res_no = rs.res_no";
+		Object[] args = {sitter.getSit_no()};
+		int rs =0;
+		try {
+			rs = jdbcTemplate.queryForObject(sql, args, Integer.class);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return rs; 
+	}
+
+	public int payBook(Payment payment) {
+		String sql ="insert into payment(imp_uid, merchant_uid, pay,user_no) values(?,?,?,?)";
+		int result = 0;
+		try {
+			result = jdbcTemplate.update(sql, payment.getImp_uid(), payment.getMerchant_uid(), payment.getPay(), payment.getUser_no());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public void insertPayment(String merchant_uid, int res_no) {
+		
+		
+		
+		String sql = "update payment set res_no=? where merchant_uid=?";
+		int r = jdbcTemplate.update(sql,res_no, merchant_uid);
+		System.out.println(r+"최종결과"+merchant_uid+res_no);
+		
+		
 	}
 	
 	

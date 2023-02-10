@@ -190,7 +190,7 @@ h1 {
 				</article>
 				
 				<article class="service_btn sitter_item"">	
-					<button type="button" class="btn btn-primary" ><a href="/amigo/view/book/book_sitter_form.jsp" style="color: white;">신청하기</a></button>
+					<button type="button" class="btn btn-primary" ><a href="/amigo/view/book/book_sitter_form.do" style="color: white;">신청하기</a></button>
 				</article>
 			</section>
 		</div>
