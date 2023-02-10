@@ -46,7 +46,7 @@ prefix="c"%>
       <ul class="list-group list-group-flush" align="left">
         <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
           <li class="list-group-item">
-            <a>관리자 ** ${ user.getUser_name() } ** 입니다</a>
+            <a style="font-size:16px; color:gray;">* 관리자  <span style="font-weight:bold; font-size:18px; color: #189cc4;">${ user.getUser_name() }</span>  입니다.</a>
           </li>
         </c:if>
         <li class="list-group-item">
@@ -91,6 +91,10 @@ prefix="c"%>
        		<li class="list-group-item">
        		   <a href="<%=request.getContextPath() %>/view/admin/getSitList.do" class="mypage_link">펫시터 회원관리</a>
      	    </li>
+     	    <li class="list-group-item">
+       		   <a href="<%=request.getContextPath() %>/view/admin/getPayList.do" class="mypage_link">펫시터 회원관리</a>
+     	    </li>
+     	    
         </c:if>
         <c:if test="${ sessionScope.user.getUser_type() == 'U' }">
         <li class="list-group-item">

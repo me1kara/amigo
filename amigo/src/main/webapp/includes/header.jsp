@@ -35,8 +35,9 @@
 }
 
 .navbar-toggler {
+	width:20px;
 	margin-left:20px;
-	  border: none;
+	 
 }
 
 .menu-trigger,
@@ -101,7 +102,8 @@
         type="button"
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
-        aria-label="Toggle navigation">
+        aria-label="Toggle navigation"
+        style=" border: none;">
         <!-- 햄버거 -->
    <a class="menu-trigger" href="#">
     <span></span>

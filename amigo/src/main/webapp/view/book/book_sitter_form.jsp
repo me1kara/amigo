@@ -345,6 +345,42 @@ td {
 	z-index: 1056;
 }
 
+#book_title {
+	padding-top: 80px;
+	font-family: "Jalnan";
+    font-size:30px;
+    color: rgb(87, 160, 227);
+    text-align: center;
+}
+
+.timepick {
+	width:90px;
+	border: 1px solid rgb(87, 160, 227);
+	border-radius: 10px;
+	padding-left:10px;
+}
+
+.modal_title {
+	font-family: "Jalnan";
+	color: color: rgb(87, 160, 227);
+	padding-top:20px;
+}
+
+ #modal_content_st {
+ 	width:460px; 
+ 	margin:0 auto; 
+ 	margin-top:170px;
+ 	border-radius: 10px;
+	box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
+ }
+ 
+ #eventDog {
+ 	border: 1px solid rgb(87, 160, 227);
+ 	border-radius: 10px;
+ 	padding-left:10px;
+ }
+
+
 </style>
 
 <script> 
@@ -526,9 +562,11 @@ td {
     <!-- Core theme JS-->
     <script src="/amigo/resources/js/script.js"></script>
 	<div class="container" style="width: 480px;">
+		<h2 id="book_title">예약 상세</h2>
+		<hr>
 		<section>
 			<form action="book.do" onsubmit="return checkResult();">
-				<article class="select" style="display: flex; justify-content: space-between; margin-top: 100px;">
+				<article class="select" style="display: flex; justify-content: space-between; margin-top: 40px;">
 					<input type="radio" id="select1" name="res_visit_is" value="true" checked="checked">
 					<label class="ctn_btn" for="select1">방문</label> 
 					<input type="radio" id="select2" name="res_visit_is" value="false">
@@ -591,13 +629,12 @@ td {
 	<%@include file="/includes/footer.jsp"%>
 	
 	<div class="modal" id="eventModifyForm" style="display: none;">
-		<div class="modal-content">
-			<div>
-				
-				
+		<div class="modal-content" id="modal_content_st">
+		
+			<div align="center" >
 				
 				<c:set var="myDog_list" value="<%=myDog_list %>"></c:set>
-				<p>강아지</p>
+				<p class="modal_title">반려동물 선택</p>
 				<select name="selectDog" id="eventDog">
 						<c:if test="${myDog_list!=null }">					
 							<c:forEach var="dog" items="${myDog_list }">
@@ -605,14 +642,19 @@ td {
 							</c:forEach>
 						</c:if>
 				</select>
-				<p>시간선택</p>
-				<div >
-					<input type="text" id="eventStartTime" class="timepick"/>~<input type="text" id="eventEndTime" class="timepick"/>
+				<p class="modal_title">이용시간 선택</p>
+				
+				<div>
+					<input type="text" id="eventStartTime" class="timepick" placeholder="시작시간"/>~<input type="text" id="eventEndTime" class="timepick" placeholder="끝시간"/>
 				</div>
+				
+				<div style="margin:20px 0;">
 				<button class="btn btn-secondary" type="button" id="modifyEvent" style="display: none; " onclick="modifyEvent(g_info)">수정</button>
 				<button class="btn btn-danger" type="button" id="deleteEvent" style="display: none; "onclick="deleteEvent(g_info)">삭제</button>
 				<button class="btn btn-dark" type="button" id="addEvent" style="display: none; "onclick="addEvent(g_info)">추가</button>
 				<button class="btn btn-dark" type="button" onclick="modalClose()">닫기</button>
+				</div>
+				
 			</div>
 			
 		</div>

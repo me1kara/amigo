@@ -57,9 +57,11 @@
 			box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
     	}
     	
-    	h2 {
+    	.sitter_list_title {
     		font-family: "Jalnan";
-       		font-size:40px;
+       		font-size:30px;
+       		color: rgb(87, 160, 227);
+       		text-align: center;
     	}
     	
     	th {
@@ -88,32 +90,26 @@
 
 	<%@include file="/includes/header.jsp"%>
 		<div class="container">
-			
 			<section>
 				<article class="sitter_list">
-					<h2><%=addr%> 펫시터 목록</h2> <hr>
+					<h2 class="sitter_list_title"><%=addr%> 펫시터 목록</h2> <hr>
 					<c:choose>
 					<c:when test="${sittList!=null }">
 					<c:forEach var="sit" items="${sittList }">
-						<c:forEach var="user" items="${sittNameList }">		
-						<c:if test="${user.getUser_no() == sit.getUser_no() }">
 							<div class="sitter_item">
 								<div>
 									<img src="https://via.placeholder.com/100x100" width="100px" height="100px"/>
 								</div>
 								<table>
-									<tr><th style="width:100px;">이름</th><td>${user.getUser_name() }</td></tr>									
+									<tr><th style="width:100px;">이름</th><td>${sit.getUser_name() }</td></tr>									
 									<tr><th>시간</th><td>${sit.getSit_time() }</td></tr>
 									<tr><th>경력 및 특기</th><td>${sit.sit_care_exp }</td></tr>
 								</table>
 								<div style="display: flex; justify-content: center; align-items: center;">
 									<button class="btn btn-outline-secondary"
-										onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }'">상세보기</button>
-									<a href="/view/review/user_review_insert.do?sit_no=${sit.getSit_no()}&user_name=${user.getUser_name() }">리뷰작성</a>
+										onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${sit.getUser_name() }'">상세보기</button>
 								</div>
 							</div>
-						</c:if>
-						</c:forEach>
 					</c:forEach>
 						<c:if test="${searchVO.totalPageCount>1 }">
 						<div class="row align-items-start mt-3">
