@@ -46,7 +46,7 @@ prefix="c"%>
       <ul class="list-group list-group-flush" align="left">
         <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
           <li class="list-group-item">
-            <a>관리자 ** ${ user.getUser_name() } ** 입니다</a>
+            <a style="font-size:16px; color:gray;">* 관리자  <span style="font-weight:bold; font-size:18px; color: #189cc4;">${ user.getUser_name() }</span>  입니다.</a>
           </li>
         </c:if>
         <li class="list-group-item">

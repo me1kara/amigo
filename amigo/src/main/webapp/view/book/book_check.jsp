@@ -66,7 +66,16 @@
 	.modal_tTitle{
 		background:rgb(87, 160, 227);
 		color:white;
-	 
+	}
+	
+	.book_ch_title {
+		font-family: "Jalnan";
+		font-size: 30px;
+		color : rgb(87, 160, 227);
+	}
+	
+	section {
+		margin-top : 80px;
 	}
 	
 </style>
@@ -172,10 +181,10 @@
 		<script>
 			
 		</script>
-		<div class="container">
+		<div class="container text-center">
 			<section>	
 				<article>
-					<h3>예약확인</h3>
+					<h2 class="book_ch_title">예약 확인</h2> <hr>
 					<c:if test='${user.getUser_type().equals("S") }'>
 						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do'">시터모드</button>
 					</c:if>

@@ -80,7 +80,7 @@ public class SitterDAO {
 		String sql = "select * from petsitter where user_no=?";
 		System.out.println(user_no+"유넘 확인용");
 		Object[] args = {user_no};		
-		return jdbcTemplate.queryForObject(sql, args, new SitterRowMapper());
+		return jdbcTemplate.queryForObject(sql, args, new SitRowMapper());
 	}
 
 	public SitterVO sitterInfo(SitterVO svo) {

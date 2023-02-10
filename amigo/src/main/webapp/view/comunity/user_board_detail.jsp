@@ -47,6 +47,11 @@
 		padding : 10px;
 		font-size: 14px;
 	}
+	
+	.reply_time {
+		font-size: 14px;
+		color:  gray;
+	}
 
 </style>
 <title>게시판04_글상세내용~05_글삭제</title>
@@ -103,7 +108,7 @@
 		<!--  추천  -->
 			<br>
 			<div class="container text-center">
-				<a class="heart" style="text-decoration-line: none;">
+				<a class="heart" style="text-decoration-line: none; color:black">
 					<img id="heart" src="resources/img/heart.svg">
 					좋아요 <span id="LikeCntView"></span>
 				</a>
@@ -127,14 +132,14 @@
 					<li>
 						<div>
 							<div>
-							<span id="reply_user">${reply.user_nick}</span> / <fmt:formatDate value="${reply.ubd_r_regdate}" type="date"/>
+							<span id="reply_user">${reply.user_nick}</span> <span class="reply_time"> <fmt:formatDate value="${reply.ubd_r_regdate}" type="date"/> </span>
 							
 							<c:if test="${reply.user_no == user.getUser_no() || user.getUser_type() == 'A'}">
-		     					<a href="#" onclick="deleteReply(${reply.ubd_r_no})">삭제</a>
+		     					<a href="#" onclick="deleteReply(${reply.ubd_r_no})" style="font-size:14px;">삭제</a>
 		     				</c:if>
 		     				
 		     				<c:if test="${reply.user_no == user.getUser_no()}">
-		     					<a href="updateReply.do?ubd_r_no=${reply.ubd_r_no}&user_no=${reply.user_no}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=${cnt}">수정</a>
+		     					<a style="font-size:14px;" href="updateReply.do?ubd_r_no=${reply.ubd_r_no}&user_no=${reply.user_no}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&cnt=${cnt}">수정</a>
 		     				</c:if>	
 
 								<P>${reply.ubd_r_content}</P>

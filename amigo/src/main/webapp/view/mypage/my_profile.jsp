@@ -124,6 +124,7 @@
                <label for="sample4_roadAddress" class="sighup-group">&nbsp;내 주소</label><br>
                <input type="text" id="sample4_postcode" size = 20 style="padding-left: 10px;" placeholder="우편번호">
                <input type="button" onclick="sample4_execDaumPostcode()" id="sample4_find" style="width: 100px;" value="주소 찾기"><br>
+               <input type="hidden" id="sample4_jibunAddress" class="form-control" placeholder="지번주소" required>
                <input type="text" id="sample4_roadAddress" class="form-control" name="user_addr" value="${ user.getUser_addr() }">
            </div>
             &nbsp;<span id ="addrETC">상세주소를 꼭 입력해주세요. 예약 시에 반영됩니다.</span>
