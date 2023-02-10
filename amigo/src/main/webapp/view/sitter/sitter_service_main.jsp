@@ -137,7 +137,7 @@ h1 {
   }
 }
 
- h3 {
+ .sitter_service_title {
  	   font-family: "Jalnan";
        font-size:30px;
        color: rgb(87, 160, 227);
@@ -158,7 +158,7 @@ h1 {
 		<div class="container">		
 			<section class="sitter_service">
 				<article class="sitter_service_photo sitter_item">
-					<h3>다양한 펫시터 서비스</h3>
+					<h3 class="sitter_service_title">다양한 펫시터 서비스</h3>
 					<hr>
 				 <br>
 				<div class="service_list">
@@ -168,7 +168,7 @@ h1 {
 				</div> 
 				</article>			
 				<article class="sitter_item">
-					<h3>대표 펫시터를 소개합니다!</h3>
+					<h3 class="sitter_service_title">대표 펫시터를 소개합니다!</h3>
 					<hr>
 					  <div class="items">
 				    <div class="entry">
