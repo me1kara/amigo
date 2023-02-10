@@ -36,6 +36,56 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDAO.deleteReview(rev_no);
 	}
 
+	@Override
+	public int dogRowCount() {
+		return reviewDAO.dogRowCount();
+	}
+
+	@Override
+	public double starsAverage() {
+		// TODO Auto-generated method stub
+		return reviewDAO.starsAverage();
+	}
+
+	@Override
+	public int ssrc1() {
+		// TODO Auto-generated method stub
+		return reviewDAO.ssrc1();
+	}
+
+	@Override
+	public int ssrc2() {
+		// TODO Auto-generated method stub
+		return reviewDAO.ssrc2();
+	}
+
+	@Override
+	public int ssrc3() {
+		// TODO Auto-generated method stub
+		return reviewDAO.ssrc3();
+	}
+
+	@Override
+	public int ssrc4() {
+		// TODO Auto-generated method stub
+		return reviewDAO.ssrc4();
+	}
+
+	@Override
+	public int ssrc5() {
+		// TODO Auto-generated method stub
+		return reviewDAO.ssrc5();
+	}
+
+	@Override
+	public int starsTotalCount() {
+		// TODO Auto-generated method stub
+		return reviewDAO.starsTotalCount();
+	}
+	
+	
+
+	
 
 //	@Override
 //	public List<ReviewVO> getReviewListStar(ReviewVO review) {

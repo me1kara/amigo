@@ -8,7 +8,8 @@
 <html>
 	<%	
 	ChatDAO dao = new ChatDAO();
-	List<ChatVO> chatList = dao.getMyChatList(1);	
+	List<ChatVO> chatList = dao.getMyChatList(1);
+	
 	%>
 <head>
 <script

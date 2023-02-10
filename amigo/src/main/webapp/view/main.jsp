@@ -279,6 +279,8 @@ prefix="c"%>
         </div>
         <br />
         <div class="row text-center">
+        <c:choose>
+        <c:when test="${ sessionScope.user.getUser_type() == 'U' }">
           <a href="apply/sitter_join.do">
             <img
               src="/amigo/resources/img/needYou.png"
@@ -286,6 +288,20 @@ prefix="c"%>
               alt="needYou"
             />
           </a>
+         </c:when>
+         <c:when test="${ sessionScope.user.getUser_type() == 'A' || sessionScope.user.getUser_type() == 'S'}">
+           <a href="#">
+            <img
+              src="/amigo/resources/img/needYou.png"
+              class="img-fluid"
+              alt="needYou"
+              onclick="alert('일반 회원만 신청 가능합니다')"
+            />
+          </a>
+         </c:when>
+         </c:choose>
+         <!-- 펫시터 회원과 관리자는 지원을 제한함. -->
+         
         </div>
       </div>
       <!-- 커뮤니티 종료-->
