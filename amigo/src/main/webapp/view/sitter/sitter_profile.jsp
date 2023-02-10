@@ -22,9 +22,36 @@
 <% UserVO user = (UserVO)session.getAttribute("user"); 
 %>    
     <style>
-    	ul{
-    		list-style: none;
+		.petsitter_name {
+			font-family: "Jalnan";
+			font-size:20px;
+			padding-top:20px;
+		}
+    	
+    	#profile_card {
+    		margin: 0 auto;
+    		width: 400px;
+    		margin-top:50px;
+    		margin-bottom:50px;
+    		border-radius: 10px;
+			box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
     	}
+    	
+    	
+    	h2 {
+    		font-family: "Jalnan";
+       		font-size:40px;
+    	}
+    	
+    	section {
+    		margin-top:80px;
+    	}
+    	
+    	#petsitter_title {
+    		padding-top:20px;
+    		
+    	}
+    	
     </style>
     <script>		
 		function requestPay() {
@@ -74,7 +101,7 @@
 
 <body>
 	<%@include file="/includes/header.jsp" %>
-			<div class="container text-center">
+			<div class="container text-center" >
 				<section>
 					<h2> 시터 프로필 정보</h2>
 					${book.res_pay }
@@ -105,6 +132,28 @@
 									<div><span>후기</span></div>
 								</li>
 							</ul>
+					<article id="profile_card">
+						<div id="petsitter_title">
+							<div id="img_ex" style="border:1px solid; width:200px; height:200px; margin:0 auto;">
+				    		 <c:choose>
+				     		 <c:when test="${not empty sitter.sit_photo}">
+				     			<img src="${sitter.sit_photo}" alt="Profile Picture"/>
+				     	 	 </c:when>
+				     		 <c:otherwise>
+				     			<span>Profile picture not available</span>
+				     		 </c:otherwise>
+				    		 </c:choose>
+				    		 </div>
+						 <p class="petsitter_name"><c:out value="${sitter.user_name}"/> 펫시터</p>
+				   		</div>	
+				   		<hr>
+						<div>
+							 	<p>펫시터 전문가 교육 수료</p>
+							 	<p>전문 펫시터 자격증 보유</p>
+							 	<p>펫시터 직업훈련 교육 수료</p>
+						</div>
+								<hr>
+								<div>후기</div>
 					</article>
 				<article>
 				<article>

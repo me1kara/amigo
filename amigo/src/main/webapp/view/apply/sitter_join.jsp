@@ -187,20 +187,20 @@
 					<label for="sit_days">활동 가능한 일수(한 달 기준)*</label>
 					
 					<div class="form-check2">
-  						<input class="form-check-input" type="radio" name="sit_days" id="sitter_days1" value="주말 포함한 30일 모두 가능합니다." required>
+  						<input class="form-check-input" type="radio" name="sit_days" id="sitter_days1" value="30" required>
  						 <label class="form-check-label" for="sit_days">주말 포함한 30일 모두 가능합니다.</label>
 					</div>
 					<div class="form-check2">
- 						 <input class="form-check-input" type="radio" name="sit_days" id="sitter_days2" value="평균 20일 이상 가능합니다.">
+ 						 <input class="form-check-input" type="radio" name="sit_days" id="sitter_days2" value="20">
  						 <label class="form-check-label" for="sit_days">평균 20일 이상 가능합니다.</label>
 					</div>
 					<div class="form-check2">
- 						 <input class="form-check-input" type="radio" name="sit_days" id="sitter_days3" value="평균 20일 이하 가능합니다.">
+ 						 <input class="form-check-input" type="radio" name="sit_days" id="sitter_days3" value="14">
  						 <label class="form-check-label" for="sit_days">평균 20일 이하 가능합니다.</label>
 					</div>
 					<div class="form-check2">
- 						 <input class="form-check-input" type="radio" name="sit_days" id="sitter_days4" value="주말만 가능합니다.">
- 						 <label class="form-check-label" for="sit_days">주말만 가능합니다.</label>  
+ 						 <input class="form-check-input" type="radio" name="sit_days" id="sitter_days4" value="주말">
+ 						 <label class="form-check-label" for="sit_days">주말만 가능합니다.</label> 
  						  <br>
  						  <span class="sit_weekends">(방문 펫시터로 활동이 어려울 수 있습니다.)</span>						         
 					</div>
@@ -210,15 +210,15 @@
 					<label for="sit_time">활동 가능한 시간대*</label>
 					
 					<div class="form-check3">
-  						<input class="form-check-input" type="radio" name="sit_time" id="sitter_times1" value="모두 가능합니다" required>
+  						<input class="form-check-input" type="radio" name="sit_time" id="sitter_times1" value="모두" required>
  						 <label class="form-check-label" for="sit_time">모두 가능합니다.</label>
 					</div>
 					<div class="form-check3">
- 						 <input class="form-check-input" type="radio" name="sit_time" id="sitter_times2" value="오전타임(오전8:00~오후12:00)">
+ 						 <input class="form-check-input" type="radio" name="sit_time" id="sitter_times2" value="오전">
  						 <label class="form-check-label" for="sit_time">오전타임(오전8:00~오후12:00)</label>
 					</div>
 					<div class="form-check3">
- 						 <input class="form-check-input" type="radio" name="sit_time" id="sitter_times3" value="오후타임(오후12:00~오후06:00)">
+ 						 <input class="form-check-input" type="radio" name="sit_time" id="sitter_times3" value="오후">
  						 <label class="form-check-label" for="sit_time">오후타임(오후12:00~오후06:00)</label>
 					</div>
 				</div>

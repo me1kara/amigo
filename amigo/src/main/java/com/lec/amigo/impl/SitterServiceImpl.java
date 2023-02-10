@@ -22,7 +22,6 @@ public class SitterServiceImpl implements SitterService {
 	
 	@Override
 	public SitterVO getSitter(SitterVO svo) {
-		// TODO Auto-generated method stub
 		return sitterDAO.getSitter(svo);
 	}
 
@@ -62,9 +61,9 @@ public class SitterServiceImpl implements SitterService {
 	}
 
 	@Override
-	public void updateTypeU(SitterVO svo, boolean sit_auth_is) {
+	public void updateTypeU(SitterVO svo) {
 		
-		sitterDAO.updateTypeU(svo, sit_auth_is);
+		sitterDAO.updateTypeU(svo);
 		
 	}
 
@@ -81,7 +80,11 @@ public class SitterServiceImpl implements SitterService {
 		return sitterDAO.getSitter(user_no);
 	}
 
-
+	@Override
+	public List<SitterVO> getSitInfoList(int user_no) {
+		// TODO Auto-generated method stub
+		return sitterDAO.getSitInfoList(user_no);
+	}
 
 
 

@@ -55,6 +55,14 @@
 	overflow-x:hidden;
 	text-align: left;
 }
+
+.page-header {
+	font-family: "Jalnan";
+    font-size:35px;
+
+}
+
+
 </style>
 <script>
 		$(document).ready(function(){
@@ -110,7 +118,7 @@
 				<table class="table table-bordered" style="background: rgb(87, 160, 227);">
 					<tr class="table-borderless" style="border: none;">
 						<td colspan="6">
-							<ul id="list" style="list-style: none;">
+							<ul id="list" style="list-style: none; height:550px;"" >
 								<c:forEach var="chat" items="<%=chatList%>">
 									<c:choose>
 									<c:when test="${chat.getUser_nick()!=user.getUser_nick() }">
@@ -169,7 +177,7 @@
 </label>
 							</td>
 						<td colspan="1" style="text-align: rigth;"><button
-								class="btn btn-success" style="width: 100px; height:62px;" id="chat_submit_btn">보내기</button></td>
+								class="btn btn-light" style="width: 100px; height:62px; color:rgb(87, 160, 227); font-weight:bold;" id="chat_submit_btn">보내기</button></td>
 					</tr>		
 				</table>
 				<input type="file" id="fileUpload" onchange="previewFile()" style="display: none;">

@@ -57,7 +57,7 @@ prefix="c"%>
           >
           <c:choose>
           	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
-          	<img src="/userimg/${user.getUser_photo()}" alt="userphoto" width="20px" height="20px"/>
+          	<img src="/userimg/${user.getUser_photo()}" alt="userphoto" width="20px" height="20px" style="border-radius:10px" />
             </c:when>
             <c:otherwise>
             <img src="../../resources/img/logo2.png" alt="logo2" width="20px" height="20px"/>
@@ -68,7 +68,7 @@ prefix="c"%>
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">찜 목록 & 예약 확인</a>
+          <a href="#" class="mypage_link">예약 확인</a>
         </li>
         <li class="list-group-item">
           <a
@@ -92,12 +92,16 @@ prefix="c"%>
        		   <a href="<%=request.getContextPath() %>/view/admin/getSitList.do" class="mypage_link">펫시터 회원관리</a>
      	    </li>
         </c:if>
+        <c:if test="${ sessionScope.user.getUser_type() == 'U' }">
         <li class="list-group-item">
           <a href="apply/sitter_join.do" class="mypage_link">펫시터 지원하기</a>
         </li>
+        </c:if>
+        <c:if test="${ sessionScope.user.getUser_type() == 'S' }">
         <li class="list-group-item">
           <a href="#" class="mypage_link">펫시터모드로 전환</a>
         </li>
+        </c:if>
       </ul>
     </div>
     <!-- Footer -->

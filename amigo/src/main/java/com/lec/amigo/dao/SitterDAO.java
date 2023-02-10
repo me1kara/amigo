@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.common.SearchVO;
+import com.lec.amigo.mapper.BookContentRowMapper;
 import com.lec.amigo.mapper.SitRowMapper;
 import com.lec.amigo.mapper.SitterRowMapper;
 import com.lec.amigo.vo.SitterVO;
@@ -41,6 +42,7 @@ public class SitterDAO {
 	private String selectSitterByG = "";
 	private String selectSitterByUserName = "";
 	private String sitterTotalRowCount = "";
+	private String selectSitterByUserNo = "";
 	private String selectSitterInfo = "";   // 펫시터 개인의 상세정보
 	private String selectSitterCate = "";   // 승인/미승인 을 나눠서 정렬하기
 	private String insertSitter = "";
@@ -59,6 +61,7 @@ public class SitterDAO {
 		selectSitterByUserName  = environment.getProperty("selectSitterByUserName");
 		sitterTotalRowCount     = environment.getProperty("sitterTotalRowCount");
 		selectSitterInfo        = environment.getProperty("selectSitterInfo");
+		selectSitterByUserNo    = environment.getProperty("selectSitterByUserNo");
 		selectSitterCate        = environment.getProperty("selectSitterCate");
 		insertSitter            = environment.getProperty("insertSitter");
 		deleteSitter            = environment.getProperty("deleteSitter");
@@ -74,9 +77,24 @@ public class SitterDAO {
 		return jdbcTemplate.queryForObject(sql, args, new SitterRowMapper());
 	}
 
-	public SitterVO getSitter(SitterVO svo) {
-		Object[] args = { svo.getSit_no() };
-		return jdbcTemplate.queryForObject(selectSitterInfo, args, new SitRowMapper());
+	public SitterVO sitterInfo(SitterVO svo) {
+		Object[] args = { svo.getUser_no() };
+		return (SitterVO) jdbcTemplate.query(selectSitterInfo, args, new SitRowMapper());
+		
+	}
+	
+	public List<SitterVO> getSitInfoList(int userno) {
+		
+		sql = selectSitterByUserNo;
+		Object[] args = {userno};
+		
+		try {
+			return jdbcTemplate.query(sql, args, new SitRowMapper());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		 
+		return null;
 		
 	}
 	
@@ -84,7 +102,7 @@ public class SitterDAO {
 		if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
 				searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) {
 			sql = selectSitter;
-			// searchVO.setSearchType("user_name");
+			searchVO.setSearchType("user_name");
 		} else {
 			if(searchVO.getSearchType().equalsIgnoreCase("user_name")) {
 				sql = selectSitterByUserName;
@@ -140,16 +158,20 @@ public class SitterDAO {
 		jdbcTemplate.update(updateTypeS, svo.getUser_type());
 	}
 	
-	public int updateTypeU(SitterVO svo, boolean sit_auth_is) {
-		System.out.println("원래복귀");
-		int uu = jdbcTemplate.update(updateTypeU, false, svo.getUser_type(), svo.getUser_no());
-		System.out.println("타입원복 및 삭제");
-		return uu;
-	}	
-	public int deleteSitter(int user_no) {
+	public void updateTypeU(SitterVO svo) {
+		jdbcTemplate.update(updateTypeU, svo.getUser_type());
+	}
 	
+/*public int updateSitter(SitterVO svo) {
+		return jdbcTemplate.update(updateSitter,svo.getSit_gender(),svo.getSit_birth(),svo.isSit_smoking(),svo.getSit_job(),svo.getSit_days(),svo.getSit_time(),svo.isSit_exp(),svo.getSit_care_exp(),svo.getSit_intro(),svo.getSit_photo(),svo.isSit_auth_is());
+	}*/
+	
+	public int deleteSitter(int user_no) {
+		
+		
 		System.out.println(deleteSitter);                    // 쿼리 확인하기
 		int del = jdbcTemplate.update(deleteSitter, user_no); // 업데이트 매서드를 위한 변수.
 		return del;                                          // 변수 반환.
 	}
+
 }

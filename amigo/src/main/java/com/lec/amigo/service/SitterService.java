@@ -19,6 +19,9 @@ public interface SitterService {
 	// 펫시터상세정보
 	SitterVO getSitter(SitterVO svo);
 	
+	// 펫시터 신청인 신상정보
+	List<SitterVO> getSitInfoList (int user_no);
+	
 	// 펫시터(신청)리스트(승인무관)
 	List<SitterVO> getSitList(SearchVO searchVO);
 	
@@ -39,7 +42,7 @@ public interface SitterService {
 	void updateTypeS(SitterVO svo);
 	
 	// 펫시터 삭제하면 회원타입 원복시키기 (아직 보류)
-	void updateTypeU(SitterVO svo, boolean sit_auth_is);
+	void updateTypeU(SitterVO svo);
 
 	
 	

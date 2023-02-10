@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,17 +25,13 @@
     		width:100%;
     		text-align: center;
     	}
-    	.text-uppercase {
-    	 font-family: "Jalnan";
-      	 font-size:40px; 
-    	}
+    	
     </style>
 <title>후기01_실시간 후기</title>
-
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <![endif]-->	
 </head>
-<%
-
-%>
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
@@ -53,20 +48,20 @@
           >
             <div class="rating-card">
               <div class="text-center m-b-30">
-                <!-- 몇마리의 표현은 정보를 가져와줘야함. 02/09 백단에서 가져옴 -->
+                <!-- 몇마리의 표현은 정보를 가져와줘야함 -->
                 <div class="review-member">
-                  <a href="#">${dogCount}</a>마리의 친구들이 AM!GO와 함께했어요!
+                  <a href="#">10000</a>마리의 친구들이 AM!GO와 함께했어요!
                 </div>
                 <br />
                 <!-- 점수 -->
-                <h1 class="rating-number">${starsAverage}<small>/5</small></h1>
+                <h1 class="rating-number">4.3<small>/5</small></h1>
                 <div class="rating-stars d-inline-block position-relative mr-2">
                   <!-- 별 이미지 일뿐 구동은 백엔드쪽에서 만들어 줘야할거 같습니다. -->
                   <img src="amigo/resources/img/grey-star.svg" alt="" />
                   <div class="filled-star" style="width: 86%"></div>
                 </div>
                 <!-- 총 레이팅 -->
-                <div class="text-muted">${starsTotalCount } ratings</div>
+                <div class="text-muted">2,145 ratings</div>
               </div>
               <div class="rating-divided">
                 <div class="rating-progress">
@@ -83,7 +78,7 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <span class="rating-value">${ssrc5}</span>
+                  <span class="rating-value">1,985</span>
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
@@ -99,7 +94,7 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <span class="rating-value">${ssrc4}</span>
+                  <span class="rating-value">356</span>
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
@@ -115,7 +110,7 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <span class="rating-value">${ssrc3}</span>
+                  <span class="rating-value">130</span>
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
@@ -131,7 +126,7 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <span class="rating-value">${ssrc2}</span>
+                  <span class="rating-value">90</span>
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
@@ -147,7 +142,7 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <span class="rating-value">${ssrc1}</span>
+                  <span class="rating-value">33</span>
                 </div>
               </div>
             </div>
@@ -159,12 +154,6 @@
     <!-- 유저 실시간 리뷰 -->
     <div class="container">
       <div class="row">
-      <c:choose>
-         <c:when test="${ revList.isEmpty() || revList == null }">
-            <h6>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</h6>
-         </c:when>
-      <c:otherwise>
-     	 <c:forEach var="rev" items="${ revList }">
         <div
           class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4"
         >
@@ -173,27 +162,14 @@
               <div class="row">
                 <div class="col-sm-3">
                   <div class="review-img">
-                  <!-- 유저 프로필 -->
-                  	<c:choose>
-                  	<c:when test="${rev.getUser_photo()!=null and rev.getUser_photo()!=''}">
                     <img
-                      src="/img/${rev.getUser_photo() }"
-                      class="review-user-photo"
-                      alt="userProfile"
-                      width="50px"
-                      class="mr-3 rounded-circle"
+                      src="/amigo/resources/img/reviewProfile.jpg"
+                      class="review-user-profile"
+                      alt="profileImg"
                     />
-                    </c:when>
-                    <c:otherwise>
-                    <img src="resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>
-                    </c:otherwise>
-                    </c:choose>
-                    <span class="nickName" style="color:#498dcc; font-weight:bold">${ rev.getUser_nick() }</span>&nbsp;
-                    <!-- 유저 프로필 end -->
                   </div>
-                  
-                  <!-- 별 
-                 
+                  <!-- 별 -->
+                  <!-- 
                   <div class="star-ratings">
                     <div 
                       class="star-ratings-fill space-x-2 text-lg"
@@ -209,18 +185,7 @@
                     <div class="wrap-star">
                       <!-- 100 % -->
                       <div class="star-rating">
-                        <span style="width: 100%">"${ rev.getStar_cnt() }"</span>
-                        <input type="hidden" class="form-control" name="sit_no" value="${ rev.getSit_no() }">
-                        <input type="hidden" class="form-control" name="user_no" value="${ sessionScope.user.getUser_no() }">
-                        <input type="hidden" class="form-control" name="user_no" value="${ rev.getUser_no() }">
-                        <input type="hidden" class="form-control" name="star_cnt" value="${ rev.getStar_cnt() }">
-                        <input type="hidden" class="form-control" name="rev_content" value="${ rev.getRev_content() }">
-                        <input type="hidden" class="form-control" name="rev_date" value="${ rev.getRev_date() }">
-                        <input type="hidden" class="form-control" name="user_addr" value="${ rev.getUser_addr() }">
-                        <input type="hidden" class="form-control" name="user_nick" value="${ rev.getUser_nick() }">
-                        <input type="hidden" class="form-control" name="user_name" value="${ rev.getUser_name() }">
-                        <input type="hidden" class="form-control" name="user_photo" value="${ rev.getUser_photo() }"> 
-                        
+                        <span style="width: 100%"></span>
                       </div>
                     </div>
                   </div>
@@ -230,23 +195,78 @@
               <br />
               <div class="reviewMain text-center">
                 <div class="review-user-addr">
-                  <a href="#">${ rev.getUser_addr() }</a>
+                  <a href="#">서울 강남구</a>
                 </div>
                 <br />
                 <br />
                 <div class="review-main">
-                  <a href="#"></a>${ rev.getRev_content() }
+                  <a href="#"></a>늘 믿고 맡기는 시터분이에요 항상 감사드려요!
                 </div>
               </div>
             </div>
           </div>
         </div>
-         </c:forEach>
-       </c:otherwise>
-       </c:choose>
       </div>
     </div>
-	</div>
+    <!-- 두번째 리뷰 -->
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4"
+        >
+          <div class="review-user-card">
+            <div class="review-divided">
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="review-img">
+                    <img
+                      src="/amigo/resources/img/reviewProfile.jpg"
+                      class="review-user-profile"
+                      alt="profileImg"
+                    />
+                  </div>
+                  <!-- 별 -->
+                  <!-- 
+                  <div class="star-ratings">
+                    <div 
+                      class="star-ratings-fill space-x-2 text-lg"
+                      :style="{ width: ratingToPercent + '%' }"
+                    >
+                      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <div class="star-ratings-base space-x-2 text-lg">
+                      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                  -->
+                  <div class="text-center">
+                    <div class="wrap-star">
+                      <!-- 100 % -->
+                      <!-- 100가 아닐시 별이 깨짐;-->
+                      <div class="star-rating">
+                        <span style="width: 100%"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 별 end -->
+              </div>
+              <br />
+              <div class="reviewMain text-center">
+                <div class="review-user-addr">
+                  <a href="#">인천 송도동</a>
+                </div>
+                <br />
+                <br />
+                <div class="review-main">
+                  <a href="#"></a>너무 친절하고 좋아요!! 미쳤나봐 진쨔~~ 최공
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+		</div>
 	<%@include file="/includes/footer.jsp" %>
 
 	

@@ -26,21 +26,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.dao.UserDAO;
+import com.lec.amigo.impl.BoardServiceImpl;
 import com.lec.amigo.impl.ChatServiceImpl;
 import com.lec.amigo.impl.DogServiceImpl;
 import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
+import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
-@PropertySource("classpath:config/uploadpathUser.properties")
+@PropertySource("classpath:config/uploadpath.properties")
 public class LoginController {
 	
 	@Autowired
 	UserServiceImpl userService;
+	
+	@Autowired
+	BoardServiceImpl boardService;
 	
 	@Autowired
 	DogServiceImpl dogService;
@@ -48,17 +53,21 @@ public class LoginController {
 	@Autowired
 	ChatServiceImpl chatService;
 	
+<<<<<<< HEAD
 	@Autowired
 	SitterServiceImpl sitService;
 	
 	private String uploadFolderUser = "";
+=======
+	private String uploadFolder = "";
+>>>>>>> 368ccce91effe09613b47f079dba4728fc124178
 	
 	@Autowired
 	Environment environment;
 	
 	@PostConstruct
 	public void getUploadPathPropeties() {
-		uploadFolderUser = environment.getProperty("uploadFolderUser");
+		uploadFolder = environment.getProperty("uploadFolderUser");
 	}
 	
 	
@@ -69,7 +78,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess) {
+	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess, BoardVO boardVO, Model model) {
 			
 		UserVO user = userDAO.getUser(userVO.getUser_email()); // 사용자가 입력한 이메일을 getUser메서드로 DB 있는지 찾기
 
@@ -108,6 +117,9 @@ public class LoginController {
 			} else {
 				sess.setAttribute("isAdmin", false);
 			}
+			
+			model.addAttribute("board", boardService.getBoard(boardVO));
+			
 			return "view/main.jsp";
 		} else {
 			sess.setAttribute("isLoginSuccess", false);
@@ -126,7 +138,12 @@ public class LoginController {
 	// 회원탈퇴
 	@RequestMapping(value="/revoke.do", method = RequestMethod.GET)
 	public String revoke(UserVO userVO) {
+		if(userVO.getUser_photo() != "" || userVO.getUser_photo() != null) {
+		String filename = userVO.getUser_photo();
+		new File(uploadFolder+filename).delete();
+		}
 		userService.revokeUser(userVO.getUser_no());
+		
 		return "home.jsp";
 	}
 	
@@ -206,13 +223,15 @@ public class LoginController {
 	
 	// 둘러보기
 	@RequestMapping(value="/main_tour.do", method = RequestMethod.GET) 
-	public String main_tour() {
+	public String main_tour(BoardVO boardVO, Model model) {
+		model.addAttribute("board", boardService.getBoard(boardVO));
 		return "view/main_tour.jsp"; 
 	}
 	
 	// 로고 클릭시 메인가기
 	@RequestMapping(value="/main_home.do", method = RequestMethod.GET) 
-	public String main_home() {
+	public String main_home(BoardVO boardVO, Model model) {
+		model.addAttribute("board", boardService.getBoard(boardVO));
 		return "view/main.jsp"; 
 	}
 	
@@ -229,14 +248,15 @@ public class LoginController {
 		MultipartFile uploadFile = userVO.getUploadFile();
 		
 		if (!uploadFile.isEmpty()) {
+			new File(uploadFolder+userVO.getUser_photo()).delete();
 			String fileName = uploadFile.getOriginalFilename();
 			String fileExtension = fileName.substring(fileName.lastIndexOf("."),fileName.length());
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
 			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
-			uploadFile.transferTo(new File(uploadFolderUser + uniqueName));
+			uploadFile.transferTo(new File(uploadFolder + uniqueName));
 			userVO.setUser_photo(uniqueName);
-		}
+		} 
 		
 		// 바뀐 정보로 세션 정보 업데이트!
 		sess.setAttribute("user", userService.updateUser(userVO));

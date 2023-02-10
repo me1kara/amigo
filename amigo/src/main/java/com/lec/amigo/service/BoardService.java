@@ -42,6 +42,8 @@ public interface BoardService {
 	// 좋아요 등록
 	int insertHeart(HeartVO heart);
 
+	// 좋아요 개수
+	int countHeart(int udb_no);
 
 	
 
