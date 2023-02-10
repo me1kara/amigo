@@ -52,15 +52,13 @@ public class LoginController {
 	
 	@Autowired
 	ChatServiceImpl chatService;
-	
-<<<<<<< HEAD
+
 	@Autowired
 	SitterServiceImpl sitService;
 	
 	private String uploadFolderUser = "";
-=======
+
 	private String uploadFolder = "";
->>>>>>> 368ccce91effe09613b47f079dba4728fc124178
 	
 	@Autowired
 	Environment environment;

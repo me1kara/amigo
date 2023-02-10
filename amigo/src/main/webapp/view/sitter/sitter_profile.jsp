@@ -104,34 +104,6 @@
 			<div class="container text-center" >
 				<section>
 					<h2> 시터 프로필 정보</h2>
-					${book.res_pay }
-					<article>
-							<ul>
-								<li>
-				    			    <c:choose>
-				     			     <c:when test="${not empty sitter.sit_photo}">
-				     			       <img src="${sitter.sit_photo}" alt="Profile Picture"/>
-				     			     </c:when>
-				     			     <c:otherwise>
-				     			       <span>Profile picture not available</span>
-				     			     </c:otherwise>
-				    			    </c:choose>
-				   				</li>
-						 		<li><c:out value="${sitter.user_name}"/> 펫시터</li>
-						 		<li>
-							 		<ul>
-							 			<li>펫시터 전문가 교육 수료</li>
-							 			<li>전문 펫시터 자격증 보유</li>
-							 			<li>펫시터 직업훈련 교육 수료</li>
-							 		</ul>
-								</li>
-								<li>
-									<span>신원인증</span><span>인성검사</span><span>촬영동의</span>
-								</li>
-								<li style="border-top: 1px solid black;">
-									<div><span>후기</span></div>
-								</li>
-							</ul>
 					<article id="profile_card">
 						<div id="petsitter_title">
 							<div id="img_ex" style="border:1px solid; width:200px; height:200px; margin:0 auto;">
