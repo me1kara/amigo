@@ -47,7 +47,7 @@ public class SitterController {
 	
 	@PostConstruct
 	public void getUploadPathPropeties() {
-		uploadFolder = environment.getProperty("uploadFolder");
+		uploadFolder = environment.getProperty("uploadFolderSitter");
 	}
 	
 	@RequestMapping("/view/apply/getSitter.do")                    // 유저가 보는 시터정보(승인된시터만 get)

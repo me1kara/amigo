@@ -36,7 +36,7 @@ public class DogController {
 	
 	@PostConstruct
 	public void getUploadPathPropeties() {
-		uploadFolder = environment.getProperty("uploadFolder");
+		uploadFolder = environment.getProperty("uploadFolderdog");
 	}
 	
 	@RequestMapping("view/mypage/getDogList.do")

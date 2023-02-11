@@ -15,8 +15,8 @@
 <meta charset="UTF-8">
 <title>산책04_추천산책로</title>
 <style>
-* {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:20px;}
-.placeinfo {position:relative;width:130%;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;padding-bottom: 10px;background: #fff;}
+* {margin:0;padding:0;font-family:Pretendard-Regular;font-size:20px;}
+.placeinfo {position:relative;width:150%;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;padding-bottom: 10px;background: #fff;}
 .placeinfo:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
 .placeinfo .after {content:'';position:relative;margin-left:-12px;left:50%;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 .placeinfo a, .placeinfo a:hover, .placeinfo a:active{color:#fff;text-decoration: none;}
@@ -56,18 +56,18 @@
 	// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 	var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 	
-	let testData = JSON.parse(JSON.stringify(TestFile));
+	var testData = JSON.parse(JSON.stringify(TestFile));
         
     for (var i = 0; i < 100; i += 1) {    // i 100개
 
     	var linePath =[];
 
-    	var id        = testData.features[i].id,
-        	route_nm  = testData.features[i].properties.route_nm,
-        	length_km = testData.features[i].properties.length_km,
-        	time2walk = testData.features[i].properties.time2walk;
-    	var places    = [id,route_nm,length_km,time2walk];
-
+    	var route_no = (testData.features[i].id).substr(14),  // 넘버
+        	route_nm  = testData.features[i].properties.route_nm,   // 이름 
+        	length_km = testData.features[i].properties.length_km,  // 길이
+        	time2walk = testData.features[i].properties.time2walk;  // 소요시간
+    	var places    = [route_no,route_nm,length_km,time2walk];
+        	
 
         for (var j = 0; j < testData.features[i].geometry.coordinates[0].length; j += 1){
     	   	
@@ -91,10 +91,17 @@
 	polyline.setMap(map);
     
 	(function(polyline, places) {
-	kakao.maps.event.addListener(polyline, 'click', function(mouseEvent) {
+	kakao.maps.event.addListener(polyline, 'mouseover', function(mouseEvent) {
 		displayInfowindow(polyline,places,mouseEvent.latLng);
-
 	});
+	
+	kakao.maps.event.addListener(map, 'dragstart', function(mouseEvent) {
+		infowindow.close();
+	});
+	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+		infowindow.close();
+	});
+	
 	 })(polyline, places);
 	
     }
@@ -102,14 +109,14 @@
   // 인포윈도우에 장소명을 표시합니다
 	function displayInfowindow(polyline,places,latLng) {
 
+        // places = [route_no,route_nm,length_km,time2walk]
+        
 		var content = '<div class="placeinfo">' +
-        '<a class="title" href="#" target="_blank" title="' + places[1] + '">' + places[1] + '</a>' +
+        '<a class="title" href=trail_detail.do?route_no='+places[0]+' target="_blank" title="' + places[1] + '">' + places[1] + '</a>' +
         ' <span title="' + places[2] + '"> 길이(km) : ' + places[2] + '</span>' +
         ' <span title="' + places[3] + '"> 소요시간  : ' + places[3] + '</span>' +
-        ' <span title="' + places[0] + '"> 번호  : ' + places[0] + '</span>' +
         '</div><div class="after"></div>';
-        
-	 
+         
 	 	
         var marker = new kakao.maps.Marker({
             position: latLng

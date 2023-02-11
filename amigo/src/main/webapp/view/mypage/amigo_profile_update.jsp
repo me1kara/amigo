@@ -27,7 +27,7 @@
 			<form role="form" action="updateDog.do" method="post" enctype="multipart/form-data">
 		     
 		    <c:if test="${dog.getDog_image_file()!=null and dog.getDog_image_file()!=''}">
-				<div style="text-align: center" class="before_img_del"><img src="/img/${dog.getDog_image_file()}" width="400px" height="400px"></div></c:if>
+				<div style="text-align: center" class="before_img_del"><img src="/dogimg/${dog.getDog_image_file()}" width="400px" height="400px"></div></c:if>
 				    <input type="hidden" value="${dog.getDog_image_file()}"  name="dog_image_file">
             		<div style="text-align: center" id="msgTd"></div>
              <div class="form-group" style="width:90px; margin: 0 auto;" >

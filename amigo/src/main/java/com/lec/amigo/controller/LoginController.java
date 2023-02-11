@@ -34,7 +34,7 @@ import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
-@PropertySource("classpath:config/uploadpathUser.properties")
+@PropertySource("classpath:config/uploadpath.properties")
 public class LoginController {
 	
 	@Autowired
