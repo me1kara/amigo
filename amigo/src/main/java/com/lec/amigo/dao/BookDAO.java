@@ -493,7 +493,7 @@ public class BookDAO {
 
 
 	public Payment getPayment(int rno) {
-		String sql = "select * from payment where rno=?";
+		String sql = "select * from payment where res_no=?";
 		Object[] args = {rno};
 
 		return jdbcTemplate.queryForObject(sql, args, new PaymentRowMapper());
