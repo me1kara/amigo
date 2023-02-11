@@ -12,6 +12,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  
+  <!-- 아임포트 -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>my02_예약확인~예약취소</title>
@@ -63,7 +66,16 @@
 	.modal_tTitle{
 		background:rgb(87, 160, 227);
 		color:white;
-	 
+	}
+	
+	.book_ch_title {
+		font-family: "Jalnan";
+		font-size: 30px;
+		color : rgb(87, 160, 227);
+	}
+	
+	section {
+		margin-top : 80px;
 	}
 	
 </style>
@@ -71,7 +83,8 @@
 <script>
 	function open_book_modal(e){
 		console.log("입장확인");
-		let rno = $(e).find("#book_res_no").text();		
+		let rno = $(e).find("#book_res_no").text();
+		//let res_state = $(e).find("#book_res_state").text();
 		getBook_detail(rno);
 		$('.modal').fadeIn();
 		$('body').css("overflow", "hidden");
@@ -105,6 +118,7 @@
 					});
 					temp+='</ul>';
 					temp+='<button class="btn btn-danger book_btn" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
+					
 					modalBody.append(temp);
 				} else {
 					alert('예약정보가 없습니다! 다시 시도해주세요!');
@@ -123,9 +137,10 @@
 				data : {
 					'rno' : rno	
 				},
-				success : function(result){
-					if(result>0){
-						alert('성공적으로 삭제됐습니다!');
+				success : function(payment){
+					if(payment!=null){
+						
+						
 						history.go(0);
 					}else{
 						alert('삭제에 실패했습니다!');
@@ -135,91 +150,46 @@
 			    error : function(request, status, error) { // 결과 에러 콜백함수
 			        console.log(error);
 			        alert('삭제에 실패했습니다!');
-			        close_book_modal();
+			        history.go(0);
 			    }
 			});
 			
 		}
 	}
 	
+	function cancelPay() {
+	    jQuery.ajax({
+	      "url": "{환불요청을 받을 서비스 URL}", // 예: http://www.myservice.com/payments/cancel
+	      "type": "POST",
+	      "contentType": "application/json",
+	      "data": JSON.stringify({
+	        "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
+	        "cancel_request_amount": 2000, // 환불금액
+	        "reason": "테스트 결제 환불" // 환불사유
+	        "refund_holder": "홍길동", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+	        "refund_bank": "88" // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+	        "refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+	      }),
+	      "dataType": "json"
+	    });
+	  }
 </script>
 </head>
 <body>
 	<%@include file="/includes/header.jsp" %>
-		<div class="container">
+	
+		<script>
+			
+		</script>
+		<div class="container text-center">
 			<section>	
 				<article>
-					<h3>예약확인</h3>
+					<h2 class="book_ch_title">예약 확인</h2> <hr>
+					<c:if test='${user.getUser_type().equals("S") }'>
+						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do'">시터모드</button>
+					</c:if>
 				</article>
-				<c:choose>
-				<c:when test='${user.getUser_type().equals("S") }'>
-					<h1>시터전용</h1>
-					<c:choose>
-						<c:when test="${sitBookList!=null }">
-							<ul style="list-style: none;">
-							<c:forEach var="book" items="${sitBookList }">
-								<c:forEach var="usr" items="${userList }">
-								<c:if test="${ book.getUser_no()==usr.getUser_no()}">
-								<li class="book_item">
-									<div>
-									<table class="table">
-										<tbody onclick="open_book_modal(this)">
-										<tr><th colspan="2" style="text-align: center;">${usr.getUser_name() } 유저</th></tr>
-										<tr>
-											<th>예약번호</th><td id="book_res_no">${book.res_no }</td>
-										</tr>
-										<tr>
-											<th colspan="2" style="color:blue;'">
-												
-												<c:choose>
-													<c:when test="${book.res_visit_is }">
-														방문
-													</c:when> 
-													<c:otherwise>
-														위탁
-													</c:otherwise>
-												</c:choose>
-												
-											</th>
-										</tr>
-										<tr>
-											<th>결제금액</th><td>${book.getRes_pay() }원</td>
-										</tr>
-										<tr>
-											<th>승인여부</th>
-											<td>
-												<c:choose>
-													<c:when test="${book.res_is }">
-														완료
-													</c:when>
-													<c:otherwise>
-														대기
-													</c:otherwise>
-												</c:choose>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2">
-											
-											</td>
-										</tr>
-										
-										</tbody>
-									</table>
-								</li>
-												
-								</c:if>	
-								</c:forEach>
-							</c:forEach>
-							</ul>
-						</c:when>
-						<c:otherwise>
-							<h2>예약된 정보가 없습니다!</h2>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<article>
+					<article id="user_book">
 						<c:choose>
 						<c:when test="${!myBookList.isEmpty()}">	
 							<ul style="list-style: none;">
@@ -257,19 +227,17 @@
 										<tr>
 											<th class="tTitle">결제금액</th><td><fmt:formatNumber value="${book.getRes_pay() }" pattern="#,###"/>원</td>
 										</tr>
-										<tr style="border-bottom: 1px solid">
+<%-- 										<tr style="border-bottom: 1px solid">
 											<th class="tTitle">승인여부</th>
-											<td>
+											<td id="book_res_state">
 												<c:choose>
-													<c:when test="${book.res_is }">
-														완료
-													</c:when>
-													<c:otherwise>
-														<mark>대기</mark>
+													<c:when test="${book.res_state eq '0'}">승인
+													</c:when>					
+													<c:otherwise><mark>대기</mark>
 													</c:otherwise>
 												</c:choose>
 											</td>
-										</tr>
+										</tr> --%>
 										
 										</tbody>
 									</table>
@@ -278,11 +246,11 @@
 								</c:if>	
 								</c:forEach>
 							</c:forEach>
-							</ul>
+							</u		<c:set var="rp" value="${searchVO.getRowSizePerPage()}" />
+								l>
 								<div class="row align-items-start mt-3">
 									<ul class="col pagination justify-content-center">
 										<c:set var="cp" value="${searchVO.getCurPage()}" />
-										<c:set var="rp" value="${searchVO.getRowSizePerPage()}" />
 										<c:set var="fp" value="${searchVO.getFirstPage()}" />
 										<c:set var="lp" value="${searchVO.getLastPage()}" />
 										<c:set var="ps" value="${searchVO.getPageSize()}" />
@@ -293,25 +261,25 @@
 
 										<c:if test="${ fp != 1 }">
 											<li class="page-item"><a
-												href="book_check.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="book_check.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-fast-backward"></i></a></li>
 											<li class="page-item"><a
-												href="book_check.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="book_check.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-backward"></i></a></li>
 										</c:if>
 
 										<c:forEach var="page" begin="${fp}" end="${lp}">
 											<li class="page-item ${cp==page ? 'active' : ''}"><a
-												href="book_check.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="book_check.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
 												class="page-link">${page}</a></li>
 										</c:forEach>
 
 										<c:if test="${ lp < tp }">
 											<li class="page-item "><a
-												href="book_check.do?curPage=${lp+1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="book_check.do?curPage=${lp+1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-forward"></i></a></li>
 											<li class="page-item"><a
-												href="book_check.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="book_check.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-fast-forward"></i></a></li>
 										</c:if>
 									</ul>
@@ -321,12 +289,11 @@
 								<!-- 페이징 -->
 							</c:when>
 						<c:otherwise>
-							<h2>예약사항이 없습니다</h2>
+							<h2 id="user_book">예약사항이 없습니다</h2>
 						</c:otherwise>
 						</c:choose>
 					</article>
-				</c:otherwise>
-				</c:choose>
+				
 			</section>	
 		</div>
 		

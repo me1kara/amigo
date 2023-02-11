@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -26,16 +28,18 @@ import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.mapper.BoardRowMapper;
 import com.lec.amigo.mapper.BookContentRowMapper;
 import com.lec.amigo.mapper.BookRowMapper;
+import com.lec.amigo.mapper.PaymentRowMapper;
 import com.lec.amigo.mapper.SitterRowMapper;
 import com.lec.amigo.mapper.UserRowMapper;
 import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.BookContentVO;
 import com.lec.amigo.vo.BookVO;
+import com.lec.amigo.vo.Payment;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
 @Repository("bookDAO")
-@PropertySource("classpath:config/booksql.properties")
+@PropertySource("classpath:config/paymentsql.properties")
 public class BookDAO {
 	
 	@Autowired
@@ -43,6 +47,45 @@ public class BookDAO {
 	
 	@Autowired
 	Environment environment;
+	
+	private String sql = "";
+	private String selectBoardListByUbdTitle = "";
+	private String selectBoardListByUserNick = "";
+	private String selectBoardListByUbdCont = "";
+	private String selectBoardListByUbdTitleLike = "";
+	private String selectBoardListByUserNickLike = "";
+	private String selectBoardListByUbdContLike = "";
+	private String boardTotalRowCount = "";
+	private String boardCateRowCount = "";
+	private String selectByUbdNo = "";
+	private String updateCount = "";
+	private String updateBoard = "";
+	private String deleteBoard = "";
+	private String selectCateByUbdTitle = "";
+	private String selectCateByUserNick = "";
+	private String selectCateByUbdCont = "";
+	private String insertBoard = "";
+	private String findHeart = "";
+	private String insertHeart = "";
+	private String deleteHeart = "";
+	private String countHeart = "";
+	
+	@PostConstruct
+	public void getSqlPropeties() {
+		selectBoardListByUbdTitleLike = environment.getProperty("selectBoardListByUbdTitleLike");
+		selectBoardListByUserNickLike = environment.getProperty("selectBoardListByUserNickLike");
+		selectBoardListByUbdContLike  = environment.getProperty("selectBoardListByUbdContLike");
+		selectBoardListByUbdTitle     = environment.getProperty("selectBoardListByUbdTitle");
+		selectBoardListByUserNick     = environment.getProperty("selectBoardListByUserNick");
+		selectBoardListByUbdCont      = environment.getProperty("selectBoardListByUbdCont");
+		boardTotalRowCount            = environment.getProperty("boardTotalRowCount");
+		boardCateRowCount             = environment.getProperty("boardCateRowCount");
+		selectByUbdNo                 = environment.getProperty("selectByUbdNo");
+		selectCateByUbdTitle          = environment.getProperty("selectCateByUbdTitle");
+		selectCateByUserNick          = environment.getProperty("selectCateByUserNick");
+		selectCateByUbdCont           = environment.getProperty("selectCateByUbdCont");
+	}
+	
 	
 	public int calMoney(int days, int time) {
 		String sql = "select sit_price from sit_price where sit_time=1";
@@ -52,14 +95,72 @@ public class BookDAO {
 		return calResult;
 	}
 
-	public List<SitterVO> getArroudSitter(String secondeAddr, PagingVO page) {
-		
+	public List<SitterVO> getArroudSitter(String secondeAddr, PagingVO page, String calr) {		
 		System.out.println(secondeAddr);
+		/*
+		 * String sql =
+		 * "select u.user_no, s.sit_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_intro, s.sit_care_exp from user u,petsitter s"
+		 * +
+		 * " where u.user_no = s.user_no and u.user_type='S' and user_addr like ? limit ?,?"
+		 * ;
+		 */
+		
+		/*
+		 * String sql =
+		 * "select r.*,rs.res_time, rs.res_date from (select res_no, su.* from reservation rd, "
+		 * +
+		 * "(select u.user_no, s.sit_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_intro, s.sit_care_exp from user u,petsitter s where u.user_no = s.user_no and u.user_type='S') su where rd.sit_no = su.sit_no) r, res_content rs where r.res_no = rs.res_no and "
+		 * + "rs.res_date not in (";
+		 */
+		String sql = "select u.user_name,u.user_addr, ss.* from user u,"
+				+ "(select * from petsitter where sit_no not in("
+				+ "select distinct r.sit_no from reservation r,(select distinct * from res_content where res_date in (";
+		
+		
+		
+		JSONParser parser = new JSONParser();
+		JSONArray jms = null;
+		
+		try {
+			jms = (JSONArray) parser.parse(calr);
+			for (int i = 0; i < jms.size(); i++) {
+				JSONObject jsonObj = (JSONObject) jms.get(i);
+				String title = (String)jsonObj.get("title");
+				String start = (String) jsonObj.get("start");
+				String end = (String) jsonObj.get("end");
+				
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+					java.util.Date date1 = transFormat.parse(start);
+					java.util.Date date2 = transFormat.parse(end);
+			        long diffSec = (date2.getTime() - date1.getTime()) / 1000;
+					Long diffDays = diffSec / (24*60*60);
+					int days = diffDays.intValue();
+						for(int day=0;day<days;day++) {
+							cal.setTime(date1);
+							cal.add(Calendar.DATE, day);
+							String da = transFormat.format(cal.getTime()).toString();
+							System.out.println(da+"확인용");
+							if(jms.size()-i==1 && days-day==1) {
+								sql+="DATE('"+da+"')";
+							}else {
+								sql+="DATE('"+da+"'),";
+							}
+			
+						}
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-		String sql = "select u.user_no, s.sit_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_intro, s.sit_care_exp from user u,petsitter s"+ 
-				" where u.user_no = s.user_no and u.user_type='S' and user_addr like ? limit ?,?";
+		sql +=")) rs where r.res_no = rs.res_no)) ss where u.user_no=ss.user_no and u.user_type='S' and u.user_addr like ? limit ?,?";
 		
 		String sqlinput = "%"+secondeAddr+"%";
+		
+		System.out.println(sqlinput);
+		
+		//and user_addr like '%?%'
 		//1 -> 0 
 		//2 -> 10
 		//3 ->
@@ -78,6 +179,7 @@ public class BookDAO {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				SitterVO si = new SitterVO();
+				si.setUser_name(rs.getString("user_name"));
 				si.setUser_no(rs.getInt("user_no"));
 				si.setSit_days(rs.getString("sit_days"));
 				si.setSit_no(rs.getInt("sit_no"));
@@ -136,10 +238,10 @@ public class BookDAO {
 	
 	
 	
-	public int setBook(String calr, BookVO book) {
+	public int setBook(String calr, BookVO book, String merchant_uid) {
 		
-		String sql = "insert into reservation(user_no,sit_no,res_regdate,res_is,res_etc,res_pay,res_visit_is,res_term_is) "
-				+ "values(?,?,SYSDATE(),false, ?,?,?,?)";
+		String sql = "insert into reservation(user_no,sit_no,res_regdate,res_etc,res_pay,res_visit_is,res_term_is) "
+				+ "values(?,?,SYSDATE(), ?,?,?,?)";
 		
 		System.out.println(calr+"확인용");
 		
@@ -208,6 +310,7 @@ public class BookDAO {
 
 
 			}
+			insertPayment(merchant_uid, res_no);
 			return row;
 		}
 		
@@ -219,8 +322,8 @@ public class BookDAO {
 
 	public List<BookVO> getBookList(int user_no, SearchVO search) {
 		String sql = "select r.*, rs.res_date  from reservation r, (select res_no, \r\n"
-				+ "IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date from res_content GROUP BY res_no) rs \r\n"
-				+ "where user_no=? and r.res_no = rs.res_no limit ?,?";
+				+ "IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date, DATEDIFF(max(res_date),sysdate()) df from res_content GROUP BY res_no) rs \r\n"
+				+ "where user_no=? and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date limit ?,?";
 		Connection conn = JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -238,7 +341,6 @@ public class BookDAO {
 				book.setUser_no(user_no);
 				book.setSit_no(rs.getInt("sit_no"));
 				book.setRes_regdate(rs.getDate("res_regdate"));
-				book.setRes_is(rs.getBoolean("res_is"));
 				book.setRes_etc(rs.getString("res_etc"));
 				book.setRes_pay(rs.getInt("res_pay"));
 				book.setRes_visit_is(rs.getBoolean("res_visit_is"));
@@ -270,17 +372,45 @@ public class BookDAO {
 		return null;
 	}
 
-	public List<BookVO> getSitBookList(int user_no) {
-		String sql = "select * from reservation where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?)";
-		Object[] args = {user_no};
-		
+	public List<BookVO> getSitBookList(int user_no, SearchVO search) {
+		String sql = "select r.res_no, res_etc, user_no, sit_no, res_regdate,res_date,res_pay, res_visit_is, res_term_is from reservation r, (select res_no, IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date,DATEDIFF(max(res_date), sysdate()) df from res_content GROUP BY res_no) rs where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?) and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date limit ?,?";
+		Connection conn = JDBCUtility.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BookVO> bookList = new ArrayList<BookVO>();
 		try {
-			return jdbcTemplate.query(sql, args, new BookRowMapper());
-		} catch (Exception e) {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_no);
+			pstmt.setInt(2, search.getFirstRow()); 
+			pstmt.setInt(3, search.getRowSizePerPage());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BookVO book = new BookVO();
+				book.setRes_no(rs.getInt("res_no"));
+				book.setUser_no(rs.getInt("user_no"));
+				book.setSit_no(rs.getInt("sit_no"));
+				book.setRes_regdate(rs.getDate("res_regdate"));
+				book.setRes_etc(rs.getString("res_etc"));
+				book.setRes_pay(rs.getInt("res_pay"));
+				book.setRes_visit_is(rs.getBoolean("res_visit_is"));
+				book.setRes_date(rs.getString("res_date"));
+				bookList.add(book);;
+				System.out.println(rs.getString("res_date"));
+				System.out.println(rs.getString("res_regdate"));
+			}
+			
+			JDBCUtility.commit(conn);
+		} catch (SQLException e) {
+			JDBCUtility.rollback(conn);
 			e.printStackTrace();
+		}finally {
+			JDBCUtility.close(conn, rs, pstmt);
 		}
+
 		
-		return null;
+		return bookList;
 	}
 
 	public int getMyBookCount(int user_no) {
@@ -296,11 +426,143 @@ public class BookDAO {
 		if(row>0) {
 			sql = "delete from res_content where res_no=?";
 			row = jdbcTemplate.update(sql,rno);
+			if(row>0) {
+				return rno;
+			}
 		}
 
 		return row;
 	}
+
+	public int updateBook(int rno) {
+		
+		int row=0;
+		try {
+			sql = "select max(chat_index)+1 from chat_room";
+			int room_index = jdbcTemplate.queryForObject(sql, Integer.class);
+			sql = "select * from reservation where res_no=?";
+			Object[] a = {rno};
+			BookVO book = jdbcTemplate.queryForObject(sql, a, new BookRowMapper());
+			System.out.println(book.getUser_no()+"유넘확인");
+			sql="select user_no from petsitter where sit_no = ?";
+			Object[] args = {book.getSit_no()};
+			int suno = jdbcTemplate.queryForObject(sql, args, Integer.class);
+			sql = "insert into chat_room values(?,?)";
+			jdbcTemplate.update(sql, room_index, book.getUser_no());
+			row = jdbcTemplate.update(sql, room_index, suno);
+		
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return row; 
+	}
+
+	public int getMyBookCount(SitterVO sitter) {
+		String sql = "select count(distinct r.res_no) from reservation r, res_content rs where sit_no=? and r.res_no = rs.res_no";
+		Object[] args = {sitter.getSit_no()};
+		int rs =0;
+		try {
+			rs = jdbcTemplate.queryForObject(sql, args, Integer.class);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return rs; 
+	}
+
+	public int payBook(Payment payment) {
+		String sql ="insert into payment(imp_uid, merchant_uid, pay,user_no) values(?,?,?,?)";
+		int result = 0;
+		try {
+			result = jdbcTemplate.update(sql, payment.getImp_uid(), payment.getMerchant_uid(), payment.getPay(), payment.getUser_no());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public void insertPayment(String merchant_uid, int res_no) {
+		String sql = "update payment set res_no=? where merchant_uid=?";
+		int r = jdbcTemplate.update(sql,res_no, merchant_uid);
+		System.out.println(r+"최종결과"+merchant_uid+res_no);
+		
+		
+	}
+
+
+	public Payment getPayment(int rno) {
+		String sql = "select * from payment where rno=?";
+		Object[] args = {rno};
+
+		return jdbcTemplate.queryForObject(sql, args, new PaymentRowMapper());
+	}
+
+
+
 	
+	
+	
+	/*
+	 * public List<Payment> getPayList(SearchVO searchVO) {
+	 * if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
+	 * searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) { sql =
+	 * selectBoardListByUbdTitle; searchVO.setSearchType("ubd_title"); } else {
+	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) { sql =
+	 * selectBoardListByUbdTitle; } else
+	 * if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) { sql =
+	 * selectBoardListByUserNick; } else
+	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) { sql =
+	 * selectBoardListByUbdCont; } }
+	 * 
+	 * String searchWord = "%" + searchVO.getSearchWord() + "%"; Object[] args =
+	 * {searchWord, searchVO.getFirstRow(), searchVO.getRowSizePerPage()}; return
+	 * jdbcTemplate.query(sql, args, new BoardRowMapper()); }
+	 * 
+	 * public List<Payment> selectCate(BoardVO board, SearchVO searchVO) {
+	 * if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
+	 * searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) { sql =
+	 * selectCateByUbdTitle; searchVO.setSearchType("ubd_title"); } else {
+	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) { sql =
+	 * selectCateByUbdTitle; } else
+	 * if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) { sql =
+	 * selectCateByUserNick; } else
+	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) { sql =
+	 * selectCateByUbdCont; } }
+	 * 
+	 * String searchWord = "%" + searchVO.getSearchWord() + "%"; Object[] args = {
+	 * board.getUbd_cate(), searchWord, searchVO.getFirstRow(),
+	 * searchVO.getRowSizePerPage() }; return jdbcTemplate.query(sql, args, new
+	 * BoardRowMapper());
+	 * 
+	 * }
+	 * 
+	 * public int getTotalRowCount(SearchVO searchVO) {
+	 * if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
+	 * searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) { sql =
+	 * boardTotalRowCount; searchVO.setSearchType("ubd_title"); } else {
+	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) { sql =
+	 * boardTotalRowCount + " and ubd_title like '%" + searchVO.getSearchWord() +
+	 * "%'"; } else if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) { sql
+	 * = boardTotalRowCount + " and user_nick like '%" + searchVO.getSearchWord() +
+	 * "%'"; } else if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) { sql
+	 * = boardTotalRowCount + " and ubd_cont like '%" + searchVO.getSearchWord() +
+	 * "%'"; } } return jdbcTemplate.queryForObject(sql, Integer.class); }
+	 * 
+	 * public int getCateRowCount (SearchVO searchVO, BoardVO board) {
+	 * if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
+	 * searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) { sql =
+	 * boardCateRowCount; searchVO.setSearchType("ubd_title"); } else {
+	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) { sql =
+	 * boardCateRowCount + " and ubd_title like '%" + searchVO.getSearchWord() +
+	 * "%'"; } else if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) { sql
+	 * = boardCateRowCount + " and user_nick like '%" + searchVO.getSearchWord() +
+	 * "%'"; } else if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) { sql
+	 * = boardCateRowCount + " and ubd_cont like '%" + searchVO.getSearchWord() +
+	 * "%'"; } } return jdbcTemplate.queryForObject(sql, Integer.class,
+	 * board.getUbd_cate()); }
+	 */
 	
 
 	

@@ -20,7 +20,6 @@
 		
 	}
 	
-	
 	ul{
 		list-style-type:none;	
 	}
@@ -42,6 +41,11 @@
 	textarea::placeholder {
 		padding : 10px;
 		font-size: 14px;
+	}
+	
+	.reply_time {
+		font-size: 14px;
+		color:  gray;
 	}
 
 </style>
@@ -105,14 +109,14 @@
 					<li>
 						<div>
 							<div>
-							<span id="sreply_user">${sreply.user_nick}</span> / <fmt:formatDate value="${sreply.sbd_r_regdate}" type="date"/>
+							<span id="sreply_user">${sreply.user_nick}</span> <span class="reply_time"><fmt:formatDate value="${sreply.sbd_r_regdate}" type="date"/></span>
 							
 							<c:if test="${sreply.user_no == user.getUser_no() || user.getUser_type() == 'A'}">
-		     					<a href="#" onclick="deleteSitterReply(${sreply.sbd_r_no})">삭제</a>
+		     					<a href="#" style="font-size:14px;" onclick="deleteSitterReply(${sreply.sbd_r_no})">삭제</a>
 		     				</c:if>
 		     				
 		     				<c:if test="${sreply.user_no == user.getUser_no()}">
-		     					<a href="updateSitterReply.do?sbd_r_no=${sreply.sbd_r_no}&user_no=${sreply.user_no}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">수정</a>
+		     					<a style="font-size:14px;" href="updateSitterReply.do?sbd_r_no=${sreply.sbd_r_no}&user_no=${sreply.user_no}&curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">수정</a>
 		     				</c:if>	
 
 								<P>${sreply.sbd_r_cont}</P>
@@ -122,7 +126,7 @@
 					</li>
 					</c:forEach>
 				</ul>
-			</div>
+			</div>	
 			
 			
 			<div id="sreply_form">
@@ -186,7 +190,7 @@
 				</div>
 				</div>
 				  
-		<!--삭제 modal form script ubd_no전달-->	
+		<!--삭제 modal form script sbd_no전달-->	
 		<script>
 		var SBDNO="";
 

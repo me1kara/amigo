@@ -137,6 +137,18 @@ h1 {
   }
 }
 
+ .sitter_service_title {
+ 	   font-family: "Jalnan";
+       font-size:30px;
+       color: rgb(87, 160, 227);
+ }
+
+.sitter_item {
+	margin-top:100px;
+}
+
+
+
 </style>
     
 <title>펫시터01_펫시터화면</title>    
@@ -146,7 +158,8 @@ h1 {
 		<div class="container">		
 			<section class="sitter_service">
 				<article class="sitter_service_photo sitter_item">
-					<h3>펫시터서비스(활동사진)</h3>
+					<h3 class="sitter_service_title">다양한 펫시터 서비스</h3>
+					<hr>
 				 <br>
 				<div class="service_list">
 					<img src="https://via.placeholder.com/150x100" alt="돌봄" class="service_image"/>
@@ -155,22 +168,23 @@ h1 {
 				</div> 
 				</article>			
 				<article class="sitter_item">
-					<h3>대표펫시터사진들</h3>
+					<h3 class="sitter_service_title">대표 펫시터를 소개합니다!</h3>
+					<hr>
 					  <div class="items">
 				    <div class="entry">
-				      <p class="name">시터</p>
+				      <p class="name">한준호</p>
 				      <img class="sitter_img" src="https://via.placeholder.com/150x100"  />
-				      <p class="quote">시터설명</p>
+				      <p class="quote">공룡처럼 짜릿한 케어!</p>
 				    </div>
 				    <div class="entry">
-				      <p class="name">시터</p>
+				      <p class="name">이진주</p>
 				      <img class="sitter_img" src="https://via.placeholder.com/150x100"  />
-				      <p class="quote">시터설명</p>
+				      <p class="quote">최고의 강아지 전문가~</p>
 				    </div>
 				    <div class="entry">
-				      <p class="name">시터</p>
+				      <p class="name">최성형</p>
 				      <img class="sitter_img" src="https://via.placeholder.com/150x100"  />
-				      <p class="quote">시터설명</p>
+				      <p class="quote">엄마처럼 친근한 케어!</p>
 				    </div>
 				    <div class="entry">
 				      <p class="name">시터</p>
@@ -190,7 +204,7 @@ h1 {
 				</article>
 				
 				<article class="service_btn sitter_item"">	
-					<button type="button" class="btn btn-primary" ><a href="/amigo/view/book/book_sitter_form.jsp" style="color: white;">신청하기</a></button>
+					<button type="button" class="btn btn-primary" ><a href="/amigo/view/book/book_sitter_form.do" style="color: white;">신청하기</a></button>
 				</article>
 			</section>
 		</div>

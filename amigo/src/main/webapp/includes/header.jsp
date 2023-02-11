@@ -35,8 +35,9 @@
 }
 
 .navbar-toggler {
+	width:20px;
 	margin-left:20px;
-	  border: none;
+	 
 }
 
 .menu-trigger,
@@ -101,7 +102,8 @@
         type="button"
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
-        aria-label="Toggle navigation">
+        aria-label="Toggle navigation"
+        style=" border: none;">
         <!-- 햄버거 -->
    <a class="menu-trigger" href="#">
     <span></span>
@@ -110,7 +112,7 @@
 </a>
         <!-- 햄버거/ -->
       </button>
-      <a class="logo" href="<%=request.getContextPath()%>/main_home.do"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"/></a>
+      <a class="logo" href="<%=request.getContextPath()%>/main_home.do?ubd_no=5"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"/></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <div class="hori-selector">

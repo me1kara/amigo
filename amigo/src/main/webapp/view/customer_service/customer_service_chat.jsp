@@ -42,16 +42,26 @@
     	.RL_item{
     		width:66%;
     	}
+    	
+    	.chat-header-title {
+    		font-family: "Jalnan";
+      		font-size:40px;
+      		text-align: left;
+    	}
+    	
     </style>
 </head>
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-		<div class="container" style="margin-top:100px;">
-		
+		<div class="container" style="margin-top:60px;">
 			<section>
 				<article>
 					<div style="text-align: center; width: 500px; margin: 0 auto;" >
+					
+						 <div class="p-5">
+				         	<p class="chat-header-title">채팅</p>
+				    	 </div> 
 					
 					<c:set var="chatList" value="<%=chatList %>"/>
 					<c:set var="elseRoomList" value="<%=elseRoomList %>"></c:set>

@@ -93,7 +93,11 @@
                <div class="col-auto">
                <a class="ubd-header-menu" href="user_board_list.do">전체글</a>&nbsp;&nbsp;
                   <a class="ubd-header-menu" href="user_board_list_like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a>&nbsp;&nbsp;
-                  <a class="ubd-header-menu" href="">펫시터커뮤니티</a>
+
+	   			    <c:if test="${user.getUser_type() == 'S' || user.getUser_type() == 'A'}">
+                    <a class="ubd-header-menu" href="sitter_board_list.do">펫시터커뮤니티</a>
+                    </c:if>
+
                </div>
                      <div class="col-auto">
                <select class="form-select" id="searchCategory" name="searchCategory" onchange="chageSelect()">
@@ -161,7 +165,7 @@
                       <h6>
                       <a class="text-body" style="font-size:20px;" href="user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
                       &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc&cnt=1">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
+                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc&cnt=2">${board.getUbd_title()}</a><span> [${board.getReply_cnt()}]</span>
                       </h6>
                       <!-- 제목/ -->
                       <p class="text-muted">
@@ -240,7 +244,7 @@
              	<a href="user_board_insert.do" class="btn btn-primary">글 작성하기</a>
             </div>
       </form>      
-       
+      </div>
        
 <%@include file="/includes/footer.jsp" %>
 </body>

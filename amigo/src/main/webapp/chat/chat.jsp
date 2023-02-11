@@ -55,6 +55,14 @@
 	overflow-x:hidden;
 	text-align: left;
 }
+
+.page-header {
+	font-family: "Jalnan";
+    font-size:35px;
+
+}
+
+
 </style>
 <script>
 		$(document).ready(function(){
@@ -70,7 +78,6 @@
 		  reader.addEventListener(
 		    'load',
 		    function () {
-		    	
 		      $('#photo').hide();
 		   	  $('#msg').val('').hide();
 		      preview.prepend("<img src="+reader.result+" height='62px' class='preview_img_del' width='100%'/>");
@@ -108,10 +115,10 @@
 					<button class="btn btn-close" style="margin-left: auto;" onclick="history.back(-1)"></button>
 				</div>
 				
-				<table class="table table-bordered" style="background: #81DAF5;">
+				<table class="table table-bordered" style="background: rgb(87, 160, 227);">
 					<tr class="table-borderless" style="border: none;">
 						<td colspan="6">
-							<ul id="list" style="list-style: none;">
+							<ul id="list" style="list-style: none; height:550px;"" >
 								<c:forEach var="chat" items="<%=chatList%>">
 									<c:choose>
 									<c:when test="${chat.getUser_nick()!=user.getUser_nick() }">
@@ -120,14 +127,18 @@
 												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
 												<li class="chat_left" style="margin-bottom: 3px; clear: both;"
 													id="chat_no_${chat.getChat_no() }">
-													[${chat.getUser_nick() }] ${chat.getContent()} 
+													<span class="text-bg-light" style="border-radius: 5px; overflow: hidden;">
+													[${chat.getUser_nick() }] ${chat.getContent()}
+													</span> 
 												</li>
 											</c:when>
 											<c:when test="${chat.getFile()!=null}">
 												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
 												<li style="margin-bottom: 3px; overflow: hidden; clear: both;"
 													id="chat_no_${chat.getChat_no() }" >
+													<span>
 													[${chat.getUser_nick() }]
+													</span>
 													<span onclick="imgPop('/chatImg/${chat.getFile() }')">
 													<img src="/chatImg/${chat.getFile() }" width="200px" height="200px">
 													</span>
@@ -166,10 +177,10 @@
 </label>
 							</td>
 						<td colspan="1" style="text-align: rigth;"><button
-								class="btn btn-success" style="width: 100px; height:62px;" id="chat_submit_btn">보내기</button></td>
+								class="btn btn-light" style="width: 100px; height:62px; color:rgb(87, 160, 227); font-weight:bold;" id="chat_submit_btn">보내기</button></td>
 					</tr>		
 				</table>
-				<input type="file" id="fileUpload" onchange="previewFile()" style="display: none;">
+				<input type="file" id="fileUpload" onchange="previewFile()" style="display: none;" accept=".gif, .jpg, .png">
 			</article>
 		</section>
 	</div>

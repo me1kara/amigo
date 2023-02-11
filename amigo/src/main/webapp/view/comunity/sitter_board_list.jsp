@@ -98,7 +98,7 @@
 
       <div class="container">               
          <c:if test="${ sboardList.isEmpty() }">
-            <h6><p>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</p></h6>
+            <p>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</p>
          </c:if>
            <c:forEach  var="sboard" items="${ sboardList }">
             <div class="container" style="cursor: pointer;"  onclick="">
@@ -206,7 +206,7 @@
              	<a href="sitter_board_insert.do" class="btn btn-primary">글 작성하기</a>
             </div>
       </form>      
-       
+     </div>  
        
 <%@include file="/includes/footer.jsp" %>
 </body>

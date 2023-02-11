@@ -12,6 +12,7 @@ import com.lec.amigo.dao.BookDAO;
 import com.lec.amigo.service.BookService;
 import com.lec.amigo.vo.BookContentVO;
 import com.lec.amigo.vo.BookVO;
+import com.lec.amigo.vo.Payment;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
@@ -27,9 +28,9 @@ public class BookServiceImpl implements BookService{
 		return bookDao.calMoney(days, time);
 	}
 
-	public List<SitterVO> getArroundSitter(String address,PagingVO page) {
+	public List<SitterVO> getArroundSitter(String address,PagingVO page, String calr) {
 		
-		return bookDao.getArroudSitter(address,page);
+		return bookDao.getArroudSitter(address,page, calr);
 	}
 
 	public List<UserVO> getUserNameList(String address) {
@@ -41,9 +42,9 @@ public class BookServiceImpl implements BookService{
 		return bookDao.getTotalRowCount(address);
 	}
 
-	public int setBook(String calr, BookVO book) {
+	public int setBook(String calr, BookVO book, String merchant_uid) {
 		
-		return bookDao.setBook(calr, book);
+		return bookDao.setBook(calr, book, merchant_uid);
 	}
 
 	public List<BookVO> getBookList(int user_no, SearchVO search) {
@@ -56,9 +57,9 @@ public class BookServiceImpl implements BookService{
 		return bookDao.getBookDetailList(rno);
 	}
 
-	public List<BookVO> getSitBookList(int user_no) {
+	public List<BookVO> getSitBookList(int user_no, SearchVO search) {
 		
-		return bookDao.getSitBookList(user_no);
+		return bookDao.getSitBookList(user_no, search);
 	}
 
 	public int getMyBookCount(int user_no) {
@@ -69,6 +70,32 @@ public class BookServiceImpl implements BookService{
 		// TODO Auto-generated method stub
 		return bookDao.deleteBook(rno);
 	}
+
+	public int updateBook(int rno) {
+		
+		return bookDao.updateBook(rno);
+	}
+
+	public int getMyBookCount(SitterVO sitter) {
+		// TODO Auto-generated method stub
+		return bookDao.getMyBookCount(sitter);
+	}
+
+	public int payBook(Payment payment) {
+		// TODO Auto-generated method stub
+		return bookDao.payBook(payment);
+	}
+
+	public List<Payment> getPayList(SearchVO search) {
+		return null;//bookDao.getPaylist(search);
+	}
+
+	public Payment getPayment(int rno) {
+		// TODO Auto-generated method stub
+		return bookDao.getPayment(rno);
+	}
+
+
 	
 	
 	

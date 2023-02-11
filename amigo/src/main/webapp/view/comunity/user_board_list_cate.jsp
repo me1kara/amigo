@@ -94,7 +94,11 @@
 	   			<div class="col-auto">
 					<a class="ubd-header-menu" href="user_board_list.do">전체글</a>&nbsp;&nbsp;
 	   				<a class="ubd-header-menu" href="user_board_list_like.do?curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}&searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}">인기글</a>&nbsp;&nbsp;
-	   				<a class="ubd-header-menu" href="">펫시터커뮤니티</a>
+	   				
+	   			    <c:if test="${user.getUser_type() == 'S' || user.getUser_type() == 'A'}">
+                    <a class="ubd-header-menu" href="sitter_board_list.do">펫시터커뮤니티</a>
+                    </c:if>
+                    
 	   			</div>
 	   			   	<div class="col-auto">
 					<select class="form-select" id="searchCategory" name="searchCategory" onchange="chageSelect()">
@@ -148,8 +152,8 @@
                   <div class="media forum-item">
                   <!-- user profile 아직 미완성이라 여기 완성되면 다른 리스트에도 복붙!!-->
                    <c:choose>
-			          	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
-			          	<img src="/userimg/${user.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
+			          <c:when test="${board.getUser_photo()!=null and board.getUser_photo()!=''}">
+                      <img src="/userimg/${board.getUser_photo()}" alt="userProfile" width="50px" class="mr-3 rounded-circle" />
 			            </c:when>
 			            <c:otherwise>
 			            <img src="resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>
@@ -241,7 +245,8 @@
             <div class="container" align="center">
              	<a href="user_board_insert.do" class="btn btn-primary">글 작성하기</a>
             </div>
-      </form>      
+      </form>
+      </div>      
 	    
 	    
 <%@include file="/includes/footer.jsp" %>

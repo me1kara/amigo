@@ -46,7 +46,7 @@ prefix="c"%>
       <ul class="list-group list-group-flush" align="left">
         <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
           <li class="list-group-item">
-            <a>관리자 ** ${ user.getUser_name() } ** 입니다</a>
+            <a style="font-size:16px; color:gray;">* 관리자  <span style="font-weight:bold; font-size:18px; color: #189cc4;">${ user.getUser_name() }</span>  입니다.</a>
           </li>
         </c:if>
         <li class="list-group-item">
@@ -57,7 +57,7 @@ prefix="c"%>
           >
           <c:choose>
           	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
-          	<img src="/userimg/${user.getUser_photo()}" alt="userphoto" width="20px" height="20px"/>
+          	<img src="/userimg/${user.getUser_photo()}" alt="userphoto" width="20px" height="20px" style="border-radius:10px" />
             </c:when>
             <c:otherwise>
             <img src="../../resources/img/logo2.png" alt="logo2" width="20px" height="20px"/>
@@ -68,7 +68,7 @@ prefix="c"%>
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">찜 목록 & 예약 확인</a>
+          <a href="#" class="mypage_link">예약 확인</a>
         </li>
         <li class="list-group-item">
           <a
@@ -91,6 +91,10 @@ prefix="c"%>
        		<li class="list-group-item">
        		   <a href="<%=request.getContextPath() %>/view/admin/getSitList.do" class="mypage_link">펫시터 회원관리</a>
      	    </li>
+     	    <li class="list-group-item">
+       		   <a href="<%=request.getContextPath() %>/view/admin/getPayList.do" class="mypage_link">펫시터 회원관리</a>
+     	    </li>
+     	    
         </c:if>
         <c:if test="${ sessionScope.user.getUser_type() == 'U' }">
         <li class="list-group-item">

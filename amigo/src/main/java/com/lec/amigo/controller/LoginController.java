@@ -26,11 +26,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.dao.UserDAO;
+import com.lec.amigo.impl.BoardServiceImpl;
 import com.lec.amigo.impl.ChatServiceImpl;
 import com.lec.amigo.impl.DogServiceImpl;
+import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
+import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.DogVO;
+import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
@@ -41,19 +45,27 @@ public class LoginController {
 	UserServiceImpl userService;
 	
 	@Autowired
+	BoardServiceImpl boardService;
+	
+	@Autowired
 	DogServiceImpl dogService;
 	
 	@Autowired
 	ChatServiceImpl chatService;
+
+	@Autowired
+	SitterServiceImpl sitService;
 	
 	private String uploadFolderUser = "";
+
+	private String uploadFolder = "";
 	
 	@Autowired
 	Environment environment;
 	
 	@PostConstruct
 	public void getUploadPathPropeties() {
-		uploadFolderUser = environment.getProperty("uploadFolderUser");
+		uploadFolder = environment.getProperty("uploadFolderUser");
 	}
 	
 	
@@ -64,7 +76,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess) {
+	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess, BoardVO boardVO, Model model) {
 			
 		UserVO user = userDAO.getUser(userVO.getUser_email()); // 사용자가 입력한 이메일을 getUser메서드로 DB 있는지 찾기
 
@@ -85,17 +97,17 @@ public class LoginController {
 			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요! 싫은데용
 			
 			List<ChatRoom> room_list = chatService.getRoomList(user.getUser_no());
-			List<DogVO> myDog_list = dogService.getDogList(user.getUser_no());
+			
+			//시터인지 확인용
+			if(user.getUser_type().equals("S")) {
+				SitterVO sitter = sitService.getSitter(user.getUser_no());
+				sess.setAttribute("sitter", sitter);
+			}
 		
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);
 			}else {
 				sess.removeAttribute("chat_room_list");
-			}
-			if(!myDog_list.isEmpty()) {
-				sess.setAttribute("myDog_list", myDog_list);
-			}else {
-				sess.removeAttribute("myDog_list");
 			}
 				
 			if(user.getUser_type().equals("A")) {
@@ -103,6 +115,9 @@ public class LoginController {
 			} else {
 				sess.setAttribute("isAdmin", false);
 			}
+			
+			model.addAttribute("board", boardService.getBoard(boardVO));
+			
 			return "view/main.jsp";
 		} else {
 			sess.setAttribute("isLoginSuccess", false);
@@ -121,7 +136,12 @@ public class LoginController {
 	// 회원탈퇴
 	@RequestMapping(value="/revoke.do", method = RequestMethod.GET)
 	public String revoke(UserVO userVO) {
+		if(userVO.getUser_photo() != "" || userVO.getUser_photo() != null) {
+		String filename = userVO.getUser_photo();
+		new File(uploadFolder+filename).delete();
+		}
 		userService.revokeUser(userVO.getUser_no());
+		
 		return "home.jsp";
 	}
 	
@@ -201,13 +221,15 @@ public class LoginController {
 	
 	// 둘러보기
 	@RequestMapping(value="/main_tour.do", method = RequestMethod.GET) 
-	public String main_tour() {
+	public String main_tour(BoardVO boardVO, Model model) {
+		model.addAttribute("board", boardService.getBoard(boardVO));
 		return "view/main_tour.jsp"; 
 	}
 	
 	// 로고 클릭시 메인가기
 	@RequestMapping(value="/main_home.do", method = RequestMethod.GET) 
-	public String main_home() {
+	public String main_home(BoardVO boardVO, Model model) {
+		model.addAttribute("board", boardService.getBoard(boardVO));
 		return "view/main.jsp"; 
 	}
 	
@@ -224,14 +246,15 @@ public class LoginController {
 		MultipartFile uploadFile = userVO.getUploadFile();
 		
 		if (!uploadFile.isEmpty()) {
+			new File(uploadFolder+userVO.getUser_photo()).delete();
 			String fileName = uploadFile.getOriginalFilename();
 			String fileExtension = fileName.substring(fileName.lastIndexOf("."),fileName.length());
 			UUID uuid = UUID.randomUUID();
 			String[] uuids = uuid.toString().split("-");
 			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
-			uploadFile.transferTo(new File(uploadFolderUser + uniqueName));
+			uploadFile.transferTo(new File(uploadFolder + uniqueName));
 			userVO.setUser_photo(uniqueName);
-		}
+		} 
 		
 		// 바뀐 정보로 세션 정보 업데이트!
 		sess.setAttribute("user", userService.updateUser(userVO));

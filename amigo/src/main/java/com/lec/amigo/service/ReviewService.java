@@ -21,7 +21,28 @@ public interface ReviewService {
 	// 별점갯수
 	//void starCnt(int star_cnt);
 	
-	
+	// 강아지 마릿수
+	int dogRowCount();
 
+	// 별점 총평균
+	double starsAverage();
+	
+	// 별점 1점일때
+	int ssrc1();
+	
+	// 별점 2점일때
+	int ssrc2();
+	
+	// 별점 3점일때
+	int ssrc3();
+	
+	// 별점 4점일때
+	int ssrc4();
+	
+	// 별점 5점일때
+	int ssrc5();
+	
+	// 총 리뷰갯수
+	int starsTotalCount();
 
 }

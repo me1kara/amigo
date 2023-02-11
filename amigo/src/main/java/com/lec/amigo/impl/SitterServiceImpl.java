@@ -21,9 +21,8 @@ public class SitterServiceImpl implements SitterService {
 	SitterDAO sitterDAO;
 	
 	@Override
-	public SitterVO sitterInfo(SitterVO svo) {
-		// TODO Auto-generated method stub
-		return sitterDAO.sitterInfo(svo);
+	public SitterVO getSitter(SitterVO svo) {
+		return sitterDAO.getSitter(svo);
 	}
 
 	@Override
@@ -73,6 +72,18 @@ public class SitterServiceImpl implements SitterService {
 	public int getCateRowCount(SearchVO searchVO, SitterVO svo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	
+	//유저넘버로구하기용
+	public SitterVO getSitter(int user_no) {
+		return sitterDAO.getSitter(user_no);
+	}
+
+	@Override
+	public List<SitterVO> getSitInfoList(int user_no) {
+		// TODO Auto-generated method stub
+		return sitterDAO.getSitInfoList(user_no);
 	}
 
 
