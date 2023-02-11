@@ -4,6 +4,7 @@ package com.lec.amigo.controller;
 import java.io.File;
 
 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -55,8 +56,6 @@ public class LoginController {
 
 	@Autowired
 	SitterServiceImpl sitService;
-	
-	private String uploadFolderUser = "";
 
 	private String uploadFolder = "";
 	
@@ -97,12 +96,6 @@ public class LoginController {
 			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요! 싫은데용
 			
 			List<ChatRoom> room_list = chatService.getRoomList(user.getUser_no());
-			
-			//시터인지 확인용
-			if(user.getUser_type().equals("S")) {
-				SitterVO sitter = sitService.getSitter(user.getUser_no());
-				sess.setAttribute("sitter", sitter);
-			}
 		
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);
