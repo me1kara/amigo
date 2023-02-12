@@ -1,21 +1,30 @@
 package com.lec.amigo.controller;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.search.IntegerComparisonTerm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.eclipse.jdt.internal.compiler.lookup.ImportConflictBinding;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,6 +50,10 @@ import com.lec.amigo.vo.HeartVO;
 import com.lec.amigo.vo.Payment;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.response.IamportResponse;
 
 @Controller
 public class BookController {
@@ -257,7 +270,7 @@ public class BookController {
 	@PostMapping("/ajax/deleteBook.do")
 	@ResponseBody 
 	public Payment deleteBook(HttpServletRequest req) {
-		int rno = Integer.parseInt(req.getParameter("rno")) ;
+		int rno = Integer.parseInt(req.getParameter("rno"));		
 		int result = bookService.deleteBook(rno);
 		
 		if(result>0) {
@@ -280,36 +293,80 @@ public class BookController {
 		return result;
 	}
 	
+	
 	@PostMapping("/view/book/ajax/payment.do")
 	@ResponseBody 
-	public String payBook(HttpServletRequest req, Payment payment) {
-		int result=0;
+	public ResponseEntity<?> payBook(@RequestBody Map<String, Object> model, HttpServletRequest req) {
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		JSONObject responseObj = new JSONObject();
+		
+		System.out.println(model.toString());
 		
 		UserVO user = (UserVO)req.getSession().getAttribute("user");
 		
-		String money = req.getParameter("money"); //돈
-		String imp_uid = req.getParameter("imp_uid"); //고유번호
-		String merchant_uid = req.getParameter("merchant_uid"); //주문번호
+		System.out.println("입장확인");
 		
-		System.out.println(payment.toString());
-
-		result = bookService.payBook(payment);
+		int money = (int)model.get("paid_amount"); //돈
+		String imp_uid = (String)model.get("imp_uid"); //고유번호
+		String merchant_uid = (String)model.get("merchant_uid"); //주문번호
+		String card = (String)model.get("card_number");
+		int user_no = Integer.parseInt((String)model.get("buyer_postcode"));
 		
-		if(result>0) {
-			return payment.getMerchant_uid();
+		boolean success = (Boolean)model.get("success");
+		String error_msg = (String)model.get("error_msg");
+		
+		System.out.println(money + imp_uid + merchant_uid);
+		System.out.println("카드넘버"+card);
+		
+		if(success==true) {
+			Payment payment = new Payment();
+			payment.setImp_uid(imp_uid);
+			payment.setMerchant_uid(merchant_uid);
+			payment.setPay(money);
+			payment.setUser_no(user_no);
+			try {
+				
+				String api_key = "7637382105357040";
+				String api_secret = "GLH595QqwqJMZ9Z7oeiFmpbvOLTfO6w7iojqLlHtiuJA01jHK09c0AJXqQugN2hGMppj3qS7U17cwE7x";
+				
+				IamportClient ic = new IamportClient(api_key, api_secret);
+				IamportResponse<com.siot.IamportRestClient.response.Payment> response = ic.paymentByImpUid(imp_uid);
+				BigDecimal import_amount =response.getResponse().getAmount(); //api_amount
+			
+				if(payment.getPay()==import_amount.intValue()) {
+					int insertPay = bookService.payBook(payment);
+					
+					if(insertPay>0) {responseObj.put("process_result", "결제성공:" + payment.getMerchant_uid());}
+					else {
+						ic.cancelPaymentByImpUid(new CancelData(merchant_uid, true));
+						responseObj.put("process_result", "결제에러:디비삽입실패");
+						}
+				}else {
+				   ic.cancelPaymentByImpUid(new CancelData(merchant_uid, true));
+				   responseObj.put("process_result", "결제에러:금액불일치");
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
 		}else {
-			return "db삽입실패";
+			System.out.println("error_msg:" + error_msg);
+			responseObj.put("process_result", "결제에러:" + error_msg);
 		}
+		System.out.println("responseObj:" + responseObj.toString());
+		return new ResponseEntity<String>(responseObj.toString(), responseHeaders, HttpStatus.OK);
 	}
 	
-	@PostMapping("/auth/payment.do")
-	@ResponseBody 
-	public void hook(HttpServletRequest seq) {
-			System.out.println("pay");
-
+	@PostMapping("/ajax/canclePay.do")
+	@ResponseBody
+	public String canclePay(HttpServletRequest req) {
+		
+		
+		return null;
 	}
-	
-	
 	
 	
 	@RequestMapping(value = "/book_check.do", method = { RequestMethod.GET })
@@ -363,7 +420,17 @@ public class BookController {
 					
 		return "/view/sitter/sitter_recive_book_check.jsp";
 	}
-		
+	
+	/*
+	 * @RequestMapping("/pastBook_check.do") public String
+	 * pastBook(HttpServletRequest req) { UserVO user =
+	 * (UserVO)(req.getSession().getAttribute("user"));
+	 * 
+	 * List<BookVO> pastBookList =bookService.getPastBook(user.getUser_no());
+	 * req.setAttribute("pastBookList", pastBookList);
+	 * 
+	 * return "pastBook.jsp"; }
+	 */
 	
 		
 
