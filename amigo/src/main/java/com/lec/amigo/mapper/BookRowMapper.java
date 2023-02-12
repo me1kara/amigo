@@ -19,6 +19,9 @@ public class BookRowMapper implements RowMapper<BookVO>{
 		book.setUser_no(rs.getInt("user_no"));
 		book.setSit_no(rs.getInt("sit_no"));
 		book.setRes_regdate(rs.getDate("res_regdate"));
+		
+		if(rs.getString("res_date")!=null)book.setRes_date(rs.getString("res_date"));
+		if(rs.getString("res_time")!=null)book.setRes_time(rs.getString("res_time"));
 		book.setRes_etc(rs.getString("res_etc"));
 		book.setRes_pay(rs.getInt("res_pay"));
 		book.setRes_visit_is(rs.getBoolean("res_visit_is"));

@@ -94,7 +94,7 @@
 				<article class="sitter_list">
 					<h2 class="sitter_list_title"><%=addr%> 펫시터 목록</h2> <hr>
 					<c:choose>
-					<c:when test="${sittList!=null }">
+					<c:when test="${sittList!=null && !sitList.isEmpty() }">
 					<c:forEach var="sit" items="${sittList }">
 							<div class="sitter_item">
 								<div>
@@ -140,7 +140,7 @@
 						</c:if>
 					</c:when>
 					<c:otherwise>
-						<h>해당한 지역의 펫시터가 없습니다!</h>
+						<h1>해당한 지역의 펫시터가 없습니다!</h1>
 					</c:otherwise>
 					</c:choose>
 				</article>

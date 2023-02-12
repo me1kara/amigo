@@ -31,6 +31,7 @@ import com.lec.amigo.mapper.BookRowMapper;
 import com.lec.amigo.mapper.PaymentRowMapper;
 import com.lec.amigo.mapper.SitterRowMapper;
 import com.lec.amigo.mapper.UserRowMapper;
+import com.lec.amigo.service.BookService;
 import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.BookContentVO;
 import com.lec.amigo.vo.BookVO;
@@ -115,9 +116,7 @@ public class BookDAO {
 		String sql = "select u.user_name,u.user_addr, ss.* from user u,"
 				+ "(select * from petsitter where sit_no not in("
 				+ "select distinct r.sit_no from reservation r,(select distinct * from res_content where res_date in (";
-		
-		
-		
+
 		JSONParser parser = new JSONParser();
 		JSONArray jms = null;
 		
@@ -187,16 +186,15 @@ public class BookDAO {
 				si.setSit_photo(rs.getString("sit_photo"));
 				si.setSit_intro(rs.getString("sit_intro"));
 				si.setSit_care_exp(rs.getString("sit_care_exp"));
-				sitList.add(si);
-				
+				sitList.add(si);	
 				System.out.println(si.getSit_no()+"sit_no 확인용");
-				
 			}
-		
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("해당한 결과가 없습니다!");
 		}
+	
 	
 		
 		return sitList;
@@ -493,10 +491,37 @@ public class BookDAO {
 
 
 	public Payment getPayment(int rno) {
-		String sql = "select * from payment where rno=?";
+		String sql = "select * from payment where res_no=?";
 		Object[] args = {rno};
 
 		return jdbcTemplate.queryForObject(sql, args, new PaymentRowMapper());
+	}
+
+
+	public List<BookVO> getPastBook(int user_no) {
+		String sql = "select r.*, rc.res_time, concat(min(res_date),'~',max(res_date)) res_date  from reservation r, res_content rc where r.res_no = rc.res_no and r.user_no = ? and sysdate()>rc.res_date group by r.res_no";
+		
+		Object[] args = {user_no};
+		
+		try {
+			return jdbcTemplate.query(sql, args, new BookRowMapper());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+
+	public Payment canclePay(int rno) {
+		String sql = "select * from payment where res_no = ?";
+		Object[] args = {rno};
+		
+		try {
+			return jdbcTemplate.queryForObject(sql, args, new PaymentRowMapper());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}		
 	}
 
 

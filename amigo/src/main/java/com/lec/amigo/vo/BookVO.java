@@ -8,7 +8,7 @@ public class BookVO {
 	private int sit_no;
 	private Date res_regdate;
 	private String res_date;
-	private int res_time;
+	private String res_time;
 	private int dog_no;
 	private String res_addr;
 	private String res_etc;
@@ -48,13 +48,7 @@ public class BookVO {
 		this.res_regdate = res_regdate;
 	}
 
-	public int getRes_time() {
-		return res_time;
-	}
 
-	public void setRes_time(int res_time) {
-		this.res_time = res_time;
-	}
 
 	public int getDog_no() {
 		return dog_no;
@@ -118,6 +112,14 @@ public class BookVO {
 				+ res_regdate + ", res_date=" + res_date + ", res_time=" + res_time + ", dog_no=" + dog_no
 				+ ", res_addr=" + res_addr + ", res_etc=" + res_etc + ", res_pay=" + res_pay + ", res_visit_is="
 				+ res_visit_is + ", res_term_is=" + res_term_is + "]";
+	}
+
+	public String getRes_time() {
+		return res_time;
+	}
+
+	public void setRes_time(String res_time) {
+		this.res_time = res_time;
 	}
 
 

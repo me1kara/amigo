@@ -63,6 +63,8 @@
 }
 
 
+
+
 </style>
 <script>
 		$(document).ready(function(){
@@ -127,8 +129,8 @@
 												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
 												<li class="chat_left" style="margin-bottom: 3px; clear: both;"
 													id="chat_no_${chat.getChat_no() }">
-													<span class="text-bg-light" style="border-radius: 5px; overflow: hidden;">
-													[${chat.getUser_nick() }] ${chat.getContent()}
+													<span class="text-bg-light">
+													${chat.getUser_nick() } ${chat.getContent()}
 													</span> 
 												</li>
 											</c:when>
@@ -137,7 +139,7 @@
 												<li style="margin-bottom: 3px; overflow: hidden; clear: both;"
 													id="chat_no_${chat.getChat_no() }" >
 													<span>
-													[${chat.getUser_nick() }]
+													${chat.getUser_nick() }
 													</span>
 													<span onclick="imgPop('/chatImg/${chat.getFile() }')">
 													<img src="/chatImg/${chat.getFile() }" width="200px" height="200px">
