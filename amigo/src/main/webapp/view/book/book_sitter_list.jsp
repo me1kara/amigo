@@ -112,7 +112,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           <h2 class="sitter_list_title"><%=addr%> 펫시터 목록</h2>
           <hr />
           <c:choose>
-            <c:when test="${sittList!=null }">
+            <c:when test="${sittList!=null && !sittList.isEmpty() }">
               <c:forEach var="sit" items="${sittList }">
                 <!--  div클릭 접속 구현  -->
                 <div

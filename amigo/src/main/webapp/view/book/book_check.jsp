@@ -198,10 +198,10 @@
 						</c:if>
 						<c:choose>
 						<c:when test="${sc eq 'past' }">
-							<button class="btn" onclick="location.href='book_check.do?mode=user'"><b>현재기록</b></button>
+							<button class="btn" onclick="location.href='book_check.do?mode=user'"><b>현재예약</b></button>
 						</c:when>
 						<c:otherwise>
-							<button class="btn" onclick="location.href='book_check.do?searchCategory=past&mode=user'"><b>이전기록</b></button>
+							<button class="btn" onclick="location.href='book_check.do?searchCategory=past&mode=user'"><b>이전예약</b></button>
 						</c:otherwise>
 						</c:choose>
 						</div>

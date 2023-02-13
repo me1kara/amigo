@@ -48,8 +48,7 @@
 	.book_content{
 		width: 100%;height: 90%;
 	}
-	
-	
+
 	table {
 	  border-radius: 10px;
 	  border-style: hidden;
@@ -63,10 +62,19 @@
 	.modal_tTitle{
 		background:rgb(87, 160, 227);
 		color:white;
-	 
 	}
+	
+	.book_ch_title {
+		font-family: "Jalnan";
+		font-size: 30px;
+		color : rgb(87, 160, 227);
+	}
+	
 	.table-modal{
 		box-shadow: 5px 2px 20px rgb(0 0 0 / 20%);
+	}
+	section {
+		margin-top : 80px;
 	}
 	
 </style>
@@ -190,23 +198,29 @@
 			<c:set var="sw" value="${searchVO.getSearchWord()}" />
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
-			<section>	
+			<section>
 				<article>
-					<h3>예약확인</h3>
-					<c:if test='${user.getUser_type().equals("S") }'>
-						<button class="btn btn-primary" onclick="location.href='/amigo/book_check.do'">유저모드</button>
-					</c:if>
-					<c:choose>
-					<c:when test="${sc eq 'past' }">
-						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do'">현재기록</button>
-					</c:when>
-					<c:otherwise>
-						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do?searchCategory=past'">이전기록</button>
-					</c:otherwise>
-					</c:choose>
+					<div class="row">
+						<h2 class="book_ch_title d-flex justify-content-center">예약 확인</h2>
+						<div class="d-flex justify-content-end">
+						<c:if test='${user.getUser_type().equals("S") }'>
+							<button class="btn" onclick="location.href='/amigo/book_check.do'"><b>유저모드</b></button>
+						</c:if>
+						<c:choose>
+						<c:when test="${sc eq 'past' }">
+							<button class="btn" onclick="location.href='/amigo/receiveBook_check.do'"><b>현재예약</b></button>
+						</c:when>
+						<c:otherwise>
+							<button class="btn" onclick="location.href='/amigo/receiveBook_check.do?searchCategory=past'"><b>지난예약</b></button>
+						</c:otherwise>
+						</c:choose>
+						</div>
+					 </div>
+					<hr>
+					
 				</article>
+
  				<article id="sitter_book">
-					<h1>시터전용</h1>
 					<c:choose>
 						<c:when test="${sitBookList!=null && !sitBookList.isEmpty() }">
 							<ul style="list-style: none;">
@@ -297,7 +311,7 @@
 								</div>
 						</c:when>
 						<c:otherwise>
-							<h2>예약된 정보가 없습니다!</h2>
+						<h2 class="text-center">예약사항이 없습니다</h2>
 						</c:otherwise>
 					</c:choose>
 				</article>

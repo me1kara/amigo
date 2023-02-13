@@ -40,13 +40,14 @@
     
     <style>
     	.RL_item{
-    		width:66%;
+    		width:90%;
     	}
     	
     	.chat-header-title {
     		font-family: "Jalnan";
       		font-size:40px;
       		text-align: left;
+      		margin-left: 10%;
     	}
     	
     </style>
@@ -57,17 +58,16 @@
 		<div class="container" style="margin-top:60px;">
 			<section>
 				<article>
-					<div style="text-align: center; width: 500px; margin: 0 auto;" >
-						 <div class="p-5">
-				         	<p class="chat-header-title">채팅</p>
-				    	 </div> 
+					<div style="text-align: center; width: 400px; margin: 0 auto;" >
+				
+				    <p class="chat-header-title">채팅</p>
+
 					<c:set var="chatList" value="<%=chatList %>"/>
 					<c:set var="elseRoomList" value="<%=elseRoomList %>"></c:set>
 					<!-- 유저가 채팅방을 소유하고있는지 여부 -->
 					<c:choose>
 						<c:when test="<%=checkRoom==null %>">	
 						<p><b>채팅방이 없습니다</b></p>
-					</div>
 						</c:when>
 						<c:when test="<%=checkRoom!=null %>">
 							<ul style="list-style: none;">
@@ -126,6 +126,7 @@
 						</ul>
 						</c:when>
 					</c:choose>
+					</div>
 				</article>
 			</section>
 		</div>
