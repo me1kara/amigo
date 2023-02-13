@@ -49,6 +49,10 @@
         padding: 1rem;
       }
       
+      .card:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
+      
       
       .udb-header-menu {
       font-family: "Jalnan";
@@ -121,7 +125,9 @@
                    </c:choose>
                  --> 
                  
-                    <div class="media-body">
+                    <div class="media-body" onclick="location.href='sitter_board_detail.do?sbd_no=${sboard.getSbd_no()}&user_no=${user.getUser_no()}
+	                      &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+	                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc';">
 	                   <!-- 제목 -->
 	                   <h6>
 	                      <a class="text-body" style="font-size:20px;" href="sitter_board_detail.do?sbd_no=${sboard.getSbd_no()}&user_no=${user.getUser_no()}
@@ -207,7 +213,7 @@
             </div>
       </form>      
      </div>  
-       
+<%@include file="/includes/scrollTop.jsp" %>
 <%@include file="/includes/footer.jsp" %>
 </body>
 </html>

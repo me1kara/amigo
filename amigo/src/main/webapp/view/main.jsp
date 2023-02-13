@@ -32,6 +32,18 @@ prefix="c"%>
         /* 그림자 */
         box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
       }
+      
+      .img-fluid:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
+      
+      #card-last{
+      box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
+      }
+      
+      #card-last:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
 
       /* 폰트 적용(여기어때 폰트)*/
       h4 {
@@ -156,13 +168,12 @@ prefix="c"%>
       /* 탑으로 스크롤 */
       a.top {
  	 position: fixed;
- 	 left: 50%;
+ 	 left: 85%;
   	 bottom: 50px;
   	 display: none;
 			}
 			
-	
-      
+
     </style>
 
     <title>메인홈</title>
@@ -228,7 +239,7 @@ prefix="c"%>
           <!-- 추천산책루트  -->
           <div class="col-6">
             <div class="p-3">
-              <a href="#">
+              <a href="<%=request.getContextPath() %>/view/trail/recommend_trail_list.jsp">
                 <img
                   src="/amigo/resources/img/walking.png"
                   class="img-fluid"
@@ -241,7 +252,7 @@ prefix="c"%>
           <!-- 병원 -->
           <div class="col-6">
             <div class="p-3">
-              <a href="#">
+              <a href="<%=request.getContextPath() %>/view/hospital/recommend_hospital_list.jsp">
                 <img
                   src="/amigo/resources/img/hp.png"
                   class="img-fluid"
@@ -255,7 +266,7 @@ prefix="c"%>
           <div class="col-6">
             <div class="p-3">
               <a
-                href="<%=request.getContextPath() %>/cs_main.do"
+                href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"
               >
                 <img
                   src="/amigo/resources/img/cs.png"
@@ -424,7 +435,7 @@ prefix="c"%>
           <a href="user_board_cate.do?ubd_cate=질문" class="all-view">전체보기</a>
         </div>
       </div>
-      <div class="container card text-center" style="width: 25rem;" onclick="location.href='user_board_detail.do?ubd_no=5&updateCount_is=abd&cnt=3'">
+      <div class="container card text-center" id="card-last" style="cursor:pointer; border-radius: 20px;" onclick="location.href='user_board_detail.do?ubd_no=5&updateCount_is=abd&cnt=3'">
       	<h5 class="card-title"><b>Q ${ board.getUbd_title() }</b></h5>
         	<small> ${ board.getUser_nick() } </small>
         <div class="card-body">
@@ -436,12 +447,16 @@ prefix="c"%>
       </div>
       <br />
       <!-- Q&A 종료 -->
+
       <!-- 스크롤 -->
       <a href="#" class="top"><img
-                  src="/amigo/resources/img/topicon2.png"
-                  alt="top"/> </a>
+                  src="/amigo/resources/img/scrollTop1.png"
+                  alt="top" style="width:60px; height:60px;" /> </a>
     </div>
     
+    
+    
+    <!-- scrollTop code 입니다. -->
     <script>
       $( document ).ready( function() {
         $( window ).scroll( function() {
@@ -457,6 +472,9 @@ prefix="c"%>
         } );
       } );
     </script>
+
+    </div>
+
     <%@include file="/includes/footer.jsp" %>
 
     <!-- Bootstrap core JS-->
