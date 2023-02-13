@@ -173,8 +173,7 @@ prefix="c"%>
   	 display: none;
 			}
 			
-	
-      
+
     </style>
 
     <title>메인홈</title>
@@ -240,7 +239,7 @@ prefix="c"%>
           <!-- 추천산책루트  -->
           <div class="col-6">
             <div class="p-3">
-              <a href="#">
+              <a href="<%=request.getContextPath() %>/view/trail/recommend_trail_list.jsp">
                 <img
                   src="/amigo/resources/img/walking.png"
                   class="img-fluid"
@@ -253,7 +252,7 @@ prefix="c"%>
           <!-- 병원 -->
           <div class="col-6">
             <div class="p-3">
-              <a href="#">
+              <a href="<%=request.getContextPath() %>/view/hospital/recommend_hospital_list.jsp">
                 <img
                   src="/amigo/resources/img/hp.png"
                   class="img-fluid"
@@ -267,7 +266,7 @@ prefix="c"%>
           <div class="col-6">
             <div class="p-3">
               <a
-                href="<%=request.getContextPath() %>/cs_main.do"
+                href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"
               >
                 <img
                   src="/amigo/resources/img/cs.png"
@@ -448,6 +447,7 @@ prefix="c"%>
       </div>
       <br />
       <!-- Q&A 종료 -->
+
       <!-- 스크롤 -->
       <a href="#" class="top"><img
                   src="/amigo/resources/img/scrollTop1.png"
@@ -472,6 +472,9 @@ prefix="c"%>
         } );
       } );
     </script>
+
+    </div>
+
     <%@include file="/includes/footer.jsp" %>
 
     <!-- Bootstrap core JS-->
