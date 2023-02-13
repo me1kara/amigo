@@ -24,6 +24,10 @@
 		margin-top:20px;
 	}
 
+	.Dtitle {
+		margin-bottom:5px;
+		font-family: "Jalnan";
+	}
 
 </style>    
    
@@ -48,13 +52,13 @@
 
 			
 					<div class="form-group">
-						<label for="dog_name">이름</label>
+						<label for="dog_name" class="Dtitle">이름</label>
 						<input type="text" name="dog_name" id="dog_name" class="form-control" required placeholder="예) 댕댕이">
 					</div>
 						
 					
 					<div class="form-group">
-					   <label>성별</label>
+					   <label class="Dtitle">성별</label>
 							<div>
 							  <input class="form-check-input" type="radio" name="dog_gender" id="female" value="f" checked>
 							  <label class="form-check-label" for="female">여자아이</label>
@@ -65,22 +69,22 @@
 						
 						
 					<div class="form-group">
-						<label for="dog_breeds">품종</label>
+						<label for="dog_breeds" class="Dtitle">품종</label>
 						<input type="text" name="dog_breeds" id="dog_breeds" class="form-control" required>
 					</div>
 						
 					<div class="form-group">
-						<label for="dog_birth">생일</label>
+						<label for="dog_birth" class="Dtitle">생일</label>
 						<input type="date" name="dog_birth" id="dog_birth" class="form-control" required>
 					</div>
 						
 					<div class="form-group">
-						<label for="dog_weight">몸무게(kg)</label>
+						<label for="dog_weight" class="Dtitle">몸무게(kg)</label>
 						<input type="text" pattern="(^\d+$)|(^\d+\.\d{0,2}$)" name="dog_weight" id="dog_weight" class="form-control" placeholder="소수점두자리 숫자로 입력해주세요. 예) 6.01 / 7 / 3.4 등 " required>
 					</div>
 						
 					<div class="form-group">
-					   <label>중성화</label>
+					   <label class="Dtitle">중성화</label>
 						<div>
 							 <input class="form-check-input" type="radio" name="dog_neutered" id="dog_neutered_yes" value="1" checked>
 							 <label class="form-check-label" for="dog_neutered_yes">했어요</label>
@@ -90,7 +94,7 @@
 					</div>
 					 
 					<div class="form-group">
-					   <label>광견병 접종여부</label>
+					   <label class="Dtitle">광견병 접종여부</label>
 							<div>
 							  <input class="form-check-input" type="radio" name="dog_rabies_vacc" id="dog_rabies_vacc_yes" value="1" checked>
 							  <label class="form-check-label" for="dog_rabies_vacc_yes">했어요</label>
@@ -100,7 +104,7 @@
 					</div>
 	  <hr> 
 					<div class="form-group">
-					  <label for="dog_notice">우리강아지(성격 및 건강상태 등..)</label>
+					  <label for="dog_notice" class="Dtitle">우리강아지(성격 및 건강상태 등..)</label>
 					  <textarea class="form-control" id="dog_notice" rows="5" name="dog_notice" 
 					   placeholder="펫시터에게 알려줘야할 사항들을 나열해주세요. 성격 및 건상상태를 알려주시면 됩니다." required></textarea>
 					</div>
@@ -116,7 +120,7 @@
 		<!-- user_no 벨류값 받아서 폼에 기입-->
 		<input class="form-control" type="hidden" name="user_no" value="${ sessionScope.user.getUser_no()}">
 				    
-				<div class="col-md-6 text-center" style="width:100px; margin: 0 auto; margin-top:20px;">           
+				<div class="col-md-6 text-center" style="width:100px; margin: 0 auto; margin-top:50px;">           
 				<button type="submit" class="btn btn-primary text-center">등록완료</button>
 			    </div>
 		</form>

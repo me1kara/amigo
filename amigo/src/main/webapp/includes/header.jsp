@@ -145,7 +145,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp">고객센터</a>
+            <a class="nav-link" href="<%=request.getContextPath() %>/cs_main.do">고객센터</a>
           </li>
         </ul>
       </div>

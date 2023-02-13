@@ -23,6 +23,12 @@
 	.form-group {
 		margin-top:20px;
 	}
+	
+	.Dtitle {
+		margin-bottom:5px;
+		font-family: "Jalnan";
+	}
+	
 </style>    
     
     
@@ -51,13 +57,13 @@
 
 				
 					<div class="form-group">
-						<label for="dog_name">이름</label>
+						<label for="dog_name" class="Dtitle">이름</label>
 						<input type="text" name="dog_name" id="dog_name" class="form-control" value="${dog.getDog_name()}" required>
 					</div>
 						
 					
 					<div class="form-group">
-					   <label for="female">성별</label>
+					   <label for="female" class="Dtitle">성별</label>
 							<div>
 							  <input class="form-check-input" type="radio" name="dog_gender" id="female" value="f" ${dog.getDog_gender()=="f" ? "checked" : "" }>
 							  <label class="form-check-label" for="female">여자아이</label>
@@ -68,22 +74,22 @@
 						
 						
 					<div class="form-group">
-						<label for="dog_breeds">품종</label>
+						<label for="dog_breeds" class="Dtitle">품종</label>
 						<input type="text" name="dog_breeds" id="dog_breeds" class="form-control" value="${dog.getDog_breeds()}" required>
 					</div>
 						
 					<div class="form-group">
-						<label for="dog_birth">생일</label>
+						<label for="dog_birth" class="Dtitle">생일</label>
 						<input type="date" name="dog_birth" id="dog_birth" class="form-control" value="${dog.getDog_birth()}" required>
 					</div>
 						
 					<div class="form-group">
-						<label for="dog_weight">몸무게(kg)</label>
+						<label for="dog_weight" class="Dtitle">몸무게(kg)</label>
 						<input type="text" pattern="(^\d+$)|(^\d+\.\d{0,2}$)" name="dog_weight" id="dog_weight" class="form-control" value="${dog.getDog_weight()}" required>
 					</div>
 						
 					<div class="form-group">
-					   <label for="dog_neutered_yes">중성화</label>
+					   <label for="dog_neutered_yes" class="Dtitle">중성화</label>
 						<div>
 							 <input class="form-check-input" type="radio" name="dog_neutered" id="dog_neutered_yes" value="1" ${dog.isDog_neutered() == true ? "checked" : "" }>
 							 <label class="form-check-label" for="dog_neutered_yes">했어요</label>
@@ -93,7 +99,7 @@
 					</div>
 					 
 					<div class="form-group">
-					   <label for="dog_rabies_vacc_yes">광견병 접종여부</label>
+					   <label for="dog_rabies_vacc_yes" class="Dtitle">광견병 접종여부</label>
 							<div>
 							  <input class="form-check-input" type="radio" name="dog_rabies_vacc" id="dog_rabies_vacc_yes" value="1" ${dog.isDog_rabies_vacc() == true ? "checked" : "" }>
 							  <label class="form-check-label" for="dog_rabies_vacc_yes">했어요</label>
@@ -103,7 +109,7 @@
 					</div>
 	  <hr> 
 					<div class="form-group">
-					  <label for="dog_notice">우리강아지(성격 및 건강상태 등..)</label>
+					  <label for="dog_notice" class="Dtitle">우리강아지(성격 및 건강상태 등..)</label>
 					  <textarea class="form-control" id="dog_notice" rows="5" name="dog_notice" required>${dog.getDog_notice()}</textarea>
 					</div>
  
@@ -112,7 +118,7 @@
 		<!-- dog_no 벨류값 받아서 폼에 기입해야함-->
 		<input class="form-control" type="hidden" name="dog_no" value="${dog.getDog_no()}">
 				    
-				<div class="text-center mb-5">           
+				<div class="text-center mb-5" style="margin-top:50px;">           
 				<button type="submit" class="btn btn-primary text-center">수정완료</button>
 			    </div>
 		</form>
