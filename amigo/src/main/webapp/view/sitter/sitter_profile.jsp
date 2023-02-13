@@ -71,7 +71,6 @@
 		        buyer_postcode : <%=user.getUser_no() %>
 		    }, function (rsp) { // callback
 		        if (rsp.success) {
-		        	alert(JSON.stringify(rsp));
 					$.ajax({
 						url : 'ajax/payment.do',
 						type : 'POST',
@@ -95,7 +94,7 @@
 						}
 					});
 		        } else {
-		            alert(rsp);
+		            alert("결제실패!");
 		        }
 		    });
 		}
@@ -150,9 +149,9 @@
 				<article>
 					<button type="button" class="btn btn-secondary" id="pay_btn" onclick="requestPay()">결제 및 신청</button>
 				</article>
-				<a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }">신청</a>
+<%-- 			<a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }">신청</a>
 				<br>
-				<a href="/amigo/view/review/user_review_insert.do?sit_no=${sitter.sit_no}&user_name=${sitter.user_name}">리뷰작성</a><!-- 리뷰작성 컨트롤러로 진입 -->
+				<a href="/amigo/view/review/user_review_insert.do?sit_no=${sitter.sit_no}&user_name=${sitter.user_name}">리뷰작성</a> --%><!-- 리뷰작성 컨트롤러로 진입 -->
 
 
 

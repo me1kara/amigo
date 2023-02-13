@@ -63,8 +63,6 @@
 }
 
 
-
-
 </style>
 <script>
 		$(document).ready(function(){
@@ -128,12 +126,15 @@
 									<c:when test="${chat.getUser_nick()!=user.getUser_nick() }">
 										<c:choose>
 											<c:when test="${chat.getFile()==null}">
-												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
 												<li class="chat_left" style="margin-bottom: 3px; clear: both;"
 													id="chat_no_${chat.getChat_no() }">
-													<span>
-													${chat.getUser_nick() } ${chat.getContent()}
-													</span> 
+													<div>
+														<div class="align-self-center">
+															${chat.getUser_nick() }<span style="font-size: 12px; color: #777;">${chat.getDate() }</span>
+														</div>
+														<div>${chat.getContent()}
+														</div>
+													</div>													
 												</li>
 											</c:when>
 											<c:when test="${chat.getFile()!=null}">
@@ -382,10 +383,15 @@
   	  	  // 상대방이 보낸 메세지 화면에 출력
   	  	  function print(user, txt, chat_no) {
   	  	  	let temp = '';
-  	  		temp += '<span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
+			
   	  	  	temp += '<li class="chat_left" style="margin-bottom:3px; clear: both;" id="chat_no_'+chat_no+'">';
-  	  	  	temp += '[' + user + '] ';
-  	  	  	temp += txt;
+  	  	 
+			temp += '<div>';
+			temp += '<div class="align-self-center">';
+			temp += user + '<span style="font-size: 12px; color: #777;">'+new Date().toLocaleTimeString()+'</span>'
+			temp += '</div>';
+			temp += '<div>'+txt;
+			temp += '</div></div>';	
   	  	  	temp += '</li>';		
   	  	  	$('#list').append(temp);
   	  	  	$('#list').scrollTop($('#list').prop('scrollHeight'));

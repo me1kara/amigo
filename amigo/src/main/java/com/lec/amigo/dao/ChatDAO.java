@@ -119,7 +119,7 @@ public class ChatDAO {
 	
 	public int insertChat(int index, int user_no, String content) {
 		//Connection conn = JDBCUtility.getConnection();
-		String sql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,SYSDATE(),0,?,?)";
+		String sql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),0,?,?)";
 		/*
 		try {
 		//	jdbcTemplate.update(sql, index, user, content, null, null);
