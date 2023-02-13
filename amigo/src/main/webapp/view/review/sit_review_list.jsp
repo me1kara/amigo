@@ -44,7 +44,7 @@
 		  <section class="main-content">
       <br />
       <div class="container">
-        <h1 class="text-uppercase">고객님들의 실시간 후기</h1>
+        <h1 class="text-uppercase">펫시터 리뷰</h1>
         <br />
         <br />
         <div class="row">
@@ -55,7 +55,7 @@
               <div class="text-center m-b-30">
                 <!-- 몇마리의 표현은 정보를 가져와줘야함. 02/09 백단에서 가져옴 -->
                 <div class="review-member">
-                  <a href="#">${dogCount}</a>마리의 친구들이 AM!GO와 함께했어요!
+                  <a href="#">${rev.getUser_name()}</a>펫시터 후기
                 </div>
                 <br />
                 <!-- 점수 -->
@@ -208,25 +208,8 @@
                   <div class="text-center">
                     <div class="wrap-star">
                       <!-- 100 % -->
-                      <div class="ratingStars">
-                      
-                      	<c:choose>
-                      	<c:when test="${rev.getStar_cnt() == 1}">
-                      		<img src="../../resources/img/star1.png" style="width:150px;height:60px;">
-                      	</c:when>
-                      	<c:when test="${rev.getStar_cnt() == 2}">
-                      		<img src="../../resources/img/star2.png" style="width:150px;height:60px;">
-                      	</c:when>
-                      	<c:when test="${rev.getStar_cnt() == 3}">
-                      		<img src="../../resources/img/star3.png" style="width:150px;height:60px;">
-                      	</c:when>
-                      	<c:when test="${rev.getStar_cnt() == 4}">
-                      		<img src="../../resources/img/star4.png" style="width:150px;height:60px;">
-                      	</c:when>
-                      	<c:when test="${rev.getStar_cnt() == 5}">
-                      		<img src="../../resources/img/star5.png" style="width:150px;height:60px;">
-                      	</c:when>
-                        </c:choose>
+                      <div class="star-rating">
+                        <span style="width: 100%">"${ rev.getStar_cnt() }"</span>
                         <input type="hidden" class="form-control" name="sit_no" value="${ rev.getSit_no() }">
                         <input type="hidden" class="form-control" name="user_no" value="${ sessionScope.user.getUser_no() }">
                         <input type="hidden" class="form-control" name="user_no" value="${ rev.getUser_no() }">

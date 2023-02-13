@@ -292,7 +292,7 @@ prefix="c"%>
         <div class="row text-center">
         <c:choose>
         <c:when test="${ sessionScope.user.getUser_type() == 'U' }">
-          <a href="apply/sitter_join.do">
+          <a href="view/mypage/apply/sitter_join.do">
             <img
               src="/amigo/resources/img/needYou.png"
               class="img-fluid"
@@ -311,6 +311,7 @@ prefix="c"%>
           </a>
          </c:when>
          </c:choose>
+         <!-- sitter_join 쪽 상단 이미지를 클릭하면 펫시터 지원 페이지로 감.  -->
          <!-- 펫시터 회원과 관리자는 지원을 제한함. -->
          
         </div>
