@@ -93,7 +93,7 @@ public class DogController {
 	}
 	
 	@RequestMapping(value="/view/mypage/deleteDog.do", method = RequestMethod.GET)
-	public String deleteDog(HttpServletRequest req,Model model) {
+	public String deleteDog(HttpServletRequest req) {
 	int dog_no = Integer.parseInt(req.getParameter("dog_no"));
 	String fileName = req.getParameter("dog_image_file");
 	new File(uploadFolder+fileName).delete();

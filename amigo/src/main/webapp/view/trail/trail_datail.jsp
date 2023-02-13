@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+
+<%
+UserVO user = (UserVO)session.getAttribute("user");
+%>
+<c:set var="userNo" value="<%=user.getUser_no() %>"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,21 +20,6 @@
 <meta charset="UTF-8">
 <title>산책04_추천산책로</title>
 <style>
-/* 레이아웃 외곽 너비 400px 제한*/
-.wrap{
-    max-width: 480px;
-    margin: 0 auto; /* 화면 가운데로 */
-    background-color: #fff;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-
-}
-.reviewform textarea{
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-}
 .rating .rate_radio {
     position: relative;
     display: inline-block;
@@ -58,19 +48,6 @@
 .rating .rate_radio:checked + label {
     background-color: #ff8;
 }
-
-.warning_msg {
-    display: none;
-    position: relative;
-    text-align: center;
-    background: #ffffff;
-    line-height: 26px;
-    width: 100%;
-    color: red;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #e0e0e0;
-}
 </style>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -87,89 +64,111 @@
 
 			    
 		 <!-- 후기  -->	    
-	    <div class="container">               
-         <c:if test="${ boardList.isEmpty() || boardList == null }">
+	    <div class="container">
+	      <c:choose>          
+         <c:when test="${ trailReviewList.isEmpty() || trailReviewList == null }">
             <p align="center">등록된 후기 정보가 존재하지 않습니다.</p>
-         </c:if>
-              
-            <!-- 후기 리스트 -->
-            <c:forEach  var="board" items="${ boardList }">
-            <div class="inner-main-body p-2 p-sm-3 forum-content show" >
-                  <div class="media forum-item">
-                    <div class="media-body">
-                      <!-- 후기글 -->
-                      <span> ${board.getReply_cnt()}</span>
-                      <!-- 작성자 -->
-                        <span class="nickName" style="color:#498dcc; font-weight:bold">${ board.getUser_nick() }</span>&nbsp;    
-                    </div>
-                  </div>
-            </div>
-            </c:forEach>
-         </div>
+         </c:when>
+         <c:otherwise>
+          <div class="container mt-3">		
+			<div class="row mt-4">
+				<table class="table table-hover table-bordered">
+					<thead class="table-dark text-center">
+						<th scope="col" class="col-1 text-center">별점</th>
+						<th scope="col" class="col-9">후기내용</th>
+						<th scope="col" class="col-2 text-center">작성자</th>					
+					</thead>
+					<tbody>
+					<c:forEach  var="trail" items="${ trailReviewList }">
+						<tr>
+							<td><c:choose>
+								<c:when test="${trail.getWalk_star() == 1}">
+								   <img src="../../resources/img/star1.png" style="width:150px;height:60px;">
+								</c:when>
+								<c:when test="${trail.getWalk_star() == 2}">
+								   <img src="../../resources/img/star2.png" style="width:150px;height:60px;">
+								</c:when>
+								<c:when test="${trail.getWalk_star() == 3}">
+								   <img src="../../resources/img/star3.png" style="width:150px;height:60px;">
+								</c:when>
+								<c:when test="${trail.getWalk_star() == 4}">
+								   <img src="../../resources/img/star4.png" style="width:150px;height:60px;">
+								</c:when>
+								<c:when test="${trail.getWalk_star() == 5}">
+								   <img src="../../resources/img/star5.png" style="width:150px;height:60px;">
+								</c:when>
+							</c:choose></td>
+							<td>${trail.getWalk_cont()}</a></td>
+							<td>${trail.getUser_nick()}<br>
+								<c:if test="${userNo==trail.getUser_no()}">
+									   <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#traildelete"
+                                       data-walk_review_no="${trail.getWalk_review_no()}">삭제</button>	   
+									   <a href="updateTrailReview.do?walk_review_no=${trail.getWalk_review_no()}" class="btn btn-primary"><i class="fas fa-trash">수정</i></a>
+								</c:if>
+							</td>
+						</tr>
+					</c:forEach>									
+					</tbody>
+				</table>
+			</div>	
+		</div> <!-- 게시판 -->
+       </c:otherwise>
+      </c:choose>     
+      
         <!-- 페이징 -->
-      <c:if test="${ searchVO.getCurPage()> 1 }">
+
       <div class="row align-items-start mt-3">
          <ul class="col pagination justify-content-center">
          
-            <c:set var="cp" value="${searchVO.getCurPage()}"/>
-            <c:set var="rp" value="${searchVO.getRowSizePerPage()}"/>
-            <c:set var="fp" value="${searchVO.getFirstPage()}"/>
-            <c:set var="lp" value="${searchVO.getLastPage()}"/>
-            <c:set var="ps" value="${searchVO.getPageSize()}"/>
-            <c:set var="tp" value="${searchVO.getTotalPageCount()}"/>
-    <!--    <c:set var="sc" value="${searchVO.getSearchCategory()}"/>
-            <c:set var="st" value="${searchVO.getSearchType()}"/>
-            <c:set var="sw" value="${searchVO.getSearchWord()}"/>  
-     -->                                           
+            <c:set var="cp" value="${pagingVO.getCurPage()}"/>
+            <c:set var="rp" value="${pagingVO.getRowSizePerPage()}"/>
+            <c:set var="fp" value="${pagingVO.getFirstPage()}"/>
+            <c:set var="lp" value="${pagingVO.getLastPage()}"/>
+            <c:set var="ps" value="${pagingVO.getPageSize()}"/>
+            <c:set var="tp" value="${pagingVO.getTotalPageCount()}"/>
+                                          
             <c:if test="${ fp != 1 }">
-               <li class="page-item"><a href="user_board_list.do?curPage=1&rowSizePerPage=${rp}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
-               <li class="page-item"><a href="user_board_list.do?curPage=${fp-1}&rowSizePerPage=${rp}" class="page-link"><i class="fas fa-backward"></i></a></li>            
+               <li class="page-item"><a href="trail_detail.do?curPage=1&rowSizePerPage=${rp}" class="page-link"><i class="fas fa-fast-backward"></i></a></li>
+               <li class="page-item"><a href="trail_detail.do?curPage=${fp-1}&rowSizePerPage=${rp}" class="page-link"><i class="fas fa-backward"></i></a></li>            
             </c:if>
          
             <c:forEach var="page" begin="${fp}" end="${lp}">
-               <li class="page-item ${cp==page ? 'active' : ''}"><a href="user_board_list.do?curPage=${page}&rowSizePerPage=${rp}" class="page-link">${page}</a></li>
+               <li class="page-item ${cp==page ? 'active' : ''}"><a href="trail_detail.do?curPage=${page}&rowSizePerPage=${rp}" class="page-link">${page}</a></li>
             </c:forEach>
             
             <c:if test="${ lp < tp }">
-               <li class="page-item "><a href="user_board_list.do?curPage=${lp+1}&rowSizePerPage=${rp}" class="page-link"><i class="fas fa-forward"></i></a></li>            
-               <li class="page-item"><a href="user_board_list.do?curPage=${tp}&rowSizePerPage=${rp}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>            
+               <li class="page-item "><a href="trail_detail.do?curPage=${lp+1}&rowSizePerPage=${rp}" class="page-link"><i class="fas fa-forward"></i></a></li>            
+               <li class="page-item"><a href="trail_detail.do?curPage=${tp}&rowSizePerPage=${rp}" class="page-link"><i class="fas fa-fast-forward"></i></a></li>            
             </c:if>
          </ul> <!-- pagination -->     
       </div> 
-		</c:if>	    
-	  		   <!-- 후기 작성 폼 --> 
-   						 <h4>후기</h4><p>별점과 리뷰를 남겨주세요.</p>
-			    <form role="form" class="reviewform container" method="post" action="insertTrailReview.do">
-			        <input type="hidden" name="route_no" id="rate" value='${route_no}'>
 
-			        <div class="review_rating">
-			            <div class="warning_msg">별점을 선택해 주세요.</div>
-			            <div class="rating">
-			                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
-			                <input type="checkbox" name="walk_star" id="rating1" value="1" class="rate_radio" title="1점">
-			                <label for="rating1"></label>
-			                <input type="checkbox" name="walk_star" id="rating2" value="2" class="rate_radio" title="2점">
-			                <label for="rating2"></label>
-			                <input type="checkbox" name="walk_star" id="rating3" value="3" class="rate_radio" title="3점" >
-			                <label for="rating3"></label>
-			                <input type="checkbox" name="walk_star" id="rating4" value="4" class="rate_radio" title="4점">
-			                <label for="rating4"></label>
-			                <input type="checkbox" name="walk_star" id="rating5" value="5" class="rate_radio" title="5점">
-			                <label for="rating5"></label>
-			            </div>
-			        </div>
-			        <div class="review_contents">
-			            <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
-			            <textarea rows="6" class="review_textarea" name="walk_cont" placeholder="후기는 5~400자를 써주세요."></textarea>
-			        </div>   
-			            <button type="submit" id="save" class="btn btn-primary">등록</button>
-			    </form>   
-			       
+	
+		    <div class="container" align="center">
+             	<a href="insertTrailReview.do?route_no=${route_no}" class="btn btn-primary">후기 작성하기</a>
+            </div>
+	       
 		</div>		
 	<%@include file="/includes/footer.jsp" %>
-	
-</body>
-</html>
+
+	          <!--삭제 modal form  -->
+            <div id="traildelete" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="traildeleteLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="traildeleteLabel">후기 삭제</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    산책 후기를 정말 삭제하시겠습니까?
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-danger" onclick="deleteTrail();">삭제</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+                  </div>
+                </div>
+              </div>
+              </div>
 
 <script>
 var testData = JSON.parse(JSON.stringify(TestFile));
@@ -194,78 +193,17 @@ function previewPlaces(places) {
 		'<p>소요시간  : '+places[3]+'</p>';
 }
 
+<!--삭제 modal form -->     
+	var TRAILREVIEWNO="";
+	$(document).ready(function() {     
+	     $('#traildelete').on('show.bs.modal', function(event) {          
+	    	 TRAILREVIEWNO = $(event.relatedTarget).data('walk_review_no');     
+	     });
+	 });
+	function deleteTrail() {location.href='deleteTrailReview.do?walk_review_no='+TRAILREVIEWNO;}
 
-//별점 마킹 모듈 프로토타입으로 생성
-function Rating(){};
-Rating.prototype.rate = 0;
-Rating.prototype.setRate = function(newrate){
-    //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
-    this.rate = newrate;
-    let items = document.querySelectorAll('.rate_radio');
-    items.forEach(function(item, idx){
-        if(idx < newrate){
-            item.checked = true;
-        }else{
-            item.checked = false;
-        }
-    });
-}
-let rating = new Rating();//별점 인스턴스 생성
-
-document.addEventListener('DOMContentLoaded', function(){
-    //별점선택 이벤트 리스너
-    document.querySelector('.rating').addEventListener('click',function(e){
-        let elem = e.target;
-        if(elem.classList.contains('rate_radio')){
-            rating.setRate(parseInt(elem.value));
-        }
-    })
-});
-
-//상품평 작성 글자수 초과 체크 이벤트 리스너
-document.querySelector('.review_textarea').addEventListener('keydown',function(){
-    //리뷰 400자 초과 안되게 자동 자름
-    let review = document.querySelector('.review_textarea');
-    let lengthCheckEx = /^.{400,}$/;
-    if(lengthCheckEx.test(review.value)){
-        //400자 초과 컷
-        review.value = review.value.substr(0,400);
-    }
-});
-
-//저장 전송전 필드 체크 이벤트 리스너
-document.querySelector('#save').addEventListener('click', function(e){
-    //별점 선택 안했으면 메시지 표시
-    if(rating.rate == 0){
-        rating.showMessage('rate');
-        return false;
-    }
-    //리뷰 5자 미만이면 메시지 표시
-    if(document.querySelector('.review_textarea').value.length < 5){
-        rating.showMessage('review');
-        return false;
-    }
-    //폼 서밋
-});
-
-Rating.prototype.showMessage = function(type){//경고메시지 표시
-    switch(type){
-        case 'rate':
-            //안내메시지 표시
-            document.querySelector('.review_rating .warning_msg').style.display = 'block';
-            //지정된 시간 후 안내 메시지 감춤
-            setTimeout(function(){
-                document.querySelector('.review_rating .warning_msg').style.display = 'none';
-            },1000);            
-            break;
-        case 'review':
-            //안내메시지 표시
-            document.querySelector('.review_contents .warning_msg').style.display = 'block';
-            //지정된 시간 후 안내 메시지 감춤
-            setTimeout(function(){
-                document.querySelector('.review_contents .warning_msg').style.display = 'none';
-            },1000);    
-            break;
-    }
-}
 </script>
+
+
+</body>
+</html>
