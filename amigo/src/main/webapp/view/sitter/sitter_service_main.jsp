@@ -166,7 +166,9 @@ h1 {
 					<img src="https://via.placeholder.com/150x100" alt="산책" class="service_image"/>
 					<img src="https://via.placeholder.com/150x100" alt="케어" class="service_image"/>
 				</div> 
-				</article>			
+				</article>	
+				
+				<!-- 시터캐러셀 자동루프 -->	
 				<article class="sitter_item">
 					<h3 class="sitter_service_title">대표 펫시터를 소개합니다!</h3>
 					<hr>

@@ -83,6 +83,8 @@
 </style>
 
 <script>
+
+	//예약내용 모달 열기
 	function open_book_modal(e){
 		let rno = $(e).find("#book_res_no").text();
 		//let res_state = $(e).find("#book_res_state").text();
@@ -90,7 +92,7 @@
 		$('.modal').fadeIn();
 		$('body').css("overflow", "hidden");
 	}
-	
+	//예약내용 모달 닫기
 	function close_book_modal(){
 		$('.modal').fadeOut();
 		$('.book_content').remove();
@@ -98,6 +100,7 @@
 		$('body').css("overflow", "auto");
 	}
 	
+	//예약내용모달 구하는 로직, ajax
 	function getBook_detail(rno){
  		$.ajax({
 			url : '/amigo/ajax/getBook_detail.do',
@@ -118,12 +121,15 @@
 						temp += '</table></li>';
 					});
 					temp+='</ul>';
+					
+					//날짜 비교해서 취소하기 버튼 유무
 					let res_start = new Date(result[0].res_date);
 					let today = new Date();	
 					let limitDay = new Date(today);
 					limitDay.setDate(res_start.getDate()-1);
 					console.log(today + limitDay + res_start);
 					
+					//이전기록,현재기록 확인하기,현재기록일시에만 취소버튼 나오게
 					let cate;
 					if('${searchVO.getSearchCategory()}'!=''){
 						cate = '${searchVO.getSearchCategory()}';
@@ -145,6 +151,8 @@
 		
 	}
 	
+	
+	//예약취소함수
 	function book_delete(rno){
 		if(confirm('정말로 취소하시겠습니까?')){
 			$.ajax({
@@ -192,6 +200,8 @@
 					<div class="row">
 						<h2 class="book_ch_title d-flex justify-content-center">예약 확인</h2>
 						
+						
+					<!-- 현재기록, 과거기록 버튼, 시터모드 버튼-->
 						<div class="d-flex justify-content-end">
 						<c:if test='${user.getUser_type().equals("S") }'>
 							<button class="btn" onclick="location.href='/amigo/receiveBook_check.do'"><b>시터모드</b></button>
@@ -247,17 +257,6 @@
 										<tr>
 											<th class="tTitle">결제금액</th><td><fmt:formatNumber value="${book.getRes_pay() }" pattern="#,###"/>원</td>
 										</tr>
-<%-- 										<tr style="border-bottom: 1px solid">
-											<th class="tTitle">승인여부</th>
-											<td id="book_res_state">
-												<c:choose>
-													<c:when test="${book.res_state eq '0'}">승인
-													</c:when>					
-													<c:otherwise><mark>대기</mark>
-													</c:otherwise>
-												</c:choose>
-											</td>
-										</tr> --%>
 										
 										</tbody>
 									</table>
@@ -267,6 +266,8 @@
 								</c:forEach>
 							</c:forEach>
 							</ul>
+							
+							<!-- 페이징처리 -->
 								<div class="row align-items-start mt-3">
 									<ul class="col pagination justify-content-center">
 										<c:if test="${ fp != 1 }">
@@ -293,7 +294,6 @@
 												class="page-link"><i class="fas fa-fast-forward"></i></a></li>
 										</c:if>
 									</ul>
-									<!-- pagination -->
 								</div>
 								<!-- 페이징 -->
 							</c:when>
@@ -306,7 +306,7 @@
 			</section>	
 		</div>
 		
-		<!-- 모달 -->
+		<!-- 예약내용모달 껍데기, 실내용은 ajax로 덧붙임 -->
 		
 		<div class="modal">
 			<div class="modal_body">
