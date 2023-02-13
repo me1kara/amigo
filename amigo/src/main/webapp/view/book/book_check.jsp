@@ -89,8 +89,12 @@
 		width:95%; 
 		margin-top:15px;
 		box-shadow: 5px 2px 20px rgb(0 0 0 / 20%);
-
+	}
 	
+	#user_book {
+		font-family: "Jalnan";
+		font-size: 25px;
+		padding: 50px 0;
 	}
 	
 
