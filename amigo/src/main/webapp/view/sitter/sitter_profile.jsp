@@ -11,6 +11,7 @@
   crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>프로필01_시터 프로필 확인</title>
@@ -58,41 +59,43 @@
 			var IMP = window.IMP; 
 			IMP.init("imp07716558"); 
 		    IMP.request_pay({
-		        pg : 'html5_inicis',
+		        pg : 'html5_inicis.INIpayTest',
 		        pay_method : 'card',
 		        merchant_uid: 'merchant_'+new Date().getTime(), 
 		        name : '시터예약',
 		        amount : '100', //${book.res_pay},
-		        buyer_email : 'Iamport@chai.finance',
+		        buyer_email : '<%=user.getUser_email()%>',
 		        buyer_name : '<%=user.getUser_name()%>',
 		        buyer_tel : '<%=user.getUser_phone()%>',
 		        buyer_addr : '<%=user.getUser_addr()%>',
-		        buyer_postcode : '<%=user.getUser_no() %>'
+		        buyer_postcode : <%=user.getUser_no() %>
 		    }, function (rsp) { // callback
 		        if (rsp.success) {
+		        	alert(JSON.stringify(rsp));
 					$.ajax({
 						url : 'ajax/payment.do',
 						type : 'POST',
-						data : {
-					       imp_uid: rsp.imp_uid,
-					       merchant_uid: rsp.merchant_uid,
-					       pay : ${book.res_pay},
-						   user_no : <%=user.getUser_no() %>
-						},
-						success : function(result) {							
-							if(result!='삽입실패'){
-								alert("결제에 성공했습니다!");
-								let alink = '/amigo/requestBook.do?sit_no='+${sitter.sit_no }+'&merchant_uid='+result+"";
+			            //dataType: 'json',
+			            contentType: 'application/json; charset=utf-8',
+						data : JSON.stringify(rsp),
+						success : function(result) {
+							console.log(result);
+							let process_result = result.process_result.split(":");
+ 							if(process_result[0]=='결제성공'){
+								alert('결제성공!');
+								let alink = '/amigo/requestBook.do?sit_no='+${sitter.sit_no }+'&merchant_uid='+process_result[1]+"";
 								console.log(alink);
 								window.location.href = alink;
 							}else{
-								alert('결제실패!');
+								alert(process_result[1]);
 							}
 
+						},error: function(result){
+							alert(result);
 						}
 					});
 		        } else {
-		            console.log(rsp);
+		            alert(rsp);
 		        }
 		    });
 		}

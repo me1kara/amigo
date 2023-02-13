@@ -40,7 +40,7 @@ import lombok.RequiredArgsConstructor;
 public class ChatHandler extends TextWebSocketHandler{
 	
 	private static HashMap<String, WebSocketSession> sessions = new HashMap<>();
-	private static final String FILE_UPLOAD_PATH = "C:/test/websocket/";
+	private static final String FILE_UPLOAD_PATH = "C:/FTP/upload/img/chatImg/";
 	//세션구별용	
 //	private Map<String, WebSocketSession> userSessions = new HashMap();
 	
@@ -326,7 +326,7 @@ public class ChatHandler extends TextWebSocketHandler{
 				int chat_no = Integer.parseInt(ab);
 				String fileName = chatServiceImpl.getFileName(chat_no);
 				
-				File deleteFile = new File("C:\\test\\websocket\\"+fileName);
+				File deleteFile = new File("C:/FTP/upload/img/chatImg/"+fileName);
 				if(deleteFile.exists()) {
 					deleteFile.delete();
 				}

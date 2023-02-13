@@ -103,7 +103,7 @@
 				<article class="sitter_list">
 					<h2 class="sitter_list_title"><%=addr%> 펫시터 목록</h2> <hr>
 					<c:choose>
-					<c:when test="${sittList!=null }">
+					<c:when test="${sittList!=null && !sitList.isEmpty() }">
 					<c:forEach var="sit" items="${sittList }">
 							<!--  div클릭 접속 구현  -->
 							<div class="sitter_item" id="item-box-shadow" style="cursor:pointer;" onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${sit.getUser_name() }';">
@@ -148,7 +148,7 @@
 						</c:if>
 					</c:when>
 					<c:otherwise>
-						<h>해당한 지역의 펫시터가 없습니다!</h>
+						<h1>해당한 지역의 펫시터가 없습니다!</h1>
 					</c:otherwise>
 					</c:choose>
 				</article>
