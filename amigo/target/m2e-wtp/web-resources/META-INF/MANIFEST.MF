@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: ￬ﾠﾜ￬ﾝﾴ￫ﾡﾜ
+=======
+Built-By: nickr
+>>>>>>> 26b9645a85044a7d1ec12d60799bea2de5f8c1c4
 Build-Jdk: 11.0.16.1
 Created-By: Maven Integration for Eclipse
 

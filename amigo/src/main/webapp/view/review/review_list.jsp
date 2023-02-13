@@ -208,8 +208,25 @@
                   <div class="text-center">
                     <div class="wrap-star">
                       <!-- 100 % -->
-                      <div class="star-rating">
-                        <span style="width: 100%">"${ rev.getStar_cnt() }"</span>
+                      <div class="ratingStars">
+                      
+                      	<c:choose>
+                      	<c:when test="${rev.getStar_cnt() == 1}">
+                      		<img src="../../resources/img/star1.png" style="width:150px;height:60px;">
+                      	</c:when>
+                      	<c:when test="${rev.getStar_cnt() == 2}">
+                      		<img src="../../resources/img/star2.png" style="width:150px;height:60px;">
+                      	</c:when>
+                      	<c:when test="${rev.getStar_cnt() == 3}">
+                      		<img src="../../resources/img/star3.png" style="width:150px;height:60px;">
+                      	</c:when>
+                      	<c:when test="${rev.getStar_cnt() == 4}">
+                      		<img src="../../resources/img/star4.png" style="width:150px;height:60px;">
+                      	</c:when>
+                      	<c:when test="${rev.getStar_cnt() == 5}">
+                      		<img src="../../resources/img/star5.png" style="width:150px;height:60px;">
+                      	</c:when>
+                        </c:choose>
                         <input type="hidden" class="form-control" name="sit_no" value="${ rev.getSit_no() }">
                         <input type="hidden" class="form-control" name="user_no" value="${ sessionScope.user.getUser_no() }">
                         <input type="hidden" class="form-control" name="user_no" value="${ rev.getUser_no() }">

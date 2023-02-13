@@ -30,7 +30,7 @@ public class SitterBoardController {
 	Environment environment;
 	
 	
-	// 전체 글 목록
+	// 시터 전체 글 목록
 	@RequestMapping("/sitter_board_list.do")
 	public String getBoardList (Model model, SearchVO searchVO,
 			@RequestParam(defaultValue="1") int curPage,
@@ -55,7 +55,7 @@ public class SitterBoardController {
 	}
 	
 			
-	
+	// 시터 게시글 상세보기
 	@RequestMapping(value= "/sitter_board_detail.do", method=RequestMethod.GET)
 	public String user_board_detail(Model model, SitterBoardVO sboard, SearchVO searchVO, 
 			                        @RequestParam int sbd_no, SitterReplyVO sitterReplyVO,
@@ -80,6 +80,8 @@ public class SitterBoardController {
 		return "view/comunity/sitter_board_detail.jsp";
 	}
 	
+	
+	// 시터 게시글 작성하기
 	@RequestMapping(value="/sitter_board_insert.do", method=RequestMethod.GET)
 	public String user_board_insert() {
 		return "view/comunity/sitter_board_insert.jsp";
@@ -94,6 +96,8 @@ public class SitterBoardController {
 		return "view/comunity/alert.jsp";
 	}
 	
+	
+	// 시터 게시글 수정하기
 	@RequestMapping(value= "/sitter_board_update.do", method=RequestMethod.GET)
 	public String user_board_update_form(Model model, SitterBoardVO sboard, SearchVO searchVO) {
 		
@@ -103,7 +107,6 @@ public class SitterBoardController {
 		return "view/comunity/sitter_board_update.jsp";
 	}
 	
-
 	@RequestMapping(value="/sitter_board_update.do", method=RequestMethod.POST)
 	public String sitter_board_update(Model model, SitterBoardVO sboard, SearchVO searchVO) {	
 		
@@ -115,6 +118,7 @@ public class SitterBoardController {
 	}
 	
 	
+	// 시터 게시글 삭제하기
 	@RequestMapping(value="/sitter_board_delete.do", method=RequestMethod.GET)
 	public String sitter_board_delete(SitterBoardVO sboard) {
 		sitterboardService.deleteSitterBoard(sboard);
