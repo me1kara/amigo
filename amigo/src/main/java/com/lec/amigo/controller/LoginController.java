@@ -93,7 +93,7 @@ public class LoginController {
 			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요!
 			
 			List<ChatRoom> room_list = chatService.getRoomList(user.getUser_no());
-		
+
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);
 			}else {

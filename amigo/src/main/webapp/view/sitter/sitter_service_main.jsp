@@ -37,9 +37,11 @@
 }
 
 .service_list{
-	width:90%;
+	width: 90%;
     margin: 0 auto;
-	
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 .service_image{
 	width:32%;
@@ -149,6 +151,161 @@ h1 {
 
 
 
+
+.service_image {
+		width:310px;
+	height:290px;
+	box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+
+}
+
+/* 이미지 */
+figure.amigo1224 {
+        font-family: "Raleway", Arial, sans-serif;
+        position: relative;
+        overflow: hidden;
+        margin: 10px;
+        min-width: 290px;
+        max-width: 310px;
+        width: 100%;
+        color: #ffffff;
+        text-align: center;
+        font-size: 16px;
+        background-color: #000000;
+        border-radius: 10px;
+      }
+      figure.amigo1224 *,
+      figure.amigo1224 *:before,
+      figure.amigo1224 *:after {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-transition: all 0.55s ease;
+        transition: all 0.55s ease;
+      }
+      figure.amigo1224 img {
+        max-width: 100%;
+        backface-visibility: hidden;
+        vertical-align: top;
+        opacity: 0.9;
+      }
+      figure.amigo1224 .title {
+        position: absolute;
+        top: 58%;
+        left: 25px;
+        padding: 5px 10px 10px;
+      }
+      figure.amigo1224 .title:before,
+      figure.amigo1224 .title:after {
+        height: 2px;
+        width: 310px;
+        position: absolute;
+        content: "";
+        background-color: #ffffff;
+      }
+      figure.amigo1224 .title:before {
+        top: 0;
+        left: 10px;
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+      }
+      figure.amigo1224 .title:after {
+        bottom: 0;
+        right: 10px;
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+      }
+      figure.amigo1224 .title div:before,
+      figure.amigo1224 .title div:after {
+        width: 2px;
+        height: 300px;
+        position: absolute;
+        content: "";
+        background-color: #ffffff;
+      }
+      figure.amigo1224 .title div:before {
+        top: 10px;
+        right: 0;
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+      }
+      figure.amigo1224 .title div:after {
+        bottom: 10px;
+        left: 0;
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-100%);
+      }
+      figure.amigo1224 h2,
+      figure.amigo1224 h4 {
+        margin: 0;
+        text-transform: uppercase;
+      }
+      figure.amigo1224 h2 {
+        font-weight: 400;
+      }
+      figure.amigo1224 h4 {
+        display: block;
+        font-weight: 700;
+        background-color: #ffffff;
+        padding: 5px 10px;
+        color: #000000;
+      }
+      figure.amigo1224 figcaption {
+        position: absolute;
+        bottom: 42%;
+        left: 25px;
+        text-align: left;
+        opacity: 0;
+        padding: 5px 60px 5px 10px;
+        font-size: 0.8em;
+        font-weight: 500;
+        letter-spacing: 1.5px;
+      }
+      figure.amigo1224 figcaption p {
+        margin: 0;
+      }
+      figure.amigo1224 a {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+      figure.amigo1224:hover img,
+      figure.amigo1224.hover img {
+        zoom: 1;
+        filter: alpha(opacity=35);
+        -webkit-opacity: 0.35;
+        opacity: 0.35;
+      }
+      figure.amigo1224:hover .title:before,
+      figure.amigo1224.hover .title:before,
+      figure.amigo1224:hover .title:after,
+      figure.amigo1224.hover .title:after,
+      figure.amigo1224:hover .title div:before,
+      figure.amigo1224.hover .title div:before,
+      figure.amigo1224:hover .title div:after,
+      figure.amigo1224.hover .title div:after {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
+      }
+      figure.amigo1224:hover .title:before,
+      figure.amigo1224.hover .title:before,
+      figure.amigo1224:hover .title:after,
+      figure.amigo1224.hover .title:after {
+        -webkit-transition-delay: 0.15s;
+        transition-delay: 0.15s;
+      }
+      figure.amigo1224:hover figcaption,
+      figure.amigo1224.hover figcaption {
+        opacity: 1;
+        -webkit-transition-delay: 0.2s;
+        transition-delay: 0.2s;
+      }
+
+
+
+
 </style>
     
 <title>펫시터01_펫시터화면</title>    
@@ -161,14 +318,75 @@ h1 {
 					<h3 class="sitter_service_title">다양한 펫시터 서비스</h3>
 					<hr>
 				 <br>
-				<div class="service_list">
-					<img src="https://via.placeholder.com/150x100" alt="돌봄" class="service_image"/>
-					<img src="https://via.placeholder.com/150x100" alt="산책" class="service_image"/>
-					<img src="https://via.placeholder.com/150x100" alt="케어" class="service_image"/>
-				</div> 
-				</article>	
+				 <div class="container col">
+				<div class="service_list">				
+		 <figure class="amigo1224">
+    	  <img
+       		 src="/amigo/resources/img/service_img1.png"
+       		 alt="돌봄"
+       		 class="service_image"
+   			   />
+     		 <div class="title">
+      			  <div>
+       			   <h2>돌봄</h2>
+        		  <h4>care</h4>
+     		   </div>
+    		  </div>
+    		  <figcaption>  
+        		<p>
+        	  Amigo를 찾아주시는 여러분들에게 최고의 서비스를 제공하는 돌봄 서비스입니다.
+      			  </p>
+     			 </figcaption>
+     		 <a href="#"></a>
+   			 </figure>
+   			 		 <figure class="amigo1224">
+    	  <img
+       		 src="/amigo/resources/img/service_img2.png"
+       		 alt="산책"
+       		 class="service_image"
+   			   />
+     		 <div class="title">
+      			  <div>
+       			   <h2>산책</h2>
+        		  <h4>Trail</h4>
+     		   </div>
+    		  </div>
+    		  <figcaption>  
+        		<p>
+        	  당신의 AM!GO와 함께 시터가 걸어드립니다.
+      			  </p>
+     			 </figcaption>
+     		 <a href="#"></a>
+   			 </figure>
+   			 		 <figure class="amigo1224">
+    	  <img
+       		 src="/amigo/resources/img/service_img3.png"
+       		 alt="케어"
+       		 class="service_image"
+   			   />
+     		 <div class="title">
+      			  <div>
+       			   <h2>훈련</h2>
+        		  <h4>Training</h4>
+     		   </div>
+    		  </div>
+    		  <figcaption>  
+        		<p>
+        	  당신의 AM!GO에게 완벽한 교육을 선사합니다.
+      			  </p>
+     			 </figcaption>
+     		 <a href="#"></a>
+   			 </figure>
+   			 
+				<!-- 	
+					<img src="/amigo/resources/img/service_img2.png" alt="산책" class="service_image"/>
+					<img src="/amigo/resources/img/service_img3.png" alt="케어" class="service_image"/> -->
+				</div> 		
+				</div>		
+				</article>			
 				
 				<!-- 시터캐러셀 자동루프 -->	
+
 				<article class="sitter_item">
 					<h3 class="sitter_service_title">대표 펫시터를 소개합니다!</h3>
 					<hr>

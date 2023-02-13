@@ -490,7 +490,7 @@ prefix="c"%>
           <a href="#" onclick="main_fail()" class="all-view">전체보기</a>
         </div>
       </div>
-      <div class="container card text-center" style="width: 25rem;" onclick="main_fail()">
+      <div class="container card text-center" onclick="main_fail()">
       	<h5 class="card-title"><b>Q ${ board.getUbd_title() }</b></h5>
         	<small> ${ board.getUser_nick() } </small>
         <div class="card-body">
@@ -502,31 +502,8 @@ prefix="c"%>
       </div>
       <br />
       <!-- Q&A 종료 -->
-      <!-- 스크롤 -->
-      <a href="#" class="top"
-><img
-                  src="/amigo/resources/img/topicon2.png"
-                  alt="top"/> </a>
-    </div>
-    
-   
-    
-    
-    <script>
-      $( document ).ready( function() {
-        $( window ).scroll( function() {
-          if ( $( this ).scrollTop() > 200 ) {
-            $( '.top' ).fadeIn();
-          } else {
-            $( '.top' ).fadeOut();
-          }
-        } );
-        $( '.top' ).click( function() {
-          $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
-          return false;
-        } );
-      } );
-    </script>
+     
+     <%@include file="/includes/scrollTop.jsp"%>
     <%@include file="/includes/footer.jsp" %>
 
     <!-- Bootstrap core JS-->
