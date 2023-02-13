@@ -156,7 +156,7 @@ prefix="c"%>
       /* 탑으로 스크롤 */
       a.top {
  	 position: fixed;
- 	 left: 50%;
+ 	 left: 85%;
   	 bottom: 50px;
   	 display: none;
 			}
@@ -423,7 +423,7 @@ prefix="c"%>
           <a href="user_board_cate.do?ubd_cate=질문" class="all-view">전체보기</a>
         </div>
       </div>
-      <div class="container card text-center" style="width: 25rem;" onclick="location.href='user_board_detail.do?ubd_no=5&updateCount_is=abd&cnt=3'">
+      <div class="container card text-center" style="cursor:pointer; border-radius: 20px; box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);" onclick="location.href='user_board_detail.do?ubd_no=5&updateCount_is=abd&cnt=3'">
       	<h5 class="card-title"><b>Q ${ board.getUbd_title() }</b></h5>
         	<small> ${ board.getUser_nick() } </small>
         <div class="card-body">
@@ -437,10 +437,13 @@ prefix="c"%>
       <!-- Q&A 종료 -->
       <!-- 스크롤 -->
       <a href="#" class="top"><img
-                  src="/amigo/resources/img/topicon2.png"
-                  alt="top"/> </a>
+                  src="/amigo/resources/img/scrollTop1.png"
+                  alt="top" style="width:60px; height:60px;" /> </a>
     </div>
     
+    
+    
+    <!-- scrollTop code 입니다. -->
     <script>
       $( document ).ready( function() {
         $( window ).scroll( function() {

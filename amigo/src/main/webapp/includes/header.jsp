@@ -35,9 +35,9 @@
 }
 
 .navbar-toggler {
-	width:20px;
 	margin-left:20px;
-	 
+	width:30px;
+	display: contents; 
 }
 
 .menu-trigger,
@@ -51,6 +51,7 @@
   position: relative;
   width: 40px;
   height: 34px;
+  margin-left: 30px;
 }
 
 .menu-trigger span {
@@ -103,7 +104,7 @@
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
-        style=" border: none;">
+        >
         <!-- 햄버거 -->
    <a class="menu-trigger" href="#">
     <span></span>
@@ -144,7 +145,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp">고객센터</a>
+            <a class="nav-link" href="<%=request.getContextPath() %>/cs_main.do">고객센터</a>
           </li>
         </ul>
       </div>

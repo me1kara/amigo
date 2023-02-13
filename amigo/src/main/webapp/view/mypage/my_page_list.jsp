@@ -72,7 +72,7 @@ prefix="c"%>
         </li>
         <li class="list-group-item">
           <a
-            href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"
+            href="<%=request.getContextPath() %>/cs_main.do"
             class="mypage_link"
             >고객센터</a
           >

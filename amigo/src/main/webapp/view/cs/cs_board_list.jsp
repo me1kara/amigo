@@ -67,6 +67,10 @@
         color: #189cc4;
       }
       
+      #cs-footer{
+      width:100%;
+      }
+
     </style>
 </head>
 <body>
@@ -202,8 +206,20 @@
              	<a href="cs_board_insert.do" class="btn btn-primary">글 작성하기</a>
             </div>
       </form>      
+       </div>
+	 <!-- Footer -->
+    <footer class="bg-primary text-center text-white mt-5">
+      <!-- Copyright -->
+      <div class="text-center p-3 mt-5" style="background-color:rgb(87, 160, 227);">
+        © 2022 Copyright:
+        <a class="text-white" href="#">amigo.com</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer 끝 -->
+
        
-       
-<%@include file="/includes/footer.jsp" %>
+<%@include file="/includes/scrollTop.jsp" %>       
+
 </body>
 </html>

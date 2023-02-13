@@ -49,12 +49,21 @@
     	}
     	
     	.sitter_item{
-    		display: flex;
-    		justify-content: space-around;
-    		margin: 50px auto; 
-			padding-right : 10px;
-			border-radius: 10px;
-			box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
+    	display: flex;
+    	margin: 50px auto;
+   		padding-right: 10px;
+   		border-radius: 10px;
+    	width: 450px;
+    	height: 300px;
+    	background-color: #F8F9FA;
+    	align-items: center;
+    	flex-direction: column;
+    	justify-content: space-around;
+	     box-shadow: 1px 1px 20px rgba(0,0,0,0.2);
+    	}
+    	
+    	#item-box-shadow:hover{
+    	 box-shadow: 1px 1px 20px #69abce;
     	}
     	
     	.sitter_list_title {
@@ -89,26 +98,25 @@
     </script>
 
 	<%@include file="/includes/header.jsp"%>
-		<div class="container">
+		<div class="container col-md-6">
 			<section>
 				<article class="sitter_list">
 					<h2 class="sitter_list_title"><%=addr%> 펫시터 목록</h2> <hr>
 					<c:choose>
 					<c:when test="${sittList!=null }">
 					<c:forEach var="sit" items="${sittList }">
-							<div class="sitter_item">
+							<!--  div클릭 접속 구현  -->
+							<div class="sitter_item" id="item-box-shadow" style="cursor:pointer;" onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${sit.getUser_name() }';">
 								<div>
 									<img src="https://via.placeholder.com/100x100" width="100px" height="100px"/>
 								</div>
+								<!-- 전체 테이블 -->
 								<table>
-									<tr><th style="width:100px;">이름</th><td>${sit.getUser_name() }</td></tr>									
-									<tr><th>시간</th><td>${sit.getSit_time() }</td></tr>
-									<tr><th>경력 및 특기</th><td>${sit.sit_care_exp }</td></tr>
+									<tr><th style="width:100px; padding: 2px;">이름</th><td>${sit.getUser_name() }</td></tr>									
+									<tr><th style="padding: 2px;">시간</th><td>${sit.getSit_time() }</td></tr>
+									<tr><th style="padding: 2px;">경력 및 특기</th><td>${sit.sit_care_exp }</td></tr>
 								</table>
-								<div style="display: flex; justify-content: center; align-items: center;">
-									<button class="btn btn-outline-secondary"
-										onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${sit.getUser_name() }'">상세보기</button>
-								</div>
+								<!-- 전체 테이블 end -->
 							</div>
 					</c:forEach>
 						<c:if test="${searchVO.totalPageCount>1 }">

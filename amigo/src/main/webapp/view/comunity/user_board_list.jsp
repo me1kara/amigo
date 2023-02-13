@@ -248,7 +248,7 @@
       </form>
     </div>      
        
-       
+<%@include file="/includes/scrollTop.jsp" %>
 <%@include file="/includes/footer.jsp" %>
 </body>
 </html>

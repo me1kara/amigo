@@ -1,25 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
-<!DOCTYPE html> 
+pageEncoding="UTF-8"%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c"%>
+<!DOCTYPE html>
 <html>
-<head>
-<script
-  src="https://code.jquery.com/jquery-3.6.3.min.js"
-  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-  crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<meta charset="UTF-8">
-<style>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/amigo/resources/css/style.css"
+    />
+    <meta charset="UTF-8" />
+    <style>
       /* aimgo 메인 사진들 css */
       .img-fluid {
         border-radius: 20px;
-        border: 2px outset rgba(44, 134, 204, 0.67);
         cursor: pointer;
-      }
-
-      .img-fluid needYou {
+        /* 그림자 */
+        box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
       }
 
       /* 폰트 적용(여기어때 폰트)*/
@@ -30,238 +41,456 @@
         font-family: "Jalnan";
         font-size: 90%;
       }
-      </style>
-<title>메인홈</title>
+      .all-view {
+        font-family: "Roboto", sans-serif;
+        text-decoration: none;
+        color: gray;
+        font-family: "Jalnan";
+        font-size: 90%;
+      }
+      /* 폰트 적용 end */
+
+      @import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
+      figure.snip0015 {
+        font-family: "Roboto", sans-serif;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        background: #000000;
+        text-align: center;
+        border-radius: 20px;
+        box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
+      }
+      figure.snip0015 * {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      figure.snip0015 img {
+        opacity: 1;
+        width: 100%;
+        -webkit-transition: opacity 0.35s;
+        transition: opacity 0.35s;
+      }
+      figure.snip0015 figcaption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 3em 3em;
+        width: 100%;
+        height: 100%;
+      }
+      figure.snip0015 figcaption::before {
+        position: absolute;
+        top: 50%;
+        right: 30px;
+        bottom: 50%;
+        left: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.8);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+        content: "";
+        opacity: 0;
+        background-color: #ffffff;
+        -webkit-transition: all 0.4s;
+        transition: all 0.4s;
+        -webkit-transition-delay: 0.6s;
+        transition-delay: 0.6s;
+      }
+      figure.snip0015 h2,
+      figure.snip0015 p {
+        margin: 0 0 5px;
+        opacity: 0;
+        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+        transition: opacity 0.35s, -webkit-transform 0.35s, -moz-transform 0.35s,
+          -o-transform 0.35s, transform 0.35s;
+      }
+      figure.snip0015 h2 {
+        word-spacing: -0.15em;
+        font-weight: 300;
+        text-transform: uppercase;
+        -webkit-transform: translate3d(0%, 50%, 0);
+        transform: translate3d(0%, 50%, 0);
+        -webkit-transition-delay: 0.3s;
+        transition-delay: 0.3s;
+      }
+      figure.snip0015 h2 span {
+        font-weight: 800;
+      }
+      figure.snip0015 p {
+        font-weight: 200;
+        -webkit-transition-delay: 0s;
+        transition-delay: 0s;
+      }
+      figure.snip0015 a {
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        color: #ffffff;
+      }
+      figure.snip0015:hover img {
+        opacity: 0.35;
+      }
+      figure.snip0015:hover figcaption h2 {
+        opacity: 1;
+        -webkit-transform: translate3d(0%, 0%, 0);
+        transform: translate3d(0%, 0%, 0);
+        -webkit-transition-delay: 0.3s;
+        transition-delay: 0.3s;
+      }
+      figure.snip0015:hover figcaption p {
+        opacity: 0.9;
+        -webkit-transition-delay: 0.6s;
+        transition-delay: 0.6s;
+      }
+      figure.snip0015:hover figcaption::before {
+        background: rgba(255, 255, 255, 0);
+        top: 30px;
+        bottom: 30px;
+        opacity: 1;
+        -webkit-transition-delay: 0s;
+        transition-delay: 0s;
+      }
+      
+      /* 탑으로 스크롤 */
+      a.top {
+ 	 position: fixed;
+ 	 left: 50%;
+  	 bottom: 50px;
+  	 display: none;
+			}
+			
+			
+  /* 버튼 css */
+   .buttons {
+        text-align: center;
+        margin-bottom: 100px;
+      }
+
+      .btn-hover {
+        width: 200px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        height: 55px;
+        text-align: center;
+        border: none;
+        background-size: 300% 100%;
+
+        border-radius: 50px;
+        moz-transition: all 0.4s ease-in-out;
+        -o-transition: all 0.4s ease-in-out;
+        -webkit-transition: all 0.4s ease-in-out;
+        transition: all 0.4s ease-in-out;
+      }
+
+      .btn-hover:hover {
+        background-position: 100% 0;
+        moz-transition: all 0.4s ease-in-out;
+        -o-transition: all 0.4s ease-in-out;
+        -webkit-transition: all 0.4s ease-in-out;
+        transition: all 0.4s ease-in-out;
+      }
+
+      .btn-hover:focus {
+        outline: none;
+      }
+      .btn-hover.color-9 {
+        background-image: linear-gradient(
+          to right,
+          #25aae1,
+          #4481eb,
+          #04befe,
+          #3f86ed
+        );
+        box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+      }
+	
+      
+    </style>
+
+    <title>메인홈</title>
     <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
+      <script src="js/html5shiv.js"></script>
     <![endif]-->
-</head>
-<body>
-	
-	
-<!--  
-		<a href="#" onclick="main_fail();">펫시터</a> <br>
-		<a href="#" onclick="main_fail();">추천산책루트</a><br>
-		<a href="#" onclick="main_fail()">병원</a><br>
-		<a href="#" onclick="main_fail()">고객센터</a><br>
-		<a href="#" onclick="main_fail()">커뮤니티</a><br>
-	
-		<-- 메뉴바 만들기 전에 임시로 채팅연결용으로 사용 
-		<a href="#" onclick="main_fail()">채팅목록</a><br>
-		
-		
-		<a href="home.jsp">로그인 하러하기</a><br>
-	
-		</div>
-		
-		-->
-		
-		<%@include file="/includes/header.jsp" %>
-	
-		
-		
-		<div class="container">
-		
-		<script>
+  </head>
+  <body>
+  
+  <script>
 		 function main_fail() {
      		alert("로그인 후 이용가능한 페이지입니다.");
          }
 		</script>
 		
 		
-		 <!-- Am!go 소개 -->
-    <div class="container text-center" id="AmigoTop">
-      <div class="amigoMainImg">
-      <img
-           src="/amigo/resources/img/amigoLoginImg.png"
+		
+    <div class="container">
+    
+    <form>
+           <div class="container mt-3 mb-5 py-5  h-100" align="center">
+          <!-- 이메일 로그인 -->
+          <div class="buttons">
+          <button type="button" class="btn-hover color-9" onclick="location.href='terms.do';">
+            이메일 가입
+          </button>
+          </div>
+    </form>
+
+      <!--   
+		<a href="sitter/sitter_service_main.jsp">펫시터</a>
+		<a href="#">추천산책루트</a>
+		<a href="#">병원</a>
+		<a href="#">고객센터</a>
+		<a href="#">커뮤니티</a>
+			-->
+
+      <!-- 메뉴바 만들기 전에 임시로 채팅연결용으로 사용 
+		<a href="view/customer_service/customer_service_chat.jsp">채팅목록</a>	
+		-->
+
+      <!-- Am!go 소개 -->
+       <hr/>
+      <div class="container col-md-6 text-center" id="AmigoTop">
+        <figure class="snip0015">
+          <img
+            src="/amigo/resources/img/MainPageImg.png"
             class="img-fluid"
             alt="amigoPet"
           />
+          <figcaption>
+            <h2>반가워요!! <span>AM!GO</span> 입니다!</h2>
+            <p>
+              당신곁에 항상 있는 우리의 반려동물들 그들을 위해서 만들어진
+              곳이예요.
+            </p>
+            <p>혹시 당신의 AM!GO가 집에 혼자 남겨져있나요?</p>
+            <p>걱정말고 AM!GO의 펫시터 앱을 이용해보세요 !</p>
+           
+          </figcaption>
+        </figure>
       </div>
-    </div>
-    <!--소개 종료-->
+      <!--소개 종료-->
 
-    <!-- AM!GO 서비스 -->
-    <!-- 차후에 아이콘으로 대체할것임.-->
-    <div class="container overflow-hidden">
-      <div>
+      <!-- AM!GO 서비스 -->
+      <!-- 차후에 아이콘으로 대체할것임.-->
+      <div class="container overflow-hidden col-md-6 mb-5 mt-5">
         <h4>AM!GO서비스</h4>
-      </div>
-      <!-- 펫시터 -->
-      <div class="row gy-5">
-        <div class="col-6">
-          <div class="p-3">
-          <a href="#" onclick="main_fail();">
-             <img
+        <div class="row gy-5">
+          <!-- 펫시터 -->
+          <div class="col-6">
+            <div class="p-3">
+              <a href="#" onclick="main_fail()">
+                <img
                   src="/amigo/resources/img/petsitter.png"
                   class="img-fluid"
-                  alt="..."
+                  alt="sitter"
                 />
-            </a>
+              </a>
+            </div>
           </div>
-        </div>
-        <!-- 추천산책루트 -->
-        <div class="col-6">
-          <div class="p-3">
-            <a href="#" onclick="main_fail();">
-           <img
+          <!-- 펫시터 end -->
+          <!-- 추천산책루트  -->
+          <div class="col-6">
+            <div class="p-3">
+              <a href="#" onclick="main_fail()">
+                <img
                   src="/amigo/resources/img/walking.png"
                   class="img-fluid"
-                  alt="..."
+                  alt="trail"
                 />
-            </a>
+              </a>
+            </div>
           </div>
-        </div>
-        <!-- 병원 -->
-        <div class="col-6">
-          <div class="p-3">
-           <a href="#" onclick="main_fail();">
-            <img
+          <!-- 추천산책루트 end -->
+          <!-- 병원 -->
+          <div class="col-6">
+            <div class="p-3">
+              <a href="#" onclick="main_fail()">
+                <img
                   src="/amigo/resources/img/hp.png"
                   class="img-fluid"
-                  alt="..."
+                  alt="hospital"
                 />
-            </a>
+              </a>
+            </div>
           </div>
-        </div>
-        <!-- 고객센터 -->
-        <div class="col-6">
-          <div class="p-3">
-          <a href="#" onclick="main_fail();">
-             <img
+          <!-- 병원 end -->
+          <!-- 고객센터 -->
+          <div class="col-6">
+            <div class="p-3">
+              <a
+                href="#" onclick="main_fail()"
+              >
+                <img
                   src="/amigo/resources/img/cs.png"
                   class="img-fluid"
                   alt="..."
                 />
-            </a>
+              </a>
+            </div>
           </div>
+          <!-- 고객센터 end -->
         </div>
       </div>
-    </div>
-    <hr />
-    <!-- 커뮤니티 -->
-    <div class="container">
-      <div>
-        <h4>커뮤니티</h4>
-        <a href="#" onclick="main_fail();">전체보기</a>
-      </div>
-      <div class="row text-center">
-        <a href="#" onclick="main_fail();">
-          <img
+      <hr />
+      <!-- 커뮤니티 -->
+      <div class="container  col-md-6 mt-5">
+        <div class="row justify-content-between">
+          <div class="col-4">
+            <h4>커뮤니티</h4>
+          </div>
+          <div class="col-4 text-end">
+            <a href="#" onclick="main_fail()" class="all-view">전체보기</a>
+          </div>
+        </div>
+        <div class="row text-center">
+          <a href="#" onclick="main_fail()">
+            <img
               src="/amigo/resources/img/community.png"
               class="img-fluid"
               alt="community"
             />
-        </a>
-      </div>
-      <br />
-      <div class="row text-center">
-        <a href="#" onclick="main_fail();">
-          <img
+          </a>
+        </div>
+        <br />
+        <div class="row text-center">
+        <c:choose>
+        <c:when test="${ sessionScope.user.getUser_type() == 'U' }">
+          <a href="apply/sitter_join.do">
+            <img
               src="/amigo/resources/img/needYou.png"
               class="img-fluid"
               alt="needYou"
             />
-        </a>
-      </div>
-    </div>
-    <!-- 커뮤니티 종료-->
-    <br />
-    <!-- 실시간 후기 -->
-    <div>
-      <h4>실시간 후기</h4>
-      <a href="#" onclick="main_fail();">전체보기</a>
-    </div>
-    <div id="carouselExampleDark" class="carousel carousel-dark slide">
-      <div class="carousel-indicators">
-        <button
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide-to="0"
-          class="active"
-          aria-current="true"
-          aria-label="Slide 1"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide-to="1"
-          aria-label="Slide 2"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide-to="2"
-          aria-label="Slide 3"
-        ></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="10000">
-          <img
-            src="https://via.placeholder.com/400x100"
-            class="d-block w-100"
-            alt="..."
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>First slide label</h5>
-            <p>Some representative placeholder content for the first slide.</p>
-          </div>
-        </div>
-        <div class="carousel-item" data-bs-interval="2000">
-          <img
-            src="https://via.placeholder.com/400x100"
-            class="d-block w-100"
-            alt="..."
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Second slide label</h5>
-            <p>Some representative placeholder content for the second slide.</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img
-            src="https://via.placeholder.com/400x100"
-            class="d-block w-100"
-            alt="..."
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Third slide label</h5>
-            <p>Some representative placeholder content for the third slide.</p>
-          </div>
+          </a>
+         </c:when>
+         <c:when test="${ sessionScope.user.getUser_type() == 'A' || sessionScope.user.getUser_type() == 'S'}">
+           <a href="#" onclick="main_fail()">
+            <img
+              src="/amigo/resources/img/needYou.png"
+              class="img-fluid"
+              alt="needYou"
+            />
+          </a>
+         </c:when>
+         </c:choose>
+         <!-- 펫시터 회원과 관리자는 지원을 제한함. -->
+         
         </div>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleDark"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleDark"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    <!-- 후기 종료 -->
-    <br />
-     <!-- Q&A -->
+      <!-- 커뮤니티 종료-->
+      <br />
+      <!-- 실시간 후기 -->
+      <div class="container col-md-6 mt-5">
+      <div class="row justify-content-between">
+        <div class="col-4">
+          <h4>실시간 후기</h4>
+        </div>
+        <div class="col-4 text-end">
+          <a href="#"
+          onclick="main_fail()"
+          class="all-view">전체보기</a>
+        </div>
+      </div>
+      <div id="carouselExampleDark" class="carousel carousel-dark slide">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#carouselExampleDark"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleDark"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleDark"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="10000">
+            <img
+              src="https://via.placeholder.com/400x100"
+              class="d-block w-100"
+              alt="..."
+            />
+            <div class="carousel-caption d-none d-md-block">
+              <h5>First slide label</h5>
+              <p>
+                Some representative placeholder content for the first slide.
+              </p>
+            </div>
+          </div>
+          <div class="carousel-item" data-bs-interval="2000">
+            <img
+              src="https://via.placeholder.com/400x100"
+              class="d-block w-100"
+              alt="..."
+            />
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Second slide label</h5>
+              <p>
+                Some representative placeholder content for the second slide.
+              </p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://via.placeholder.com/400x100"
+              class="d-block w-100"
+              alt="..."
+            />
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Third slide label</h5>
+              <p>
+                Some representative placeholder content for the third slide.
+              </p>
+            </div>
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleDark"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleDark"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      </div>
+      <!-- 후기 종료 -->
+      <br />
+      <!-- Q&A -->
       <div class="container col-md-6">
       <div class="row justify-content-between mt-5">
         <div class="col-4">
           <h4>Q&A</h4>
         </div>
         <div class="col-4 text-end">
-          <a href="#" onclick="main_fail();">전체보기</a>
+          <a href="#" onclick="main_fail()" class="all-view">전체보기</a>
         </div>
       </div>
-      <div class="container card text-center" style="width: 25rem;" onclick="main_fail();">
+      <div class="container card text-center" style="width: 25rem;" onclick="main_fail()">
       	<h5 class="card-title"><b>Q ${ board.getUbd_title() }</b></h5>
         	<small> ${ board.getUser_nick() } </small>
         <div class="card-body">
@@ -273,10 +502,34 @@
       </div>
       <br />
       <!-- Q&A 종료 -->
+      <!-- 스크롤 -->
+      <a href="#" class="top"
+><img
+                  src="/amigo/resources/img/topicon2.png"
+                  alt="top"/> </a>
     </div>
-		
-	<%@include file="/includes/footer.jsp" %>
+    
+   
+    
+    
+    <script>
+      $( document ).ready( function() {
+        $( window ).scroll( function() {
+          if ( $( this ).scrollTop() > 200 ) {
+            $( '.top' ).fadeIn();
+          } else {
+            $( '.top' ).fadeOut();
+          }
+        } );
+        $( '.top' ).click( function() {
+          $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+          return false;
+        } );
+      } );
+    </script>
+    <%@include file="/includes/footer.jsp" %>
 
-	
-</body>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

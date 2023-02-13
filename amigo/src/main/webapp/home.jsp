@@ -20,7 +20,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
 <meta charset="UTF-8">
-<style></style>
+<style>
+</style>
 <title>로그인전01_처음화면</title>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -69,12 +70,12 @@
     <!-- Submit button -->
     
       <form>
-        <div class="container mt-3 mb-5 py-5  h-100" align="center">
+        <div class="container mt-3 mb-3 py-5  h-100" align="center">
           <!-- 이메일 로그인 -->
-          <button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='login.do';">
+          <button type="button" class="btn btn-primary btn-lg btn-block" style="width:350px; height:50px" onclick="location.href='login.do';">
             이메일 로그인
           </button>
-          <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="location.href='terms.do';">
+          <button type="button" class="btn btn-secondary mt-3 btn-lg btn-block" style="width:350px; height:50px" onclick="location.href='terms.do';">
             이메일 가입
           </button>
           <!-- 이메일 로그인 end -->
@@ -93,6 +94,7 @@
             </a>
           </div>
           카카오, 지메일 end -->
+          
         </div>
         <hr />
         <div class="container text-center mt-2">
