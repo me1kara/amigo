@@ -5,6 +5,7 @@ import java.io.File;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,22 +73,54 @@ public class ReviewController {
 		return "view/review/review_list.jsp";
 	}
 	
+	// 특정 펫시터의 리뷰리스트
+	@RequestMapping("/sit_review_list.do")
+	public String getReviewList (HttpServletRequest req, ReviewVO review, Model model) {
+		
+		int sit_no = Integer.parseInt(req.getParameter("sit_no"));
+		String user_name = (req.getParameter("user_name"));
+		
+		List<ReviewVO> rev = reviewService.getReviewListBySitNo(sit_no);
+		model.addAttribute("rev", rev);
+		
+		req.setAttribute("user_name", user_name);
+		req.setAttribute("sit_no", sit_no);
+		
+		return "view/sitter/sitter_profile.jsp";
+		
+	}
+	
+	
+		
 
 	// 리뷰 작성하는 페이지로 들어가기
 	@RequestMapping(value="/view/review/user_review_insert.do", method=RequestMethod.GET) 
-	public String insertReview() {
+	public String insertReview(HttpServletRequest req) {
 		
 		System.out.println("리뷰 작성창");
-		return "view/review/review_insert.jsp";
+		
+		
+		int sit_no = Integer.parseInt(req.getParameter("sit_no"));
+		String user_name = (req.getParameter("user_name"));
+		
+		
+		req.setAttribute("user_name", user_name);
+		req.setAttribute("sit_no", sit_no);
+		
+		// return "view/review/review_insert.jsp";
+		return "review_insert.jsp";
 	}
 	
 	// 리뷰 작성해서 Submit 하기.
 	@RequestMapping(value="/view/review/user_review_insert.do", method=RequestMethod.POST) 
 	public String insertReview(ReviewVO review) {
 		
+		
 		System.out.println("리뷰를 등록합니다.");
+		System.out.println(review.toString());
 		reviewService.insertReview(review);
 		return "view/review/review_list.jsp";
+		
 	}
 	
 	// 리뷰 삭제하기

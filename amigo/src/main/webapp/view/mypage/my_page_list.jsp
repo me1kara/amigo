@@ -91,10 +91,6 @@ prefix="c"%>
        		<li class="list-group-item">
        		   <a href="<%=request.getContextPath() %>/view/admin/getSitList.do" class="mypage_link">펫시터 회원관리</a>
      	    </li>
-     	    <li class="list-group-item">
-       		   <a href="<%=request.getContextPath() %>/view/admin/getPayList.do" class="mypage_link">펫시터 회원관리</a>
-     	    </li>
-     	    
         </c:if>
         <c:if test="${ sessionScope.user.getUser_type() == 'U' }">
         <li class="list-group-item">

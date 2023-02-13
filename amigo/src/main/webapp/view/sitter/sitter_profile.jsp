@@ -126,14 +126,53 @@
 						</div>
 								<hr>
 								<div>후기</div>
+								
+								<c:forEach var="rev"  items="${ review }">
+								<table>
+									<tr>
+										<td>${ rev.getRev_no() }</td>
+										<td>${ rev.getStar_cnt() }</td>
+										<td>${ rev.getRev_content() }</td>
+										<td>${ rev.getRev_date() }</td>
+										<td>${ rev.getUser_nick() }</td>
+										<td></td>
+										<td></td>
+										<td></td>										
+									</tr>
+								</table>
+								</c:forEach>
+								
 					</article>
 				<article>
 				<article>
 					<button type="button" class="btn btn-secondary" id="pay_btn" onclick="requestPay()">결제 및 신청</button>
 				</article>
 				<a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }">신청</a>
-				
-		
+				<br>
+				<a href="/amigo/view/review/user_review_insert.do?sit_no=${sitter.sit_no}&user_name=${sitter.user_name}">리뷰작성</a><!-- 리뷰작성 컨트롤러로 진입 -->
+
+
+
+<!-- 메시지 요청된 리소스 [/view/review/user_review_insert.do]은(는) 가용하지 않습니다. -->
+<!-- 파일 [/view/review/view/review/review_insert.jsp]을(를) 찾을 수 없습니다. -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				</section>
 			</div>
 	<%@include file="/includes/footer.jsp" %>

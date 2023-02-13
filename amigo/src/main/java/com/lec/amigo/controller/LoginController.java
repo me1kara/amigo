@@ -98,11 +98,11 @@ public class LoginController {
 			
 			List<ChatRoom> room_list = chatService.getRoomList(user.getUser_no());
 			
-			//시터인지 확인용
-			if(user.getUser_type().equals("S")) {
-				SitterVO sitter = sitService.getSitter(user.getUser_no());
-				sess.setAttribute("sitter", sitter);
-			}
+//			//시터인지 확인용
+//			if(user.getUser_type().equals("S")) {
+//				SitterVO sitter = sitService.getSitter(user.getUser_no());
+//				sess.setAttribute("sitter", sitter);
+//			}
 		
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);

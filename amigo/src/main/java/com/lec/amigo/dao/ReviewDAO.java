@@ -38,6 +38,8 @@ public class ReviewDAO {
 	private String insertReview = "";                          // 리뷰 작성하기
 	private String deleteReview = "";                          // 리뷰 삭제하기
 	private String starsTotalCount ="";
+	private String selectReviewListByUserNo = "";
+	private String selectReviewListBySitNo ="";
 	
 
 	@PostConstruct
@@ -48,6 +50,8 @@ public class ReviewDAO {
 		insertReview                      = environment.getProperty("insertReview ");
 		deleteReview                      = environment.getProperty("deleteReview");
 		starsTotalCount                   = environment.getProperty("starsTotalCount");
+		selectReviewListByUserNo          = environment.getProperty("selectReviewListByUserNo");
+		selectReviewListBySitNo           = environment.getProperty("selectReviewListBySitNo");
 	}
 	
 	// 총 리뷰 다뜨게하기
@@ -55,6 +59,13 @@ public class ReviewDAO {
 		
 		System.out.println(selectReviewList);
 		return jdbcTemplate.query(selectReviewList, new ReviewRowMapper());
+	}
+	
+	// 펫시터 한명당 총리뷰 02/13
+	public List<ReviewVO> getReviewListBySitNo(int sit_no) {
+		System.out.println(selectReviewListBySitNo);
+		Object[] args = {sit_no };
+		return jdbcTemplate.query(selectReviewListBySitNo, args, new ReviewRowMapper());
 	}
 
 	//  리뷰 쓰기 아래는 별점 매기기???
@@ -98,6 +109,12 @@ public class ReviewDAO {
 		return jdbcTemplate.queryForObject("select count(*) from sit_review", Integer.class);
 	}
 	
+	public int starsTotalCountBySit(int sit_no) {
+		
+		Object[] args = {sit_no};
+		return jdbcTemplate.queryForObject("select count(*) from sit_review where sit_no = ?", args, Integer.class);
+	}
+	
 	public int ssrc1() { 
 		return jdbcTemplate.queryForObject("select count(*) from sit_review where star_cnt = ?", Integer.class, 1);
 	}
@@ -116,6 +133,11 @@ public class ReviewDAO {
 	
 	public int ssrc5() {
 		return jdbcTemplate.queryForObject("select count(*) from sit_review where star_cnt = ?", Integer.class, 5);
+	}
+	
+	public int selectReviewListByUserNo() {
+		return jdbcTemplate.queryForObject("select sit_review.*, user.user_nick, user.user_photo, petsitter.sit_photo from sit_review inner join petsitter on sit_review.user_no = petsitter.user_no inner join user on petsitter.user_no = user.user_no where petsitter.user_no = ? order by sit_review.rev_date desc", Integer.class);
+		
 	}
 	
 	

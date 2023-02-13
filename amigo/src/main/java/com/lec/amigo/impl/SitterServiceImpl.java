@@ -76,9 +76,9 @@ public class SitterServiceImpl implements SitterService {
 
 	
 	//유저넘버로구하기용
-	public SitterVO getSitter(int user_no) {
-		return sitterDAO.getSitter(user_no);
-	}
+//	public SitterVO getSitter(int user_no) {
+//		return sitterDAO.getSitter(user_no);
+//	}
 
 	@Override
 	public List<SitterVO> getSitInfoList(int user_no) {
