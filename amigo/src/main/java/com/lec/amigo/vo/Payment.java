@@ -27,6 +27,11 @@ public class Payment {
 	public int getUser_no() {
 		return user_no;
 	}
+	@Override
+	public String toString() {
+		return "Payment [imp_uid=" + imp_uid + ", merchant_uid=" + merchant_uid + ", pay=" + pay + ", user_no="
+				+ user_no + ", res_no=" + res_no + "]";
+	}
 	public void setUser_no(int user_no) {
 		this.user_no = user_no;
 	}

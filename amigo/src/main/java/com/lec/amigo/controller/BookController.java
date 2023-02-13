@@ -380,7 +380,7 @@ public class BookController {
 		UserVO user = (UserVO)sess.getAttribute("user");
 		int user_no = user.getUser_no();
 		
-		searchVO.setTotalRowCount(bookService.getMyBookCount(user_no));
+		searchVO.setTotalRowCount(bookService.getMyBookCount(user_no, searchVO));
 		searchVO.setCurPage(curPage);
 		searchVO.setRowSizePerPage(rowSizePerPage);
 		searchVO.setSearchCategory(searchCategory);
@@ -409,8 +409,9 @@ public class BookController {
 		int user_no = user.getUser_no();
 		
 		if(user.getUser_type().equals("S")) {
-			SitterVO sitter= (SitterVO)sess.getAttribute("sitter");	
-			searchVO.setTotalRowCount(bookService.getMyBookCount(sitter));
+			SitterVO sitter = new SitterVO();
+			sitter.setUser_no(user_no);
+			searchVO.setTotalRowCount(bookService.getMyBookCount(sitter,searchVO));
 			searchVO.pageSetting();
 			List<BookVO> sitBookList = bookService.getSitBookList(user_no,searchVO);
 			List<UserVO> userList  = userService.getUserList();

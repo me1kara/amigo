@@ -119,10 +119,17 @@
 					let res_start = new Date(result[0].res_date);
 					let today = new Date();	
 					let limitDay = new Date(today);
-					limitDay.setDate(res_start.getDate()-2);
+					limitDay.setDate(res_start.getDate()-1);
 					console.log(today + limitDay + res_start);
+					
+					let cate;
+					if('${searchVO.getSearchCategory()}'!=''){
+						cate = '${searchVO.getSearchCategory()}';
+					}
 					if(today<limitDay){
 						temp+='<button class="btn btn-danger book_btn" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
+					}else if(cate=='past'){
+						temp+='<button class="btn btn-danger book_btn" onclick="" style="position:relative;">리뷰목록</button>';
 					}else{
 						temp+='<button disabled="disabled" class="btn btn-danger book_btn" style="position:relative;">취소불가</button>';
 					}
@@ -169,18 +176,29 @@
 </head>
 <body>
 	<%@include file="/includes/header.jsp" %>
-	
-		<script>
-			
-		</script>
+				<c:set var="rp" value="${searchVO.getRowSizePerPage()}" />
+				<c:set var="cp" value="${searchVO.getCurPage()}" />
+				<c:set var="fp" value="${searchVO.getFirstPage()}" />
+				<c:set var="lp" value="${searchVO.getLastPage()}" />
+				<c:set var="ps" value="${searchVO.getPageSize()}" />
+				<c:set var="tp" value="${searchVO.getTotalPageCount()}" />
+				<c:set var="sc" value="${searchVO.getSearchCategory()}" />
+				<c:set var="sw" value="${searchVO.getSearchWord()}" />
 		<div class="container text-center">
 			<section>	
 				<article>
 					<h2 class="book_ch_title">예약 확인</h2> <hr>
 					<c:if test='${user.getUser_type().equals("S") }'>
 						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do'">시터모드</button>
-					</c:if>			
-				
+					</c:if>
+					<c:choose>
+					<c:when test="${sc eq 'past' }">
+						<button class="btn btn-primary" onclick="location.href='book_check.do?mode=user'">현재기록</button>
+					</c:when>
+					<c:otherwise>
+						<button class="btn btn-primary" onclick="location.href='book_check.do?searchCategory=past&mode=user'">이전기록</button>
+					</c:otherwise>
+					</c:choose>
 				</article>
 					<article id="user_book">
 						<c:choose>
@@ -239,45 +257,34 @@
 								</c:if>	
 								</c:forEach>
 							</c:forEach>
-							</ul><c:set var="rp" value="${searchVO.getRowSizePerPage()}" />
-								
+							</ul>
 								<div class="row align-items-start mt-3">
 									<ul class="col pagination justify-content-center">
-										<c:set var="cp" value="${searchVO.getCurPage()}" />
-										<c:set var="fp" value="${searchVO.getFirstPage()}" />
-										<c:set var="lp" value="${searchVO.getLastPage()}" />
-										<c:set var="ps" value="${searchVO.getPageSize()}" />
-										<c:set var="tp" value="${searchVO.getTotalPageCount()}" />
-										<c:set var="sc" value="${searchVO.getSearchCategory()}" />
-										<c:set var="st" value="${searchVO.getSearchType()}" />
-										<c:set var="sw" value="${searchVO.getSearchWord()}" />
-
 										<c:if test="${ fp != 1 }">
 											<li class="page-item"><a
-												href="book_check.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
+												href="book_check.do?curPage=1&rowSizePerPage=${rp}&searchCategory=${sc}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-fast-backward"></i></a></li>
 											<li class="page-item"><a
-												href="book_check.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
+												href="book_check.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchCategory=${sc}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-backward"></i></a></li>
 										</c:if>
 
 										<c:forEach var="page" begin="${fp}" end="${lp}">
 											<li class="page-item ${cp==page ? 'active' : ''}"><a
-												href="book_check.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
+												href="book_check.do?curPage=${page}&rowSizePerPage=${rp}&searchCategory=${sc}&searchWord=${sw}&mode=user"
 												class="page-link">${page}</a></li>
 										</c:forEach>
 
 										<c:if test="${ lp < tp }">
 											<li class="page-item "><a
-												href="book_check.do?curPage=${lp+1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
+												href="book_check.do?curPage=${lp+1}&rowSizePerPage=${rp}&searchCategory=${sc}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-forward"></i></a></li>
 											<li class="page-item"><a
-												href="book_check.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}&mode=user"
+												href="book_check.do?curPage=${tp}&rowSizePerPage=${rp}&searchCategory=${sc}&searchWord=${sw}&mode=user"
 												class="page-link"><i class="fas fa-fast-forward"></i></a></li>
 										</c:if>
 									</ul>
 									<!-- pagination -->
-
 								</div>
 								<!-- 페이징 -->
 							</c:when>
