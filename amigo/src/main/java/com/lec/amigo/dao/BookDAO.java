@@ -228,12 +228,6 @@ public class BookDAO {
 		return jdbcTemplate.queryForObject(sql, args, Integer.class);
 	}
 	
-	public int getCateRowCount () {
-		
-		return 0;
-	}
-
-	
 	
 	
 	public int setBook(String calr, BookVO book, String merchant_uid) {
@@ -318,10 +312,19 @@ public class BookDAO {
 		return 0;
 	}
 
-	public List<BookVO> getBookList(int user_no, SearchVO search) {
-		String sql = "select r.*, rs.res_date  from reservation r, (select res_no, \r\n"
-				+ "IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date, DATEDIFF(max(res_date),sysdate()) df from res_content GROUP BY res_no) rs \r\n"
-				+ "where user_no=? and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date limit ?,?";
+	public List<BookVO> getBookList(int user_no, SearchVO search) {		
+		String sql=null;
+		System.out.println(search.getSearchType());
+		if(search.getSearchCategory()!=null && search.getSearchCategory().equals("past")) {
+			sql = "select r.*, rs.res_date from reservation r, (select res_no,"
+					+ "IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date, DATEDIFF(max(res_date),sysdate()) df from res_content GROUP BY res_no) rs \r\n"
+					+ "where user_no=? and r.res_no = rs.res_no and rs.df<0 ORDER BY res_date limit ?,?";
+		}else {
+			sql = "select r.*, rs.res_date  from reservation r, (select res_no,"
+					+ "IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date, DATEDIFF(max(res_date),sysdate()) df from res_content GROUP BY res_no) rs \r\n"
+					+ "where user_no=? and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date limit ?,?";
+		}
+
 		Connection conn = JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -371,7 +374,13 @@ public class BookDAO {
 	}
 
 	public List<BookVO> getSitBookList(int user_no, SearchVO search) {
-		String sql = "select r.res_no, res_etc, user_no, sit_no, res_regdate,res_date,res_pay, res_visit_is, res_term_is from reservation r, (select res_no, IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date,DATEDIFF(max(res_date), sysdate()) df from res_content GROUP BY res_no) rs where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?) and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date limit ?,?";
+		String sql = null;
+		
+		if(search.getSearchCategory()!=null && search.getSearchCategory().equals("past")) {
+			sql = "select r.res_no, res_etc, user_no, sit_no, res_regdate,res_date,res_pay, res_visit_is, res_term_is from reservation r, (select res_no, IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date,DATEDIFF(max(res_date), sysdate()) df from res_content GROUP BY res_no) rs where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?) and r.res_no = rs.res_no and rs.df<0 ORDER BY res_date limit ?,?";
+		}else {
+			sql = "select r.res_no, res_etc, user_no, sit_no, res_regdate,res_date,res_pay, res_visit_is, res_term_is from reservation r, (select res_no, IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date,DATEDIFF(max(res_date), sysdate()) df from res_content GROUP BY res_no) rs where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?) and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date limit ?,?";
+		}
 		Connection conn = JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -411,8 +420,17 @@ public class BookDAO {
 		return bookList;
 	}
 
-	public int getMyBookCount(int user_no) {
-		String sql = "select count(distinct r.res_no) from reservation r, res_content rs where user_no=? and r.res_no = rs.res_no";
+	public int getMyBookCount(int user_no,SearchVO searchvo) {
+		String sql =null;
+		if(searchvo.getSearchCategory()!=null && searchvo.getSearchCategory().equals("past")){
+			sql = "select count(*) from reservation r, (select res_no,"
+					+ "					IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date, DATEDIFF(max(res_date),sysdate()) df from res_content GROUP BY res_no) rs"
+					+ "					where user_no=? and r.res_no = rs.res_no and rs.df<0 ORDER BY res_date";	
+		}else {
+			sql = "select count(*) from reservation r, (select res_no,"
+					+ "					IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date, DATEDIFF(max(res_date),sysdate()) df from res_content GROUP BY res_no) rs"
+					+ "					where user_no=? and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date";	
+		}
 		Object[] args = {user_no};
 		return jdbcTemplate.queryForObject(sql, args, Integer.class);
 	}
@@ -457,9 +475,14 @@ public class BookDAO {
 		return row; 
 	}
 
-	public int getMyBookCount(SitterVO sitter) {
-		String sql = "select count(distinct r.res_no) from reservation r, res_content rs where sit_no=? and r.res_no = rs.res_no";
-		Object[] args = {sitter.getSit_no()};
+	public int getMyBookCount(SitterVO sitter,SearchVO search) {
+		String sql = null;;
+		if(search.getSearchCategory()!=null && search.getSearchCategory().equals("past")) {
+			sql = "select count(*) from reservation r, (select res_no, IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date,DATEDIFF(max(res_date), sysdate()) df from res_content GROUP BY res_no) rs where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?) and r.res_no = rs.res_no and rs.df<0 ORDER BY res_date";
+		}else {
+			sql = "select count(*) from reservation r, (select res_no, IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date,DATEDIFF(max(res_date), sysdate()) df from res_content GROUP BY res_no) rs where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?) and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date";
+		}
+		Object[] args = {sitter.getUser_no()};
 		int rs =0;
 		try {
 			rs = jdbcTemplate.queryForObject(sql, args, Integer.class);

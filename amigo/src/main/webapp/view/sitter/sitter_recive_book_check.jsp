@@ -120,7 +120,7 @@
 		
 	}
 	
-	function book_refuse(rno){
+/* 	function book_refuse(rno){
 		if(confirm('정말로 거부하시겠습니까?')){
 			$.ajax({
 				url  : '/amigo/ajax/refuseBook.do',
@@ -145,7 +145,7 @@
 			});
 			
 		}
-	}
+	} */
 	function book_update(rno){
 		if(confirm('정말로 승인하시겠습니까?')){
 			$.ajax({
@@ -176,6 +176,15 @@
 </script>
 </head>
 <body>
+			<c:set var="cp" value="${searchVO.getCurPage()}" />
+			<c:set var="rp" value="${searchVO.getRowSizePerPage()}" />
+			<c:set var="fp" value="${searchVO.getFirstPage()}" />
+			<c:set var="lp" value="${searchVO.getLastPage()}" />
+			<c:set var="ps" value="${searchVO.getPageSize()}" />
+			<c:set var="tp" value="${searchVO.getTotalPageCount()}" />
+			<c:set var="sc" value="${searchVO.getSearchCategory()}" />
+			<c:set var="st" value="${searchVO.getSearchType()}" />
+			<c:set var="sw" value="${searchVO.getSearchWord()}" />
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
 			<section>	
@@ -184,11 +193,19 @@
 					<c:if test='${user.getUser_type().equals("S") }'>
 						<button class="btn btn-primary" onclick="location.href='/amigo/book_check.do'">유저모드</button>
 					</c:if>
+					<c:choose>
+					<c:when test="${sc eq 'past' }">
+						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do'">현재기록</button>
+					</c:when>
+					<c:otherwise>
+						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do?searchCategory=past'">이전기록</button>
+					</c:otherwise>
+					</c:choose>
 				</article>
  				<article id="sitter_book">
 					<h1>시터전용</h1>
 					<c:choose>
-						<c:when test="${sitBookList!=null }">
+						<c:when test="${sitBookList!=null && !sitBookList.isEmpty() }">
 							<ul style="list-style: none;">
 							<c:forEach var="book" items="${sitBookList }">
 								<c:forEach var="usr" items="${userList }">
@@ -248,37 +265,27 @@
 							</ul>
 							<div class="row align-items-start mt-3">
 									<ul class="col pagination justify-content-center">
-										<c:set var="cp" value="${searchVO.getCurPage()}" />
-										<c:set var="rp" value="${searchVO.getRowSizePerPage()}" />
-										<c:set var="fp" value="${searchVO.getFirstPage()}" />
-										<c:set var="lp" value="${searchVO.getLastPage()}" />
-										<c:set var="ps" value="${searchVO.getPageSize()}" />
-										<c:set var="tp" value="${searchVO.getTotalPageCount()}" />
-										<c:set var="sc" value="${searchVO.getSearchCategory()}" />
-										<c:set var="st" value="${searchVO.getSearchType()}" />
-										<c:set var="sw" value="${searchVO.getSearchWord()}" />
-
 										<c:if test="${ fp != 1 }">
 											<li class="page-item"><a
-												href="receiveBook_check.do?curPage=1&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="receiveBook_check.do?curPage=1&rowSizePerPage=${rp}&searchCategory=${sc}&searchWord=${sw}"
 												class="page-link"><i class="fas fa-fast-backward"></i></a></li>
 											<li class="page-item"><a
-												href="receiveBook_check.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="receiveBook_check.do?curPage=${fp-1}&rowSizePerPage=${rp}&searchCategory=${sc}&searchWord=${sw}"
 												class="page-link"><i class="fas fa-backward"></i></a></li>
 										</c:if>
 
 										<c:forEach var="page" begin="${fp}" end="${lp}">
 											<li class="page-item ${cp==page ? 'active' : ''}"><a
-												href="receiveBook_check.do?curPage=${page}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="receiveBook_check.do?curPage=${page}&rowSizePerPage=${rp}&searchCategory=${sc}&searchWord=${sw}"
 												class="page-link">${page}</a></li>
 										</c:forEach>
 
 										<c:if test="${ lp < tp }">
 											<li class="page-item "><a
-												href="receiveBook_check.do?curPage=${lp+1}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="receiveBook_check.do?curPage=${lp+1}&rowSizePerPage=${rp}&searchCategory=${sc}&searchWord=${sw}"
 												class="page-link"><i class="fas fa-forward"></i></a></li>
 											<li class="page-item"><a
-												href="receiveBook_check.do?curPage=${tp}&rowSizePerPage=${rp}&searchType=${st}&searchWord=${sw}"
+												href="receiveBook_check.do?curPage=${tp}&rowSizePerPage=${rp}&searchCategory=${sc}&searchWord=${sw}"
 												class="page-link"><i class="fas fa-fast-forward"></i></a></li>
 										</c:if>
 									</ul>

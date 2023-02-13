@@ -80,9 +80,9 @@ public class BookServiceImpl implements BookService{
 		
 		return bookDao.getSitBookList(user_no, search);
 	}
-
-	public int getMyBookCount(int user_no) {
-		return bookDao.getMyBookCount(user_no);
+	
+	public int getMyBookCount(int user_no, SearchVO searchvo) {
+		return bookDao.getMyBookCount(user_no,searchvo);
 	}
 
 	public int deleteBook(int rno) {
@@ -143,9 +143,9 @@ public class BookServiceImpl implements BookService{
 		return bookDao.updateBook(rno);
 	}
 
-	public int getMyBookCount(SitterVO sitter) {
+	public int getMyBookCount(SitterVO sitter, SearchVO searchVO) {
 		// TODO Auto-generated method stub
-		return bookDao.getMyBookCount(sitter);
+		return bookDao.getMyBookCount(sitter, searchVO);
 	}
 
 	public int payBook(Payment payment) {
