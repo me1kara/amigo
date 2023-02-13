@@ -291,10 +291,12 @@ public class ChatDAO {
 		return 0;
 	}
 	
-	public List<ChatVO> getMyChatList(int user_no){			
+	
+
+	public List<ChatVO> getMyChatList(int user_no){
+		//내가 가진 채팅방의 방번호들 구하기
 		String sql = "select distinct sitt_chat_index from sit_chat where user_no=?";
-		//Object[] args = {sql, name};
-				
+		
 		Connection conn = JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -310,17 +312,16 @@ public class ChatDAO {
 			
 			while(rs.next()) {
 				a = rs.getInt("sitt_chat_index");
+				//해당 방의 마지막 채팅 구하기 
 				myChatList.add(getLastChat(a));
 			}
+			//마지막 채팅만 담은 리스트를 반환
 			return myChatList;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			JDBCUtility.close(conn, rs, pstmt);
 		}
-		
-			
 		return null;
 	}
 	
@@ -493,20 +494,6 @@ public class ChatDAO {
 		String fileType = fileName.substring(fileName.lastIndexOf("."),fileName.length());
 			
 		fileName = UUID.randomUUID().toString();
-		/*
-		fileName = fileName.split(fileType)[0];
-		Object[] args = {param};
-		String selectEqualsFile = "select count(sitt_chat_file) from sit_chat where sitt_chat_file like ?";
-		String param = fileName+"%";
-	
-		int a = 0;
-		a = jdbcTemplate.queryForObject(selectEqualsFile,args, Integer.class);
-		
-		if(a!=0) {
-		
-			fileName = fileName+"("+a+")";
-		}
-		*/		
 		fileName = fileName+fileType;
 		
 		String insertSql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,SYSDATE(),0,?,?)";	

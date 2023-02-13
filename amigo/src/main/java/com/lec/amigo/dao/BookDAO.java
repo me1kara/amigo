@@ -98,21 +98,6 @@ public class BookDAO {
 
 	public List<SitterVO> getArroudSitter(String secondeAddr, PagingVO page, String calr) {		
 		System.out.println(secondeAddr);
-		/*
-		 * String sql =
-		 * "select u.user_no, s.sit_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_intro, s.sit_care_exp from user u,petsitter s"
-		 * +
-		 * " where u.user_no = s.user_no and u.user_type='S' and user_addr like ? limit ?,?"
-		 * ;
-		 */
-		
-		/*
-		 * String sql =
-		 * "select r.*,rs.res_time, rs.res_date from (select res_no, su.* from reservation rd, "
-		 * +
-		 * "(select u.user_no, s.sit_no, s.sit_days, s.sit_time, s.sit_photo, s.sit_intro, s.sit_care_exp from user u,petsitter s where u.user_no = s.user_no and u.user_type='S') su where rd.sit_no = su.sit_no) r, res_content rs where r.res_no = rs.res_no and "
-		 * + "rs.res_date not in (";
-		 */
 		String sql = "select u.user_name,u.user_addr, ss.* from user u,"
 				+ "(select * from petsitter where sit_no not in("
 				+ "select distinct r.sit_no from reservation r,(select distinct * from res_content where res_date in (";
