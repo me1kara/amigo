@@ -30,6 +30,7 @@ public class ChatDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	//id확인
 	public int idCheck(int no) {
 		boolean check = false;
 		Connection conn = JDBCUtility.getConnection();		
@@ -68,6 +69,7 @@ public class ChatDAO {
 	}
 	
 	
+	//특정채팅방 채팅목록
 	public List<ChatVO> getChatList(int index){
 		//List<ChatVO> chatList = new ArrayList<ChatVO>();
 		String sql = "SELECT sitt_chat_no, sitt_chat_index,user_nick, sitt_chat_content, sitt_chat_regdate,sitt_chat_readis,sitt_chat_file,sitt_chat_emo "
@@ -82,81 +84,14 @@ public class ChatDAO {
 			return null;
 		}
 		
-		/*
-		Connection conn = JDBCUtility.getConnection();
-
-		ResultSet rs =null;
-		PreparedStatement pstmt=null;
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, index);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				ChatVO chat = new ChatVO();
-				chat.setChat_no(rs.getInt("sitt_chat_no"));
-				chat.setIndex(rs.getInt("sitt_chat_index"));
-				chat.setUser_nick(rs.getString("user_nick"));
-				chat.setContent(rs.getString("sitt_chat_content"));
-				chat.setDate(rs.getDate("sitt_chat_regdate"));
-				chat.setRead_is(rs.getBoolean("sitt_chat_readis"));
-				chat.setFile(rs.getString("sitt_chat_file"));
-				chat.setEmo(rs.getString("sitt_chat_emo"));
-				chatList.add(chat);
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			JDBCUtility.close(conn, rs, pstmt);
-		}
-		*/
-		
 
 	}
 	
+	
+	//채팅내용 넣기
 	public int insertChat(int index, int user_no, String content) {
-		//Connection conn = JDBCUtility.getConnection();
+
 		String sql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'),0,?,?)";
-		/*
-		try {
-		//	jdbcTemplate.update(sql, index, user, content, null, null);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		
-		int row = 0;
-		PreparedStatement pstmt=null;
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, index);
-			pstmt.setInt(2, user_no);
-			pstmt.setString(3, content);
-			pstmt.setString(4, null);
-			pstmt.setString(5, null);
-			row = pstmt.executeUpdate();
-			
-			if(row>0) {
-			System.out.println(row+"건이 업데이트됐습니다");
-			System.out.println("디비 삽입성공!");
-			JDBCUtility.commit(conn);
-			return row;
-			}else {
-				JDBCUtility.rollback(conn);
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			JDBCUtility.close(conn, null, pstmt);
-		}
-		*/
-		
 		try {
 			return jdbcTemplate.update(sql, index, user_no, content, null, null);
 		} catch (Exception e) {
@@ -166,7 +101,7 @@ public class ChatDAO {
 		
 	}
 	
-
+	//예약완료 후 방생성
 	public void setRoom(ChatRoom ch){
 		String sql = "insert into chat_room values(?,?)";
 				
@@ -180,59 +115,16 @@ public class ChatDAO {
 		} catch (Exception e) {
 			
 		}
-		
-		/*
-		Connection conn = JDBCUtility.getConnection();
-		PreparedStatement pstmt = null;
-		
-		int row=0;
-		
-		try {
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, chat_index);
-			pstmt.setInt(2, user_no);
-			row = pstmt.executeUpdate();
-			
-			if(row>0) {
-				System.out.println(row+"건 삽입 성공!");
-				JDBCUtility.commit(conn);
-			}
-			
-		} catch (SQLException e) {
-			System.out.println("실패");
-			
-			sql = "update chat_room set chat_index=?, user_no=?";
-			try {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, chat_index);
-				pstmt.setInt(2, user_no);
-				pstmt.executeLargeUpdate();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			
-			//e.printStackTrace();
-		}finally {
-			JDBCUtility.close(conn, null, pstmt);
-		}
-		*/
+	
 		
 	}
 	
+	
+	//방번호 확인, 실챗 방구분 전달을 위함
 	public boolean checkRoomIndex(int user_no, int roomindex) {
 		
 		String sql = "select distinct chat_index chat_index from chat_room where user_no=? and chat_index=?";
-		
-		//int row = jdbcTemplate.queryForObject(sql, Integer.class);
-		
-		//if(row>0) {
-			//return true;
-		//}
-		
-		
+				
 		Connection conn = JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs =null;
@@ -262,7 +154,7 @@ public class ChatDAO {
 	}
 	
 	
-	
+	//
 	public int getSessionId(int roomNo) {
 		
 		String sql = "select distinct user_no from chat_room where chat_index=?";
@@ -294,7 +186,7 @@ public class ChatDAO {
 	
 
 	public List<ChatVO> getMyChatList(int user_no){
-		//내가 가진 채팅방의 방번호들 구하기
+		//내가 가진 채팅방들 구하기
 		String sql = "select distinct sitt_chat_index from sit_chat where user_no=?";
 		
 		Connection conn = JDBCUtility.getConnection();
@@ -325,6 +217,8 @@ public class ChatDAO {
 		return null;
 	}
 	
+	
+	//특정 방의 마지막채팅 구하는 로직
 	public ChatVO getLastChat(int index) {
 		String sql = "select sitt_chat_no, s.user_no, sitt_chat_index,user_nick, sitt_chat_content,sitt_chat_regdate,sitt_chat_readis,sitt_chat_file,sitt_chat_emo from sit_chat s,user u where sitt_chat_index=? and u.user_no=s.user_no order by sitt_chat_no desc limit 1";
 		
@@ -361,7 +255,7 @@ public class ChatDAO {
 		return chat;
 	}
 	
-	
+	//방가지고있는지 아닌지 체크를 위한 로직, 내 채팅방리스트
 	public ChatRoom getRoom(int user_no) {
 		String sql = "select * from chat_room where user_no=?";
 	
@@ -391,7 +285,7 @@ public class ChatDAO {
 		
 	}
 
-
+	//채팅삭제 로직
 	public boolean delete(int chat_no) {	
 			String sql = "delete from sit_chat where sitt_chat_no=?";
 			Connection conn = JDBCUtility.getConnection();
@@ -420,7 +314,7 @@ public class ChatDAO {
 	
 	
 
-
+	//내 채팅방목록
 	public List<ChatRoom> getRoomList(int user_no) {
 		
 		List<ChatRoom> room_list = new ArrayList<ChatRoom>();
@@ -451,6 +345,7 @@ public class ChatDAO {
 		return null;
 	}
 	
+	//채팅방목록에서 마지막 채팅이 없을시, 차집합을 통해 방만 구함
 	public List<ChatRoom> getElseRoomList(int user_no){
 		List<ChatRoom> room_list = new ArrayList<ChatRoom>();
 		String sql="select chat_index, r.user_no from chat_room r where r.user_no=? and r.chat_index not in"
@@ -488,11 +383,13 @@ public class ChatDAO {
 	}
 
 
-
+	//파일이름 삽입로직
 	public void insertFile(int roomIndex, int user_no, String fileName) {
 		
 		String fileType = fileName.substring(fileName.lastIndexOf("."),fileName.length());
-			
+		
+		
+		//랜덤이름
 		fileName = UUID.randomUUID().toString();
 		fileName = fileName+fileType;
 		
@@ -507,7 +404,7 @@ public class ChatDAO {
 		
 	}
 
-
+	//내 마지막 체팅 구하기,파일 삽입 이전 먼저 채팅을 삽입해서 파일이름을 가져오는 방식때문
 	public int getLastMyChat(int user_no, int roomIndex) {
 		String sql = "select sitt_chat_no from sit_chat where user_no=? and sitt_chat_index=? and sitt_chat_file!='' order by sitt_chat_no desc limit 1";
 		
@@ -524,6 +421,7 @@ public class ChatDAO {
 		return chat_no;
 	}
 
+	//위에 언급한대로 파일이름 가져옴
 	public String getFileName(int chat_no) {
 		String sql = "select sitt_chat_file from sit_chat where sitt_chat_no=?";
 		Object[] args = {chat_no};
@@ -536,7 +434,7 @@ public class ChatDAO {
 		return fileName;
 	}
 
-
+	//채팅방 나가기,미구현상태
 	public void exitRoom(int index, int user_no) {
 		String sql = "delete from chat_room where index=? and user_no=?";
 		jdbcTemplate.update(sql,index,user_no);

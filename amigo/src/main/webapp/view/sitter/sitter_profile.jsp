@@ -54,7 +54,9 @@
     	}
     	
     </style>
-    <script>		
+    <script>	
+    
+    //아임포트 결제api 구동, 
 		function requestPay() {
 			var IMP = window.IMP; 
 			IMP.init("imp07716558"); 
@@ -70,7 +72,11 @@
 		        buyer_addr : '<%=user.getUser_addr()%>',
 		        buyer_postcode : <%=user.getUser_no() %>
 		    }, function (rsp) { // callback
+		    	
+		    	//결제성공시
 		        if (rsp.success) {
+		        	
+		        	//백단에 내용전달
 					$.ajax({
 						url : 'ajax/payment.do',
 						type : 'POST',
@@ -79,9 +85,14 @@
 						data : JSON.stringify(rsp),
 						success : function(result) {
 							console.log(result);
+							
+							//백단에 성공적으로 들어갔을시
+							//실패시 자동환불(백단에서)
 							let process_result = result.process_result.split(":");
  							if(process_result[0]=='결제성공'){
 								alert('결제성공!');
+								
+								//성공시 완료페이지로 이동
 								let alink = '/amigo/requestBook.do?sit_no='+${sitter.sit_no }+'&merchant_uid='+process_result[1]+"";
 								console.log(alink);
 								window.location.href = alink;
@@ -105,6 +116,8 @@
 	<%@include file="/includes/header.jsp" %>
 			<div class="container text-center" >
 				<section>
+				
+				<!-- 시터카드 -->
 					<h2 class="sitter_profile_title"> 시터 프로필 정보</h2><hr>
 					<article id="profile_card">
 						<div id="petsitter_title">
