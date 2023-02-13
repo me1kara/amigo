@@ -48,13 +48,18 @@
 
     	}
     	
-    	.sitter_item{
+    	.sitter_card{
     		display: flex;
     		justify-content: space-around;
     		margin: 50px auto; 
 			padding-right : 10px;
 			border-radius: 10px;
 			box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
+    	}
+    	
+    	.sitter_item{
+    		height: 129.5px;
+    		
     	}
     	
     	.sitter_list_title {
@@ -96,16 +101,16 @@
 					<c:choose>
 					<c:when test="${sittList!=null && !sitList.isEmpty() }">
 					<c:forEach var="sit" items="${sittList }">
-							<div class="sitter_item">
-								<div>
-									<img src="https://via.placeholder.com/100x100" width="100px" height="100px"/>
+							<div class="sitter_card row">
+								<div class="col-sm-4 sitter_item" style="text-align: center;">
+									<img src="https://via.placeholder.com/100x100" width="100px" height="129.5px"/>
 								</div>
-								<table>
+								<table class="col-sm-4 sitter_item">
 									<tr><th style="width:100px;">이름</th><td>${sit.getUser_name() }</td></tr>									
 									<tr><th>시간</th><td>${sit.getSit_time() }</td></tr>
-									<tr><th>경력 및 특기</th><td>${sit.sit_care_exp }</td></tr>
+									<tr><th>경력 및 특기</th><td style="height: 70px; overflow: hidden;"><p style="height:70px;text-overflow: ellipsis; ">${sit.sit_care_exp }</p></td></tr>
 								</table>
-								<div style="display: flex; justify-content: center; align-items: center;">
+								<div class="col-sm-4 sitter_item" style="height:129.5px; display: flex; justify-content: center; align-items: center;">
 									<button class="btn btn-outline-secondary"
 										onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${sit.getUser_name() }'">상세보기</button>
 								</div>

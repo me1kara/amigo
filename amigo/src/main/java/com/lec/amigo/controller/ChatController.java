@@ -2,6 +2,7 @@ package com.lec.amigo.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,7 +82,17 @@ public class ChatController {
 		req.setAttribute("userList", userList);
 		
 		return "/view/customer_service/customer_service_chat.jsp";
-	}	
+	}
+	
+	@GetMapping("/exit_chat_room.do")
+	public String delete_room(HttpServletRequest req) {
+		
+		int index = Integer.parseInt(req.getParameter("room_index"));
+		int user_no = ((UserVO)req.getSession().getAttribute("user")).getUser_no();
+		chatService.exitRoom(index,user_no);
+		
+		return "view/customer_service/customer_service_chat.jsp"; 
+	}
 	
 	
 }

@@ -548,6 +548,14 @@ public class ChatDAO {
 		}
 		return fileName;
 	}
+
+
+	public void exitRoom(int index, int user_no) {
+		String sql = "delete from chat_room where index=? and user_no=?";
+		jdbcTemplate.update(sql,index,user_no);
+		String delete_chat = "delete from sit_chat where sitt_chat_index=? and user_no=?";
+		jdbcTemplate.update(delete_chat, index, user_no);
+	}
 	
 	
 }

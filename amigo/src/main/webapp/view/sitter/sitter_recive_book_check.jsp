@@ -65,6 +65,9 @@
 		color:white;
 	 
 	}
+	.table-modal{
+		box-shadow: 5px 2px 20px rgb(0 0 0 / 20%);
+	}
 	
 </style>
 
@@ -99,7 +102,7 @@
 				if (result != null) {
 					let temp='<ul class="book_content list-group" style="overflow: auto;">';
 					result.forEach((content, index) =>{
-						temp += '<li style="padding:5px;"><table class="table-sm table-bordered" border="2" style="width:95%;">';
+						temp += '<li style="padding:5px;"><table class="table-sm table-bordered table-modal" border="2" style="width:95%;">';
 						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:50%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
 						temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">시간</td><td>' + content.res_time +'</td></tr>';
 						temp += '<tr style="border-bottom:1px solid black; vertical-align: middle;"><td class="modal_tTitle">장소</td><td>' + content.res_addr +'</td></tr>';
