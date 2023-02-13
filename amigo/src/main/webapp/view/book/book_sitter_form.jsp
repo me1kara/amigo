@@ -43,8 +43,12 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
       var calendar = null;
       var g_info = null;
       $(document).ready(function(){  
+    	  
+    	//달력 api
         var calendarEl = document.getElementById('calendar');
         calendar = new FullCalendar.Calendar(calendarEl, {
+        	
+          //한글, 크기 설정
           locale: "ko",
           initialView: 'dayGridMonth',
           contentHeight: 300,
@@ -52,21 +56,26 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
           editable: false,
           droppable: true,
           firstDay : 1,
+          
+      	  //달력내용수정
           eventClick:function(info) {
         	  modalOpen('modify',info);
           },
-
+		 //달력내용넣기
           select: function(info) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
         	  let date = new Date();
         	  if(info.start>new Date(date.setDate(date.getDate()+1))){
         	  	modalOpen('insert',info);
         	  }else{
+        		  //예약가능날짜체크
         		  let arim =date.toLocaleDateString(date.setDate(date.getDate()+1));
         		  alert(arim.substr(0,arim.length-1)+"부터 예약가능합니다");
         		  
         	  }
         }});
         calendar.render();
+        
+        //시작시간 ui설정,타임피커
    		$('#eventStartTime').timepicker({
    			timeFormat: 'HH:mm',
  	        interval: 60,
@@ -79,6 +88,8 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
  	        scrollbar: true
 
  		});
+        
+        //끝시간 ui설정
    		$('#eventEndTime').timepicker({
    		 	timeFormat: 'HH:mm',
  	        interval: 60,
@@ -94,7 +105,7 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
         $('#eventStartTime').time
       });
      
-      //예약추가하기
+      //예약내용
       function addEvent(g_info){
     	  	let title = $('#eventDog').val() + "," + $('#eventStartTime').val() + "~" + $('#eventEndTime').val();
 			if($('#eventStartTime').val()=='' || $('#eventEndTime').val()==''){
@@ -391,11 +402,12 @@ td {
     	function term_text_toggle(){
     		$('.term_text').toggle();
     	}
+		//예약내용모달open
     	function modalOpen(path ,info){
     		g_info = info;
     		console.log(path);
  
-			
+			//수정,삽입 분기
     		if(path == 'modify'){
         		console.log(g_info.event.title);	
     			let array = g_info.event.title.split(',');
@@ -430,6 +442,8 @@ td {
     		
     	}
     	
+		
+		//예약modal 닫기
     	function modalClose(){
 			$('#addEvent').fadeOut();
 			$('#modifyEvent').fadeOut();
@@ -439,6 +453,7 @@ td {
 			$('#eventEndTime').val('');
     	}
         
+		//방문여부 선택 자바스크립트
         $('#select1').click(function(){
         	$('#select2').prop("checked", false);
         	$('#select1').prop("checked", true);
@@ -462,6 +477,7 @@ td {
 </script>
 
 <script>
+	//예약금액계산
 	function cost_cal() {
 		var allEvent = calendar.getEvents();
 		console.log(allEvent);
@@ -478,6 +494,8 @@ td {
 				events.push(obj);
 			}
 			let bookDate = JSON.stringify(events);
+			
+			//아작스로 비동기적 처리, json형태로 데이터 통신
 			$.ajax({
 				url : 'ajax/calMoney.do',
 				type : 'POST',
@@ -488,6 +506,7 @@ td {
 					//that.prop('name', data);
 					console.log('결과:' + result);
 					if (result != 0) {
+						//서버에서 계산한 값 form에 넣기 
 						$('#money').val(result); //$('#heart').prop("src","resources/img/heart_fill.svg");
 						$('#show_money').text(result + '원');
 					} else {
@@ -568,7 +587,10 @@ td {
 		<h2 id="book_title">예약 상세</h2>
 		<hr>
 		<section>
+			<!-- 신청하기 이전, 유효성검사 -->
 			<form action="book.do" onsubmit="return checkResult();">
+			
+				<!--방문여부 선택, radio사용  -->
 				<article class="select" style="display: flex; justify-content: space-between; margin-top: 50px;">
 					<input type="radio" id="select1" name="res_visit_is" value="true" checked="checked">
 					<label class="ctn_btn" for="select1">방문</label> 
@@ -576,15 +598,17 @@ td {
 					<label class="ctn_btn" for="select2">위탁</label>
 				</article>
 
-				
+				<!-- 달력 프론트단에 호출 -->
 				<article id='calendar-container' style="margin-top:20px;">
 					<div id='calendar' name="calendar"></div>
 				</article>
 				
 				
+				<!-- 주소 -->
 				<article style="margin-top:20px;">
 					<b style="font-family: 'Jalnan';">이용주소</b>&nbsp;&nbsp;<input type="text" name="res_addr" id="address" required="required" readonly="readonly" style="width :300px; padding-left:10px;"
 					value="<%=user.getUser_addr() %>"/>
+					<!-- 주소모달 -->
 					<button type="button" class="item_change" onclick="open_address_modal()" style="width:60px;">변경</button>
 				</article>
 				
@@ -595,11 +619,14 @@ td {
 					<br>
 				</article>
 				
+				<!-- 예약내용 ajax로 얻어온 값 실반영 및 input 설정 -->
 				<article class="inline_box">
 					<b style="margin: 0 auto; font-family: 'Jalnan';">비용</b>&nbsp;<span id="show_money" style="font-size:22px;"> 0원</span>
 					<input type="hidden" id="money" name="res_pay"></input>
 				</article>
 				
+				
+				<!-- 약관동의 토글 -->
 				<article>
 					<br> <label for="term" class="term_css"> <input
 						type="checkbox" id="term" name="res_term_is" required="required"> <span style="font-family: 'Jalnan';">개인정보 이용
@@ -617,6 +644,8 @@ td {
 						운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.</div>
 					<br>
 				</article>
+				
+				<!-- 확인 시 유효성검사 -->
 				<article style="display: flex; justify-content: space-between; margin-top:30px; margin-bottom:100px;">
 					<button class="btn btn-primary ctn_btn" onclick="history.back(-1)">이전</button>
 					<button type="submit" class="btn btn-primary ctn_btn">확인</button>
@@ -631,6 +660,8 @@ td {
 
 	<%@include file="/includes/footer.jsp"%>
 	
+	
+	<!-- 예약내용 작성모달 -->
 	<div class="modal" id="eventModifyForm" style="display: none;">
 		<div class="modal-content" id="modal_content_st">
 		
@@ -663,34 +694,36 @@ td {
 		</div>
 	</div>
 
-	<!-- 모달창 -->
+	<!-- 주소모달창 -->
 
 	<div class="modal" id="address_modal" style="display: none;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
-				<!-- Modal Header -->
+				<!-- 모달헤더 -->
 				<div class="modal-header">
 					<h4 class="modal-title">주소</h4>
+					
+					<!-- 모달닫기 -->
 					<button type="button" class="btn-close" onclick="close_address_modal()"></button>
 
 				</div>
 
-				<!-- Modal body -->
+				<!-- 모달바디 -->
 				<div class="modal-body">
 
 
 					<!-- 시작시 기본 날짜 설정은 value를 이용 -->
 					<div class="form-group">
 
-						<input type="text" id="sample4_postcode" placeholder="우편번호" disabled="disabled">
-						<input type="button" onclick="sample4_execDaumPostcode()"
+						<input type="text" id="p_postcode" placeholder="우편번호" disabled="disabled">
+						<input type="button" onclick="p_execDaumPostcode()"
 							value="우편번호 찾기"><br> <input type="text"
-							id="sample4_roadAddress" class="form-control" name="user_addr"
+							id="p_roadAddress" class="form-control" name="user_addr"
 							placeholder="도로명주소" readonly="readonly"> <input type="hidden"
-							id="sample4_jibunAddress" class="form-control" placeholder="지번주소">
+							id="p_jibunAddress" class="form-control" placeholder="지번주소">
 						<span id="guide" style="color: #999; display: none"></span> <input
-							type="text" id="sample4_detailAddress" class="form-control"
+							type="text" id="p_detailAddress" class="form-control"
 							name="user_addr2" placeholder="상세주소">
 					</div>
 
@@ -710,17 +743,17 @@ td {
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
             	$('#address_submit').click(function(){
-            	  	if($('#sample4_detailAddress').val() =='' || $("#sample4_roadAddress").val() == '' || $("#sample4_postcode").val() ==''){	
+            	  	if($('#p_detailAddress').val() =='' || $("#p_roadAddress").val() == '' || $("#p_postcode").val() ==''){	
             	  		//$(this).removeAttr("data-bs-dismiss");
             	  	}else{
             	  		//$(this).attr("data-bs-dismiss", "modal");
-            	  		let temp = $("#sample4_roadAddress").val() + '/' +$('#sample4_detailAddress').val();
+            	  		let temp = $("#p_roadAddress").val() + '/' +$('#p_detailAddress').val();
             			$('#address').val(temp);
             	  		close_address_modal();
             	  	}
             	}) 
                 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
-                function sample4_execDaumPostcode() {
+                function p_execDaumPostcode() {
                     new daum.Postcode({
                         oncomplete: function(data) {
                             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -745,9 +778,9 @@ td {
                             }
             
                             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                            document.getElementById('sample4_postcode').value = data.zonecode;
-                            document.getElementById("sample4_roadAddress").value = roadAddr;
-                            document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+                            document.getElementById('p_postcode').value = data.zonecode;
+                            document.getElementById("p_roadAddress").value = roadAddr;
+                            document.getElementById("p_jibunAddress").value = data.jibunAddress;
             
     
                             var guideTextBox = document.getElementById("guide");
