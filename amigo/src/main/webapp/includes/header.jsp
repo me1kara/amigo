@@ -37,7 +37,7 @@
 .navbar-toggler {
 	width:20px;
 	margin-left:20px;
-	 
+	display:contents;
 }
 
 .menu-trigger,
@@ -51,6 +51,7 @@
   position: relative;
   width: 40px;
   height: 34px;
+  margin-left:20px;
 }
 
 .menu-trigger span {

@@ -18,6 +18,14 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
+    
+<style>
+	.form-group {
+		margin-top:20px;
+	}
+</style>    
+    
+    
 </head>
 <body>
 	
@@ -38,7 +46,7 @@
 			 </div>
 	  <hr>
 	         <div class="page-header">
-	            <h3>업데이트</h3>	            
+	            <h3 style="font-family: 'Jalnan';">업데이트</h3>	            
 	         </div>
 
 				

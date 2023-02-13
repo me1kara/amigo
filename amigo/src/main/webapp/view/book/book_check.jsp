@@ -91,12 +91,10 @@
 		box-shadow: 5px 2px 20px rgb(0 0 0 / 20%);
 	}
 	
-	#user_book {
+	.tTitle {
 		font-family: "Jalnan";
-		font-size: 25px;
-		padding: 50px 0;
 	}
-	
+
 
 </style>
 
@@ -310,7 +308,7 @@
 								<!-- 페이징 -->
 							</c:when>
 						<c:otherwise>
-							<h2 id="user_book">예약사항이 없습니다</h2>
+							<h2 id="user_book" style="font-family: 'Jalnan'; font-size: 25px;">예약사항이 없습니다</h2>
 						</c:otherwise>
 						</c:choose>
 					</article>

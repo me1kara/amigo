@@ -18,6 +18,15 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
+    
+<style>
+	.form-group {
+		margin-top:20px;
+	}
+
+
+</style>    
+   
 </head>
 <body>
 	
@@ -34,7 +43,7 @@
 			 </div>
 	  <hr>
 	         <div class="page-header">
-	            <h3>기본사항</h3>	            
+	            <h3 style="font-family: 'Jalnan';">기본사항</h3>	            
 	         </div>
 
 			
@@ -107,7 +116,7 @@
 		<!-- user_no 벨류값 받아서 폼에 기입-->
 		<input class="form-control" type="hidden" name="user_no" value="${ sessionScope.user.getUser_no()}">
 				    
-				<div class="col-md-6 text-center" style="width:100px; margin: 0 auto;">           
+				<div class="col-md-6 text-center" style="width:100px; margin: 0 auto; margin-top:20px;">           
 				<button type="submit" class="btn btn-primary text-center">등록완료</button>
 			    </div>
 		</form>
