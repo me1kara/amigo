@@ -70,7 +70,9 @@
 		$(document).ready(function(){
 			$('#list').scrollTop($('#list').prop('scrollHeight'));
 		});
-
+	
+		
+		
   	  function previewFile() {
 		  //var preview = document.getElementById('preimg');
 		  var preview = $('#msgTd');
@@ -129,7 +131,7 @@
 												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
 												<li class="chat_left" style="margin-bottom: 3px; clear: both;"
 													id="chat_no_${chat.getChat_no() }">
-													<span class="text-bg-light">
+													<span>
 													${chat.getUser_nick() } ${chat.getContent()}
 													</span> 
 												</li>
@@ -189,7 +191,7 @@
 
 	<script>
 //채팅 서버 주소
-  		var url = "ws://localhost:8088/amigo/chatHandler.do?<%=index%>";
+  		var url = "ws://localhost:80/amigo/chatHandler.do?<%=index%>";
   		var index = "<%=index%>";
 		
   // 웹 소켓
@@ -241,6 +243,8 @@
   			ws.onmessage = function (evt) {
   			  	console.log(evt.data);
   			  	
+  			  	
+  			  	//서버에서 보내온 메시지 타입 확인, 텍스트인지 파일인지
   			  	if(typeof evt.data == "string"){
   	  			let msg = evt.data;
   	  			var jd = JSON.parse(msg);
@@ -253,13 +257,15 @@
   	  			let chat_no;
   	  			let type;
   	  			
-  	  			
+  	  			//메세지종류 분기
   	  			switch(jd.no){
+  	  				//입장
   	  				case "1" : 
 	  	  				no = jd.no;
 	  	  			    user = jd.userName;
 	  	  			    roomIndex = jd.index;
 	  	  			    break; 
+	  	  			//메세지보냄
   	  				case "2" : 
   	  	  				no = jd.no;
   	  	  				user = jd.userName;
@@ -267,6 +273,7 @@
   	  	  				chat_no = jd.chatNo;
   	  	  				type= jd.type;
   	  					break;
+  	  				//삭제
   	  				case "4":
   	  	  				let delete_no = jd.chatNo;	
   	  	  				roomIndex = jd.roomIndex;			
@@ -277,11 +284,14 @@
   		  				}
   	  	  				break;	
   	  			}
-  	  			console.log('인덱스:'+index+'룸인덱스:'+roomIndex);		
+  	  			console.log('인덱스:'+index+'룸인덱스:'+roomIndex);
+  	  			
+  	  			
   	  			if (no == '1') {
   	  				if(parseInt(roomIndex)==index){
   	  					print2(user);
   	  				}
+  	  			//다른 사람이 보낸 메세지일 경우
   	  			} else if (jd.type == 'message' && jd.no== "2") {
   	  				txt = jd.msg;
   	  				if(parseInt(roomIndex)==index){
@@ -296,6 +306,7 @@
   	  					}
   	  					
   	  				}
+  	  			//파일을 보내온 경우
   	  			}else if(jd.type=='file'){
   	  				let fileName = jd.fileName;
   	  				console.log(fileName);
@@ -306,14 +317,14 @@
   	  						
   	  				}
   	  			}
+  	  			//채팅방 나감
   	  			else if (no == '3') {
   	  				if(parseInt(roomIndex)==index){
   	  					print3(user);
 	  				}
   	  				
   	  			}
-  			  	}
-  			  	else{
+  			  	}else{
   			  		console.log("비나리타입");
   			  		console.log(event.data.byteLength);
   			  			  		
@@ -331,10 +342,13 @@
   	  		ws.onerror = function (evt) {
   	  			console.log(evt.data);
   	  		};
+  	  	
   	  		
+  	  	  //상대방이 보내온 이미지 출력
     	  function printImage(user, fileName, chat_no) {
     	    	let temp = '';
     	    	
+    	    	//파일이름과 경로를 통해 서버에서 이미지를 가져옴
     	    	let realFile ="/chatImg/"+fileName;
     	    	console.log(realFile);
     	    	temp += ' <span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
@@ -342,12 +356,15 @@
     	    	temp += '[' + user + '] ';
     	   	  	temp += '<img width="200px" height="200px" src='+realFile+' onclick="imgPop('+"'"+realFile+"'"+')">';
     	   	  	temp += '</li>';
-    	   	  			
+    	   			  			
     	    	$('#list').append(temp);
     	    	$('#list').scrollTop($('#list').prop('scrollHeight'));
     	  }
+  	  	  
+  	  	  //내 화면단에 이미지 출력
   	  	  function printImageMe(fileName, chat_no){
 	  		
+  	  		//파일이름과 경로를 통해 출력
   	    	let realFile ="/chatImg/"+fileName;
 	    	console.log(realFile);
   	  	  	let temp = '';
@@ -362,7 +379,7 @@
   	  	  	$('#list').scrollTop($('#list').prop('scrollHeight'));
   	  		}
  	  	  
-  	  	  // 메세지 전송 및 아이디
+  	  	  // 상대방이 보낸 메세지 화면에 출력
   	  	  function print(user, txt, chat_no) {
   	  	  	let temp = '';
   	  		temp += '<span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
@@ -373,6 +390,7 @@
   	  	  	$('#list').append(temp);
   	  	  	$('#list').scrollTop($('#list').prop('scrollHeight'));
   	  	  }
+  	  	  //내가 보낸 메세지 출력
   	  	  function printMe(txt, chat_no) {
   	  		  	
   	  		  	console.log('확인용숫자'+chat_no);
@@ -424,6 +442,7 @@
   	  	  	}
   	  	  	);
   	  	  
+  	  	  //
   	  	  $('#msg').keydown(function(e) {
     	  	  	if (event.keyCode == 13) {
       	  		  	console.log('엔터');
@@ -457,8 +476,9 @@
 	  		ws.send(JSON.stringify(option));
 	  		
   		  }
+  		  
+  		 //파일 보내기로직
   		function sendFile(){
-  			//let file = document.querySelector("#fileUpload").files[0];
   			let file = document.querySelector("#fileUpload").files[0];
   			let fileReader = new FileReader();
   			
@@ -470,11 +490,11 @@
   					roomIndex: index,
   					userName : user_name
   				}
-  				ws.send(JSON.stringify(param)); //  보내기전 메시지를 보내서 파일을 보냄을 명시한다.
+  				ws.send(JSON.stringify(param)); //  보내기전 메시지를 보내서 파일을 보냄을 명시
   			    rawData = e.target.result;
-  			  	ws.send(rawData);
-  				 //파일 소켓 전송
+  			  	ws.send(rawData); //파일보내기(비나리타입)
   			};
+  			//인풋파일을 어레이버퍼형식으로 읽기
   			fileReader.readAsArrayBuffer(file);
   		}   	
   		};

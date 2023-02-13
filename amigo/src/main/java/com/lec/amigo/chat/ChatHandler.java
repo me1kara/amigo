@@ -56,50 +56,36 @@ public class ChatHandler extends TextWebSocketHandler{
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		//세션리스트에 세션저장
 		//유저-세션 저장
 		sessions.put(session.getId(), session);
-	
-		/*
-		ChatRoom ch = getRoomUser(session);
-		if(ch!=null) {
-			boolean chat_room_is = chatDao.getRoom(ch);		
-			if(!chat_room_is)chatDao.setRoom(ch);
-		};
-		*/
-		
-	
+
 	}
 	
+
+	//파일을 서버에 저장하는 로직 
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
-		String curWorkingDir = System.getProperty("user.dir");
 		
-		ByteBuffer byteBuffer = message.getPayload();		
+		ByteBuffer byteBuffer = message.getPayload();
+		
+		//url의 파라미터를 통해 채팅방번호 받아오기
 		String url = session.getUri().toString();
-		
-		
 		String room = url.split("/chatHandler.do?")[1].substring(1);
 		int roomIndex = Integer.parseInt(room);
 		UserVO user = getUser(session);
+		
+		//파일 보낸이의 정보
 		int user_no = user.getUser_no();
 		String sendUser = user.getUser_nick();
 		
+		//파일을 보내기 전에 미리 채팅을 추가함으로서 파일이름 가져오기
 		int last_chat_no = chatServiceImpl.getLastMyChatNo(user_no, roomIndex);
-		
 		String fileName = null; 
-		
 		while(fileName == null) {
 			fileName = chatServiceImpl.getFileName(last_chat_no);
 		}
-		/*
-		UUID uuid = UUID.randomUUID();
-		String[] uuids = uuid.toString().split("-");
-		
-		String fileName = uuids[0];
-		*/
+		//파일생성로직
 		File dir = new File(FILE_UPLOAD_PATH);
-		
 		if(!dir.exists()) {
 			dir.mkdirs();
 		}
@@ -111,7 +97,7 @@ public class ChatHandler extends TextWebSocketHandler{
 			out = new FileOutputStream(file, true); //생성을 위해 OutputStream을 연다.
 			outChannel = out.getChannel(); //채널을 열고
 			byteBuffer.compact(); //파일을 복사한다.
-			outChannel.write(byteBuffer); //파일을 쓴다.
+			outChannel.write(byteBuffer); //binary타입으로 받은 파일을 작성
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -127,11 +113,9 @@ public class ChatHandler extends TextWebSocketHandler{
 			}
 		}
 		byteBuffer.position(0); 
-		
 		try {
 			for (String key : sessions.keySet()) {
 				WebSocketSession s = sessions.get(key);
-
 					//if (s != session) { // 현재 접속자가 아닌 나머지 사람들							
 						try {
 							//세션아이디로 인덱스를 구하고,
@@ -176,19 +160,19 @@ public class ChatHandler extends TextWebSocketHandler{
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		
+		
+		//채팅메세지 받기
 		String msg = message.getPayload();
 		JSONObject jms = jsonToObjectParser(msg);
 	
-	
-		
 		String no=null;
 		int roomIndex=0;
 		String sendUser=null;
 		String text=null;
 		String type=null;
-		
-		
-		//삭제, 입장 분기
+
+		//메세지 분기, 삭제하란 요청이면
 		if(jms!=null && jms.size()==4) {
 				no = (String) jms.get("no");
 				roomIndex = Integer.parseInt((String)jms.get("roomIndex"));
@@ -203,23 +187,15 @@ public class ChatHandler extends TextWebSocketHandler{
 				roomIndex = Integer.parseInt((String)jms.get("roomIndex"));
 				type = (String) jms.get("type");
 		}		
-		
-		//String id = chatDao.getSessionId(roomIndex);
-		
-		 
 	
 		int user_no = getUser(session).getUser_no();
 		
 		
 		if (no.equals("1")) {
-			// 누군가 접속 > 1#아무개
-			
-			//for(String id:idList) {
 				for (String key : sessions.keySet()) {
 					WebSocketSession s = sessions.get(key);
 						if (s != session) { // 현재 접속자가 아닌 나머지 사람들				
 							try {
-								
 								//세션의 로그인정보가 있으면
 								if(getUser(s)!=null) {
 									//해당 세션의 유저가 메세지의 룸번호를 가지고있는지 조회
@@ -230,9 +206,6 @@ public class ChatHandler extends TextWebSocketHandler{
 										s.sendMessage(new TextMessage(jms.toJSONString()));
 									}	
 								}
-								
-										
-								//s.getBasicRemote().sendText();
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
@@ -243,6 +216,7 @@ public class ChatHandler extends TextWebSocketHandler{
 			//}
 		} else if (no.equals("2") && type.equals("message")) {
 			
+			//받은 메세지를 db에 삽입 
 			text = (String)jms.get("msg");
 			int a = chatServiceImpl.insertChatMessage(roomIndex, user_no, text);
 			int chat_no=0;
@@ -250,29 +224,19 @@ public class ChatHandler extends TextWebSocketHandler{
 			chat_no = chatServiceImpl.getLastChat(roomIndex).getChat_no();
 			}
 			
-		//	for(String id:idList) {			
-			// 누군가 메세지를 전송
-			
-			
+			//같은 방 접속자에게 메세지 보내기 위한 로직
 			for (String key : sessions.keySet()) {
-				WebSocketSession s = sessions.get(key);
-
-					//if (s != session) { // 현재 접속자가 아닌 나머지 사람들							
+				WebSocketSession s = sessions.get(key);							
 						try {
-							
-							//세션아이디로 인덱스를 구하고,
-							//해당인덱스와 일치하면 문자를 보내면됨
-							if(getUser(s)!=null) {				
-								boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
-								
-								
+							if(getUser(s)!=null) {
+								//같은 방인지 체크
+								boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);								
 								if(checkIndex) {
+									//json형태로 보내기
 									jms.put("chatNo", chat_no);
-							
 									s.sendMessage(new TextMessage(jms.toJSONString()));							
 								}
 							}
-							//s.getBasicRemote().sendText("2#" + snderId +"#" + text);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -286,19 +250,13 @@ public class ChatHandler extends TextWebSocketHandler{
 		}else if(no.equals("2") && type.equals("fileUpload")){
 		
 			String fileName = (String)jms.get("file");
-			
-			
 			chatServiceImpl.insertFile(roomIndex, user_no, fileName);
 			
 			
 		}else if (no.equals("3")) {
-			
-			
-			//for(String id:idList) {
-			// 누군가 접속 > 3#아무개
 					for (String key : sessions.keySet()) {
 						WebSocketSession s = sessions.get(key);
-				//	if(id.equals(s.getId())) {
+			
 						if (s != session) { // 현재 접속자가 아닌 나머지 사람들
 							try {
 								
@@ -312,8 +270,6 @@ public class ChatHandler extends TextWebSocketHandler{
 									s.sendMessage(new TextMessage(jms.toJSONString()));
 									}
 								}
-								
-//								s.getBasicRemote().sendText("3#" + user + "#");
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
@@ -326,31 +282,27 @@ public class ChatHandler extends TextWebSocketHandler{
 				int chat_no = Integer.parseInt(ab);
 				String fileName = chatServiceImpl.getFileName(chat_no);
 				
+				//파일여부체크 
 				File deleteFile = new File("C:/FTP/upload/img/chatImg/"+fileName);
 				if(deleteFile.exists()) {
 					deleteFile.delete();
 				}
+				//db삭제
 				chatServiceImpl.deleteChat(chat_no);
 				
-
-				
+				//같은 방에 있는 유저들의 화면에서도 채팅이 삭제되게 하기
 					for (String key : sessions.keySet()) {
 						WebSocketSession s = sessions.get(key);
-				//	if(id.equals(s.getId())) {
 						if (s != session) { // 현재 접속자가 아닌 나머지 사람들
 							try {
 								if(getUser(s)!=null) {
 					
 									boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
-									
-				
 									if(checkIndex) {
 						
 										s.sendMessage(new TextMessage(jms.toJSONString()));
 									}
 								}
-								
-//								s.getBasicRemote().sendText("3#" + user + "#");
 							} catch (IOException e) {
 								e.printStackTrace();
 							}

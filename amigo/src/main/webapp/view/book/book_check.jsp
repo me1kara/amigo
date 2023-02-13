@@ -189,18 +189,25 @@
 		<div class="container text-center">
 			<section>	
 				<article>
-					<h2 class="book_ch_title">예약 확인</h2> <hr>
-					<c:if test='${user.getUser_type().equals("S") }'>
-						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do'">시터모드</button>
-					</c:if>
-					<c:choose>
-					<c:when test="${sc eq 'past' }">
-						<button class="btn btn-primary" onclick="location.href='book_check.do?mode=user'">현재기록</button>
-					</c:when>
-					<c:otherwise>
-						<button class="btn btn-primary" onclick="location.href='book_check.do?searchCategory=past&mode=user'">이전기록</button>
-					</c:otherwise>
-					</c:choose>
+					<div class="row">
+						<h2 class="book_ch_title d-flex justify-content-center">예약 확인</h2>
+						
+						<div class="d-flex justify-content-end">
+						<c:if test='${user.getUser_type().equals("S") }'>
+							<button class="btn" onclick="location.href='/amigo/receiveBook_check.do'"><b>시터모드</b></button>
+						</c:if>
+						<c:choose>
+						<c:when test="${sc eq 'past' }">
+							<button class="btn" onclick="location.href='book_check.do?mode=user'"><b>현재기록</b></button>
+						</c:when>
+						<c:otherwise>
+							<button class="btn" onclick="location.href='book_check.do?searchCategory=past&mode=user'"><b>이전기록</b></button>
+						</c:otherwise>
+						</c:choose>
+						</div>
+					 </div>
+					<hr>
+					
 				</article>
 					<article id="user_book">
 						<c:choose>
