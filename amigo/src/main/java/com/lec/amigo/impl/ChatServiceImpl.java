@@ -85,5 +85,12 @@ public class ChatServiceImpl implements ChatService{
 	public List<ChatRoom> getElseRoomList(int chat_no) {
 		return chatDao.getElseRoomList(chat_no);
 	}
+
+
+	public void exitRoom(int index, int user_no) {
+		
+		chatDao.exitRoom(index,user_no);
+		
+	}
 	
 }

@@ -332,10 +332,6 @@
   	  			console.log(evt.data);
   	  		};
   	  		
-
-
-  		
-  	  		
     	  function printImage(user, fileName, chat_no) {
     	    	let temp = '';
     	    	

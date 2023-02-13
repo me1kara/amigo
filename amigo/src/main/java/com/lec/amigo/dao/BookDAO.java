@@ -290,18 +290,16 @@ public class BookDAO {
 							cal.setTime(date1);
 							cal.add(Calendar.DATE, day);
 							String da = transFormat.format(cal.getTime()).toString();
-							
-						
 							jdbcTemplate.update(insertContent, res_no,da,time,dog_no,book.getRes_addr());
 						}
+						
 					}		
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-
 			}
+			updateBook(res_no);
 			insertPayment(merchant_uid, res_no);
 			return row;
 		}
@@ -415,11 +413,8 @@ public class BookDAO {
 		}finally {
 			JDBCUtility.close(conn, rs, pstmt);
 		}
-
-		
 		return bookList;
 	}
-
 	public int getMyBookCount(int user_no,SearchVO searchvo) {
 		String sql =null;
 		if(searchvo.getSearchCategory()!=null && searchvo.getSearchCategory().equals("past")){
@@ -443,6 +438,13 @@ public class BookDAO {
 			sql = "delete from res_content where res_no=?";
 			row = jdbcTemplate.update(sql,rno);
 			if(row>0) {
+				sql = "select distinct chat_index from chat_room where res_no=?";
+				Object[] gs = {rno};
+				int index = jdbcTemplate.queryForObject(sql,gs, Integer.class);
+				sql = "delete from chat_room where res_no=?";
+				jdbcTemplate.update(sql, rno);
+				sql = "delete from sit_chat where sitt_chat_index=?";
+				jdbcTemplate.update(sql, index);
 				return rno;
 			}
 		}
@@ -452,24 +454,40 @@ public class BookDAO {
 
 	public int updateBook(int rno) {
 		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Connection conn = null;
 		int row=0;
 		try {
-			sql = "select max(chat_index)+1 from chat_room";
+			sql = "select IFNULL(max(chat_index), 0)+1 from chat_room";
 			int room_index = jdbcTemplate.queryForObject(sql, Integer.class);
-			sql = "select * from reservation where res_no=?";
-			Object[] a = {rno};
-			BookVO book = jdbcTemplate.queryForObject(sql, a, new BookRowMapper());
+			sql = "select user_no,sit_no from reservation where res_no=?";
+			conn = JDBCUtility.getConnection();
+		
+			pstmt = conn.prepareStatement(sql);
+			BookVO book = new BookVO();
+			pstmt.setInt(1, rno);
+			rs=pstmt.executeQuery();
+			System.out.println("rno:"+rno);
+			if(rs.next()) {
+				book.setUser_no(rs.getInt("user_no"));
+				book.setSit_no(rs.getInt("sit_no"));
+			}
+
 			System.out.println(book.getUser_no()+"유넘확인");
 			sql="select user_no from petsitter where sit_no = ?";
 			Object[] args = {book.getSit_no()};
 			int suno = jdbcTemplate.queryForObject(sql, args, Integer.class);
-			sql = "insert into chat_room values(?,?)";
-			jdbcTemplate.update(sql, room_index, book.getUser_no());
-			row = jdbcTemplate.update(sql, room_index, suno);
+			
+			sql = "insert into chat_room(chat_index, user_no, res_no) values(?,?,?)";
+			jdbcTemplate.update(sql, room_index, book.getUser_no(), rno);
+			row = jdbcTemplate.update(sql, room_index, suno, rno);
 		
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			JDBCUtility.close(conn, rs, pstmt);
 		}
 
 		return row; 

@@ -62,10 +62,9 @@
 						 <div class="p-5">
 				         	<p class="chat-header-title">채팅</p>
 				    	 </div> 
-					
 					<c:set var="chatList" value="<%=chatList %>"/>
 					<c:set var="elseRoomList" value="<%=elseRoomList %>"></c:set>
-					
+					<!-- 유저가 채팅방을 소유하고있는지 여부 -->
 					<c:choose>
 						<c:when test="<%=checkRoom==null %>">	
 						<p><b>채팅방이 없습니다</b></p>
@@ -98,6 +97,9 @@
 															
 														</c:choose>
 														</ul>
+													</td>
+													<td>
+														<button onclick="location.href='/amigo/exit_chat_room.do?room_index=${chat.getIndex()}'">채팅방나가기</button>
 													</td>
 												</tr>
 											</table>	
