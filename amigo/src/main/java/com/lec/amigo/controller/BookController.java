@@ -41,6 +41,7 @@ import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.dao.SitterDAO;
 import com.lec.amigo.impl.BookServiceImpl;
 import com.lec.amigo.impl.DogServiceImpl;
+import com.lec.amigo.impl.ReviewServiceImpl;
 import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.vo.BookContentVO;
@@ -48,6 +49,7 @@ import com.lec.amigo.vo.BookVO;
 import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.HeartVO;
 import com.lec.amigo.vo.Payment;
+import com.lec.amigo.vo.ReviewVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 import com.siot.IamportRestClient.IamportClient;
@@ -60,6 +62,9 @@ public class BookController {
 	
 	@Autowired
 	BookServiceImpl bookService;
+	
+	@Autowired
+	ReviewServiceImpl reviewService;
 	
 	@Autowired
 	SitterServiceImpl sitterService;
@@ -137,15 +142,22 @@ public class BookController {
 	
 	
 	@RequestMapping(value = "/view/book/sitter_profile.do", method = { RequestMethod.GET })
-	public String getSitterProfile (HttpServletRequest req, HttpServletResponse resp, SitterVO sitterVO, HttpSession sess) {
+	public String getSitterProfile (HttpServletRequest req, ReviewVO review, HttpServletResponse resp, SitterVO sitterVO, HttpSession sess, Model model) {
 
 		SitterVO s = sitterService.getSitter(sitterVO);
+	
 		BookVO book = (BookVO)sess.getAttribute("book");
+		int sit_no = Integer.parseInt(req.getParameter("sit_no"));
+		String user_name = (req.getParameter("user_name"));
 		
+		List<ReviewVO> rev = reviewService.getReviewListBySitNo(sit_no);
+		model.addAttribute("rev", rev);
 		System.out.println(s.toString());
 		
 		req.setAttribute("sitter", s);
 		req.setAttribute("book", book);
+		req.setAttribute("user_name", user_name);
+		
 		return "/view/sitter/sitter_profile.jsp";
 	}
 	

@@ -89,12 +89,13 @@
 </div>
 </div>
 <!-- 상담 end -->
-       <!-- Footer -->
-       <footer class="container text-center text-white" style="background-color: rgb(87, 160, 227);">
+
+  <!-- Footer -->
+       <footer class="text-center text-white " style="background-color: rgb(87, 160, 227);">
         <!-- Grid container -->
         <div class="container p-2">
           <!-- Section: Social media -->
-          <section class="mb-5">
+          <section class="mt-5 mb-4">
           <span>채팅 문의 평일 오전 10:00~오후 06:00 (상시 상담 가능)</span>
           </section>
           <!-- Section: Form -->
@@ -106,9 +107,8 @@
           © 2023 Copyright:
           <a class="text-white" href="#">amigo.com</a>
         </div>
+        </footer>
         <!-- Copyright -->
-      </footer>
-      <!-- Footer 끝 -->
       <!-- Bootstrap core JS-->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
       <!-- Core theme JS-->

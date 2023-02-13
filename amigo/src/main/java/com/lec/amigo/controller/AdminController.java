@@ -115,7 +115,7 @@ public class AdminController {
 		
 		System.out.println("삭제합니다");
 		sitterService.deleteSitter(user_no);
-		sitterService.updateTypeU(svo);
+		
 		
 
 		return "/view/admin/getSitList.do"; 

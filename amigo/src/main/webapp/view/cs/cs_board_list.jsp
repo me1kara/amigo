@@ -45,6 +45,10 @@
         padding: 1rem;
       }
       
+      .card:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
+      
       
       .udb-header-menu {
       font-family: "Jalnan";
@@ -67,6 +71,10 @@
         color: #189cc4;
       }
       
+      #cs-footer{
+      width:100%;
+      }
+
     </style>
 </head>
 <body>
@@ -92,7 +100,9 @@
                </div>
             </div>
 
-      <div class="container">               
+      <div class="container" onclick="location.href='cs_board_detail.do?hbd_no=${csboard.getHbd_no()}&user_no=${user.getUser_no()}
+	                      &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+	                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc">              
          <c:if test="${ csboardList.isEmpty() }">
             <h6><p>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</p></h6>
          </c:if>
@@ -202,8 +212,20 @@
              	<a href="cs_board_insert.do" class="btn btn-primary">글 작성하기</a>
             </div>
       </form>      
+       </div>
+	 <!-- Footer -->
+    <footer class="bg-primary text-center text-white mt-5">
+      <!-- Copyright -->
+      <div class="text-center p-3 mt-5" style="background-color:rgb(87, 160, 227);">
+        © 2022 Copyright:
+        <a class="text-white" href="#">amigo.com</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer 끝 -->
+
        
-       
-<%@include file="/includes/footer.jsp" %>
+<%@include file="/includes/scrollTop.jsp" %>       
+
 </body>
 </html>

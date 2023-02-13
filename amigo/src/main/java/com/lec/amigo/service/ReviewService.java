@@ -9,6 +9,9 @@ public interface ReviewService {
 	// 게시글 리스트
 	List<ReviewVO> getReviewList(ReviewVO review);
 	
+	// 시터당 게시글 리스트 02/11
+	List<ReviewVO> getReviewListBySitNo(int sit_no);
+	
 	// 게시글 등록
 	ReviewVO insertReview(ReviewVO review);
 	
