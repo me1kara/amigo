@@ -380,6 +380,9 @@ td {
  	padding-left:10px;
  }
 
+ h2 {
+ 	font-family: "Jalnan";
+ }
 
 </style>
 
@@ -566,7 +569,7 @@ td {
 		<hr>
 		<section>
 			<form action="book.do" onsubmit="return checkResult();">
-				<article class="select" style="display: flex; justify-content: space-between; margin-top: 40px;">
+				<article class="select" style="display: flex; justify-content: space-between; margin-top: 50px;">
 					<input type="radio" id="select1" name="res_visit_is" value="true" checked="checked">
 					<label class="ctn_btn" for="select1">방문</label> 
 					<input type="radio" id="select2" name="res_visit_is" value="false">
@@ -574,36 +577,36 @@ td {
 				</article>
 
 				
-				<article id='calendar-container'>
+				<article id='calendar-container' style="margin-top:20px;">
 					<div id='calendar' name="calendar"></div>
 				</article>
 				
 				
-				<article>
-					<b>이용주소</b><input type="text" name="res_addr" id="address" required="required" readonly="readonly" style="width :300px;"
+				<article style="margin-top:20px;">
+					<b style="font-family: 'Jalnan';">이용주소</b>&nbsp;&nbsp;<input type="text" name="res_addr" id="address" required="required" readonly="readonly" style="width :300px; padding-left:10px;"
 					value="<%=user.getUser_addr() %>"/>
-					<button type="button" class="item_change" onclick="open_address_modal()">변경</button>
+					<button type="button" class="item_change" onclick="open_address_modal()" style="width:60px;">변경</button>
 				</article>
 				
 				<article>
-					<br> <br> <b>특이사항</b><br>
-					<textarea class="etc_content" name="res_etc" rows="5" cols="16"
+					<br> <br> <b style="font-family: 'Jalnan';">특이사항</b><br>
+					<textarea class="etc_content" name="res_etc" rows="5" cols="16" style="margin-top:8px;"
 						placeholder="펫시터분이 알아야 할 우리 아이에 대한 특이사항을 적어주세요!"></textarea>
 					<br>
 				</article>
 				
 				<article class="inline_box">
-					<b style="margin: 0 auto;">비용</b><span id="show_money"> 0원</span>
+					<b style="margin: 0 auto; font-family: 'Jalnan';">비용</b>&nbsp;<span id="show_money" style="font-size:22px;"> 0원</span>
 					<input type="hidden" id="money" name="res_pay"></input>
 				</article>
 				
 				<article>
 					<br> <label for="term" class="term_css"> <input
-						type="checkbox" id="term" name="res_term_is" required="required"> <span>개인정보 이용
+						type="checkbox" id="term" name="res_term_is" required="required"> <span style="font-family: 'Jalnan';">개인정보 이용
 							동의<strong>(필수)</strong>
 					</span>
 					</label>
-					<button type="button" class="btn" onclick="term_text_toggle()">더보기</button>		
+					&nbsp;<button type="button" class="btn" onclick="term_text_toggle()">더보기</button>		
 					<input type="hidden" id="reciveBookData" name="bookDate">
 					<br>
 					<div class="term_text" style="height: 100px; overflow: auto; display: none;">
@@ -614,7 +617,7 @@ td {
 						운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.</div>
 					<br>
 				</article>
-				<article style="display: flex; justify-content: space-between;">
+				<article style="display: flex; justify-content: space-between; margin-top:30px; margin-bottom:100px;">
 					<button class="btn btn-primary ctn_btn" onclick="history.back(-1)">이전</button>
 					<button type="submit" class="btn btn-primary ctn_btn">확인</button>
 				</article>

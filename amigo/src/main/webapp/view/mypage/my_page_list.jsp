@@ -68,7 +68,7 @@ prefix="c"%>
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">예약 확인</a>
+          <a href="../../book_check.do" class="mypage_link">예약 확인</a>
         </li>
         <li class="list-group-item">
           <a
@@ -90,9 +90,6 @@ prefix="c"%>
         <c:if test="${ sessionScope.user.getUser_type() == 'A' }">
        		<li class="list-group-item">
        		   <a href="<%=request.getContextPath() %>/view/admin/getSitList.do" class="mypage_link">펫시터 회원관리</a>
-     	    </li>
-     	    <li class="list-group-item">
-       		   <a href="<%=request.getContextPath() %>/view/admin/getPayList.do" class="mypage_link">펫시터 회원관리</a>
      	    </li>
      	    
         </c:if>

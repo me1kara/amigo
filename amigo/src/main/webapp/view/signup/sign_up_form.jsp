@@ -314,6 +314,8 @@
                     <input type="submit" id="join-submit" class="btn btn-primary"  value="다음으로" >
                 </div>
                 
+                
+                <!-- 폼 전송 전 유효성 검사 -->
                 <script>
                 function checkResult() {
                 	
