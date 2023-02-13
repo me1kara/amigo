@@ -18,7 +18,7 @@
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:20px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {position:relative;width:100%;height:500px;}
-#menu_wrap {position:relative;top:10px;left:0;bottom:0;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+#menu_wrap {position:relative;top:10px;left:0;bottom:0;margin:10px 0 30px 10px;padding:5px;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option button {margin-left:5px;}
@@ -67,19 +67,20 @@
 <body>
 	<%@include file="/includes/header.jsp" %>
 		<div class="map_wrap container">
-				<div id="map" style="width:100%;height:600px;"></div>
-					<div id="menu_wrap" class="bg_white">
-					      
-					         	
+		
 						          <form class="row row-cols-lg-auto g-3 align-items-center" onsubmit="searchPlaces(); return false;">
 					   		 		<div class="col-12">
 					   				 <div class="input-group">
-						                    <label class="sr-only" for="keyword">현재위치에서</label>
-						                    <input class="form-control" type="text" value="동물병원" id="keyword"> 
+						                    <label class="sr-only" for="keyword">현재위치에서 &nbsp;</label>
+						                    <input class="form-control" type="text" value="동물병원" id="keyword" size="10"> 
 						                    <button type="submit" class='btn btn-primary'>검색하기</button> 
 						                  </div>
 					       			 </div> 
 						           </form>
+						           
+				<div id="map" style="width:100%;height:600px;"></div>
+					<div id="menu_wrap" class="bg_white">
+					             	
 					           	   
 							        <hr>  
 							        <ul id="placesList"></ul>
@@ -87,7 +88,7 @@
 					      
 		  		     </div>
     	</div>
-	<%@include file="/includes/footer.jsp" %>
+
 </body>
 </html>
 

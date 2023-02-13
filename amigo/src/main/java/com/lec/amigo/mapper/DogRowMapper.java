@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.vo.DogVO;
 

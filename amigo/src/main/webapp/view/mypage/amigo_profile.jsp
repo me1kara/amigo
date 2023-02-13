@@ -88,7 +88,7 @@
                   <div class="media forum-item" style="cursor: pointer;" onclick="location.href='updateDog.do?dog_no=${dog.getDog_no()}'">
                   <!-- Dog profile -->
               <div>  <c:if test="${dog.getDog_image_file()!=null and dog.getDog_image_file()!=''}">
-                           <img class="dog-profile-photo" src="/img/${dog.getDog_image_file()}" width="150px" height="100px"></c:if> 
+                           <img class="dog-profile-photo" src="/dogimg/${dog.getDog_image_file()}" width="150px" height="100px"></c:if> 
                            </div>
                     <!-- Dog profile/ -->
                     <div class="media-body">
