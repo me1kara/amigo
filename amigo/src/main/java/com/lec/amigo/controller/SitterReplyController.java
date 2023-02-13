@@ -18,6 +18,8 @@ public class SitterReplyController {
 	@Autowired
 	SitterReplyService sitterReplyService;
 	
+	
+	// 시터게시판 댓글 작성하기
 	@RequestMapping(value="/insertSitterReply.do", method=RequestMethod.POST)
 	public String insertSitterReply(SitterReplyVO sreply, RedirectAttributes redirectAttributes, SearchVO searchVO) {
 		
@@ -31,6 +33,7 @@ public class SitterReplyController {
 		+ "&searchType="+searchVO.getSearchType() + "&searchWord="+ searchVO.getSearchWord();
 	}
 
+	// 시터게시판 댓글 삭제하기
 	@RequestMapping(value="/deleteSitterReply.do", method=RequestMethod.GET)
 	public String deleteSitterReply(SitterReplyVO sreply, RedirectAttributes redirectAttributes, SearchVO searchVO) {
 
@@ -44,6 +47,7 @@ public class SitterReplyController {
 	}
 	
 	
+	// 시터게시판 댓글 수정하기 
 	@RequestMapping(value="/updateSitterReply.do", method=RequestMethod.GET)
 	public String updateSitterReply(SitterReplyVO sreply, Model model, SearchVO searchVO) {
 		

@@ -22,6 +22,8 @@ public class ReplyController {
 	@Autowired
 	ReplyService replyService;
 	
+	
+	// 게시판 댓글 작성하기
 	@RequestMapping(value="/insertReply.do", method=RequestMethod.POST)
 	public String insertReply(ReplyVO reply, RedirectAttributes redirectAttributes, 
 							  SearchVO searchVO, @RequestParam int cnt) {
@@ -35,7 +37,8 @@ public class ReplyController {
 		+ "&curPage="+searchVO.getCurPage() + "&rowSizePerPage="+searchVO.getRowSizePerPage()
 		+ "&searchType="+searchVO.getSearchType() + "&searchWord="+ searchVO.getSearchWord();
 	}
-
+	
+	// 게시판 댓글 삭제하기
 	@RequestMapping(value="/deleteReply.do", method=RequestMethod.GET)
 	public String deleteReply(ReplyVO reply, HttpServletRequest req, RedirectAttributes redirectAttributes, 
 							  SearchVO searchVO, @RequestParam int cnt) {
@@ -51,6 +54,7 @@ public class ReplyController {
 		+ "&searchType="+searchVO.getSearchType() + "&searchWord="+ searchVO.getSearchWord();
 	}
 	
+	//  게시판 댓글 수정하기
 	@RequestMapping(value="/updateReply.do", method=RequestMethod.GET)
 	public String updateReply(ReplyVO reply, Model model, SearchVO searchVO, @RequestParam int cnt) {
 		

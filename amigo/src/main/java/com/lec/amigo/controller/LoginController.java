@@ -2,8 +2,6 @@ package com.lec.amigo.controller;
 
 
 import java.io.File;
-
-
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -33,8 +31,6 @@ import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.ChatRoom;
-import com.lec.amigo.vo.DogVO;
-import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
@@ -55,8 +51,6 @@ public class LoginController {
 
 	@Autowired
 	SitterServiceImpl sitService;
-	
-	private String uploadFolderUser = "";
 
 	private String uploadFolder = "";
 	
@@ -85,6 +79,8 @@ public class LoginController {
 			return "view/login/login_form.jsp";
 		}
 		
+		
+		// 비밀번호 맞는지 확인
 		if(!user.getUser_pw().equals(userVO.getUser_pw())) {
 			sess.setAttribute("matchedPassword", false);
 			return "view/login/login_form.jsp";
@@ -94,15 +90,9 @@ public class LoginController {
 		
 		if(user.getUser_email().equals(userVO.getUser_email())) {
 			sess.setAttribute("user", user);
-			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요! 싫은데용
+			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요!
 			
 			List<ChatRoom> room_list = chatService.getRoomList(user.getUser_no());
-			
-//			//시터인지 확인용
-//			if(user.getUser_type().equals("S")) {
-//				SitterVO sitter = sitService.getSitter(user.getUser_no());
-//				sess.setAttribute("sitter", sitter);
-//			}
 		
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);

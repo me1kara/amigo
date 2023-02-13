@@ -68,11 +68,11 @@ prefix="c"%>
           <a href="getDogList.do" class="mypage_link">반려동물 프로필</a>
         </li>
         <li class="list-group-item">
-          <a href="#" class="mypage_link">예약 확인</a>
+          <a href="../../book_check.do" class="mypage_link">예약 확인</a>
         </li>
         <li class="list-group-item">
           <a
-            href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"
+            href="<%=request.getContextPath() %>/cs_main.do"
             class="mypage_link"
             >고객센터</a
           >
@@ -91,6 +91,7 @@ prefix="c"%>
        		<li class="list-group-item">
        		   <a href="<%=request.getContextPath() %>/view/admin/getSitList.do" class="mypage_link">펫시터 회원관리</a>
      	    </li>
+     	    
         </c:if>
         <c:if test="${ sessionScope.user.getUser_type() == 'U' }">
         <li class="list-group-item">

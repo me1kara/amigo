@@ -152,6 +152,17 @@ prefix="c"%>
         -webkit-transition-delay: 0s;
         transition-delay: 0s;
       }
+      
+      /* 탑으로 스크롤 */
+      a.top {
+ 	 position: fixed;
+ 	 left: 50%;
+  	 bottom: 50px;
+  	 display: none;
+			}
+			
+	
+      
     </style>
 
     <title>메인홈</title>
@@ -244,7 +255,7 @@ prefix="c"%>
           <div class="col-6">
             <div class="p-3">
               <a
-                href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"
+                href="<%=request.getContextPath() %>/cs_main.do"
               >
                 <img
                   src="/amigo/resources/img/cs.png"
@@ -425,7 +436,27 @@ prefix="c"%>
       </div>
       <br />
       <!-- Q&A 종료 -->
+      <!-- 스크롤 -->
+      <a href="#" class="top"><img
+                  src="/amigo/resources/img/topicon2.png"
+                  alt="top"/> </a>
     </div>
+    
+    <script>
+      $( document ).ready( function() {
+        $( window ).scroll( function() {
+          if ( $( this ).scrollTop() > 200 ) {
+            $( '.top' ).fadeIn();
+          } else {
+            $( '.top' ).fadeOut();
+          }
+        } );
+        $( '.top' ).click( function() {
+          $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+          return false;
+        } );
+      } );
+    </script>
     <%@include file="/includes/footer.jsp" %>
 
     <!-- Bootstrap core JS-->

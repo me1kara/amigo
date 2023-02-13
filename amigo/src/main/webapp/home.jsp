@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
@@ -27,9 +27,9 @@
     <![endif]-->
 </head>
 <body>
+
 	<!-- 로그인 화면에서는 네비바가 필요 없을거 같습니다. --> 
 	<!-- <@include file="/includes/header.jsp" %> -->
-	 
 	 <!--  
 	     과거 코드
 		<div class="container">
