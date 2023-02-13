@@ -57,7 +57,7 @@
     z-index: 10;
     width: 60px;
     height: 60px;
-    background-image: url('/amigo/resources/img/starrate.png');
+    background-image: url('./img/starrate.png');
     background-repeat: no-repeat;
     background-size: 60px 60px;
     cursor: pointer;
@@ -87,7 +87,7 @@
     function Rating(){};
     Rating.prototype.rate = 0;
     Rating.prototype.setRate = function(newrate){
-        console.log('별점');
+        //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
         this.rate = newrate;
         let items = document.querySelectorAll('.rate_radio');
         items.forEach(function(item, idx){
@@ -111,7 +111,6 @@
     });
     
     //상품평 작성 글자수 초과 체크 이벤트 리스너
-    console.log('초과체크');
     document.querySelector('.review_textarea').addEventListener('keydown',function(){
         //리뷰 400자 초과 안되게 자동 자름
         let review = document.querySelector('.review_textarea');
@@ -146,18 +145,21 @@
 	<%@include file="/includes/header.jsp" %>
 	<div class="wrap" align="center">
 		<form name="reviewform" action="user_review_insert.do" method="post" enctype="multipart/form-data" onSubmit="return checkResult()">
-            <input name="sit_no" type="hidden" value="${svo.sit_no}" />
-            <input name="user_name" type="hidden" value="${svo.user_name}" />
+            <input name="sit_no" type="hidden" value="${param.sit_no}" />
+            
             <input name="user_photo" type="hidden" value="${sessionScope.user.user_photo}" />
 			<input name="user_no" type="hidden" value="${sessionScope.user.user_no}" />
 			<input name="user_addr" type="hidden" value="${sessionScope.user.user_addr}" />
-			<input name="user_name" type="hidden" value="${sessionScope.user.user_name}" />
+			<input name="user_addr" type="hidden" value="${sessionScope.user.user_addr}" />
+			<input><c:set var="now" value="<%=new java.util.Date()%>" /></input>
+		
 
 			<!-- 작성자  -->
 			<div class="input-group mb-3">
 			 <input type="hidden" class="col-md-1 control-label" name="user_nick" value="${ sessionScope.user.getUser_nick() }" >
-			 <span class="insert-font col-md-1" style="font-size:18px; font-weight:bold;" >작성자 </span> &nbsp;<p class="insert-user-name" style="font-size:18px; font-weight:bold;">${ user.getUser_nick() }</p>&nbsp;&nbsp;&nbsp;
-			 <span class="insert-font col-md-1" style="font-size:18px; font-weight:bold;" >펫시터 </span> &nbsp;<p class="insert-sitter-name" style="font-size:18px; font-weight:bold;">${ svo.getUser_name() }</p>
+			 <input type="hidden" class="col-md-1 control-label" name="user_name" value="${ param.user_name }" >
+			 <span class="insert-font col-md-2" style="font-size:14px; font-weight:bold;" >작성자 :</span> &nbsp;<p class="insert-user-name" style="font-size:14px; font-weight:bold;">${ user.getUser_nick() }</p>&nbsp;&nbsp;&nbsp;
+			 <span class="insert-font col-md-2" style="font-size:14px; font-weight:bold;" >펫시터 :</span> &nbsp;<p class="insert-sitter-name" style="font-size:14px; font-weight:bold;">${ param.user_name }</p>
 			</div>
 			<!-- 작성자  끝 -->
 			<input type="hidden" name="rate" id="rate" value="0"/>
@@ -165,15 +167,15 @@
             <div class="warning_msg">별점을 선택해 주세요.</div>
             <div class="rating">
                 <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
-                <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점">
+                <input type="checkbox" name="star_cnt" id="rating1" value="1" class="rate_radio" title="1점">
                 <label for="rating1"></label>
-                <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio" title="2점">
+                <input type="checkbox" name="star_cnt" id="rating2" value="2" class="rate_radio" title="2점">
                 <label for="rating2"></label>
-                <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio" title="3점" >
+                <input type="checkbox" name="star_cnt" id="rating3" value="3" class="rate_radio" title="3점" >
                 <label for="rating3"></label>
-                <input type="checkbox" name="rating" id="rating4" value="4" class="rate_radio" title="4점">
+                <input type="checkbox" name="star_cnt" id="rating4" value="4" class="rate_radio" title="4점">
                 <label for="rating4"></label>
-                <input type="checkbox" name="rating" id="rating5" value="5" class="rate_radio" title="5점">
+                <input type="checkbox" name="star_cnt" id="rating5" value="5" class="rate_radio" title="5점">
                 <label for="rating5"></label>
             </div>
         </div>
