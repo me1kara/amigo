@@ -42,6 +42,10 @@
         border: 0 solid rgba(0, 0, 0, 0.125);
         border-radius: 0.25rem;
       }
+      
+      .card:hover{
+        box-shadow: 5px 2px 20px #69abce;
+      }
 
       .card-body {
         flex: 1 1 auto;
@@ -140,9 +144,7 @@
             <h6>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</h6>
          </c:if>
                <c:forEach  var="board" items="${ boardList }">
-                    <div class="container" style="cursor: pointer;"  onclick="location.href='user_board_detail.do?ubd_no=${board.getUbd_no()}&user_no=${user.getUser_no()}
-                &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
-                &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc';">
+                    <div class="container" style="cursor: pointer;">
             <!-- Forum List -->
             <!-- div를 눌러서 접속 될수 있게 만듦 -->
             <div class="inner-main-body p-2 p-sm-3 forum-content show" >
@@ -159,7 +161,7 @@
                      </c:otherwise>
                    </c:choose>
                     <!-- user profile/ -->
-                    <div class="media-body">
+                    <div class="media-body" >
                       <!-- 말머리 -->
                         <div class="text-secondary">${ board.getUbd_cate()}</div>
                       <!-- 말머리/ -->
@@ -248,7 +250,7 @@
       </form>
     </div>      
        
-<%@include file="/includes/scrollTop.jsp" %>
+       
 <%@include file="/includes/footer.jsp" %>
 </body>
 </html>

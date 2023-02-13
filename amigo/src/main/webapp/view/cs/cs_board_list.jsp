@@ -45,6 +45,10 @@
         padding: 1rem;
       }
       
+      .card:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
+      
       
       .udb-header-menu {
       font-family: "Jalnan";
@@ -96,7 +100,9 @@
                </div>
             </div>
 
-      <div class="container">               
+      <div class="container" onclick="location.href='cs_board_detail.do?hbd_no=${csboard.getHbd_no()}&user_no=${user.getUser_no()}
+	                      &curPage=${searchVO.getCurPage()}&rowSizePerPage=${searchVO.getRowSizePerPage()}
+	                      &searchType=${searchVO.getSearchType()}&searchWord=${searchVO.getSearchWord()}&updateCount_is=abc">              
          <c:if test="${ csboardList.isEmpty() }">
             <h6><p>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</p></h6>
          </c:if>

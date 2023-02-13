@@ -32,6 +32,18 @@ prefix="c"%>
         /* 그림자 */
         box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
       }
+      
+      .img-fluid:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
+      
+      #card-last{
+      box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
+      }
+      
+      #card-last:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
 
       /* 폰트 적용(여기어때 폰트)*/
       h4 {
@@ -423,7 +435,7 @@ prefix="c"%>
           <a href="user_board_cate.do?ubd_cate=질문" class="all-view">전체보기</a>
         </div>
       </div>
-      <div class="container card text-center" style="cursor:pointer; border-radius: 20px; box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);" onclick="location.href='user_board_detail.do?ubd_no=5&updateCount_is=abd&cnt=3'">
+      <div class="container card text-center" id="card-last" style="cursor:pointer; border-radius: 20px;" onclick="location.href='user_board_detail.do?ubd_no=5&updateCount_is=abd&cnt=3'">
       	<h5 class="card-title"><b>Q ${ board.getUbd_title() }</b></h5>
         	<small> ${ board.getUser_nick() } </small>
         <div class="card-body">
