@@ -35,7 +35,6 @@ import com.lec.amigo.vo.ReplyVO;
 import com.lec.amigo.vo.UserVO;
 
 
-
 @Controller
 @PropertySource("classpath:config/uploadpath.properties")
 public class BoardController {
@@ -131,6 +130,7 @@ public class BoardController {
 	}
 			
 	
+	// 게시글 상세보기
 	@RequestMapping(value= "/user_board_detail.do", method=RequestMethod.GET)
 	public String user_board_detail(Model model, BoardVO board, SearchVO searchVO, 
 			                        @RequestParam int ubd_no, HttpServletRequest req, 
@@ -149,17 +149,17 @@ public class BoardController {
 		}
 		
 		// 파일 가져오는 로직
-		BoardVO boardUser = boardService.getBoard(board);  // 파일명 가져오기 위해 boardUser에 담아줌
+		BoardVO boardUser = boardService.getBoard(board);        // 파일명 가져오기 위해 boardUser에 담아줌
 		if(boardUser.getUbd_file()!=null) {
 		String[] fileSplit = boardUser.getUbd_file().split(","); // ,를 기준으로 파일명 나눠서 배열에 담음
 		
-		model.addAttribute("fileSplit", fileSplit); // jsp 파일에 파일 보냄
+		model.addAttribute("fileSplit", fileSplit);              // jsp 파일에 파일 보냄
 		} 
 		
 		// 댓글 가져오는 로직
-		List<ReplyVO> replyList = null; // 댓글 리스트 가져오기 위해 객체생성
+		List<ReplyVO> replyList = null;                             // 댓글 리스트 가져오기 위해 객체생성
 		replyList = replyService.getReplyList(replyVO.getUbd_no()); // 게시글 번호에 맞는 댓글 리스트 가져옴
-		model.addAttribute("replyList", replyList); // jsp 파일에 댓글 보냄
+		model.addAttribute("replyList", replyList);                 // jsp 파일에 댓글 보냄
 		
 		// 이미 좋아요했는지 확인하는 로직
 		model.addAttribute("findHeart", boardService.findHeart(userVO.getUser_no(), ubd_no));
@@ -167,6 +167,8 @@ public class BoardController {
 		return "view/comunity/user_board_detail.jsp";
 	}
 	
+	
+	// 게시글 수정페이지
 	@RequestMapping(value= "/user_board_update.do", method=RequestMethod.GET)
 	public String user_board_update_form(Model model, BoardVO board, SearchVO searchVO, @RequestParam int cnt) {
 		model.addAttribute("searchVO", searchVO);
@@ -174,24 +176,31 @@ public class BoardController {
 		model.addAttribute("cnt", cnt);
 		
 		// 파일 가져오는 로직
-		BoardVO boardUser = boardService.getBoard(board);  // 파일명 가져오기 위해 boardUser에 담아줌
+		BoardVO boardUser = boardService.getBoard(board);            // 파일명 가져오기 위해 boardUser에 담아줌
 			if(boardUser.getUbd_file()!=null) {
 			String[] fileSplit = boardUser.getUbd_file().split(","); // ,를 기준으로 파일명 나눠서 배열에 담음
 							
-			model.addAttribute("fileSplit", fileSplit); // jsp 파일에 파일 보냄
+			model.addAttribute("fileSplit", fileSplit);              // jsp 파일에 파일 보냄
 		}
 		
 		return "view/comunity/user_board_update.jsp";
 	}
 	
+	
+	// 게시글 수정 완료
 	@RequestMapping(value="/user_board_update.do", method=RequestMethod.POST)
 	public String user_board_update(Model model, BoardVO board, SearchVO searchVO, @RequestParam int cnt) {	
+		
+		String[] fileSplit = board.getUbd_file().split(",");
+		for(int i=0; i<fileSplit.length; i++) {
+			new File(uploadFolder+fileSplit[i]).delete();
+		}
 		
 		if(board.getUploadFile() != null) {
 		List<MultipartFile> uploadFile = board.getUploadFile(); 
 		
 		if (!uploadFile.isEmpty()) {
-
+			
 			List<Map<String, String>> uploadFileList = new ArrayList<>();
 
 			for(int i = 0; i < uploadFile.size(); i++) {
@@ -231,7 +240,7 @@ public class BoardController {
 			}
 		
 			String DBUploadFile = StringUtils.join(DBUpload, ",");  // 리스트 값들을 ,로 연결해주는 자바에 있는 메서드
-			board.setUbd_file(DBUploadFile); // 파일 이름을 ,로 연결해서 DB에 저장
+			board.setUbd_file(DBUploadFile);                        // 파일 이름을 ,로 연결해서 DB에 저장
 		} 
 		}
 		
@@ -242,6 +251,8 @@ public class BoardController {
 		return "view/comunity/alert.jsp";
 	}
 	
+	
+	// 게시글 삭제
 	@RequestMapping(value="/user_board_delete.do", method=RequestMethod.GET)
 	public String user_board_delete(BoardVO board) {
 		String[] fileSplit = board.getUbd_file().split(",");
@@ -253,11 +264,14 @@ public class BoardController {
 	}
 
 	
+	// 게시글 작성 페이지
 	@RequestMapping(value="/user_board_insert.do", method=RequestMethod.GET)
 	public String user_board_insert() {
 		return "view/comunity/user_board_insert.jsp";
 	}
 	
+	
+	// 게시글 작성 완료
 	@RequestMapping(value="/user_board_insert.do", method=RequestMethod.POST)
 	public String user_board_insert(Model model, BoardVO board) {
 		
@@ -305,7 +319,7 @@ public class BoardController {
 			}
 		
 			String DBUploadFile = StringUtils.join(DBUpload, ",");  // 리스트 값들을 ,로 연결해주는 자바에 있는 메서드
-			board.setUbd_file(DBUploadFile); // 파일 이름을 ,로 연결해서 DB에 저장
+			board.setUbd_file(DBUploadFile);                        // 파일 이름을 ,로 연결해서 DB에 저장
 		} 
 		}
 		boardService.insertBoard(board);
@@ -315,6 +329,7 @@ public class BoardController {
 	}
 	
 	
+	// 좋아요 기능
 	@PostMapping("heart.do")
 	@ResponseBody 
 	public int heart(@ModelAttribute HeartVO heart) {
@@ -322,6 +337,8 @@ public class BoardController {
 		return data;
 	}
 	
+	
+	// 좋아요 수 확인
 	@PostMapping("countHeart.do")
 	@ResponseBody 
 	public int countheart(HeartVO heartVO) {
