@@ -66,18 +66,11 @@ public class SitterServiceImpl implements SitterService {
 		sitterDAO.updateTypeU(svo);
 		
 	}
-
-
+	
 	@Override
 	public int getCateRowCount(SearchVO searchVO, SitterVO svo) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	
-	//유저넘버로구하기용
-	public SitterVO getSitter(int user_no) {
-		return sitterDAO.getSitter(user_no);
 	}
 
 	@Override
