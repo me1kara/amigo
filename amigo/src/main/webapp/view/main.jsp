@@ -44,6 +44,15 @@ prefix="c"%>
       #card-last:hover{
        box-shadow: 5px 2px 20px #69abce;
       }
+      
+      .rating-card {
+      box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
+       border-radius: 20px;
+      }
+      
+      .rating-card:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
 
       /* 폰트 적용(여기어때 폰트)*/
       h4 {
@@ -182,6 +191,7 @@ prefix="c"%>
     <![endif]-->
   </head>
   <body>
+  
     <%@include file="/includes/header.jsp" %>
     <div class="container">
       <!--   
@@ -254,7 +264,7 @@ prefix="c"%>
             <div class="p-3">
               <a href="<%=request.getContextPath() %>/view/hospital/recommend_hospital_list.jsp">
                 <img
-                  src="/amigo/resources/img/hp.png"
+                  src="/amigo/resources/img/hp3.png"
                   class="img-fluid"
                   alt="hospital"
                 />
@@ -328,7 +338,7 @@ prefix="c"%>
       </div>
       <!-- 커뮤니티 종료-->
       <br />
-           <!— 실시간 후기 —>
+      <!-- 실시간 후기 -->
       <div class="container col-md-6 mt-5">
       <div class="row justify-content-between">
         <div class="col-4">
@@ -338,27 +348,26 @@ prefix="c"%>
           <a href="user_review_list.do" class="all-view">전체보기</a>
         </div>
       </div>
-      <!--  실시간 후기 추가한부분-카드가 아래로 내려가버림. -->
+      <!-- 실시간 후기 추가한부분-카드가 아래로 내려가버림. -->
       
       <div class="rating-card">
-              <div class="text-center m-b-30">                                                    <!— $ {도그카운트} 로 강아지 테이블의 마릿수를 가져옴 —>
+              <div class="text-center m-b-30" style="cursor:pointer;" onclick="location.href='user_review_list.do';">                                                    <!-- $ {도그카운트} 로 강아지 테이블의 마릿수를 가져옴 -->
                 <div class="review-member">
                   <a href="#">${dogCount}</a>마리의 친구들이 AM!GO와 함께했어요!
                 </div>
                 <br />
-                <!--  점수  -->
+                <!-- 점수 -->
                 <h1 class="rating-number">${starsAverage}<small>/5</small></h1>
                 <div class="rating-stars d-inline-block position-relative mr-2">
-                  
+                  <!--  -->
                   <img src="amigo/resources/img/grey-star.svg" alt="" />
                   <div class="filled-star" style="width: 86%"></div>
                 </div>
-                                                               <!— 총 레이팅 : 별 갯수를 서버단에서 직접 가져옴. —>
+                                                               <!-- 총 레이팅 : 별 갯수를 서버단에서 직접 가져옴. -->
                 <div class="text-muted">${starsTotalCount } ratings</div>
       </div> 
       </div>
-      <!--   후기 종료 -->
-      <br />
+      <!-- 후기 종료 -->
       <!-- Q&A -->
       <div class="container col-md-6">
       <div class="row justify-content-between mt-5">
@@ -384,6 +393,8 @@ prefix="c"%>
 
 
     </div>
+    </div>
+    
 	<%@include file="/includes/scrollTop.jsp" %>
     <%@include file="/includes/footer.jsp" %>
 

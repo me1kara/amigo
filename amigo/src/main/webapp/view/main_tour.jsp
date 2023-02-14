@@ -32,6 +32,27 @@ prefix="c"%>
         /* 그림자 */
         box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
       }
+      
+      .img-fluid:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
+      
+      #card-last{
+      box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
+      }
+      
+      #card-last:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
+      
+      .rating-card {
+      box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
+       border-radius: 20px;
+      }
+      
+      .rating-card:hover{
+       box-shadow: 5px 2px 20px #69abce;
+      }
 
       /* 폰트 적용(여기어때 폰트)*/
       h4 {
@@ -156,13 +177,12 @@ prefix="c"%>
       /* 탑으로 스크롤 */
       a.top {
  	 position: fixed;
- 	 left: 50%;
+ 	 left: 85%;
   	 bottom: 50px;
   	 display: none;
 			}
 			
-			
-  /* 버튼 css */
+/* 버튼 css */
    .buttons {
         text-align: center;
         margin-bottom: 100px;
@@ -207,8 +227,7 @@ prefix="c"%>
         );
         box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
       }
-	
-      
+
     </style>
 
     <title>메인홈</title>
@@ -218,25 +237,26 @@ prefix="c"%>
   </head>
   <body>
   
-  <script>
+   <script>
 		 function main_fail() {
      		alert("로그인 후 이용가능한 페이지입니다.");
          }
 		</script>
-		
-		
-		
+  
     <div class="container">
-    
-    <form>
-           <div class="container mt-3 mb-5 py-5  h-100" align="center">
+
+
+<form>
+           <div class="container mt-3 py-5  h-100" align="center">
           <!-- 이메일 로그인 -->
           <div class="buttons">
           <button type="button" class="btn-hover color-9" onclick="location.href='terms.do';">
             이메일 가입
           </button>
           </div>
+          </div>
     </form>
+<hr/>
 
       <!--   
 		<a href="sitter/sitter_service_main.jsp">펫시터</a>
@@ -251,7 +271,6 @@ prefix="c"%>
 		-->
 
       <!-- Am!go 소개 -->
-       <hr/>
       <div class="container col-md-6 text-center" id="AmigoTop">
         <figure class="snip0015">
           <img
@@ -267,7 +286,7 @@ prefix="c"%>
             </p>
             <p>혹시 당신의 AM!GO가 집에 혼자 남겨져있나요?</p>
             <p>걱정말고 AM!GO의 펫시터 앱을 이용해보세요 !</p>
-           
+            <a href="#"></a>
           </figcaption>
         </figure>
       </div>
@@ -281,7 +300,7 @@ prefix="c"%>
           <!-- 펫시터 -->
           <div class="col-6">
             <div class="p-3">
-              <a href="#" onclick="main_fail()">
+              <a href="/amigo/view/sitter/sitter_service_main.jsp">
                 <img
                   src="/amigo/resources/img/petsitter.png"
                   class="img-fluid"
@@ -309,7 +328,7 @@ prefix="c"%>
             <div class="p-3">
               <a href="#" onclick="main_fail()">
                 <img
-                  src="/amigo/resources/img/hp.png"
+                  src="/amigo/resources/img/hp3.png"
                   class="img-fluid"
                   alt="hospital"
                 />
@@ -321,8 +340,7 @@ prefix="c"%>
           <div class="col-6">
             <div class="p-3">
               <a
-                href="#" onclick="main_fail()"
-              >
+                a href="#" onclick="main_fail()">
                 <img
                   src="/amigo/resources/img/cs.png"
                   class="img-fluid"
@@ -342,7 +360,7 @@ prefix="c"%>
             <h4>커뮤니티</h4>
           </div>
           <div class="col-4 text-end">
-            <a href="#" onclick="main_fail()" class="all-view">전체보기</a>
+            <a href="#" onclick="main_fail()">전체보기</a>
           </div>
         </div>
         <div class="row text-center">
@@ -358,7 +376,7 @@ prefix="c"%>
         <div class="row text-center">
         <c:choose>
         <c:when test="${ sessionScope.user.getUser_type() == 'U' }">
-          <a href="apply/sitter_join.do">
+          <a href="#" onclick="main_fail()">
             <img
               src="/amigo/resources/img/needYou.png"
               class="img-fluid"
@@ -372,10 +390,12 @@ prefix="c"%>
               src="/amigo/resources/img/needYou.png"
               class="img-fluid"
               alt="needYou"
+              onclick="alert('일반 회원만 신청 가능합니다')"
             />
           </a>
          </c:when>
          </c:choose>
+         <!-- sitter_join 쪽 상단 이미지를 클릭하면 펫시터 지원 페이지로 감.  -->
          <!-- 펫시터 회원과 관리자는 지원을 제한함. -->
          
         </div>
@@ -389,97 +409,29 @@ prefix="c"%>
           <h4>실시간 후기</h4>
         </div>
         <div class="col-4 text-end">
-          <a href="#"
-          onclick="main_fail()"
-          class="all-view">전체보기</a>
+          <a href="#" onclick="main_fail()" class="all-view">전체보기</a>
         </div>
       </div>
-      <div id="carouselExampleDark" class="carousel carousel-dark slide">
-        <div class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active" data-bs-interval="10000">
-            <img
-              src="https://via.placeholder.com/400x100"
-              class="d-block w-100"
-              alt="..."
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>First slide label</h5>
-              <p>
-                Some representative placeholder content for the first slide.
-              </p>
-            </div>
-          </div>
-          <div class="carousel-item" data-bs-interval="2000">
-            <img
-              src="https://via.placeholder.com/400x100"
-              class="d-block w-100"
-              alt="..."
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Second slide label</h5>
-              <p>
-                Some representative placeholder content for the second slide.
-              </p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://via.placeholder.com/400x100"
-              class="d-block w-100"
-              alt="..."
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Third slide label</h5>
-              <p>
-                Some representative placeholder content for the third slide.
-              </p>
-            </div>
-          </div>
-        </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+      <!-- 실시간 후기 추가한부분-카드가 아래로 내려가버림. -->
+      
+      <div class="rating-card">
+              <div class="text-center m-b-30" style="cursor:pointer; ">                                                    <!-- $ {도그카운트} 로 강아지 테이블의 마릿수를 가져옴 -->
+                <div class="review-member">
+                  <a href="#">${dogCount}</a>마리의 친구들이 AM!GO와 함께했어요!
+                </div>
+                <br />
+                <!-- 점수 -->
+                <h1 class="rating-number">${starsAverage}<small>/5</small></h1>
+                <div class="rating-stars d-inline-block position-relative mr-2">
+                  <!--  -->
+                  <img src="amigo/resources/img/grey-star.svg" alt="" />
+                  <div class="filled-star" style="width: 86%"></div>
+                </div>
+                                                               <!-- 총 레이팅 : 별 갯수를 서버단에서 직접 가져옴. -->
+                <div class="text-muted">${starsTotalCount } ratings</div>
+      </div> 
       </div>
       <!-- 후기 종료 -->
-      <br />
       <!-- Q&A -->
       <div class="container col-md-6">
       <div class="row justify-content-between mt-5">
@@ -490,7 +442,7 @@ prefix="c"%>
           <a href="#" onclick="main_fail()" class="all-view">전체보기</a>
         </div>
       </div>
-      <div class="container card text-center" onclick="main_fail()">
+      <div class="container card text-center" id="card-last" style="cursor:pointer; border-radius: 20px;">
       	<h5 class="card-title"><b>Q ${ board.getUbd_title() }</b></h5>
         	<small> ${ board.getUser_nick() } </small>
         <div class="card-body">
@@ -502,8 +454,12 @@ prefix="c"%>
       </div>
       <br />
       <!-- Q&A 종료 -->
-     
-     <%@include file="/includes/scrollTop.jsp"%>
+
+
+    </div>
+    </div>
+    
+	<%@include file="/includes/scrollTop.jsp" %>
     <%@include file="/includes/footer.jsp" %>
 
     <!-- Bootstrap core JS-->

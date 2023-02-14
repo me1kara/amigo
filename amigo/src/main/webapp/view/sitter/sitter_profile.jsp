@@ -65,7 +65,7 @@
 		        pay_method : 'card',
 		        merchant_uid: 'merchant_'+new Date().getTime(), 
 		        name : '시터예약',
-		        amount : '100', //${book.res_pay},
+		        amount : '100', //${book.res_pay},테스트용으로 100원 고정
 		        buyer_email : '<%=user.getUser_email()%>',
 		        buyer_name : '<%=user.getUser_name()%>',
 		        buyer_tel : '<%=user.getUser_phone()%>',
@@ -124,7 +124,7 @@
 							<div id="img_ex" style="border:1px solid; width:200px; height:200px; margin:0 auto;">
 				    		 <c:choose>
 				     		 <c:when test="${not empty sitter.sit_photo}">
-				     			<img src="../../resources/img/${sitter.sit_photo}" alt="Profile Picture"/>
+				     			<img src="${sitter.sit_photo}" alt="Profile Picture"/>
 				     	 	 </c:when>
 				     		 <c:otherwise>
 				     			<span>Profile picture not available</span>
@@ -140,117 +140,31 @@
 							 	<p>펫시터 직업훈련 교육 수료</p>
 						</div>
 								<hr>
-								<div>후기</div>
+								<div style="height: 300px;">
+								<p style="font-family:Jalnan;font-size:20px;">후기</p>
+								<c:choose>
+								<c:when test="${not empty review}">
+									<c:forEach var="rev"  items="${ review }">
+									<table>
+										<tr>
+											<td>${ rev.getRev_no() }</td> 
+											<td>${ rev.getStar_cnt() }</td>
+											<td>${ rev.getRev_content() }</td>
+											<td>${ rev.getRev_date() }</td>
+											<td>${ rev.getUser_nick() }</td>
+											<td></td>
+											<td></td>
+											<td></td>										
+										</tr>
+									</table>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<p style="text-align: center;">리뷰가 없습니다!</p>
+								</c:otherwise>
 								
-							 <div class="container">
-      <div class="row">
-      <c:choose>
-         <c:when test="${ rev.isEmpty() || rev == null }">
-            <h6>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</h6>
-         </c:when>
-      <c:otherwise>
-     	 <c:forEach var="rev" items="${ rev }">
-        <div
-          class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4"
-        >
-          <div class="review-user-card">
-            <div class="review-divided">
-              <div class="row">
-                <div class="col-sm-3">
-                  <div class="review-img">
-                  <!-- 유저 프로필 -->																		<!--  유저 프로필은 서버단에서 GET -->
-                  	<c:choose>
-                  	<c:when test="${rev.getUser_photo()!=null and rev.getUser_photo()!=''}">
-                    <img
-                      src="../../resources/img/${rev.getUser_photo() }"
-                      class="review-user-photo"
-                      alt="userProfile"
-                      width="50px"
-                      class="mr-3 rounded-circle"
-                    />
-                    </c:when>
-                    <c:otherwise>
-                    <img src="../../resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>
-                    </c:otherwise>
-                    </c:choose>
-                    <br>
-                    <span class="nickName" style="color:#498dcc; font-weight:bold">${ rev.getUser_nick() }</span>&nbsp;
-                    <!-- 유저 프로필 end -->
-                  </div>
-                  
-                  <!-- 별 
-                 
-                  <div class="star-ratings">
-                    <div 
-                      class="star-ratings-fill space-x-2 text-lg"
-                      :style="{ width: ratingToPercent + '%' }"
-                    >
-                      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                    </div>
-                    <div class="star-ratings-base space-x-2 text-lg">
-                      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                    </div>
-                  -->
-                  <div class="text-center">
-                    <div class="wrap-star">
-                      <!-- 100 % -->
-                      <div class="ratingStars">             							<!-- 리뷰테이블 VO -->
-                      
-                      	<c:choose>
-                      	<c:when test="${rev.getStar_cnt() == 1}">
-                      		<img src="../../resources/img/star1.png" style="width:150px;height:60px;">
-                      	</c:when>
-                      	<c:when test="${rev.getStar_cnt() == 2}">
-                      		<img src="../../resources/img/star2.png" style="width:150px;height:60px;">
-                      	</c:when>
-                      	<c:when test="${rev.getStar_cnt() == 3}">
-                      		<img src="../../resources/img/star3.png" style="width:150px;height:60px;">
-                      	</c:when>
-                      	<c:when test="${rev.getStar_cnt() == 4}">
-                      		<img src="../../resources/img/star4.png" style="width:150px;height:60px;">
-                      	</c:when>
-                      	<c:when test="${rev.getStar_cnt() == 5}">
-                      		<img src="../../resources/img/star5.png" style="width:150px;height:60px;">
-                      	</c:when>
-                        </c:choose>
-                        <input type="hidden" class="form-control" name="sit_no" value="${ rev.getSit_no() }">
-                        <input type="hidden" class="form-control" name="user_no" value="${ sessionScope.user.getUser_no() }">
-                        <input type="hidden" class="form-control" name="user_no" value="${ rev.getUser_no() }">
-                        <input type="hidden" class="form-control" name="star_cnt" value="${ rev.getStar_cnt() }">
-                        <input type="hidden" class="form-control" name="rev_content" value="${ rev.getRev_content() }">
-                        <input type="hidden" class="form-control" name="rev_date" value="${ rev.getRev_date() }">
-                        <input type="hidden" class="form-control" name="user_addr" value="${ rev.getUser_addr() }">
-                        <input type="hidden" class="form-control" name="user_nick" value="${ rev.getUser_nick() }">
-                        <input type="hidden" class="form-control" name="user_name" value="${ rev.getUser_name() }">
-                        <input type="hidden" class="form-control" name="user_photo" value="${ rev.getUser_photo() }"> 
-                        
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- 별 end -->
-              </div>
-              <br />
-              <div class="reviewMain text-center">
-                <div class="review-user-addr">
-                  <a href="#">${ rev.getUser_addr() }</a>
-                </div>
-                <br />
-                <br />
-                <div class="review-main">
-                  <a href="#"></a>${ rev.getRev_content() }
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-         </c:forEach>
-       </c:otherwise>
-       </c:choose>
-      </div>
-    </div>
-	</div>
-								
+								</c:choose>
+							</div>	
 					</article>
 				<article>
 				<article>

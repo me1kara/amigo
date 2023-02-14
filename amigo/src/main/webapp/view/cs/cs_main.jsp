@@ -84,8 +84,7 @@
 
 <!-- 상담 -->
 <div class="row justify-content-around mt-5 mb-5 text-center ">
-  <button type="button" class="btn btn-secondary col-3 btn-md" onclick="location.href='cs_board_list.do';">게시판 문의</button>
-  <button type="button" class="btn btn-secondary col-3 btn-md" onclick="#">채팅 문의</button>
+  <button type="button" class="btn btn-secondary col-4 btn-md" onclick="location.href='cs_board_list.do';">게시판 문의</button>
 </div>
 </div>
 <!-- 상담 end -->
