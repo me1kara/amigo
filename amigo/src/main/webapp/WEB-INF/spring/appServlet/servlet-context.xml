@@ -35,10 +35,6 @@
     	</websocket:handshake-interceptors>
 	</websocket:handlers>
 	
-	
-<!-- 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	<beans:property name="prefix" value="/amigo/" />
-	</beans:bean> -->
 
 	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	     <beans:property name="host" value="smtp.naver.com"/> <!-- 메이서버 호스트 -->
