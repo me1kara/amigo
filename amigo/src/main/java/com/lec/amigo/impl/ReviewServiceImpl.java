@@ -83,6 +83,7 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDAO.starsTotalCount();
 	}
 
+	
 	@Override
 	public List<ReviewVO> getReviewListBySitNo(int sit_no) {
 		// TODO Auto-generated method stub

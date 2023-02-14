@@ -94,7 +94,6 @@
 	function close_book_modal(){
 		$('.modal').fadeOut();
 		$('.book_content').remove();
-		$('.book_btn').remove();	
 		$('body').css("overflow", "auto");
 	}
 	

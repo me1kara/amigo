@@ -106,7 +106,7 @@ public class BookController {
 	}
 	
 	//예약정보 입력 후 인근지역 시터목록 구하는 로직
-	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.GET })
+	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.POST })
 	public String book (HttpServletRequest req, Model model, SearchVO search, 
 			@RequestParam(defaultValue="1") int curPage,
 			@RequestParam(defaultValue="10") int rowSizePerPage, BookVO bookVO) {
@@ -189,7 +189,7 @@ public class BookController {
 		
 		List<ReviewVO> rev = reviewService.getReviewListBySitNo(sit_no);
 		model.addAttribute("rev", rev);
-		System.out.println(s.toString());
+		System.out.println(rev.toString());
 		
 		req.setAttribute("sitter", s);
 		req.setAttribute("book", book);

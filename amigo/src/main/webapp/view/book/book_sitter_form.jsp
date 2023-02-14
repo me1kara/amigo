@@ -694,7 +694,7 @@ td {
 		<hr>
 		<section>
 			<!-- 신청하기 이전, 유효성검사 -->
-			<form action="book.do" onsubmit="return checkResult();">
+			<form action="book.do" onsubmit="return checkResult();" method="post">
 			
 				<!--방문여부 선택, radio사용  -->
 				<article class="select" style="display: flex; justify-content: space-between; margin-top: 50px;">

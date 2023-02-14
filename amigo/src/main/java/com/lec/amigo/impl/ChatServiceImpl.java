@@ -87,9 +87,9 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 
-	public void exitRoom(int index, int user_no) {
+	public int exitRoom(int index, int user_no) {
 		
-		chatDao.exitRoom(index,user_no);
+		return chatDao.exitRoom(index,user_no);
 		
 	}
 	
