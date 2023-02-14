@@ -129,9 +129,6 @@
 				     	 	 <c:otherwise>
 				     	 	 	<img src="https://via.placeholder.com/200x200" alt="Profile Picture"/>
 				     	 	 </c:otherwise>
-				     		 <c:otherwise>
-				     			<span>Profile picture not available</span>
-				     		 </c:otherwise>
 				    		 </c:choose>
 				    		 </div>
 						 <p class="petsitter_name"><c:out value="${sitter.getUser_name()}"/> 펫시터</p>
@@ -145,7 +142,7 @@
 								<hr>
 								<div id="rev_list" style="height: 300px; overflow: scroll; overflow-x:hidden; -ms-overflow-style:none;">
 								<p style="font-family:Jalnan;font-size:20px;">후기(${rev.size() })</p>
-								<table>
+								<table style="margin:0 auto;">
 								<c:choose>
 								<c:when test="${not empty rev}">
 									<c:forEach var="r"  items="${ rev }">
