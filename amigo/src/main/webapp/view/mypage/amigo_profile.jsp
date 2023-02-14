@@ -88,18 +88,18 @@
                 <div class="card-body p-2 p-sm-3">
                   <div class="media forum-item" style="cursor: pointer;" onclick="location.href='updateDog.do?dog_no=${dog.getDog_no()}'">
                   <!-- Dog profile -->
-              <div>  <c:if test="${dog.getDog_image_file()!=null and dog.getDog_image_file()!=''}">
-                           <img class="dog-profile-photo" src="/dogimg/${dog.getDog_image_file()}" width="150px" height="100px"></c:if> 
+              <div style="text-align: center">  <c:if test="${dog.getDog_image_file()!=null and dog.getDog_image_file()!=''}">
+                           <img class="dog-profile-photo" src="/dogimg/${dog.getDog_image_file()}" width="150px" height="100px" style="border-radius:20px;"></c:if> 
                            </div>
                     <!-- Dog profile/ -->
                     <div class="media-body">
                     
                      <!-- 이름 -->
-                      <h6>
-                      <a class="text-body" style="font-size:20px; margin-top:5px">${dog.getDog_name()}</a>
+                      <h6 style="text-align: center; margin-top:10px;">
+                      <a class="text-body" style="font-size:20px; margin-top:5px; font-family: 'Jalnan';">${dog.getDog_name()}</a>
                       </h6>
                       <!-- /이름 -->
-                      <p class="text-muted">
+                      <p class="text-muted" style="margin-top:20px;">
                       <!-- 품종 -->
                         <span class="nickName" style="font-weight:bold"><i class="fa-solid fa-dog">&nbsp;&nbsp;${ dog.getDog_breeds()}</i></span>&nbsp;
                        <!-- /품종 -->
@@ -117,7 +117,7 @@
                     </div>
                  		</div>
                  		<div class="container text-center">
-                 		<button type="button" class="btn btn-danger text-center" data-bs-toggle="modal" data-bs-target="#dogdelete"
+                 		<button type="button" class="btn btn-outline-danger text-center" data-bs-toggle="modal" data-bs-target="#dogdelete"
                         data-dog_no="${dog.getDog_no()}" data-dog_image_file="${dog.getDog_image_file()}">삭 제</button>
                 		</div>
                 		</div>
