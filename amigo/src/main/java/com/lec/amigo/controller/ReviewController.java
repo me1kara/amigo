@@ -75,22 +75,22 @@ public class ReviewController {
 	
 	
 	// 특정 펫시터의 리뷰리스트
-//	@RequestMapping("/sit_review_list.do")
-//	public String getReviewList (HttpServletRequest req, ReviewVO review, Model model) {
-//		
-//		int sit_no = Integer.parseInt(req.getParameter("sit_no"));             // 도메인에서 리퀘스트객체를 통해 파라미터 가져오기
-//		String user_name = (req.getParameter("user_name"));                    // 여기서 'user_name' 은 대상 펫시터의 이름
-//		
-//		List<ReviewVO> rev = reviewService.getReviewListBySitNo(sit_no);
-//		System.out.println("리뷰리스트진입");
-//		model.addAttribute("rev", rev);
-//		
-//		req.setAttribute("user_name", user_name);
-//		req.setAttribute("sit_no", sit_no);
-//		
-//		return "view/sitter/sitter_profile.jsp";
-//		
-//	}
+	@RequestMapping("/sit_review_list.do")
+	public String getReviewList (HttpServletRequest req, ReviewVO review, Model model) {
+		
+		int sit_no = Integer.parseInt(req.getParameter("sit_no"));             // 도메인에서 리퀘스트객체를 통해 파라미터 가져오기
+		String user_name = (req.getParameter("user_name"));                    // 여기서 'user_name' 은 대상 펫시터의 이름
+		
+		List<ReviewVO> rev = reviewService.getReviewListBySitNo(sit_no);
+		System.out.println("리뷰리스트진입");
+		model.addAttribute("rev", rev);
+		
+		req.setAttribute("user_name", user_name);
+		req.setAttribute("sit_no", sit_no);
+		
+		return "view/review/sit_review_list.jsp";
+		
+	}
 	
 	// (예약하거나 이용한) 펫시터의 리뷰리스트
 //	@RequestMapping("/reviewList.do")
