@@ -48,8 +48,7 @@
 	.book_content{
 		width: 100%;height: 90%;
 	}
-	
-	
+
 	table {
 	  border-radius: 10px;
 	  border-style: hidden;
@@ -63,16 +62,25 @@
 	.modal_tTitle{
 		background:rgb(87, 160, 227);
 		color:white;
-	 
 	}
+	
+	.book_ch_title {
+		font-family: "Jalnan";
+		font-size: 30px;
+		color : rgb(87, 160, 227);
+	}
+	
 	.table-modal{
 		box-shadow: 5px 2px 20px rgb(0 0 0 / 20%);
+	}
+	section {
+		margin-top : 80px;
 	}
 	
 </style>
 
 <script>
-
+	//예약내용모달 오픈
 	function open_book_modal(e){
 		console.log("입장확인");
 		let rno = $(e).find("#book_res_no").text();		
@@ -82,7 +90,7 @@
 		$('body').css("overflow", "hidden");
 		
 	}
-	
+	//예약내용모달 닫기
 	function close_book_modal(){
 		$('.modal').fadeOut();
 		$('.book_content').remove();
@@ -90,6 +98,7 @@
 		$('body').css("overflow", "auto");
 	}
 	
+	//예약내용 ajax로 서버에서 구해오기
 	function getBook_detail(rno){
  		$.ajax({
 			url : '/amigo/ajax/getBook_detail.do',
@@ -109,10 +118,6 @@
 						temp += '</table></li>';
 					});
 					temp+='</ul>';
-/* 					if(res_state.trim()=='대기'){
-						temp+='<button class="btn btn-danger book_btn" onclick="book_refuse('+rno+')" style="position:relative;">거부하기</button>';
-						temp+='<button class="btn btn-danger book_btn" onclick="book_refuse('+rno+')" style="position:relative;">승인하기</button>';
-					} */
 					modalBody.append(temp);
 				} else {
 					alert('예약정보가 없습니다! 다시 시도해주세요!');
@@ -121,59 +126,6 @@
 			}
 		});
 		
-	}
-	
-/* 	function book_refuse(rno){
-		if(confirm('정말로 거부하시겠습니까?')){
-			$.ajax({
-				url  : '/amigo/ajax/refuseBook.do',
-				type : 'POST',
-				data : {
-					'rno' : rno	
-				},
-				success : function(result){
-					if(result>0){
-						alert('성공적으로 거부됐습니다!');
-						history.go(0);
-					}else{
-						alert('거부에 실패했습니다!');
-					    close_book_modal();
-					}
-				},
-			    error : function(request, status, error) { // 결과 에러 콜백함수
-			        console.log(error);
-			        alert('거부에 실패했습니다!');
-			        close_book_modal();
-			    }
-			});
-			
-		}
-	} */
-	function book_update(rno){
-		if(confirm('정말로 승인하시겠습니까?')){
-			$.ajax({
-				url  : '/amigo/ajax/updateBook.do',
-				type : 'POST',
-				data : {
-					'rno' : rno 
-				},
-				success : function(result){
-					if(result>0){
-						alert('승인됐습니다!');
-						history.go(0);
-					}else{
-						alert('승인에 실패했습니다!');
-					    close_book_modal();
-					}
-				},
-			    error : function(request, status, error) { // 결과 에러 콜백함수
-			        console.log(error);
-			        alert('승인에 실패했습니다!');
-			        close_book_modal();
-			    }
-			});
-			
-		}
 	}
 	
 </script>
@@ -190,23 +142,32 @@
 			<c:set var="sw" value="${searchVO.getSearchWord()}" />
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
-			<section>	
+			<section>
 				<article>
-					<h3>예약확인</h3>
-					<c:if test='${user.getUser_type().equals("S") }'>
-						<button class="btn btn-primary" onclick="location.href='/amigo/book_check.do'">유저모드</button>
-					</c:if>
-					<c:choose>
-					<c:when test="${sc eq 'past' }">
-						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do'">현재기록</button>
-					</c:when>
-					<c:otherwise>
-						<button class="btn btn-primary" onclick="location.href='/amigo/receiveBook_check.do?searchCategory=past'">이전기록</button>
-					</c:otherwise>
-					</c:choose>
+					<div class="row">
+					
+					<!-- 현재,과거 and 일반 모드 버튼 -->
+						<h2 class="book_ch_title d-flex justify-content-center">예약 확인</h2>
+						<div class="d-flex justify-content-end">
+						<c:if test='${user.getUser_type().equals("S") }'>
+							<button class="btn" onclick="location.href='/amigo/book_check.do'"><b>유저모드</b></button>
+						</c:if>
+						<c:choose>
+						<c:when test="${sc eq 'past' }">
+							<button class="btn" onclick="location.href='/amigo/receiveBook_check.do'"><b>현재예약</b></button>
+						</c:when>
+						<c:otherwise>
+							<button class="btn" onclick="location.href='/amigo/receiveBook_check.do?searchCategory=past'"><b>지난예약</b></button>
+						</c:otherwise>
+						</c:choose>
+						</div>
+					 </div>
+					<hr>
+					
 				</article>
+				
+				<!-- 예약간략내용 -->
  				<article id="sitter_book">
-					<h1>시터전용</h1>
 					<c:choose>
 						<c:when test="${sitBookList!=null && !sitBookList.isEmpty() }">
 							<ul style="list-style: none;">
@@ -244,19 +205,6 @@
 										<tr>
 											<th class="tTitle">결제금액</th><td><fmt:formatNumber value="${book.getRes_pay() }" pattern="#,###"/>원</td>
 										</tr>
-<%-- 										<tr style="border-bottom: 1px solid">
-											<th class="tTitle">승인여부</th>
-											<td>
-												<c:choose>
-													<c:when test="${book.res_state eq '1' }">
-														<mark>승인</mark>
-													</c:when>
-													<c:otherwise>
-														<mark>대기</mark>
-													</c:otherwise>
-												</c:choose>
-											</td>
-										</tr> --%>
 										
 										</tbody>
 									</table>
@@ -266,6 +214,8 @@
 								</c:forEach>
 							</c:forEach>
 							</ul>
+							
+							<!-- 페이징처리 -->
 							<div class="row align-items-start mt-3">
 									<ul class="col pagination justify-content-center">
 										<c:if test="${ fp != 1 }">
@@ -292,12 +242,12 @@
 												class="page-link"><i class="fas fa-fast-forward"></i></a></li>
 										</c:if>
 									</ul>
-									<!-- pagination -->
+									<!-- 페이징끝 -->
 
 								</div>
 						</c:when>
 						<c:otherwise>
-							<h2>예약된 정보가 없습니다!</h2>
+						<h2 class="text-center">예약사항이 없습니다</h2>
 						</c:otherwise>
 					</c:choose>
 				</article>

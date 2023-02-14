@@ -95,7 +95,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         	 let b = ${calr};
         	 $('#bookDate').val(JSON.stringify(b));
       });
-
        	function sendJsonUrl(curPage,rowSize){
        		console.log('입장확인용');
        	    var f = document.f;
@@ -111,10 +110,13 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <article class="sitter_list">
           <h2 class="sitter_list_title"><%=addr%> 펫시터 목록</h2>
           <hr />
+          
+          <!-- 시 단위의 시터목록 -->
           <c:choose>
-            <c:when test="${sittList!=null }">
+
+            <c:when test="${sittList!=null && !sittList.isEmpty() }">
               <c:forEach var="sit" items="${sittList }">
-                <!--  div클릭 접속 구현  -->
+
                 <div
                   class="sitter_item"
                   id="item-box-shadow"
@@ -146,6 +148,8 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                   <!-- 전체 테이블 end -->
                 </div>
               </c:forEach>
+              
+              <!-- 페이징처리 -->
               <c:if test="${searchVO.totalPageCount>1 }">
                 <div class="row align-items-start mt-3">
                   <ul class="col pagination justify-content-center">
@@ -191,13 +195,12 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                       </button>
                     </c:if>
                   </ul>
-                  <!-- pagination -->
+                  <!-- 페이징마침 -->
                 </div>
-                <!-- 페이징 -->
               </c:if>
             </c:when>
             <c:otherwise>
-              <h>해당한 지역의 펫시터가 없습니다!</h>
+              <h1>해당한 지역의 펫시터가 없습니다!</h1>
             </c:otherwise>
           </c:choose>
         </article>
@@ -206,37 +209,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         </article>
       </section>
     </div>
-    <%--
-    <a
-      href="book.do?curPage=${lp+1}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}"
-      class="page-link"
-      ><i class="fas fa-forward"></i
-    ></a>
-    --%> <%--
-    <a
-      href="book.do?curPage=${page}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}"
-      class="page-link"
-      >${page}</a
-    >
-    --%> <%--
-    <li class="page-item">
-      <a
-        href="book.do?curPage=${tp}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}"
-        class="page-link"
-      ></a>
-    </li>
-    --%> <%--
-    <a
-      href="book.do?curPage=1&rowSizePerPage=${rp}&address=${address}&book_date=${calr}"
-      class="page-link"
-    ></a>
-    --%> <%--
-    <a
-      href="book.do?curPage=${fp-rp}&rowSizePerPage=${rp}&address=${address}&book_date=${calr}"
-      class="page-link"
-      ><i class="fas fa-backward"></i
-    ></a>
-    --%> <%@include file="/includes/footer.jsp" %>
+	<%@include file="/includes/footer.jsp" %>
 
     <!-- json보내기용 -->
     <form name="f" action="book.do">

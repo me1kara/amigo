@@ -75,6 +75,23 @@ public class BookController {
 	@Autowired
 	DogServiceImpl dogSerice;
 	
+	
+	//예약신청폼 
+	@RequestMapping(value = "/view/book/book_sitter_form.do", method = { RequestMethod.GET })
+	public String book_from (HttpSession sess) {
+		UserVO user = (UserVO)sess.getAttribute("user");
+		List<DogVO> myDog_list = dogSerice.getDogList(user.getUser_no());
+		
+		if(!myDog_list.isEmpty()) {
+			sess.setAttribute("myDog_list", myDog_list);
+		}else {
+			sess.removeAttribute("myDog_list");
+		}
+		
+		return "/view/book/book_sitter_form.jsp";
+	}
+	
+	//예약정보 입력 후 인근지역 시터목록 구하는 로직
 	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.GET })
 	public String book (HttpServletRequest req, Model model, SearchVO search, 
 			@RequestParam(defaultValue="1") int curPage,
@@ -88,6 +105,8 @@ public class BookController {
 		String[] addrList = address.split("\\s");
 		String secondeAddr = addrList[0];
 		
+		
+		//페이징처리
 		search.setCurPage(curPage); // 현재페이지
 		search.setRowSizePerPage(rowSizePerPage); // 페이지당 담길 글 갯수
 		int totalCount = bookService.getTotalRowCount(secondeAddr);
@@ -102,6 +121,8 @@ public class BookController {
 		search.setFirstPage(startPage);//현재 페이지기준 스타트페이지
 		search.setLastPage(endPage);//현재 페이지기준 엔드페이지
 		search.setPageSize(rowSizePerPage);
+		
+		//인근지역 시터조회
 		List<SitterVO> sittList = bookService.getArroundSitter(secondeAddr,search,calr);
 		List<UserVO> sittNameList = bookService.getUserNameList(secondeAddr);
 		
@@ -141,42 +162,29 @@ public class BookController {
 	}
 	
 	
-	@RequestMapping(value = "/view/book/sitter_profile.do", method = { RequestMethod.GET })		// 예약을 하면 주소지 근처에 펫시터가 뜨는데 그중에 펫시터 클릭하면 펫시터의 상세정보가 뜸.
+	//예약, 인근지역 시터리스트에서 특정시터 자세히보기
+	@RequestMapping(value = "/view/book/sitter_profile.do", method = { RequestMethod.GET })
 	public String getSitterProfile (HttpServletRequest req, ReviewVO review, HttpServletResponse resp, SitterVO sitterVO, HttpSession sess, Model model) {
 
-		SitterVO s = sitterService.getSitter(sitterVO);											// 시터서비스에서 getSitter 로 시터정보를 담는 객체를 가져옴
+		SitterVO s = sitterService.getSitter(sitterVO);
 	
-		BookVO book = (BookVO)sess.getAttribute("book");										// 세션에서 예약정보를 가져옴 (BookVO 타입으로 형변환)
-		int sit_no = Integer.parseInt(req.getParameter("sit_no"));								// 주소창에서 시터번호를 가져오고
-		String user_name = (req.getParameter("user_name"));										// 시터의 이름 역시 가져온다.(유저네임으로 되어있으나 펫시터이름임)
+		BookVO book = (BookVO)sess.getAttribute("book");
+		int sit_no = Integer.parseInt(req.getParameter("sit_no"));
+		String user_name = (req.getParameter("user_name"));
 		
-		List<ReviewVO> rev = reviewService.getReviewListBySitNo(sit_no);						// 시터번호를 파라미터로 sql 쿼리를 돌려서 리뷰테이블에 담길 리스트를 담기 위함.
-		model.addAttribute("review", rev);
+		List<ReviewVO> rev = reviewService.getReviewListBySitNo(sit_no);
+		model.addAttribute("rev", rev);
 		System.out.println(s.toString());
-	   // reviewVO 0번째가 제대로담겼는지 확인해보기	
-		req.setAttribute("sitter", s);															// 펫시터 VO 정보, bookVO정보, 펫시터이름(user_name) 및 시터번호를 req객체에 저장.
+		
+		req.setAttribute("sitter", s);
 		req.setAttribute("book", book);
 		req.setAttribute("user_name", user_name);
-		req.setAttribute("sit_no", sit_no); // 주소
 		
-		return "/view/sitter/sitter_profile.jsp";												// 해당 페이지(시터의 프로필)를 리턴
-	}
-	
-	@RequestMapping(value = "/view/book/book_sitter_form.do", method = { RequestMethod.GET })
-	public String book_from (HttpSession sess) {
-		UserVO user = (UserVO)sess.getAttribute("user");
-		List<DogVO> myDog_list = dogSerice.getDogList(user.getUser_no());
-		
-		if(!myDog_list.isEmpty()) {
-			sess.setAttribute("myDog_list", myDog_list);
-		}else {
-			sess.removeAttribute("myDog_list");
-		}
-		
-		return "/view/book/book_sitter_form.jsp";
+		return "/view/sitter/sitter_profile.jsp";
 	}
 	
 	
+	//특정시터에게 예약신청
 	@RequestMapping(value = "/requestBook.do", method = { RequestMethod.GET })
 	public String finalBook (HttpServletRequest req) {
 		HttpSession sess= req.getSession();
@@ -204,6 +212,8 @@ public class BookController {
 		return "/view/book/book_sitter_request.jsp";
 	}
 	
+	
+	//시터신청폼에서 예약시간을 통한 금액계산, ajax
 	@PostMapping("/view/book/ajax/calMoney.do")
 	@ResponseBody 
 	public int calMoney(HttpServletRequest req) {
@@ -264,6 +274,7 @@ public class BookController {
 		
 	}
 	
+	//나의 예약내용확인 ajax
 	@PostMapping("/ajax/getBook_detail.do")
 	@ResponseBody 
 	public List<BookContentVO> getBook_datail(HttpServletRequest req) {
@@ -280,6 +291,7 @@ public class BookController {
 		return bookDetailList;
 	}
 	
+	//예약취소
 	@PostMapping("/ajax/deleteBook.do")
 	@ResponseBody 
 	public Payment deleteBook(HttpServletRequest req) {
@@ -297,20 +309,13 @@ public class BookController {
 	}
 	
 	
-	@PostMapping("/ajax/updateBook.do")
-	@ResponseBody 
-	public int updateBook(HttpServletRequest req) {
-		int rno = Integer.parseInt(req.getParameter("rno")) ;
-		int result = bookService.updateBook(rno);
-
-		return result;
-	}
-	
-	
+	//결제내용 검사 및 db삽입 
 	@PostMapping("/view/book/ajax/payment.do")
 	@ResponseBody 
 	public ResponseEntity<?> payBook(@RequestBody Map<String, Object> model, HttpServletRequest req) {
 		
+		
+		//map, json 으로 받고 보내기
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 		JSONObject responseObj = new JSONObject();
@@ -333,6 +338,7 @@ public class BookController {
 		System.out.println(money + imp_uid + merchant_uid);
 		System.out.println("카드넘버"+card);
 		
+		//결제성공했을시
 		if(success==true) {
 			Payment payment = new Payment();
 			payment.setImp_uid(imp_uid);
@@ -344,6 +350,7 @@ public class BookController {
 				String api_key = "7637382105357040";
 				String api_secret = "GLH595QqwqJMZ9Z7oeiFmpbvOLTfO6w7iojqLlHtiuJA01jHK09c0AJXqQugN2hGMppj3qS7U17cwE7x";
 				
+				//프론트단에서 보낸 금액과 아임포트에서 가져온 금액의 일치여부 검사
 				IamportClient ic = new IamportClient(api_key, api_secret);
 				IamportResponse<com.siot.IamportRestClient.response.Payment> response = ic.paymentByImpUid(imp_uid);
 				BigDecimal import_amount =response.getResponse().getAmount(); //api_amount
@@ -353,6 +360,7 @@ public class BookController {
 					
 					if(insertPay>0) {responseObj.put("process_result", "결제성공:" + payment.getMerchant_uid());}
 					else {
+						//불일치시 결제취소로직
 						ic.cancelPaymentByImpUid(new CancelData(merchant_uid, true));
 						responseObj.put("process_result", "결제에러:디비삽입실패");
 						}
@@ -373,15 +381,8 @@ public class BookController {
 		return new ResponseEntity<String>(responseObj.toString(), responseHeaders, HttpStatus.OK);
 	}
 	
-	@PostMapping("/ajax/canclePay.do")
-	@ResponseBody
-	public String canclePay(HttpServletRequest req) {
-		
-		
-		return null;
-	}
 	
-	
+	//나의 예약목록
 	@RequestMapping(value = "/book_check.do", method = { RequestMethod.GET })
 	public String myBookList (Model model, HttpSession sess,SearchVO searchVO,
 			@RequestParam(defaultValue="1") int curPage,
@@ -410,6 +411,8 @@ public class BookController {
 		return "/view/book/book_check.jsp";
 	}
 	
+	
+	//나의 예약목록(펫시터시점)
 	@RequestMapping(value = "/receiveBook_check.do", method = { RequestMethod.GET })
 	public String myReceiveBookList (Model model, HttpSession sess,SearchVO searchVO,
 			@RequestParam(defaultValue="1") int curPage,
@@ -435,16 +438,6 @@ public class BookController {
 		return "/view/sitter/sitter_recive_book_check.jsp";
 	}
 	
-	/*
-	 * @RequestMapping("/pastBook_check.do") public String
-	 * pastBook(HttpServletRequest req) { UserVO user =
-	 * (UserVO)(req.getSession().getAttribute("user"));
-	 * 
-	 * List<BookVO> pastBookList =bookService.getPastBook(user.getUser_no());
-	 * req.setAttribute("pastBookList", pastBookList);
-	 * 
-	 * return "pastBook.jsp"; }
-	 */
 	
 		
 

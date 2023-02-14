@@ -40,13 +40,14 @@
     
     <style>
     	.RL_item{
-    		width:66%;
+    		width:90%;
     	}
     	
     	.chat-header-title {
     		font-family: "Jalnan";
       		font-size:40px;
       		text-align: left;
+      		margin-left: 10%;
     	}
     	
     </style>
@@ -57,33 +58,36 @@
 		<div class="container" style="margin-top:60px;">
 			<section>
 				<article>
-					<div style="text-align: center; width: 500px; margin: 0 auto;" >
-					
-						 <div class="p-5">
-				         	<p class="chat-header-title">채팅</p>
-				    	 </div> 
+					<div style="text-align: center; width: 400px; margin: 0 auto;" >
+				
+				    <p class="chat-header-title">채팅</p>
+
 					<c:set var="chatList" value="<%=chatList %>"/>
 					<c:set var="elseRoomList" value="<%=elseRoomList %>"></c:set>
 					<!-- 유저가 채팅방을 소유하고있는지 여부 -->
 					<c:choose>
 						<c:when test="<%=checkRoom==null %>">	
 						<p><b>채팅방이 없습니다</b></p>
-					</div>
 						</c:when>
 						<c:when test="<%=checkRoom!=null %>">
 							<ul style="list-style: none;">
+							
+							<!-- db에서 받아온 내 채팅방(마지막채팅담김)목록 출력 -->
 							<c:forEach var="chat" items="${chatList }">
 										<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;">${ chat.index}번방</h6>
 										<li class="btn btn-outline-dark RL_item" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
 											<table>
 												<tr>
 													<td>
+													<!-- 채팅객체에 유저이름 필드가 없기때문에 유저리스트를 조사해서 이름 얻어오기  -->
 														<c:forEach var="us" items="${userList }">
 															<c:if test="${us.user_no==chat.user_no }">
-																<img src="/img/${us.user_photo }" width="50px;" height="50px;" > <!-- 파일나중에 저장할 것--> 
+																<img src="/img/${us.user_photo }" width="50px;" height="50px;" > <!--유저이미지 --> 
 															</c:if>
 														</c:forEach>
 													</td>
+													
+													
 													<td>
 														<ul style="list-style: none;" >
 														<li style="width:250px; text-align: left;"><b>${chat.getUser_nick()}</b></li>
@@ -98,9 +102,9 @@
 														</c:choose>
 														</ul>
 													</td>
-													<td>
+<%-- 													<td>
 														<button onclick="location.href='/amigo/exit_chat_room.do?room_index=${chat.getIndex()}'">채팅방나가기</button>
-													</td>
+													</td> --%>
 												</tr>
 											</table>	
 									<!-- 				
@@ -122,6 +126,7 @@
 						</ul>
 						</c:when>
 					</c:choose>
+					</div>
 				</article>
 			</section>
 		</div>

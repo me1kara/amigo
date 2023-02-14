@@ -266,8 +266,7 @@ prefix="c"%>
           <div class="col-6">
             <div class="p-3">
               <a
-                href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"
-              >
+                href="<%=request.getContextPath() %>/cs_main.do">
                 <img
                   src="/amigo/resources/img/cs.png"
                   class="img-fluid"
@@ -384,33 +383,9 @@ prefix="c"%>
       <br />
       <!-- Q&A 종료 -->
 
-      <!-- 스크롤 -->
-      <a href="#" class="top"><img
-                  src="/amigo/resources/img/scrollTop1.png"
-                  alt="top" style="width:60px; height:60px;" /> </a>
-    </div>
-    
-    
-    
-    <!-- scrollTop code 입니다. -->
-    <script>
-      $( document ).ready( function() {
-        $( window ).scroll( function() {
-          if ( $( this ).scrollTop() > 200 ) {
-            $( '.top' ).fadeIn();
-          } else {
-            $( '.top' ).fadeOut();
-          }
-        } );
-        $( '.top' ).click( function() {
-          $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
-          return false;
-        } );
-      } );
-    </script>
 
     </div>
-
+	<%@include file="/includes/scrollTop.jsp" %>
     <%@include file="/includes/footer.jsp" %>
 
     <!-- Bootstrap core JS-->
