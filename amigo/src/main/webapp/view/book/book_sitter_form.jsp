@@ -507,7 +507,7 @@ td {
 					console.log('결과:' + result);
 					if (result != 0) {
 						//서버에서 계산한 값 form에 넣기 
-						$('#money').val(result); //$('#heart').prop("src","resources/img/heart_fill.svg");
+						$('#money').val(result); 
 						$('#show_money').text(result + '원');
 					} else {
 						$('#money').val('');
