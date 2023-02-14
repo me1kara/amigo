@@ -38,6 +38,7 @@
       }
       .button-main1 {
         background: rgb(87, 160, 227);
+        
         margin: 20px auto;
         width: 200px;
         height: 50px;
