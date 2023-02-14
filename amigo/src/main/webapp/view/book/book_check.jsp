@@ -22,6 +22,7 @@
     <script src="js/html5shiv.js"></script>
     <![endif]-->
 <style>
+
 	.book_item{
 		 margin-bottom: 20px;
 		 padding: 20px;
@@ -115,7 +116,7 @@
 					result.forEach((content, index) =>{
 						console.log(content);
 						temp += '<li style="padding:5px;"><table class="table-sm table-bordered table-modal" border="2" style="width:95%;">';
-						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:50%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
+						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:20%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
 						temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">시간</td><td>' + content.res_time +'</td></tr>';
 						temp += '<tr style="border-bottom:1px solid black; vertical-align: middle;"><td class="modal_tTitle">장소</td><td>' + content.res_addr +'</td></tr>';
 						temp += '</table></li>';
@@ -135,11 +136,11 @@
 						cate = '${searchVO.getSearchCategory()}';
 					}
 					if(today<limitDay){
-						temp+='<button class="btn btn-danger book_btn" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
+						temp+='<button class="btn btn-light book_btn btn-outline-danger" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
 					}else if(cate=='past'){
-						temp+='<button class="btn btn-danger book_btn" onclick="" style="position:relative;">리뷰목록</button>';
+						temp+='<button class="btn btn-ligth book_btn btn-outline-info" onclick="" style="position:relative;">리뷰목록</button>';
 					}else{
-						temp+='<button disabled="disabled" class="btn btn-danger book_btn" style="position:relative;">취소불가</button>';
+						temp+='<button disabled="disabled" class="btn btn-light book_btn btn-outline-dark" style="position:relative;">취소불가</button>';
 					}
 					modalBody.append(temp);
 				} else {

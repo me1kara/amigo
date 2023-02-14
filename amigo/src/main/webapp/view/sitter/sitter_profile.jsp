@@ -144,7 +144,7 @@
 								<p style="font-family:Jalnan;font-size:20px;">후기</p>
 								<c:choose>
 								<c:when test="${not empty review}">
-									<c:forEach var="rev"  items="${ review }">
+									<c:forEach var="rev"  items="${ rev }">
 									<table>
 										<tr>
 											<td>${ rev.getRev_no() }</td> 

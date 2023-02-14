@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JDBCUtility {
+
 	private final static String driver = "org.mariadb.jdbc.Driver";
 	private final static String url = "jdbc:mariadb://3.34.29.36:3306/amigo";
 	private final static String user = "amigo2";
