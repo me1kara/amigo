@@ -133,7 +133,7 @@
 								<c:forEach var="rev"  items="${ review }">
 								<table>
 									<tr>
-										<td>${ rev.getRev_no() }</td>
+										<td>${ rev.getRev_no() }</td> 
 										<td>${ rev.getStar_cnt() }</td>
 										<td>${ rev.getRev_content() }</td>
 										<td>${ rev.getRev_date() }</td>

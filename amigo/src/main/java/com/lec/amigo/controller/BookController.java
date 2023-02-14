@@ -141,24 +141,25 @@ public class BookController {
 	}
 	
 	
-	@RequestMapping(value = "/view/book/sitter_profile.do", method = { RequestMethod.GET })
+	@RequestMapping(value = "/view/book/sitter_profile.do", method = { RequestMethod.GET })		// 예약을 하면 주소지 근처에 펫시터가 뜨는데 그중에 펫시터 클릭하면 펫시터의 상세정보가 뜸.
 	public String getSitterProfile (HttpServletRequest req, ReviewVO review, HttpServletResponse resp, SitterVO sitterVO, HttpSession sess, Model model) {
 
-		SitterVO s = sitterService.getSitter(sitterVO);
+		SitterVO s = sitterService.getSitter(sitterVO);											// 시터서비스에서 getSitter 로 시터정보를 담는 객체를 가져옴
 	
-		BookVO book = (BookVO)sess.getAttribute("book");
-		int sit_no = Integer.parseInt(req.getParameter("sit_no"));
-		String user_name = (req.getParameter("user_name"));
+		BookVO book = (BookVO)sess.getAttribute("book");										// 세션에서 예약정보를 가져옴 (BookVO 타입으로 형변환)
+		int sit_no = Integer.parseInt(req.getParameter("sit_no"));								// 주소창에서 시터번호를 가져오고
+		String user_name = (req.getParameter("user_name"));										// 시터의 이름 역시 가져온다.(유저네임으로 되어있으나 펫시터이름임)
 		
-		List<ReviewVO> rev = reviewService.getReviewListBySitNo(sit_no);
-		model.addAttribute("rev", rev);
+		List<ReviewVO> rev = reviewService.getReviewListBySitNo(sit_no);						// 시터번호를 파라미터로 sql 쿼리를 돌려서 리뷰테이블에 담길 리스트를 담기 위함.
+		model.addAttribute("review", rev);
 		System.out.println(s.toString());
-		
-		req.setAttribute("sitter", s);
+	   // reviewVO 0번째가 제대로담겼는지 확인해보기	
+		req.setAttribute("sitter", s);															// 펫시터 VO 정보, bookVO정보, 펫시터이름(user_name) 및 시터번호를 req객체에 저장.
 		req.setAttribute("book", book);
 		req.setAttribute("user_name", user_name);
+		req.setAttribute("sit_no", sit_no); // 주소
 		
-		return "/view/sitter/sitter_profile.jsp";
+		return "/view/sitter/sitter_profile.jsp";												// 해당 페이지(시터의 프로필)를 리턴
 	}
 	
 	@RequestMapping(value = "/view/book/book_sitter_form.do", method = { RequestMethod.GET })
