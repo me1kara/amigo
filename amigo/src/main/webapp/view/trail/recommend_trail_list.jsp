@@ -112,7 +112,7 @@
         // places = [route_no,route_nm,length_km,time2walk]
         
 		var content = '<div class="placeinfo">' +
-        '<a class="title" href=trail_detail.do?route_no='+places[0]+' target="_blank" title="' + places[1] + '">' + places[1] + '</a>' +
+        '<a class="title" href=trail_detail.do?route_no='+places[0]+' title="' + places[1] + '">' + places[1] + '</a>' +
         ' <span title="' + places[2] + '"> 길이(km) : ' + places[2] + '</span>' +
         ' <span title="' + places[3] + '"> 소요시간  : ' + places[3] + '</span>' +
         '</div><div class="after"></div>';
