@@ -53,7 +53,7 @@
           >
             <div class="rating-card">
               <div class="text-center m-b-30">
-                <!-- 몇마리의 표현은 정보를 가져와줘야함. 02/09 백단에서 가져옴 -->
+                																<!-- $ {도그카운트} 로 강아지 테이블의 마릿수를 가져옴 -->
                 <div class="review-member">
                   <a href="#">${dogCount}</a>마리의 친구들이 AM!GO와 함께했어요!
                 </div>
@@ -61,11 +61,11 @@
                 <!-- 점수 -->
                 <h1 class="rating-number">${starsAverage}<small>/5</small></h1>
                 <div class="rating-stars d-inline-block position-relative mr-2">
-                  <!-- 별 이미지 일뿐 구동은 백엔드쪽에서 만들어 줘야할거 같습니다. -->
+                  <!--  -->
                   <img src="amigo/resources/img/grey-star.svg" alt="" />
                   <div class="filled-star" style="width: 86%"></div>
                 </div>
-                <!-- 총 레이팅 -->
+             																	   <!-- 총 레이팅 : 별 갯수를 서버단에서 직접 가져옴. -->
                 <div class="text-muted">${starsTotalCount } ratings</div>
               </div>
               <div class="rating-divided">
@@ -173,7 +173,7 @@
               <div class="row">
                 <div class="col-sm-3">
                   <div class="review-img">
-                  <!-- 유저 프로필 -->
+                  <!-- 유저 프로필 -->																		<!--  유저 프로필은 서버단에서 GET -->
                   	<c:choose>
                   	<c:when test="${rev.getUser_photo()!=null and rev.getUser_photo()!=''}">
                     <img
@@ -188,6 +188,7 @@
                     <img src="resources/img/logo2.png" alt="logo2" width="50px" class="mr-3 rounded-circle" alt="logo2"/>
                     </c:otherwise>
                     </c:choose>
+                    <br>
                     <span class="nickName" style="color:#498dcc; font-weight:bold">${ rev.getUser_nick() }</span>&nbsp;
                     <!-- 유저 프로필 end -->
                   </div>
@@ -208,7 +209,7 @@
                   <div class="text-center">
                     <div class="wrap-star">
                       <!-- 100 % -->
-                      <div class="ratingStars">
+                      <div class="ratingStars">             							<!-- 리뷰테이블 VO -->
                       
                       	<c:choose>
                       	<c:when test="${rev.getStar_cnt() == 1}">

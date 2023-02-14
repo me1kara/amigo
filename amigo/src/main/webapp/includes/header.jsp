@@ -34,6 +34,7 @@ pageEncoding="UTF-8"%>
         color: black;
         font-family: "Jalnan";
         font-size: 90%;
+        border-bottom:20px;
       }
 
       .navbar-toggler {

@@ -55,7 +55,7 @@
               <div class="text-center m-b-30">
                 <!-- 몇마리의 표현은 정보를 가져와줘야함. 02/09 백단에서 가져옴 -->
                 <div class="review-member">
-                  <a href="#">${rev.getUser_name()}</a>펫시터 후기
+                  <a href="#">${param.username}</a>펫시터 후기
                 </div>
                 <br />
                 <!-- 점수 -->

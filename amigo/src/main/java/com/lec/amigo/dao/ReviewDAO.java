@@ -47,7 +47,7 @@ public class ReviewDAO {
 		selectReviewList                  = environment.getProperty("selectReviewList");
 		selectReviewListByUserAddr        = environment.getProperty("selectReviewListByUserAddr");
 		selectStarCount                   = environment.getProperty("selectStarCount");
-		insertReview                      = environment.getProperty("insertReview ");
+		insertReview                      = environment.getProperty("insertReview");
 		deleteReview                      = environment.getProperty("deleteReview");
 		starsTotalCount                   = environment.getProperty("starsTotalCount");
 		selectReviewListByUserNo          = environment.getProperty("selectReviewListByUserNo");
@@ -64,7 +64,7 @@ public class ReviewDAO {
 	// 펫시터 한명당 총리뷰 02/13
 	public List<ReviewVO> getReviewListBySitNo(int sit_no) {
 		System.out.println(selectReviewListBySitNo);
-		Object[] args = {sit_no };
+		Object[] args = { sit_no };
 		return jdbcTemplate.query(selectReviewListBySitNo, args, new ReviewRowMapper());
 	}
 
@@ -80,10 +80,10 @@ public class ReviewDAO {
 //		ratingOptions.put(5, "★★★★★");
 //		model.addAttribute("ratingOptions", ratingOptions);
 		
+		System.out.println(insertReview);
 		
 		jdbcTemplate.update(insertReview, review.getSit_no(), review.getUser_no(), 
-				review.getStar_cnt(), review.getRev_content(), review.getUser_addr(), 
-				review.getUser_nick(), review.getUser_name(), review.getUser_photo());
+				review.getStar_cnt(), review.getRev_content());
 		return review;	
 	}
 	

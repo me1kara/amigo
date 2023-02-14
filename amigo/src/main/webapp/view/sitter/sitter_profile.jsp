@@ -54,7 +54,9 @@
     	}
     	
     </style>
-    <script>		
+    <script>	
+    
+    //아임포트 결제api 구동, 
 		function requestPay() {
 			var IMP = window.IMP; 
 			IMP.init("imp07716558"); 
@@ -63,15 +65,18 @@
 		        pay_method : 'card',
 		        merchant_uid: 'merchant_'+new Date().getTime(), 
 		        name : '시터예약',
-		        amount : '100', //${book.res_pay},
+		        amount : '100', //${book.res_pay},테스트용으로 100원 고정
 		        buyer_email : '<%=user.getUser_email()%>',
 		        buyer_name : '<%=user.getUser_name()%>',
 		        buyer_tel : '<%=user.getUser_phone()%>',
 		        buyer_addr : '<%=user.getUser_addr()%>',
 		        buyer_postcode : <%=user.getUser_no() %>
 		    }, function (rsp) { // callback
+		    	
+		    	//결제성공시
 		        if (rsp.success) {
-		        	alert(JSON.stringify(rsp));
+		        	
+		        	//백단에 내용전달
 					$.ajax({
 						url : 'ajax/payment.do',
 						type : 'POST',
@@ -80,9 +85,14 @@
 						data : JSON.stringify(rsp),
 						success : function(result) {
 							console.log(result);
+							
+							//백단에 성공적으로 들어갔을시
+							//실패시 자동환불(백단에서)
 							let process_result = result.process_result.split(":");
  							if(process_result[0]=='결제성공'){
 								alert('결제성공!');
+								
+								//성공시 완료페이지로 이동
 								let alink = '/amigo/requestBook.do?sit_no='+${sitter.sit_no }+'&merchant_uid='+process_result[1]+"";
 								console.log(alink);
 								window.location.href = alink;
@@ -95,7 +105,7 @@
 						}
 					});
 		        } else {
-		            alert(rsp);
+		            alert("결제실패!");
 		        }
 		    });
 		}
@@ -106,6 +116,8 @@
 	<%@include file="/includes/header.jsp" %>
 			<div class="container text-center" >
 				<section>
+				
+				<!-- 시터카드 -->
 					<h2 class="sitter_profile_title"> 시터 프로필 정보</h2><hr>
 					<article id="profile_card">
 						<div id="petsitter_title">
@@ -128,31 +140,39 @@
 							 	<p>펫시터 직업훈련 교육 수료</p>
 						</div>
 								<hr>
-								<div>후기</div>
+								<div style="height: 300px;">
+								<p style="font-family:Jalnan;font-size:20px;">후기</p>
+								<c:choose>
+								<c:when test="${not empty review}">
+									<c:forEach var="rev"  items="${ review }">
+									<table>
+										<tr>
+											<td>${ rev.getRev_no() }</td> 
+											<td>${ rev.getStar_cnt() }</td>
+											<td>${ rev.getRev_content() }</td>
+											<td>${ rev.getRev_date() }</td>
+											<td>${ rev.getUser_nick() }</td>
+											<td></td>
+											<td></td>
+											<td></td>										
+										</tr>
+									</table>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<p style="text-align: center;">리뷰가 없습니다!</p>
+								</c:otherwise>
 								
-								<c:forEach var="rev"  items="${ review }">
-								<table>
-									<tr>
-										<td>${ rev.getRev_no() }</td>
-										<td>${ rev.getStar_cnt() }</td>
-										<td>${ rev.getRev_content() }</td>
-										<td>${ rev.getRev_date() }</td>
-										<td>${ rev.getUser_nick() }</td>
-										<td></td>
-										<td></td>
-										<td></td>										
-									</tr>
-								</table>
-								</c:forEach>
-								
+								</c:choose>
+							</div>	
 					</article>
 				<article>
 				<article>
 					<button type="button" class="btn btn-secondary" id="pay_btn" onclick="requestPay()">결제 및 신청</button>
 				</article>
-				<a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }">신청</a>
+<%-- 			<a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }">신청</a>
 				<br>
-				<a href="/amigo/view/review/user_review_insert.do?sit_no=${sitter.sit_no}&user_name=${sitter.user_name}">리뷰작성</a><!-- 리뷰작성 컨트롤러로 진입 -->
+				<a href="/amigo/view/review/user_review_insert.do?sit_no=${sitter.sit_no}&user_name=${sitter.user_name}">리뷰작성</a> --%><!-- 리뷰작성 컨트롤러로 진입 -->
 
 
 

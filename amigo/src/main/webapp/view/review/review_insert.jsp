@@ -38,7 +38,7 @@
     padding: 10px;
     box-sizing: border-box;
 }
-.rating .rate_radio {
+.ratingStar .rate_radio {
     position: relative;
     display: inline-block;
     z-index: 20;
@@ -50,7 +50,7 @@
     vertical-align: top;
     display: none;
 }
-.rating .rate_radio + label {
+.ratingStar .rate_radio + label {
     position: relative;
     display: inline-block;
     margin-left: -4px;
@@ -63,7 +63,7 @@
     cursor: pointer;
     background-color: #f0f0f0;
 }
-.rating .rate_radio:checked + label {
+.ratingStar .rate_radio:checked + label {
     background-color: #ff8;
 }
 
@@ -102,7 +102,7 @@
     
     document.addEventListener('DOMContentLoaded', function(){
         //별점선택 이벤트 리스너
-        document.querySelector('.rating').addEventListener('click',function(e){
+        document.querySelector('.ratingStar').addEventListener('click',function(e){
             let elem = e.target;
             if(elem.classList.contains('rate_radio')){
                 rating.setRate(parseInt(elem.value));
@@ -110,7 +110,7 @@
         })
     });
     
-    //상품평 작성 글자수 초과 체크 이벤트 리스너
+    // 작성 글자수 초과 체크 이벤트 리스너
     document.querySelector('.review_textarea').addEventListener('keydown',function(){
         //리뷰 400자 초과 안되게 자동 자름
         let review = document.querySelector('.review_textarea');
@@ -138,20 +138,19 @@
        
     
 </script>
-    
+
 </head>
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
 	<div class="wrap" align="center">
 		<form name="reviewform" action="user_review_insert.do" method="post" enctype="multipart/form-data" onSubmit="return checkResult()">
-            <input name="sit_no" type="hidden" value="${param.sit_no}" />
-            
+            <input name="sit_no" type="hidden" value="${param.sit_no}" /> 
             <input name="user_photo" type="hidden" value="${sessionScope.user.user_photo}" />
 			<input name="user_no" type="hidden" value="${sessionScope.user.user_no}" />
 			<input name="user_addr" type="hidden" value="${sessionScope.user.user_addr}" />
 			<input name="user_addr" type="hidden" value="${sessionScope.user.user_addr}" />
-			<input><c:set var="now" value="<%=new java.util.Date()%>" /></input>
+		
 		
 
 			<!-- 작성자  -->
@@ -165,7 +164,7 @@
 			<input type="hidden" name="rate" id="rate" value="0"/>
 		 <div class="review_rating">
             <div class="warning_msg">별점을 선택해 주세요.</div>
-            <div class="rating">
+            <div class="ratingStar">
                 <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
                 <input type="checkbox" name="star_cnt" id="rating1" value="1" class="rate_radio" title="1점">
                 <label for="rating1"></label>
@@ -184,13 +183,13 @@
 			<hr/>
 			<div class="review_contents">
 			   		<div class="warning_msg">5자 이상으로 작성해 주세요.</div>	
-			   		<textarea class="review_textarea" id="rev_content" name="rev_content" rows="10"  required ></textarea>		
+			   		<textarea class="review_textarea" id="rev_content" name="rev_content"   required ></textarea>		
 			</div>	
 			
 
 			
 		  
-			<input type="hidden" name="ubd_file" value=""/>	
+		
 			<div class="row justify-content-evenly mt-5 mb-5">
 				<input type="button" class="btn btn-primary col-2" value="취소" onclick="history.go(-1)"/>
 				<input type="submit" class="btn btn-primary col-2" id="save" value="등록완료"/>

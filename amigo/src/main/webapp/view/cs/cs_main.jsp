@@ -64,7 +64,7 @@
         </button>
       </h2>
       <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-        <div class="accordion-body">산책과 돌봄기능은 AM!GO의 핵심 기능들입니다. <code>돈만 있으면 가능~</code> 이용하세요 </div>
+        <div class="accordion-body">산책과 돌봄기능은 AM!GO의 핵심 기능들입니다. <code>펫시터 메뉴를 들어가시면 펫시터를 선택 후 </code> 이용하세요 </div>
       </div>
     </div>
     <div class="accordion-item">
@@ -74,7 +74,7 @@
         </button>
       </h2>
       <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-        <div class="accordion-body"> 사용자의 거주지 주변에 펫시터가 있다면 어디든지 가능합니다. <code>물론 돈이 있으면 </code>이용하세요</div>
+        <div class="accordion-body"> 사용자의 거주지 주변에 펫시터가 있다면 어디든지 가능합니다. <code>당신을 찾아가는 AM!GO서비스! </code>언제든지 이용해보세요</div>
       </div>
     </div>
   </div>

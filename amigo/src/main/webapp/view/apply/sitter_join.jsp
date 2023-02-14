@@ -19,7 +19,7 @@
 
 <%
 
-%><!-- 스크립트는 중간에 작성하였습니다 230127 현재 흡연여부, 현재직종만 적용. -->
+%>		
 	      <!-- input : 테이블의 not null 부분에 Required 작성, 유저가 시터 지원정보를 입력하면 관리자에게 전송하는 폼 -->
 	        <!-- sit_auth_is 는 boolean이고, false인 0을 디폴트값으로 넘기고, 관리자가 승인하면 올리도록 처리하려 함 -->
 	      <!-- 아래 폼에서 입력받지 않을 정보(유저명, 유저주소, 연락처)는 disabled 처리 + submit을 위해 hidden도 같이쓸것.  -->
@@ -87,14 +87,14 @@
 					var smokingYes = document.getElementById('sit_smoking_yes');
 					if (smokingYes.checked){
 						alert("흡연자는 반려동물에게 피해를 줄 수 있어 가입이 제한됩니다");  // 흡연자의 펫시터 신청을 차단함.
-						return false;   // alert 기능 확인함(230125) 단, 다른 JS 함수가 들어가면 안먹힘.
+						return false;                                                           // submit 기능을 차단시킨다
 					}
 					
 					var othersInput = document.getElementById("sitter_others_input");   //id가 sitter~~와 같은 인풋 받고
 			        var othersRadio = document.getElementById("flexRadioDefault6");     // 6번 라디오박스 받고
 			        if (othersRadio.checked && othersInput.value === "") {              // 6번박스가 체크됐는데 인풋이 공백이면, 경고창이 뜨도록함.
-			            alert("현재 하시는 일을 입력해주세요");								// 현재 하는일에서 직접 입력을 체크하면 input을 꼭 쓰도록 함.
-			        	return false;   // alert 기능 확인함(230125)
+			            alert("현재 하시는 일을 입력해주세요");						    // 현재 하는일에서 직접 입력을 체크하면 input을 꼭 쓰도록 함.
+			        	return false;                                                    // submit 기능을 차단시킨다
 			        }
 			        alert("펫시터 지원 신청이 접수되었습니다. 신청결과는 개별 통보합니다.")
 			        return true;
@@ -245,9 +245,9 @@
 	<%@include file="/includes/footer.jsp" %>
 			
 	<script>
-	function previewFile() {
+	function previewFile() {												// 파일 미리보기
         var preview = $('#msgTd');
-        var file = document.querySelector('input[type=file]').files[0];
+        var file = document.querySelector('input[type=file]').files[0];		// 1번째 순서의 파일(해당문서의 인풋에서 선택)
         var reader = new FileReader();
         preview_del();
         reader.addEventListener(
@@ -263,8 +263,8 @@
         }
      }
     function preview_del(){
-        $('.preview_img_del').remove();
-        $('#sit_image').val('');
+        $('.preview_img_del').remove();										// 미리보기를 지우면? ~del(이미지삭제버튼) 이 삭제 동작을 수행
+        $('#sit_image').val('');											// name이 sit_image 인 태그의 밸류값을 공백으로
      }
 	</script>			
 		

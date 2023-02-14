@@ -266,8 +266,7 @@ prefix="c"%>
           <div class="col-6">
             <div class="p-3">
               <a
-                href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"
-              >
+                href="<%=request.getContextPath() %>/cs_main.do">
                 <img
                   src="/amigo/resources/img/cs.png"
                   class="img-fluid"
@@ -339,90 +338,26 @@ prefix="c"%>
           <a href="user_review_list.do" class="all-view">전체보기</a>
         </div>
       </div>
-      <div id="carouselExampleDark" class="carousel carousel-dark slide">
-        <div class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active" data-bs-interval="10000">
-            <img
-              src="https://via.placeholder.com/400x100"
-              class="d-block w-100"
-              alt="..."
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>First slide label</h5>
-              <p>
-                Some representative placeholder content for the first slide.
-              </p>
-            </div>
-          </div>
-          <div class="carousel-item" data-bs-interval="2000">
-            <img
-              src="https://via.placeholder.com/400x100"
-              class="d-block w-100"
-              alt="..."
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Second slide label</h5>
-              <p>
-                Some representative placeholder content for the second slide.
-              </p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://via.placeholder.com/400x100"
-              class="d-block w-100"
-              alt="..."
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Third slide label</h5>
-              <p>
-                Some representative placeholder content for the third slide.
-              </p>
-            </div>
-          </div>
-        </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+      
+      <!-- 실시간 후기 추가한부분-카드가 아래로 내려가버림. -->
+      
+      <div class="rating-card">
+              <div class="text-center m-b-30">    																<!-- $ {도그카운트} 로 강아지 테이블의 마릿수를 가져옴 -->
+                <div class="review-member">
+                  <a href="#">${dogCount}</a>마리의 친구들이 AM!GO와 함께했어요!
+                </div>
+                <br />
+                <!-- 점수 -->
+                <h1 class="rating-number">${starsAverage}<small>/5</small></h1>
+                <div class="rating-stars d-inline-block position-relative mr-2">
+                  <!--  -->
+                  <img src="amigo/resources/img/grey-star.svg" alt="" />
+                  <div class="filled-star" style="width: 86%"></div>
+                </div>
+             														        <!-- 총 레이팅 : 별 갯수를 서버단에서 직접 가져옴. -->
+                <div class="text-muted">${starsTotalCount } ratings</div>
       </div>
-      </div>
+    
       <!-- 후기 종료 -->
       <br />
       <!-- Q&A -->
@@ -448,33 +383,9 @@ prefix="c"%>
       <br />
       <!-- Q&A 종료 -->
 
-      <!-- 스크롤 -->
-      <a href="#" class="top"><img
-                  src="/amigo/resources/img/scrollTop1.png"
-                  alt="top" style="width:60px; height:60px;" /> </a>
-    </div>
-    
-    
-    
-    <!-- scrollTop code 입니다. -->
-    <script>
-      $( document ).ready( function() {
-        $( window ).scroll( function() {
-          if ( $( this ).scrollTop() > 200 ) {
-            $( '.top' ).fadeIn();
-          } else {
-            $( '.top' ).fadeOut();
-          }
-        } );
-        $( '.top' ).click( function() {
-          $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
-          return false;
-        } );
-      } );
-    </script>
 
     </div>
-
+	<%@include file="/includes/scrollTop.jsp" %>
     <%@include file="/includes/footer.jsp" %>
 
     <!-- Bootstrap core JS-->
