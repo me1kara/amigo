@@ -45,13 +45,13 @@ public class CsBoardController {
 	}
 	
 	
-	// 메인으로 넘어가주기
+	// 메인으로 가줍니다.
 		@RequestMapping(value = "/cs_main.do", method = RequestMethod.GET)
 		public String csmain() {	
 			return "view/cs/cs_main.jsp"; 
 		}
 	
-	// 전체 글 목록
+	// 전체 글목록을 가져오기 
 	@RequestMapping("/cs_board_list.do")
 	public String getBoardList (Model model, SearchVO searchVO,
 			@RequestParam(defaultValue="1") int curPage,
@@ -86,25 +86,25 @@ public class CsBoardController {
 		model.addAttribute("csboard", csBoardService.getCsBoard(csboard));
 		
 		
-		// 조회수 올리는 로직
+		// 조회수를 올려줍니다.
 		if(updateCount_is.equals("abc")) { 
 			csBoardService.updateHbdCount(hbd_no);
 		}
 		
 		
-		// 파일 가져오는 로직
+		// 파일을 가져와줍니다. 그치만 파일을 가져오지는 않기로 했습니다.
 		CsBoardVO csBoardUser = csBoardService.getCsBoard(csboard);  // 파일명 가져오기 위해 boardUser에 담아줌
 		if(csBoardUser.getHbd_file()!=null) {
 		String[] fileSplit = csBoardUser.getHbd_file().split(","); // ,를 기준으로 파일명 나눠서 배열에 담음
 		
-		model.addAttribute("fileSplit", fileSplit); // jsp 파일에 파일 보냄
+		model.addAttribute("fileSplit", fileSplit); 
 		} 
 		
 		
-		// 댓글 가져오는 로직
+		// 댓글 가져오는 로직입니다. 
 		List<CsReplyVO> csreplyList = null; // 댓글 리스트 가져오기 위해 객체생성
 		csreplyList = csReplyService.getCsReplyList(csReplyVO.getHbd_no()); // 게시글 번호에 맞는 댓글 리스트 가져옴
-		model.addAttribute("csreplyList", csreplyList); // jsp 파일에 댓글 보냄
+		model.addAttribute("csreplyList", csreplyList); // jsp 파일에 댓글 보내줍니다.
 		
 
 		return "view/cs/cs_board_detail.jsp";

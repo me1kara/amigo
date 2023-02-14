@@ -394,6 +394,75 @@ td {
  h2 {
  	font-family: "Jalnan";
  }
+ 
+   /* header nav css  */
+
+      .nav-link {
+        font-family: "Roboto", sans-serif;
+        text-decoration: none;
+        color: black;
+        font-family: "Jalnan";
+        font-size: 90%;
+        border-bottom:20px;
+      }
+
+      .navbar-toggler {
+        margin-left: 20px;
+        width: 30px;
+        display: contents;
+      }
+
+      .menu-trigger,
+      .menu-trigger span {
+        display: inline-block;
+        transition: all 0.4s;
+        box-sizing: border-box;
+      }
+
+      .menu-trigger {
+        position: relative;
+        width: 40px;
+        height: 34px;
+        margin-left: 30px;
+      }
+
+      .menu-trigger span {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: gray;
+        border-radius: 4px;
+      }
+
+      .menu-trigger span:nth-of-type(1) {
+        top: 0;
+      }
+
+      .menu-trigger span:nth-of-type(2) {
+        top: 15px;
+      }
+
+      .menu-trigger span:nth-of-type(3) {
+        bottom: 0;
+      }
+
+      /* type-01 */
+      /* 중앙 라인이 고정된 자리에서 투명하게 사라지며 상하라인 회전하며 엑스자 만들기 */
+      .menu-trigger.active-1 span:nth-of-type(1) {
+        -webkit-transform: translateY (15px) rotate (-45deg);
+        transform: translateY(15px) rotate(-45deg);
+      }
+
+      .menu-trigger.active-1 span:nth-of-type(2) {
+        opacity: 0;
+      }
+
+      .menu-trigger.active-1 span:nth-of-type(3) {
+        -webkit-transform: translateY(-15px) rotate(45deg);
+        transform: translateY(-15px) rotate(45deg);
+      }
+
 
 </style>
 
@@ -525,59 +594,96 @@ td {
 
 <body>
 
-	<div class="container">
-	<nav
-      class="navbar navbar fixed-top navbar-light bg-light navbar-expand-custom navbar-mainbg"
-    >	
-      <button
-        class="navbar-toggler"
-        type="button"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <!-- 햄버거 -->
-        <span class="navbar-toggler-icon"></span>
-        <!-- 햄버거/ -->
-      </button>
-      <a class="logo" href="<%=request.getContextPath() %>/view/main.jsp"><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
-      /></a>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-          <div class="hori-selector">
-            <div class="left"></div>
-            <div class="right"></div>
-          </div>
-          <hr/>
-          <li class="nav-nickName">
-          	<a hraf="#">회원님</a>
-          </li>
-          <hr/>
-          <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/view/mypage/my_page_list.jsp"><i class="fas fa-tachometer-alt"></i>마이페이지</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#"
-              ><i class="address-book"></i>예약확인</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/amigo/myChatList.do"><i class="amigo-chating"></i>채팅</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/user_board_list.do"><i class="far fa-calendar-alt"></i>커뮤니티</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"
-              ><i class="far fa-chart-bar"></i>아미고 파트너 모집</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath() %>/view/customer_service/customer_service_main.jsp"><i class="aimgo-cs"></i>고객센터</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+	 <div class="container">
+      <nav
+        class="navbar navbar fixed-top navbar-light bg-light navbar-expand-custom navbar-mainbg"
+      >
+        <button
+          class="navbar-toggler"
+          type="button"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <!-- 햄버거 -->
+          <a class="menu-trigger" href="#">
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+          <!-- 햄버거/ -->
+        </button>
+        <a
+          class="logo"
+          href="<%=request.getContextPath()%>/main_home.do?ubd_no=5"
+          ><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
+        /></a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <div class="hori-selector">
+              <div class="left"></div>
+              <div class="right"></div>
+            </div>
+            <hr />
+            <li class="nav-nickName">
+              <a
+                class="nav-link"
+                href="<%=request.getContextPath() %>/my_profile.do"
+                >${ user.getUser_nick() }</a
+              >
+            </li>
+            <hr />
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="<%=request.getContextPath() %>/view/mypage/my_page_list.jsp"
+                >마이페이지</a
+              >
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/amigo/book_check.do">예약확인</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/amigo/myChatList.do">채팅</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="<%=request.getContextPath() %>/user_board_list.do"
+                >커뮤니티</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">아미고 파트너 모집</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="<%=request.getContextPath() %>/cs_main.do"
+                >고객센터</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
     </div>
+    <!-- 네비바 종료 -->
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="/amigo/resources/js/script.js"></script>
+    <script>
+      var burger = $(".menu-trigger");
+
+      burger.each(function (index) {
+        var $this = $(this);
+
+        $this.on("click", function (e) {
+          e.preventDefault();
+          $(this).toggleClass("active-" + (index + 1));
+        });
+      });
+    </script>
     <!-- 네비바 종료 -->
 	<!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

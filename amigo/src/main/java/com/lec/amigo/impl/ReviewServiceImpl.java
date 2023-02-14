@@ -83,10 +83,17 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDAO.starsTotalCount();
 	}
 
+	
 	@Override
 	public List<ReviewVO> getReviewListBySitNo(int sit_no) {
 		// TODO Auto-generated method stub
 		return reviewDAO.getReviewListBySitNo(sit_no);
+	}
+
+	@Override
+	public double starsAveragePerSit(int sit_no) {
+		// TODO Auto-generated method stub
+		return reviewDAO.starsAveragePerSit(sit_no);
 	}
 	
 	
