@@ -64,6 +64,9 @@ public class ChatController {
 		return "chat/chat.jsp";
 	}
 	
+	
+	
+	//내채팅방목록
 	@GetMapping("/myChatList.do")
 	public String getMyChatList(HttpServletRequest req) {
 		HttpSession session = req.getSession();
@@ -76,9 +79,16 @@ public class ChatController {
 		
 		List<UserVO> userList = userService.getUserList();
 		
-		req.setAttribute("elseRoomList", elseRoomList);
+		//방있는지여부 체크
 		req.setAttribute("checkRoom", checkRoom);
+		
+		//내채팅방(마지막채팅 있는것만)
 		req.setAttribute("myChatList", myChatList);
+		
+		//채팅이 없는 채팅방
+		req.setAttribute("elseRoomList", elseRoomList);
+		
+		//유저이름 매칭용
 		req.setAttribute("userList", userList);
 		
 		return "/view/customer_service/customer_service_chat.jsp";
