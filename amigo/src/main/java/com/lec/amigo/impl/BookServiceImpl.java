@@ -11,11 +11,14 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -32,6 +35,7 @@ import com.lec.amigo.vo.UserVO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.request.CancelData;
 
+@PropertySource("classpath:config/iamport.properties")
 @Service("bookService")
 public class BookServiceImpl implements BookService{
 	
@@ -39,9 +43,17 @@ public class BookServiceImpl implements BookService{
 	@Qualifier("bookDAO")
 	BookDAO bookDao;
 	
-	private String imp_key = "7637382105357040";
-	private String imp_secret = "GLH595QqwqJMZ9Z7oeiFmpbvOLTfO6w7iojqLlHtiuJA01jHK09c0AJXqQugN2hGMppj3qS7U17cwE7x"; 
+	@Autowired
+	Environment environment;
 	
+	private String imp_key = "";
+	private String imp_secret = "";
+	
+	@PostConstruct
+	public void getIamportPropeties() {
+		imp_key = environment.getProperty("imp_key");
+		imp_secret = environment.getProperty("imp_secret");
+	}
 	@Override
 	public int calMoney(int days, int time) {
 		return bookDao.calMoney(days, time);
@@ -98,39 +110,7 @@ public class BookServiceImpl implements BookService{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			/*
-			 * HttpURLConnection conn = null; String access_token = null; int result = 0;
-			 * URL url; try { url = new URL("https://api.iamport.kr/users/getToken"); conn =
-			 * (HttpURLConnection)url.openConnection();
-			 * 
-			 * conn.setRequestMethod("POST"); conn.setRequestProperty("Content-Type",
-			 * "application/json"); conn.setRequestProperty("Accept", "application/json");
-			 * 
-			 * conn.setDoOutput(true); JSONObject obj = new JSONObject(); obj.put("imp_key",
-			 * "7637382105357040"); obj.put("imp_secret",
-			 * "GLH595QqwqJMZ9Z7oeiFmpbvOLTfO6w7iojqLlHtiuJA01jHK09c0AJXqQugN2hGMppj3qS7U17cwE7x"
-			 * );
-			 * 
-			 * BufferedWriter bw = new BufferedWriter(new
-			 * OutputStreamWriter(conn.getOutputStream())); bw.write(obj.toString());
-			 * bw.flush(); bw.close();
-			 * 
-			 * int responseCode = conn.getResponseCode(); System.out.println("응답코드:" +
-			 * responseCode);
-			 * 
-			 * if(responseCode == 200) { BufferedReader br = new BufferedReader(new
-			 * InputStreamReader(conn.getInputStream())); StringBuilder sb = new
-			 * StringBuilder(); String line = null; while((line=br.readLine())!=null) {
-			 * sb.append(line + "\n"); } br.close(); System.out.println("환불성공:" +
-			 * sb.toString()); result = 1;
-			 * 
-			 * }else { System.out.println("환불실패:"+conn.getResponseMessage()); }
-			 * 
-			 * 
-			 * } catch (Exception e) { // TODO Auto-generated catch block
-			 * e.printStackTrace(); } //db삭제로직
-			 */			
+		
 			bookDao.deleteBook(rno);
 		}
 		

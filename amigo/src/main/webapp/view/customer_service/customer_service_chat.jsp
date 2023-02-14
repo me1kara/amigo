@@ -61,9 +61,11 @@
 					<div style="text-align: center; width: 400px; margin: 0 auto;" >
 				
 				    <p class="chat-header-title">채팅</p>
-
+						
 					<c:set var="chatList" value="<%=chatList %>"/>
 					<c:set var="elseRoomList" value="<%=elseRoomList %>"></c:set>
+					
+					<!-- 내 채팅방목록(마지막채팅), 채팅이 없으면 빈방출력-->
 					<!-- 유저가 채팅방을 소유하고있는지 여부 -->
 					<c:choose>
 						<c:when test="<%=checkRoom==null %>">	

@@ -553,84 +553,18 @@ public class BookDAO {
 	}
 
 	
-//	public Payment canclePay(int rno) {
-//		String sql = "select * from payment where res_no = ?";
-//		Object[] args = {rno};
-//		
-//		try {
-//			return jdbcTemplate.queryForObject(sql, args, new PaymentRowMapper());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}		
-//	}
+	public Payment canclePay(int rno) {
+		String sql = "select * from payment where res_no = ?";
+		Object[] args = {rno};
+		
+		try {
+			return jdbcTemplate.queryForObject(sql, args, new PaymentRowMapper());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}		
+	}
 
 
-
-	
-	
-	
-	/*
-	 * public List<Payment> getPayList(SearchVO searchVO) {
-	 * if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
-	 * searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) { sql =
-	 * selectBoardListByUbdTitle; searchVO.setSearchType("ubd_title"); } else {
-	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) { sql =
-	 * selectBoardListByUbdTitle; } else
-	 * if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) { sql =
-	 * selectBoardListByUserNick; } else
-	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) { sql =
-	 * selectBoardListByUbdCont; } }
-	 * 
-	 * String searchWord = "%" + searchVO.getSearchWord() + "%"; Object[] args =
-	 * {searchWord, searchVO.getFirstRow(), searchVO.getRowSizePerPage()}; return
-	 * jdbcTemplate.query(sql, args, new BoardRowMapper()); }
-	 * 
-	 * public List<Payment> selectCate(BoardVO board, SearchVO searchVO) {
-	 * if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
-	 * searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) { sql =
-	 * selectCateByUbdTitle; searchVO.setSearchType("ubd_title"); } else {
-	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) { sql =
-	 * selectCateByUbdTitle; } else
-	 * if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) { sql =
-	 * selectCateByUserNick; } else
-	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) { sql =
-	 * selectCateByUbdCont; } }
-	 * 
-	 * String searchWord = "%" + searchVO.getSearchWord() + "%"; Object[] args = {
-	 * board.getUbd_cate(), searchWord, searchVO.getFirstRow(),
-	 * searchVO.getRowSizePerPage() }; return jdbcTemplate.query(sql, args, new
-	 * BoardRowMapper());
-	 * 
-	 * }
-	 * 
-	 * public int getTotalRowCount(SearchVO searchVO) {
-	 * if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
-	 * searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) { sql =
-	 * boardTotalRowCount; searchVO.setSearchType("ubd_title"); } else {
-	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) { sql =
-	 * boardTotalRowCount + " and ubd_title like '%" + searchVO.getSearchWord() +
-	 * "%'"; } else if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) { sql
-	 * = boardTotalRowCount + " and user_nick like '%" + searchVO.getSearchWord() +
-	 * "%'"; } else if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) { sql
-	 * = boardTotalRowCount + " and ubd_cont like '%" + searchVO.getSearchWord() +
-	 * "%'"; } } return jdbcTemplate.queryForObject(sql, Integer.class); }
-	 * 
-	 * public int getCateRowCount (SearchVO searchVO, BoardVO board) {
-	 * if(searchVO.getSearchType()==null || searchVO.getSearchType().isEmpty() ||
-	 * searchVO.getSearchWord()==null || searchVO.getSearchWord().isEmpty()) { sql =
-	 * boardCateRowCount; searchVO.setSearchType("ubd_title"); } else {
-	 * if(searchVO.getSearchType().equalsIgnoreCase("ubd_title")) { sql =
-	 * boardCateRowCount + " and ubd_title like '%" + searchVO.getSearchWord() +
-	 * "%'"; } else if(searchVO.getSearchType().equalsIgnoreCase("user_nick")) { sql
-	 * = boardCateRowCount + " and user_nick like '%" + searchVO.getSearchWord() +
-	 * "%'"; } else if(searchVO.getSearchType().equalsIgnoreCase("ubd_cont")) { sql
-	 * = boardCateRowCount + " and ubd_cont like '%" + searchVO.getSearchWord() +
-	 * "%'"; } } return jdbcTemplate.queryForObject(sql, Integer.class,
-	 * board.getUbd_cate()); }
-	 */
-	
-
-	
 	
 }
