@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.mail.search.IntegerComparisonTerm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +59,7 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 
+@PropertySource("classpath:config/iamport.properties")
 @Controller
 public class BookController {
 	
@@ -75,6 +78,17 @@ public class BookController {
 	@Autowired
 	DogServiceImpl dogSerice;
 	
+	@Autowired
+	Environment environment;
+	
+	private String imp_key = "";
+	private String imp_secret = "";
+	
+	@PostConstruct
+	public void getIamportPropeties() {
+		imp_key = environment.getProperty("imp_key");
+		imp_secret = environment.getProperty("imp_secret");
+	}
 	
 	//예약신청폼 
 	@RequestMapping(value = "/view/book/book_sitter_form.do", method = { RequestMethod.GET })
@@ -97,8 +111,9 @@ public class BookController {
 			@RequestParam(defaultValue="1") int curPage,
 			@RequestParam(defaultValue="10") int rowSizePerPage, BookVO bookVO) {
 		
+		
 		String calr = req.getParameter("bookDate");
-		String address = req.getParameter("res_addr"); //주소
+		String address = req.getParameter("res_addr"); //프론트에서 받은 주소
 		
 		System.out.println(bookVO.toString());
 		
@@ -122,7 +137,7 @@ public class BookController {
 		search.setLastPage(endPage);//현재 페이지기준 엔드페이지
 		search.setPageSize(rowSizePerPage);
 		
-		//인근지역 시터조회
+		//프론트에서 받은 주소를통해 db단에서 인근지역 시터들조회
 		List<SitterVO> sittList = bookService.getArroundSitter(secondeAddr,search,calr);
 		List<UserVO> sittNameList = bookService.getUserNameList(secondeAddr);
 		
@@ -218,6 +233,8 @@ public class BookController {
 	@ResponseBody 
 	public int calMoney(HttpServletRequest req) {
 		int data = 0;
+		
+		//json파싱
 		String calr = req.getParameter("book_date");
 		JSONParser parser = new JSONParser();
 		JSONArray jms = null;
@@ -248,7 +265,7 @@ public class BookController {
 		        long diffSec = (date2.getTime() - date1.getTime()) / 1000;
 				Long diffDays = diffSec / (24*60*60);
 				
-				//이벤트의 일차이
+				//이벤트의 일차이,풀캘린더 api의 데이터저장방식 때문에 날짜차이를 통한 시간계산
 				int days = diffDays.intValue();			
 				System.out.println(days+"일차이");
 				Date t1 = f.parse(startTime);
@@ -279,7 +296,8 @@ public class BookController {
 	@ResponseBody 
 	public List<BookContentVO> getBook_datail(HttpServletRequest req) {
 		int rno = Integer.parseInt(req.getParameter("rno")) ;
-		
+
+		//예약상세내용
 		List<BookContentVO> bookDetailList = bookService.getBookDetailList(rno);
 		
 		System.out.println(rno);
@@ -347,14 +365,11 @@ public class BookController {
 			payment.setUser_no(user_no);
 			try {
 				
-				String api_key = "7637382105357040";
-				String api_secret = "GLH595QqwqJMZ9Z7oeiFmpbvOLTfO6w7iojqLlHtiuJA01jHK09c0AJXqQugN2hGMppj3qS7U17cwE7x";
-				
 				//프론트단에서 보낸 금액과 아임포트에서 가져온 금액의 일치여부 검사
-				IamportClient ic = new IamportClient(api_key, api_secret);
+				IamportClient ic = new IamportClient(imp_key, imp_secret);
 				IamportResponse<com.siot.IamportRestClient.response.Payment> response = ic.paymentByImpUid(imp_uid);
 				BigDecimal import_amount =response.getResponse().getAmount(); //api_amount
-			
+				
 				if(payment.getPay()==import_amount.intValue()) {
 					int insertPay = bookService.payBook(payment);
 					

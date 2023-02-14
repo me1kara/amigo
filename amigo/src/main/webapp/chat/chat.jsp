@@ -48,13 +48,13 @@
 #list::-webkit-scrollbar { display:none; }
 
 .chat_right{
-	max-width: 80%;
+	width: 350px;
 	overflow-wrap: break-word;
 	overflow-x:hidden;
 	text-align: right;
 }
 .chat_left{
-	max-width: 80%;
+	width: 350px;
 	overflow-wrap: break-word;
 	overflow-x:hidden;
 	overflow-y:hidden;
@@ -192,11 +192,10 @@ body::-webkit-scrollbar { display:none; }
 											</c:when>
 											<c:when test="${chat.getFile()!=null}">
 												<span style="font-size: 11px; color: #777;">${chat.getDate() }</span>
+												
 												<li style="margin-bottom: 3px; overflow: hidden; clear: both;"
 													id="chat_no_${chat.getChat_no() }" >
-													<span>
-													${chat.getUser_nick() }
-													</span>
+													
 													<span onclick="imgPop('/chatImg/${chat.getFile() }')">
 													<img src="/chatImg/${chat.getFile() }" width="200px" height="200px">
 													</span>
@@ -409,7 +408,7 @@ body::-webkit-scrollbar { display:none; }
     	    	console.log(realFile);
     	    	temp += ' <span style="font-size:11px;color:#777;">' + new Date().toLocaleTimeString() + '</span>';
     	    	temp += '<li style="margin-bottom:3px; clear: both;" id="chat_no_'+chat_no+'">';
-    	    	temp += '[' + user + '] ';
+
     	   	  	temp += '<img width="200px" height="200px" src='+realFile+' onclick="imgPop('+"'"+realFile+"'"+')">';
     	   	  	temp += '</li>';
     	   			  			

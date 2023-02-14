@@ -34,6 +34,7 @@
     <![endif]-->
 </head>
 <body>
+
 	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
