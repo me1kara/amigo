@@ -177,7 +177,7 @@
                   	<c:choose>
                   	<c:when test="${rev.getUser_photo()!=null and rev.getUser_photo()!=''}">
                     <img
-                      src="/img/${rev.getUser_photo() }"
+                      src="../amigo/resources/img/${rev.getUser_photo() }"
                       class="review-user-photo"
                       alt="userProfile"
                       width="50px"
@@ -213,19 +213,19 @@
                       
                       	<c:choose>
                       	<c:when test="${rev.getStar_cnt() == 1}">
-                      		<img src="../../resources/img/star1.png" style="width:150px;height:60px;">
+                      		<img src="../amigo/resources/img/star1.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${rev.getStar_cnt() == 2}">
-                      		<img src="../../resources/img/star2.png" style="width:150px;height:60px;">
+                      		<img src="../amigo/resources/img/star2.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${rev.getStar_cnt() == 3}">
-                      		<img src="../../resources/img/star3.png" style="width:150px;height:60px;">
+                      		<img src="../amigo/resources/img/star3.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${rev.getStar_cnt() == 4}">
-                      		<img src="../../resources/img/star4.png" style="width:150px;height:60px;">
+                      		<img src="../amigo/resources/img/star4.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${rev.getStar_cnt() == 5}">
-                      		<img src="../../resources/img/star5.png" style="width:150px;height:60px;">
+                      		<img src="../amigo/resources/img/star5.png" style="width:150px;height:60px;">
                       	</c:when>
                         </c:choose>
                         <input type="hidden" class="form-control" name="sit_no" value="${ rev.getSit_no() }">

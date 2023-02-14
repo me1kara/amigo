@@ -47,5 +47,8 @@ public interface ReviewService {
 	
 	// 총 리뷰갯수
 	int starsTotalCount();
+	
+	// 시터별로 나눈 별점 총평균
+	public double starsAveragePerSit(int sit_no);
 
 }
