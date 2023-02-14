@@ -140,23 +140,31 @@
 							 	<p>펫시터 직업훈련 교육 수료</p>
 						</div>
 								<hr>
-								<div>후기</div>
+								<div style="height: 300px;">
+								<p style="font-family:Jalnan;font-size:20px;">후기</p>
+								<c:choose>
+								<c:when test="${not empty review}">
+									<c:forEach var="rev"  items="${ review }">
+									<table>
+										<tr>
+											<td>${ rev.getRev_no() }</td> 
+											<td>${ rev.getStar_cnt() }</td>
+											<td>${ rev.getRev_content() }</td>
+											<td>${ rev.getRev_date() }</td>
+											<td>${ rev.getUser_nick() }</td>
+											<td></td>
+											<td></td>
+											<td></td>										
+										</tr>
+									</table>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<p style="text-align: center;">리뷰가 없습니다!</p>
+								</c:otherwise>
 								
-								<c:forEach var="rev"  items="${ review }">
-								<table>
-									<tr>
-										<td>${ rev.getRev_no() }</td>
-										<td>${ rev.getStar_cnt() }</td>
-										<td>${ rev.getRev_content() }</td>
-										<td>${ rev.getRev_date() }</td>
-										<td>${ rev.getUser_nick() }</td>
-										<td></td>
-										<td></td>
-										<td></td>										
-									</tr>
-								</table>
-								</c:forEach>
-								
+								</c:choose>
+							</div>	
 					</article>
 				<article>
 				<article>
