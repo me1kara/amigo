@@ -129,9 +129,6 @@
 				     	 	 <c:otherwise>
 				     	 	 	<img src="https://via.placeholder.com/200x200" alt="Profile Picture"/>
 				     	 	 </c:otherwise>
-				     		 <c:otherwise>
-				     			<span>Profile picture not available</span>
-				     		 </c:otherwise>
 				    		 </c:choose>
 				    		 </div>
 						 <p class="petsitter_name"><c:out value="${sitter.getUser_name()}"/> 펫시터</p>
