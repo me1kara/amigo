@@ -63,6 +63,7 @@
     				},
     				success : function(result){
     					alert('삭제에 성공했습니다!');
+    					history.go(0);
     				},
     			    error : function(request, status, error) { // 결과 에러 콜백함수
     			        console.log(error);

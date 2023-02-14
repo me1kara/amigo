@@ -111,7 +111,7 @@ public class ChatController {
 	public int deleteChatRoom(HttpServletRequest req) {
 		int index = Integer.parseInt(req.getParameter("index"));
 		int row = 0;
-		int user_no = ((UserVO)req.getAttribute("user")).getUser_no();
+		int user_no = ((UserVO)req.getSession().getAttribute("user")).getUser_no();
 		row = chatService.exitRoom(index, user_no);
 		return row;
 	}

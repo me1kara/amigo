@@ -436,7 +436,7 @@ public class ChatDAO {
 
 	//채팅방 나가기,미구현상태
 	public int exitRoom(int index, int user_no) {
-		String sql = "delete from chat_room where index=? and user_no=?";
+		String sql = "delete from chat_room where chat_index=? and user_no=?";
 		
 		int row = 0;
 		row = jdbcTemplate.update(sql,index,user_no);
