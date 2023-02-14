@@ -121,6 +121,14 @@ pageEncoding="UTF-8"%>
           href="<%=request.getContextPath()%>/main_home.do?ubd_no=5"
           ><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
         /></a>
+         <c:choose>
+          	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
+          	<img src="/userimg/${user.getUser_photo()}" style="border-radius:50px; margin-right:20px;" alt="userphoto" width="50px" height="50px" style="border-radius:10px" />
+            </c:when>
+            <c:otherwise>
+            <img src="../../resources/img/logo2.png" style="border-radius:50px; margin-right:20px;" alt="logo2" width="50px" height="50px"/>
+            </c:otherwise>
+        </c:choose>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
             <div class="hori-selector">

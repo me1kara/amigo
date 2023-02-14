@@ -56,7 +56,7 @@
 	if(room_list!=null){
 	%>
 	
-	var url = "ws://localhost:80/amigo/chatHandler.do";
+	var url = "ws://192.168.0.103:80/amigo/chatHandler.do";
 	var ws = new WebSocket(url);
 	
 	ws.onopen = function(){
