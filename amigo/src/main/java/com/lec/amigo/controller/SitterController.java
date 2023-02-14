@@ -53,7 +53,7 @@ public class SitterController {
 	@RequestMapping(value="/view/mypage/apply/sitter_join.do", method=RequestMethod.GET) 
 	public String insertSitter() {
 		
-		System.out.println("1........................");
+		System.out.println("1........................");  // 펫시터 신청폼을 열고 post 에서 submit 기능구현
 		
 		return "/view/apply/sitter_join.jsp";
 	}

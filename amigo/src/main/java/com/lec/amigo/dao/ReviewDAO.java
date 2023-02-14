@@ -71,15 +71,6 @@ public class ReviewDAO {
 	//  리뷰 쓰기 아래는 별점 매기기???
 	public ReviewVO insertReview(ReviewVO review) {
 		
-//		Map stars = new HashMap();
-//
-//		stars.put(1, "★☆☆☆☆");
-//		ratingOptions.put(2, "★★☆☆☆");
-//		ratingOptions.put(3, "★★★☆☆");
-//		ratingOptions.put(4, "★★★★☆");
-//		ratingOptions.put(5, "★★★★★");
-//		model.addAttribute("ratingOptions", ratingOptions);
-		
 		System.out.println(insertReview);
 		
 		jdbcTemplate.update(insertReview, review.getSit_no(), review.getUser_no(), 
@@ -103,6 +94,12 @@ public class ReviewDAO {
 	
 	public double starsAverage() {
 		return jdbcTemplate.queryForObject("select round(AVG(star_cnt),2) from sit_review", Double.class);
+	}
+	
+	public double starsAveragePerSit(int sit_no) {
+		
+		Object[] args = {sit_no};
+		return jdbcTemplate.queryForObject("select round(AVG(star_cnt),2) from sit_review where sit_no = ?", args, Double.class);
 	}
 	
 	public int starsTotalCount() {
@@ -139,6 +136,7 @@ public class ReviewDAO {
 		return jdbcTemplate.queryForObject("select sit_review.*, user.user_nick, user.user_photo, petsitter.sit_photo from sit_review inner join petsitter on sit_review.user_no = petsitter.user_no inner join user on petsitter.user_no = user.user_no where petsitter.user_no = ? order by sit_review.rev_date desc", Integer.class);
 		
 	}
+
 	
 	
 //	public void starCat(int star_cnt) {
