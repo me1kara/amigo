@@ -81,6 +81,11 @@ public class SitterServiceImpl implements SitterService {
 		return sitterDAO.getSitInfoList(user_no);
 	}
 
+	public List<SitterVO> getMainSitterList() {
+		// TODO Auto-generated method stub
+		return sitterDAO.mainSitterList();
+	}
+
 
 
 }

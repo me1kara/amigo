@@ -236,7 +236,7 @@ prefix="c"%>
           <!-- 펫시터 -->
           <div class="col-6">
             <div class="p-3">
-              <a href="/amigo/view/sitter/sitter_service_main.jsp">
+              <a href="/amigo/view/sitter/sitter_service_main.do">
                 <img
                   src="/amigo/resources/img/petsitter.png"
                   class="img-fluid"

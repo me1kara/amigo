@@ -142,7 +142,7 @@
 								<hr>
 								<div id="rev_list" style="height: 300px; overflow: scroll; overflow-x:hidden; -ms-overflow-style:none;">
 								<p style="font-family:Jalnan;font-size:20px;">후기(${rev.size() })</p>
-								<table>
+								<table style="margin:0 auto;">
 								<c:choose>
 								<c:when test="${not empty rev}">
 									<c:forEach var="r"  items="${ rev }">
@@ -171,7 +171,7 @@
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
-									<tr style="text-align: center;"><td>리뷰가 없습니다!</td><tr>
+										<tr><td class="text-center">리뷰가 없습니다!<tr>
 								</c:otherwise>
 								</c:choose>
 								</table>
