@@ -121,10 +121,10 @@
 					<h2 class="sitter_profile_title"> 시터 프로필 정보</h2><hr>
 					<article id="profile_card">
 						<div id="petsitter_title">
-							<div id="img_ex" style="border:1px solid; width:200px; height:200px; margin:0 auto;">
+							<div id="img_ex" style="margin:0 auto;">
 				    		 <c:choose>
 				     		 <c:when test="${not empty sitter.sit_photo}">
-				     			<img src="${sitter.sit_photo}" alt="Profile Picture"/>
+				     			<img src="/sitterimg/${sitter.sit_photo}" alt="Profile Picture" width="200px;" height="200px;" style="border-radius:20px;"/>
 				     	 	 </c:when>
 				     		 <c:otherwise>
 				     			<span>Profile picture not available</span>
