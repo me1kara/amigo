@@ -22,6 +22,7 @@
     <script src="js/html5shiv.js"></script>
     <![endif]-->
 <style>
+
 	.book_item{
 		 margin-bottom: 20px;
 		 padding: 20px;
@@ -80,6 +81,11 @@
 		margin-top : 80px;
 	}
 	
+	a:link, a:visited, a:hover, a:active {
+	  color : blue;
+	}
+	
+	
 </style>
 
 <script>
@@ -87,8 +93,13 @@
 	//예약내용 모달 열기
 	function open_book_modal(e){
 		let rno = $(e).find("#book_res_no").text();
+
+		let sit_name = $(e).find("#sit_name").text();
+		let sit_no = $(e).find("#sit_no").text();
+		
+		console.log(sit_name, sit_no);
 		//let res_state = $(e).find("#book_res_state").text();
-		getBook_detail(rno);
+		getBook_detail(rno, sit_name, sit_no);
 		$('.modal').fadeIn();
 		$('body').css("overflow", "hidden");
 	}
@@ -101,7 +112,7 @@
 	}
 	
 	//예약내용모달 구하는 로직, ajax
-	function getBook_detail(rno){
+	function getBook_detail(rno,user_name,sit_no){
  		$.ajax({
 			url : '/amigo/ajax/getBook_detail.do',
 			type : 'POST',
@@ -115,12 +126,15 @@
 					result.forEach((content, index) =>{
 						console.log(content);
 						temp += '<li style="padding:5px;"><table class="table-sm table-bordered table-modal" border="2" style="width:95%;">';
-						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:50%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
+						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:20%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
 						temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">시간</td><td>' + content.res_time +'</td></tr>';
 						temp += '<tr style="border-bottom:1px solid black; vertical-align: middle;"><td class="modal_tTitle">장소</td><td>' + content.res_addr +'</td></tr>';
 						temp += '</table></li>';
 					});
 					temp+='</ul>';
+					
+					console.log(sit_no);
+					console.log(user_name);
 					
 					//날짜 비교해서 취소하기 버튼 유무
 					let res_start = new Date(result[0].res_date);
@@ -135,11 +149,11 @@
 						cate = '${searchVO.getSearchCategory()}';
 					}
 					if(today<limitDay){
-						temp+='<button class="btn btn-danger book_btn" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
+						temp+='<button class="btn btn-light book_btn btn-outline-danger" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
 					}else if(cate=='past'){
-						temp+='<button class="btn btn-danger book_btn" onclick="" style="position:relative;">리뷰목록</button>';
+						temp+='<button class="btn btn-ligth book_btn btn-outline-info" style="position:relative;"><a href="/amigo/sit_review_list.do?sit_no='+sit_no+"&user_name="+user_name+'">리뷰목록</a></button>';
 					}else{
-						temp+='<button disabled="disabled" class="btn btn-danger book_btn" style="position:relative;">취소불가</button>';
+						temp+='<button disabled="disabled" class="btn btn-light book_btn btn-outline-dark" style="position:relative;">취소불가</button>';
 					}
 					modalBody.append(temp);
 				} else {
@@ -257,7 +271,12 @@
 										<tr>
 											<th class="tTitle">결제금액</th><td><fmt:formatNumber value="${book.getRes_pay() }" pattern="#,###"/>원</td>
 										</tr>
-										
+										<tr style="display: none;">
+											<td id="sit_no">${sit.sit_no }</td>
+										</tr>
+										<tr style="display: none;">
+											<td id="sit_name">${sit.user_name }</td>
+										</tr>
 										</tbody>
 									</table>
 								</li>

@@ -7,7 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.springframework.context.annotation.PropertySource;
+
 public class JDBCUtility {
+
 	private final static String driver = "org.mariadb.jdbc.Driver";
 	private final static String url = "jdbc:mariadb://3.34.29.36:3306/amigo";
 	private final static String user = "amigo2";

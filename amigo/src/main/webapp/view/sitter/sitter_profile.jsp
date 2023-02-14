@@ -52,7 +52,7 @@
     		padding-top:20px;
     		
     	}
-    	
+    	#rev_list::-webkit-scrollbar { display:none; }
     </style>
     <script>	
     
@@ -126,6 +126,9 @@
 				     		 <c:when test="${not empty sitter.sit_photo}">
 				     			<img src="/sitterimg/${sitter.sit_photo}" alt="Profile Picture" width="200px;" height="200px;" style="border-radius:20px;"/>
 				     	 	 </c:when>
+				     	 	 <c:otherwise>
+				     	 	 	<img src="https://via.placeholder.com/200x200" alt="Profile Picture"/>
+				     	 	 </c:otherwise>
 				     		 <c:otherwise>
 				     			<span>Profile picture not available</span>
 				     		 </c:otherwise>
@@ -140,30 +143,41 @@
 							 	<p>펫시터 직업훈련 교육 수료</p>
 						</div>
 								<hr>
-								<div style="height: 300px;">
-								<p style="font-family:Jalnan;font-size:20px;">후기</p>
+								<div id="rev_list" style="height: 300px; overflow: scroll; overflow-x:hidden; -ms-overflow-style:none;">
+								<p style="font-family:Jalnan;font-size:20px;">후기(${rev.size() })</p>
+								<table>
 								<c:choose>
-								<c:when test="${not empty review}">
-									<c:forEach var="rev"  items="${ review }">
-									<table>
-										<tr>
-											<td>${ rev.getRev_no() }</td> 
-											<td>${ rev.getStar_cnt() }</td>
-											<td>${ rev.getRev_content() }</td>
-											<td>${ rev.getRev_date() }</td>
-											<td>${ rev.getUser_nick() }</td>
-											<td></td>
-											<td></td>
-											<td></td>										
+								<c:when test="${not empty rev}">
+									<c:forEach var="r"  items="${ rev }">
+										<tr class="row">
+											<td><c:choose>
+						                         <c:when test="${r.getStar_cnt() == 1}">
+						                            <img src="/amigo/resources/img/star1.png" style="width:50px;height:20px;">
+						                         </c:when>
+						                         <c:when test="${r.getStar_cnt() == 2}">
+						                            <img src="/amigo/resources/img/star2.png" style="width:50px;height:20px;">
+						                         </c:when>
+						                         <c:when test="${r.getStar_cnt() == 3}">
+						                            <img src="/amigo/resources/img/star3.png" style="width:50px;height:20px;">
+						                         </c:when>
+						                         <c:when test="${r.getStar_cnt() == 4}">
+						                            <img src="/amigo/resources/img/star4.png" style="width:50px;height:20px;">
+						                         </c:when>
+						                         <c:when test="${r.getStar_cnt() == 5}">
+						                            <img src="/amigo/resources/img/star5.png" style="width:50px;height:20px;">
+						                         </c:when>
+						                        </c:choose>
+						                   </td>
+											<th>${ r.getUser_nick() }</th>
+											<td>${ r.getRev_content() }</td>										
 										</tr>
-									</table>
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
-									<p style="text-align: center;">리뷰가 없습니다!</p>
+									<tr style="text-align: center;"><td>리뷰가 없습니다!</td><tr>
 								</c:otherwise>
-								
 								</c:choose>
+								</table>
 							</div>	
 					</article>
 				<article>
