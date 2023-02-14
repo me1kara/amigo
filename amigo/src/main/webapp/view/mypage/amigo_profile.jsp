@@ -41,7 +41,6 @@
       
       .dog-profile-photo{
       position: relative;
-     
       
       }
 </style>
