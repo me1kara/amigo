@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -27,6 +28,7 @@ import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.service.ChatService;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.ChatVO;
+import com.lec.amigo.vo.Payment;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
@@ -102,6 +104,16 @@ public class ChatController {
 		chatService.exitRoom(index,user_no);
 		
 		return "view/customer_service/customer_service_chat.jsp"; 
+	}
+	
+	@PostMapping("/ajax/deleteChatRoom.do")
+	@ResponseBody 
+	public int deleteChatRoom(HttpServletRequest req) {
+		int index = Integer.parseInt(req.getParameter("index"));
+		int row = 0;
+		int user_no = ((UserVO)req.getAttribute("user")).getUser_no();
+		row = chatService.exitRoom(index, user_no);
+		return row;
 	}
 	
 	

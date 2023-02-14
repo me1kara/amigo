@@ -51,6 +51,28 @@
     	}
     	
     </style>
+    
+    <script>
+    	function exit_room(index){
+    		if(confirm('정말로 나가시겠습니까?')){
+    			$.ajax({
+    				url  : '/amigo/ajax/deleteChatRoom.do',
+    				type : 'POST',
+    				data : {
+    					'index' : index	
+    				},
+    				success : function(result){
+    					alert('삭제에 성공했습니다!');
+    				},
+    			    error : function(request, status, error) { // 결과 에러 콜백함수
+    			        console.log(error);
+    			        alert('삭제에 실패했습니다!');
+    			        history.go(0);
+    			    }
+    			});
+    		}
+    	}
+    </script>
 </head>
 <body>
 	
@@ -115,6 +137,7 @@
 										</c:if>
 										 -->
 										</li>
+										<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(${ chat.index})">나가기</button>
 										<hr>						
 							</c:forEach>
 							
@@ -122,6 +145,7 @@
 							%>
 								<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;"><%=room.getChat_index()%>번방</h6>
 								<li class="btn btn-outline-dark" style="height:62px; width:308.88px; text-align: center; line-height: 45px;" onclick="location.href='/amigo/chatList.do?index=<%=room.getChat_index()%>'">등록된 글이 없습니다!</li>
+								<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(<%=room.getChat_index()%>)">나가기</button>
 								<hr>
 							<% 
 							} %>							

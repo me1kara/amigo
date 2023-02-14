@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.springframework.context.annotation.PropertySource;
+
 public class JDBCUtility {
 
 	private final static String driver = "org.mariadb.jdbc.Driver";

@@ -435,11 +435,18 @@ public class ChatDAO {
 	}
 
 	//채팅방 나가기,미구현상태
-	public void exitRoom(int index, int user_no) {
+	public int exitRoom(int index, int user_no) {
 		String sql = "delete from chat_room where index=? and user_no=?";
-		jdbcTemplate.update(sql,index,user_no);
-		String delete_chat = "delete from sit_chat where sitt_chat_index=? and user_no=?";
-		jdbcTemplate.update(delete_chat, index, user_no);
+		
+		int row = 0;
+		row = jdbcTemplate.update(sql,index,user_no);
+		
+		if(row>0) {
+			String delete_chat = "delete from sit_chat where sitt_chat_index=? and user_no=?";
+			row = jdbcTemplate.update(delete_chat, index, user_no);
+		}
+		
+		return row; 
 	}
 	
 	
