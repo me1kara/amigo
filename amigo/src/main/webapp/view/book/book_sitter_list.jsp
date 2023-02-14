@@ -110,12 +110,13 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <article class="sitter_list">
           <h2 class="sitter_list_title"><%=addr%> 펫시터 목록</h2>
           <hr />
-          <c:choose>
           
-          	<!-- 시 단위의 시터목록 -->
+          <!-- 시 단위의 시터목록 -->
+          <c:choose>
+
             <c:when test="${sittList!=null && !sittList.isEmpty() }">
               <c:forEach var="sit" items="${sittList }">
-                <!--  div클릭 접속 구현  -->
+
                 <div
                   class="sitter_item"
                   id="item-box-shadow"
@@ -198,7 +199,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                 </div>
               </c:if>
             </c:when>
-       		<!-- 해당 지역에 시터가 없을 경우 -->
             <c:otherwise>
               <h1>해당한 지역의 펫시터가 없습니다!</h1>
             </c:otherwise>

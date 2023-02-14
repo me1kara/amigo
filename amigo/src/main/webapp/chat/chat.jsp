@@ -42,17 +42,22 @@
 	height: 300px;
 	padding: 15px;
 	overflow: auto;
+	-ms-overflow-style:none;
 }
+
+#list::-webkit-scrollbar { display:none; }
+
 .chat_right{
-	width:170px;
+	max-width: 80%;
 	overflow-wrap: break-word;
 	overflow-x:hidden;
 	text-align: right;
 }
 .chat_left{
-	width:170px;
+	max-width: 80%;
 	overflow-wrap: break-word;
 	overflow-x:hidden;
+	overflow-y:hidden;
 	text-align: left;
 }
 
@@ -62,6 +67,54 @@
 
 }
 
+.chat-bubble {
+  border-radius: 5px;
+  display: inline-block;
+  padding: 5px 10px;
+  position: relative;
+  margin: 10px;
+  max-width: 80%;
+}
+
+.chat-bubble:before {
+  content: "\00a0";
+  display: block;
+  height: 16px;
+  width: 9px;
+  position: absolute;
+  bottom: -7.5px;
+}
+
+.chat-bubble.left {
+  background-color: #e6e5eb;
+  float: left;
+}
+
+.chat-bubble.left:before {
+  background-color: #e6e5eb;
+  left: 10px;
+  -webkit-transform: rotate(70deg) skew(5deg);
+}
+
+.chat-bubble.right {
+  background-color: #158ffe;
+  color: #fff;
+  float: right;
+}
+
+.chat-bubble.right:before {
+  background-color: #158ffe;
+  right: 10px;
+  -webkit-transform: rotate(118deg) skew(-5deg);
+}
+
+.chat-bubble.right a.autolinker {
+  color: #fff;
+  font-weight: bold;
+}
+
+body{-ms-overflow-style:none; }
+body::-webkit-scrollbar { display:none; }
 
 </style>
 <script>
@@ -128,8 +181,8 @@
 											<c:when test="${chat.getFile()==null}">
 												<li class="chat_left" style="margin-bottom: 3px; clear: both;"
 													id="chat_no_${chat.getChat_no() }">
-													<div>
-														<div class="align-self-center">
+													<div class="chat-bubble left">
+														<div class="align-self-center" style="max-height: 90%;">
 															${chat.getUser_nick() }<span style="font-size: 12px; color: #777;">${chat.getDate() }</span>
 														</div>
 														<div>${chat.getContent()}
@@ -156,7 +209,9 @@
 											<c:when test="${chat.getFile()==null}">
 												<li class="chat_right" style="margin-bottom: 3px; float: right;"
 													id="chat_no_${chat.getChat_no() }">
+													<div class="chat-bubble right">
 													<span class="chat_right"onmousedown="mouseDown(${chat.getChat_no()})" onmouseleave="mouseLeave()" onmouseup="mouseLeave()">${chat.getContent()}</span>
+													</div>
 												</li>
 											</c:when>
 											<c:when test="${chat.getFile()!=null}">
@@ -386,7 +441,7 @@
 			
   	  	  	temp += '<li class="chat_left" style="margin-bottom:3px; clear: both;" id="chat_no_'+chat_no+'">';
   	  	 
-			temp += '<div>';
+			temp += '<div class="chat-bubble left">';
 			temp += '<div class="align-self-center">';
 			temp += user + '<span style="font-size: 12px; color: #777;">'+new Date().toLocaleTimeString()+'</span>'
 			temp += '</div>';
@@ -402,7 +457,7 @@
   	  		  	console.log('확인용숫자'+chat_no);
     	  	  	let temp = '';
     	  	  	temp += '<li class="chat_right" style="margin-bottom:3px; float:right;" id="chat_no_'+chat_no+'">';
-    	  	  	temp += '<span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()">'+txt+'</span>';
+    	  	  	temp += '<div class="chat-bubble right"><span onmousedown="mouseDown('+chat_no+')" onmouseleave="mouseLeave()" onmouseup="mouseLeave()">'+txt+'</span></div>';
     	  	  	temp += '</li>';
     	  	  	temp += '<li style="clear: both;"></li';
     	  	  			
