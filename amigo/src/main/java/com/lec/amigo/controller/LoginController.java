@@ -94,6 +94,7 @@ public class LoginController {
 			
 			List<ChatRoom> room_list = chatService.getRoomList(user.getUser_no());
 
+		
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);
 			}else {

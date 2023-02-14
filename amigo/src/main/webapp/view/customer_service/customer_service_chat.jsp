@@ -107,7 +107,7 @@
 													<!-- 채팅객체에 유저이름 필드가 없기때문에 유저리스트를 조사해서 이름 얻어오기  -->
 														<c:forEach var="us" items="${userList }">
 															<c:if test="${us.user_no==chat.user_no }">
-																<img src="/img/${us.user_photo }" width="50px;" height="50px;" style="border-radius: 10px;" > <!--유저이미지 --> 
+																<img src="/userimg/${us.user_photo }" width="50px;" height="50px;" style="border-radius:50px;" > <!--유저이미지 --> 
 															</c:if>
 														</c:forEach>
 													</td>
