@@ -254,7 +254,7 @@ prefix="c"%>
             <div class="p-3">
               <a href="<%=request.getContextPath() %>/view/hospital/recommend_hospital_list.jsp">
                 <img
-                  src="/amigo/resources/img/hp.png"
+                  src="/amigo/resources/img/hp3.png"
                   class="img-fluid"
                   alt="hospital"
                 />
