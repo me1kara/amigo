@@ -65,7 +65,7 @@
 		        pay_method : 'card',
 		        merchant_uid: 'merchant_'+new Date().getTime(), 
 		        name : '시터예약',
-		        amount : '100', //${book.res_pay},
+		        amount : '100', //${book.res_pay},테스트용으로 100원 고정
 		        buyer_email : '<%=user.getUser_email()%>',
 		        buyer_name : '<%=user.getUser_name()%>',
 		        buyer_tel : '<%=user.getUser_phone()%>',
