@@ -95,6 +95,8 @@ h1 {
   flex-direction: column;
   position: relative;
   width: 300px;
+  height: 400px;
+  overflow:clip;
   background: #fff;
   margin: 1em;
   padding: 0.5em;
@@ -392,12 +394,12 @@ figure.amigo1224 {
 					<hr>
 					  <div class="items">
 					<c:forEach var="sitter" items="${ mainSitterList}">					
-					<div class="entry">
+					<div class="entry" style="overflow: ">
 				      <p class="name">${ sitter.user_name}</p>
 				      
 				      <c:choose>
 			      	<c:when test="${not empty sitter.sit_photo }">
-			      		<img class="sitter_img" src="#" />	
+			      		<img class="sitter_img" src="/sitterimg/${sitter.sit_photo }" width="150px;" height="100px;"/>	
 			      	</c:when>
 	   		      <c:otherwise>	
 				      	<img class="sitter_img" src="https://via.placeholder.com/150x100"  />
