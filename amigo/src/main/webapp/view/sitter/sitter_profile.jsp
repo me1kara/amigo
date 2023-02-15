@@ -124,10 +124,10 @@
 							<div id="img_ex" style="margin:0 auto;">
 				    		 <c:choose>
 				     		 <c:when test="${not empty sitter.sit_photo}">
-				     			<img src="/sitterimg/${sitter.sit_photo}" alt="Profile Picture" width="200px;" height="200px;" style="border-radius:20px;"/>
+				     			<img src="/sitterimg/${sitter.sit_photo}" alt="sitterPicture" width="200px;" height="200px;" style="border-radius:20px;"/>
 				     	 	 </c:when>
 				     	 	 <c:otherwise>
-				     	 	 	<img src="https://via.placeholder.com/200x200" alt="Profile Picture"/>
+				     	 	 	<img src="https://via.placeholder.com/200x200" alt="sitterPictureNull"/>
 				     	 	 </c:otherwise>
 				    		 </c:choose>
 				    		 </div>
@@ -141,7 +141,7 @@
 						</div>
 								<hr>
 								<div id="rev_list" style="height: 300px; overflow: scroll; overflow-x:hidden; -ms-overflow-style:none;">
-								<p style="font-family:Jalnan;font-size:20px;">후기(${rev.size() })</p>
+								<p style="font-family:Jalnan;font-size:20px;">후기<c:if test="${rev.size()>0 }">(${rev.size() })</c:if></p>
 								<table style="margin:0 auto;">
 								<c:choose>
 								<c:when test="${not empty rev}">
@@ -177,7 +177,6 @@
 								</table>
 							</div>	
 					</article>
-				<article>
 				<article>
 					<button type="button" class="btn btn-secondary" id="pay_btn" onclick="requestPay()">결제 및 신청</button>
 				</article>

@@ -394,7 +394,7 @@ figure.amigo1224 {
 					<hr>
 					  <div class="items">
 					<c:forEach var="sitter" items="${ mainSitterList}">					
-					<div class="entry" style="overflow: ">
+					<div class="entry" style="overflow: clip;">
 				      <p class="name">${ sitter.user_name}</p>
 				      
 				      <c:choose>
