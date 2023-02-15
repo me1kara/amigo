@@ -397,7 +397,7 @@ figure.amigo1224 {
 				      
 				      <c:choose>
 			      	<c:when test="${not empty sitter.sit_photo }">
-			      		<img class="sitter_img" src="#" />	
+			      		<img class="sitter_img" src="/sitterimg/${sitter.sit_photo}" />	
 			      	</c:when>
 	   		      <c:otherwise>	
 				      	<img class="sitter_img" src="https://via.placeholder.com/150x100"  />

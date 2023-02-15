@@ -78,8 +78,13 @@ public class ChatController {
 		List<ChatRoom> elseRoomList = chatService.getElseRoomList(user_no);
 		ChatRoom checkRoom = chatService.getRoom(user_no);
 		List<ChatVO> myChatList = chatService.getMyChatList(user_no);
-		
 		List<UserVO> userList = userService.getUserList();
+		
+		List<ChatRoom> roomUserList = chatService.getRoomUserList(user_no);
+		
+		
+		//해당방의 유저
+		req.setAttribute("roomUserList", roomUserList);
 		
 		//방있는지여부 체크
 		req.setAttribute("checkRoom", checkRoom);
