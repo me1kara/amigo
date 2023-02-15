@@ -171,7 +171,7 @@
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
-									<tr style="text-align: center;"><td>리뷰가 없습니다!</td><tr>
+										<tr><td class="text-center">리뷰가 없습니다!<tr>
 								</c:otherwise>
 								</c:choose>
 								</table>
