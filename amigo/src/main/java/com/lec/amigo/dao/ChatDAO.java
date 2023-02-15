@@ -452,7 +452,7 @@ public class ChatDAO {
 
 	public List<ChatRoom> getRoomUserList(int user_no) {
 		List<ChatRoom> roomUserList = new ArrayList();
-		String sql = "select c.chat_index, c.user_no from chat_room c, (select chat_index from chat_room where user_no=1) r where c.chat_index = r.chat_index";
+		String sql = "select c.chat_index, c.user_no from chat_room c, (select chat_index from chat_room where user_no=?) r where c.chat_index = r.chat_index";
 		Connection conn = JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

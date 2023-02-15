@@ -151,7 +151,7 @@
 										</c:if>
 										 -->
 										</li>
-										<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(${ chat.index})">나가기</button>
+										<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(${ chat.index})" style="margin-top:10px;">나가기</button>
 										<hr>						
 							</c:forEach>
 							

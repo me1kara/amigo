@@ -260,7 +260,7 @@
                 </div>
             </div>
         <!-- Error Page -->
-	${msg }
+
 <script>
 function randomNum()
 {
