@@ -27,10 +27,12 @@ import com.lec.amigo.dao.UserDAO;
 import com.lec.amigo.impl.BoardServiceImpl;
 import com.lec.amigo.impl.ChatServiceImpl;
 import com.lec.amigo.impl.DogServiceImpl;
+import com.lec.amigo.impl.ReviewServiceImpl;
 import com.lec.amigo.impl.SitterServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.ChatRoom;
+import com.lec.amigo.vo.ReviewVO;
 import com.lec.amigo.vo.UserVO;
 
 @Controller
@@ -51,6 +53,9 @@ public class LoginController {
 
 	@Autowired
 	SitterServiceImpl sitService;
+	
+	@Autowired
+	ReviewServiceImpl reviewService;
 
 	private String uploadFolder = "";
 	
@@ -70,10 +75,10 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess, BoardVO boardVO, Model model) {
+	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess, BoardVO boardVO, ReviewVO review, Model model) {
 			
 		UserVO user = userDAO.getUser(userVO.getUser_email()); // 사용자가 입력한 이메일을 getUser메서드로 DB 있는지 찾기
-
+			
 		if(user == null) {
 			sess.setAttribute("isLoginSuccess", false);
 			return "view/login/login_form.jsp";
@@ -91,6 +96,32 @@ public class LoginController {
 		if(user.getUser_email().equals(userVO.getUser_email())) {
 			sess.setAttribute("user", user);
 			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요!
+			
+			
+			// 메인페이지의 실시간리뷰 현황판 설정용.
+			System.out.println("리뷰현황판");						  // 메인페이지 실시간리뷰 현황판
+			int dogCount = reviewService.dogRowCount(); 
+			double starsAverage = reviewService.starsAverage();
+			int ssrc1 = reviewService.ssrc1();		                  // 각각 별이 n개일 때 리뷰 갯수
+			int ssrc2 = reviewService.ssrc2();
+			int ssrc3 = reviewService.ssrc3();
+			int ssrc4 = reviewService.ssrc4();
+			int ssrc5 = reviewService.ssrc5();
+			int starsTotalCount = reviewService.starsTotalCount();    // 리뷰 자체의 총 갯수
+			model.addAttribute("dogCount", dogCount);
+			model.addAttribute("starsAverage", starsAverage);
+			model.addAttribute("ssrc1", ssrc1);
+			model.addAttribute("ssrc2", ssrc2);
+			model.addAttribute("ssrc3", ssrc3);
+			model.addAttribute("ssrc4", ssrc4);
+			model.addAttribute("ssrc5", ssrc5);
+			model.addAttribute("starsTotalCount", starsTotalCount);
+			List<ReviewVO> revList = reviewService.getReviewList(review);	// 리뷰 리스트에
+			model.addAttribute("revList", revList);	
+			
+			
+			
+			
 			
 			List<ChatRoom> room_list = chatService.getRoomList(user.getUser_no());
 
@@ -218,8 +249,35 @@ public class LoginController {
 	
 	// 로고 클릭시 메인가기
 	@RequestMapping(value="/main_home.do", method = RequestMethod.GET) 
-	public String main_home(BoardVO boardVO, Model model) {
+	public String main_home(BoardVO boardVO, Model model, ReviewVO review) {
 		model.addAttribute("board", boardService.getBoard(boardVO));
+		
+		
+		// 메인페이지의 실시간리뷰 현황판 설정용.
+					System.out.println("리뷰현황판");						  // 메인페이지 실시간리뷰 현황판
+					int dogCount = reviewService.dogRowCount(); 
+					double starsAverage = reviewService.starsAverage();
+					int ssrc1 = reviewService.ssrc1();		                  // 각각 별이 n개일 때 리뷰 갯수
+					int ssrc2 = reviewService.ssrc2();
+					int ssrc3 = reviewService.ssrc3();
+					int ssrc4 = reviewService.ssrc4();
+					int ssrc5 = reviewService.ssrc5();
+					int starsTotalCount = reviewService.starsTotalCount();    // 리뷰 자체의 총 갯수
+					model.addAttribute("dogCount", dogCount);
+					model.addAttribute("starsAverage", starsAverage);
+					model.addAttribute("ssrc1", ssrc1);
+					model.addAttribute("ssrc2", ssrc2);
+					model.addAttribute("ssrc3", ssrc3);
+					model.addAttribute("ssrc4", ssrc4);
+					model.addAttribute("ssrc5", ssrc5);
+					model.addAttribute("starsTotalCount", starsTotalCount);
+					List<ReviewVO> revList = reviewService.getReviewList(review);	// 리뷰 리스트에
+					model.addAttribute("revList", revList);	
+		
+		
+		
+		
+		
 		return "view/main.jsp"; 
 	}
 	

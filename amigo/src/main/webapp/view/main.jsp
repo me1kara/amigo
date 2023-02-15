@@ -360,7 +360,7 @@ prefix="c"%>
                 <h1 class="rating-number">${starsAverage}<small>/5</small></h1>
                 <div class="rating-stars d-inline-block position-relative mr-2">
                   <!--  -->
-                  <img src="amigo/resources/img/grey-star.svg" alt="" />
+                  <img src="resources/img/grey-star.svg" alt="" />
                   <div class="filled-star" style="width: 86%"></div>
                 </div>
                                                                <!-- 총 레이팅 : 별 갯수를 서버단에서 직접 가져옴. -->

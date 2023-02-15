@@ -84,6 +84,8 @@
     
     <script>
   //별점 마킹 모듈 프로토타입으로 생성
+
+
     function Rating(){};
     Rating.prototype.rate = 0;
     Rating.prototype.setRate = function(newrate){
@@ -110,31 +112,9 @@
         })
     });
     
-    // 작성 글자수 초과 체크 이벤트 리스너
-    document.querySelector('.review_textarea').addEventListener('keydown',function(){
-        //리뷰 400자 초과 안되게 자동 자름
-        let review = document.querySelector('.review_textarea');
-        let lengthCheckEx = /^.{400,}$/;
-        if(lengthCheckEx.test(review.value)){
-            //400자 초과 컷
-            review.value = review.value.substr(0,400);
-        }
-    });
 
-    //저장 전송전 필드 체크 이벤트 리스너
-    document.querySelector('#save').addEventListener('click', function(e){
-        //별점 선택 안했으면 메시지 표시
-        if(rating.rate == 0){
-            rating.showMessage('rate');
-            return false;
-        }
-        //리뷰 5자 미만이면 메시지 표시
-        if(document.querySelector('.review_textarea').value.length < 5){
-            rating.showMessage('review');
-            return false;
-        }
-        //폼 서밋
-    });
+
+   
        
     
 </script>
@@ -161,10 +141,10 @@
 			 <span class="insert-font col-md-2" style="font-size:14px; font-weight:bold;" >펫시터 :</span> &nbsp;<p class="insert-sitter-name" style="font-size:14px; font-weight:bold;">${ param.user_name }</p>
 			</div>
 			<!-- 작성자  끝 -->
-			<input type="hidden" name="rate" id="rate" value="0"/>
 		 <div class="review_rating">
             <div class="warning_msg">별점을 선택해 주세요.</div>
             <div class="ratingStar">
+			<input type="hidden" name="rate" id="rate" value="0"/>
                 <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
                 <input type="checkbox" name="star_cnt" id="rating1" value="1" class="rate_radio" title="1점">
                 <label for="rating1"></label>

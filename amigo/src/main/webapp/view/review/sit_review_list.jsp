@@ -30,6 +30,9 @@
     	 font-family: "Jalnan";
       	 font-size:40px; 
     	}
+    	.review-main {
+    	 font-weight: bold;
+    	}
     </style>
 <title>후기01_실시간 후기</title>
 
@@ -41,8 +44,8 @@
 	
 	<%@include file="/includes/header.jsp" %>
 		<div class="title text-center">
-        <h1 class="text-uppercase">${param.sit_no} 펫시터 리뷰</h1>
-        </div>
+        <h1 class="text-uppercase">${param.user_name} 펫시터 리뷰</h1>
+        </div><input type="hidden" value="${param.sit_no}" >
         <br />
         
  
@@ -51,6 +54,10 @@
                 <div class="review-member">
                   <a href="#">${param.user_name}  </a>펫시터 후기
                   <a href="/amigo/view/review/user_review_insert.do?sit_no=${param.sit_no}&user_name=${param.user_name}" class="btn btn-primary">리뷰작성</a>
+    			  
+ 
+
+ 
     <!-- 유저 실시간 리뷰 -->
  <div class="container">
       <div class="row">
