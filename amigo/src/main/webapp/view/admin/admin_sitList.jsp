@@ -120,7 +120,7 @@ function getSit_info(userno){
 						<c:forEach var="sit" items="${ sitList }">
 						 <tr>
 								<td align="center"><c:if test="${sit.getSit_photo()!=null and sit.getSit_photo()!=''}">
-                         		   <img class="sit-photo" src="/img/${sit.getSit_photo()}" width="60px" height="40px"></c:if> 
+                         		   <img class="sit-photo" src="../../resources/img/${sit.getSit_photo()}" width="60px" height="40px"></c:if> 
                            		</td>
 								<td id="sit_user_no" onclick="sit_list_modal(this)">${sit.getUser_no()}</td>
 								<td>${sit.getUser_name()}</td>								

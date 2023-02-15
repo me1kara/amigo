@@ -132,7 +132,8 @@ public class ReviewController {
 	
 	// 리뷰 작성해서 Submit 하기.
 	@RequestMapping(value="/view/review/user_review_insert.do", method=RequestMethod.POST)   
-	public String insertReview(ReviewVO review) {
+	public String insertReview(HttpSession sess, ReviewVO review) {
+		
 		
 		
 		System.out.println("리뷰를 등록합니다.");
@@ -145,7 +146,7 @@ public class ReviewController {
 	
 	// 리뷰 삭제하기
 	@RequestMapping(value="/user_review_delete.do", method=RequestMethod.GET)
-	public String user_review_delete(Model model, int user_no, ReviewVO review) {
+	public String user_review_delete(HttpSession sess, Model model, int user_no, ReviewVO review) {
 		
 		System.out.println("리뷰삭제");
 		reviewService.deleteReview(user_no);
