@@ -107,7 +107,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     <%@include file="/includes/header.jsp"%>
     <div class="container col-md-6">
       <section>
-        <article class="sitter_list">
+        <article class="ssitter_list">
           <h2 class="sitter_list_title"><%=addr%> 펫시터 목록</h2>
           <hr />
           
@@ -124,11 +124,25 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                   onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${sit.getUser_name() }';"
                 >
                   <div>
+                  	<c:choose>
+                  	<c:when test="${not empty sit.sit_photo }">
                     <img
-                      src="https://via.placeholder.com/100x100"
+                      src="/sitterimg/${sit.sit_photo}"   
                       width="100px"
                       height="100px"
+                      style="border-radius:20px;"
                     />
+                    </c:when>
+                    <c:otherwise>
+                    <img
+                      src="https://via.placeholder.com/100x100"   
+                      width="100px"
+                      height="100px"
+                      style="border-radius:20px;"
+                    />
+                    </c:otherwise>
+                    </c:choose>
+                    
                   </div>
                   <!-- 전체 테이블 -->
                   <table>

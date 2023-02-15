@@ -90,6 +90,17 @@ public class BookController {
 		imp_secret = environment.getProperty("imp_secret");
 	}
 	
+	//서비스소개화면 
+	@RequestMapping(value = "/view/sitter/sitter_service_main.do", method = { RequestMethod.GET })
+	public String service_main (Model model) {
+		
+		List<SitterVO> mainSitList = sitterService.getMainSitterList();
+		model.addAttribute("mainSitterList", mainSitList);
+		
+		return "/view/sitter/sitter_service_main.jsp";
+	}
+	
+	
 	//예약신청폼 
 	@RequestMapping(value = "/view/book/book_sitter_form.do", method = { RequestMethod.GET })
 	public String book_from (HttpSession sess) {

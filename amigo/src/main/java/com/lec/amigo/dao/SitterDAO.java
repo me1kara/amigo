@@ -173,4 +173,22 @@ public class SitterDAO {
 		return del;                                          // 변수 반환.
 	}
 
+	//메인서비스화면, 대표시터 출력용 / 한준호
+	public List<SitterVO> mainSitterList() {	
+		String sql ="select re.*, u.user_name from user u,\r\n"
+				+ "(select p.* from petsitter p, (select sit_no, format(avg(star_cnt),1) star from sit_review GROUP BY sit_no ORDER BY format(avg(star_cnt),1) desc limit 0, 5) rv where p.sit_no = rv.sit_no) re where u.user_no = re.user_no";
+		
+		List<SitterVO> mainSitterList = null;
+		try {
+			mainSitterList = jdbcTemplate.query(sql, new SitRowMapper());
+		} catch (Exception e) {
+			System.out.println("메인시터목록,sitterdao");
+			e.printStackTrace();
+		}
+		
+		return mainSitterList;
+	}
+
+
+
 }

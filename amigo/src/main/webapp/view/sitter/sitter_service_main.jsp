@@ -95,6 +95,8 @@ h1 {
   flex-direction: column;
   position: relative;
   width: 300px;
+  height: 400px;
+  overflow:clip;
   background: #fff;
   margin: 1em;
   padding: 0.5em;
@@ -391,36 +393,22 @@ figure.amigo1224 {
 					<h3 class="sitter_service_title">대표 펫시터를 소개합니다!</h3>
 					<hr>
 					  <div class="items">
-				    <div class="entry">
-				      <p class="name">한준호</p>
-				      <img class="sitter_img" src="https://via.placeholder.com/150x100"  />
-				      <p class="quote">공룡처럼 짜릿한 케어!</p>
+					<c:forEach var="sitter" items="${ mainSitterList}">					
+					<div class="entry" style="overflow: clip;">
+				      <p class="name">${ sitter.user_name}</p>
+				      
+				      <c:choose>
+			      	<c:when test="${not empty sitter.sit_photo }">
+			      		<img class="sitter_img" src="/sitterimg/${sitter.sit_photo }" width="150px;" height="100px;"/>	
+			      	</c:when>
+	   		      <c:otherwise>	
+				      	<img class="sitter_img" src="https://via.placeholder.com/150x100"  />
+				      </c:otherwise>
+				      </c:choose>
+				      <p class="quote">${sitter.sit_intro }</p>
 				    </div>
-				    <div class="entry">
-				      <p class="name">이진주</p>
-				      <img class="sitter_img" src="https://via.placeholder.com/150x100"  />
-				      <p class="quote">최고의 강아지 전문가~</p>
-				    </div>
-				    <div class="entry">
-				      <p class="name">최성형</p>
-				      <img class="sitter_img" src="https://via.placeholder.com/150x100"  />
-				      <p class="quote">엄마처럼 친근한 케어!</p>
-				    </div>
-				    <div class="entry">
-				      <p class="name">시터</p>
-				      <img class="sitter_img" src="https://via.placeholder.com/150x100"  />
-				      <p class="quote">시터설명</p>
-				    </div>
-				    <div class="entry">
-				      <p class="name">시터</p>
-				      <img class="sitter_img" src="https://via.placeholder.com/150x100"  />
-				      <p class="quote">시터설명</p>
-				    </div>
-				    <div class="entry">
-				      <p class="name">시터</p>
-				      <img class="sitter_img" src="https://via.placeholder.com/150x100"  />
-				      <p class="quote">시터설명</p>
-				    </div>
+					</c:forEach>
+					</div>
 				</article>
 				
 				<article class="service_btn sitter_item"">	

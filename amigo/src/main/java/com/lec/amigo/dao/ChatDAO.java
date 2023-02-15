@@ -448,6 +448,31 @@ public class ChatDAO {
 		
 		return row; 
 	}
+
+
+	public List<ChatRoom> getRoomUserList(int user_no) {
+		List<ChatRoom> roomUserList = new ArrayList();
+		String sql = "select c.chat_index, c.user_no from chat_room c, (select chat_index from chat_room where user_no=1) r where c.chat_index = r.chat_index";
+		Connection conn = JDBCUtility.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_no);
+			rs= pstmt.executeQuery();
+			while (rs.next()) {
+				ChatRoom room = new ChatRoom();
+				room.setChat_index(rs.getInt("chat_index"));
+				room.setUser_no(rs.getInt("user_no"));
+				roomUserList.add(room);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return roomUserList;
+	}
 	
 	
 }

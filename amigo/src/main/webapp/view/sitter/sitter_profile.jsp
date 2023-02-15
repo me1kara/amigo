@@ -121,13 +121,13 @@
 					<h2 class="sitter_profile_title"> 시터 프로필 정보</h2><hr>
 					<article id="profile_card">
 						<div id="petsitter_title">
-							<div id="img_ex" style="border:1px solid; width:200px; height:200px; margin:0 auto;">
+							<div id="img_ex" style="margin:0 auto;">
 				    		 <c:choose>
 				     		 <c:when test="${not empty sitter.sit_photo}">
-				     			<img src="${sitter.sit_photo}" alt="Profile Picture"/>
+				     			<img src="/sitterimg/${sitter.sit_photo}" alt="sitterPicture" width="200px;" height="200px;" style="border-radius:20px;"/>
 				     	 	 </c:when>
 				     	 	 <c:otherwise>
-				     	 	 	<img src="https://via.placeholder.com/200x200" alt="Profile Picture"/>
+				     	 	 	<img src="https://via.placeholder.com/200x200" alt="sitterPictureNull"/>
 				     	 	 </c:otherwise>
 				    		 </c:choose>
 				    		 </div>
@@ -141,7 +141,7 @@
 						</div>
 								<hr>
 								<div id="rev_list" style="height: 300px; overflow: scroll; overflow-x:hidden; -ms-overflow-style:none;">
-								<p style="font-family:Jalnan;font-size:20px;">후기(${rev.size() })</p>
+								<p style="font-family:Jalnan;font-size:20px;">후기<c:if test="${rev.size()>0 }">(${rev.size() })</c:if></p>
 								<table style="margin:0 auto;">
 								<c:choose>
 								<c:when test="${not empty rev}">
@@ -171,13 +171,12 @@
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
-									<tr style="text-align: center;"><td>리뷰가 없습니다!</td><tr>
+										<tr><td class="text-center">리뷰가 없습니다!<tr>
 								</c:otherwise>
 								</c:choose>
 								</table>
 							</div>	
 					</article>
-				<article>
 				<article>
 					<button type="button" class="btn btn-secondary" id="pay_btn" onclick="requestPay()">결제 및 신청</button>
 				</article>

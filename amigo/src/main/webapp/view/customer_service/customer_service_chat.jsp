@@ -83,7 +83,7 @@
 				<article>
 					<div style="text-align: center; width: 400px; margin: 0 auto;" >
 				
-				    <p class="chat-header-title">채팅</p>
+				    <p class="chat-header-title">채팅목록</p>
 						
 					<c:set var="chatList" value="<%=chatList %>"/>
 					<c:set var="elseRoomList" value="<%=elseRoomList %>"></c:set>
@@ -99,7 +99,20 @@
 							
 							<!-- db에서 받아온 내 채팅방(마지막채팅담김)목록 출력 -->
 							<c:forEach var="chat" items="${chatList }">
-										<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;">${ chat.index}번방</h6>
+										<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;">
+										
+										<c:forEach var="room" items="${roomUserList }">
+										<c:if test="${ chat.index==room.chat_index}">
+											<c:forEach var="rusl" items="${userList }">
+												<c:if test="${rusl.user_no==room.user_no }">
+													${rusl.user_nick} 
+												</c:if>
+											</c:forEach>
+										</c:if>
+										</c:forEach>
+										
+										
+										</h6>
 										<li class="btn btn-outline-dark RL_item" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
 											<table>
 												<tr>
@@ -107,7 +120,7 @@
 													<!-- 채팅객체에 유저이름 필드가 없기때문에 유저리스트를 조사해서 이름 얻어오기  -->
 														<c:forEach var="us" items="${userList }">
 															<c:if test="${us.user_no==chat.user_no }">
-																<img src="/img/${us.user_photo }" width="50px;" height="50px;" style="border-radius: 10px;" > <!--유저이미지 --> 
+																<img src="/userimg/${us.user_photo }" width="50px;" height="50px;" style="border-radius:50px;" > <!--유저이미지 --> 
 															</c:if>
 														</c:forEach>
 													</td>
@@ -144,7 +157,20 @@
 							
 							<% for(ChatRoom room :elseRoomList){
 							%>
-								<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;"><%=room.getChat_index()%>번방</h6>
+							<c:set var="room" value="<%=room %>"/>
+								<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;">
+								
+                                 <c:forEach var="rooml" items="${roomUserList }">
+										<c:if test="${ room.chat_index==rooml.chat_index}">
+											<c:forEach var="rusl" items="${userList }">
+												<c:if test="${rusl.user_no==rooml.user_no }">
+													${rusl.user_nick} 
+												</c:if>
+											</c:forEach>
+										</c:if>
+								</c:forEach>
+								
+								</h6>
 								<li class="btn btn-outline-dark" style="height:62px; width:308.88px; text-align: center; line-height: 45px;" onclick="location.href='/amigo/chatList.do?index=<%=room.getChat_index()%>'">등록된 글이 없습니다!</li>
 								<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(<%=room.getChat_index()%>)">나가기</button>
 								<hr>
