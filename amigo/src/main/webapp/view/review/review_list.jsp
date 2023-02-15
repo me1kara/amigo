@@ -177,11 +177,12 @@
                   	<c:choose>
                   	<c:when test="${rev.getUser_photo()!=null and rev.getUser_photo()!=''}">
                     <img
-                      src="../amigo/resources/img/${rev.getUser_photo() }"
+                      src="/userimg/${rev.getUser_photo() }"
                       class="review-user-photo"
                       alt="userProfile"
                       width="50px"
                       class="mr-3 rounded-circle"
+                      style="border-radius:50px;"
                     />
                     </c:when>
                     <c:otherwise>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -126,7 +127,7 @@ pageEncoding="UTF-8"%>
           	<img src="/userimg/${user.getUser_photo()}" style="border-radius:50px; margin-right:20px;" alt="userphoto" width="50px" height="50px" style="border-radius:10px" />
             </c:when>
             <c:otherwise>
-            <img src="../../resources/img/logo2.png" style="border-radius:50px; margin-right:20px;" alt="logo2" width="50px" height="50px"/>
+            <img src="/amigo/resources/img/logo2.png" style="border-radius:50px; margin-right:20px;" alt="logo2" width="50px" height="50px"/>
             </c:otherwise>
         </c:choose>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -165,7 +166,14 @@ pageEncoding="UTF-8"%>
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">아미고 파트너 모집</a>
+           <c:choose>
+       		 <c:when test="${ sessionScope.user.getUser_type() == 'U' }">
+              <a class="nav-link" href="/amigo/view/mypage/apply/sitter_join.do">아미고 펫시터 모집</a>
+             </c:when>
+             <c:when test="${ sessionScope.user.getUser_type() == 'A' || sessionScope.user.getUser_type() == 'S'}">
+             <a class="nav-link" href="#" onclick="alert('일반 회원만 신청 가능합니다')">아미고 펫시터 모집</a>
+             </c:when>
+           </c:choose>
             </li>
             <li class="nav-item">
               <a
