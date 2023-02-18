@@ -19,7 +19,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
     <style>
     	
     	.star-rating {
@@ -71,7 +71,7 @@
               <div class="rating-divided">
                 <div class="rating-progress">
                   <span class="rating-grade"
-                    >5 <img src="/amigo/resources/img/star.svg" alt=""
+                    >5 <img src="/resources/img/star.svg" alt=""
                   /></span>
                   <div class="progress">
                     <div
@@ -87,7 +87,7 @@
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
-                    >4 <img src="/amigo/resources/img/star.svg" alt=""
+                    >4 <img src="/resources/img/star.svg" alt=""
                   /></span>
                   <div class="progress">
                     <div
@@ -103,7 +103,7 @@
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
-                    >3 <img src="/amigo/resources/img/star.svg" alt=""
+                    >3 <img src="/resources/img/star.svg" alt=""
                   /></span>
                   <div class="progress">
                     <div
@@ -119,7 +119,7 @@
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
-                    >2 <img src="/amigo/resources/img/star.svg" alt=""
+                    >2 <img src="/resources/img/star.svg" alt=""
                   /></span>
                   <div class="progress">
                     <div
@@ -135,7 +135,7 @@
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
-                    >1 <img src="/amigo/resources/img/star.svg" alt=""
+                    >1 <img src="/resources/img/star.svg" alt=""
                   /></span>
                   <div class="progress">
                     <div
@@ -214,19 +214,19 @@
                       
                       	<c:choose>
                       	<c:when test="${rev.getStar_cnt() == 1}">
-                      		<img src="../amigo/resources/img/star1.png" style="width:150px;height:60px;">
+                      		<img src="../resources/img/star1.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${rev.getStar_cnt() == 2}">
-                      		<img src="../amigo/resources/img/star2.png" style="width:150px;height:60px;">
+                      		<img src="../resources/img/star2.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${rev.getStar_cnt() == 3}">
-                      		<img src="../amigo/resources/img/star3.png" style="width:150px;height:60px;">
+                      		<img src="../resources/img/star3.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${rev.getStar_cnt() == 4}">
-                      		<img src="../amigo/resources/img/star4.png" style="width:150px;height:60px;">
+                      		<img src="../resources/img/star4.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${rev.getStar_cnt() == 5}">
-                      		<img src="../amigo/resources/img/star5.png" style="width:150px;height:60px;">
+                      		<img src="../resources/img/star5.png" style="width:150px;height:60px;">
                       	</c:when>
                         </c:choose>
                         <input type="hidden" class="form-control" name="sit_no" value="${ rev.getSit_no() }">

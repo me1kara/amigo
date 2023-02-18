@@ -52,7 +52,7 @@ function getSit_info(userno){
 	console.log(userno);
 	
 	$.ajax({
-		url : '/amigo/ajax/getSit_info.do',
+		url : '/ajax/getSit_info.do',
 		type : 'POST',
 		data : {
 			'userno' : userno

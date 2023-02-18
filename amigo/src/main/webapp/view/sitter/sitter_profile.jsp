@@ -93,7 +93,7 @@
 								alert('결제성공!');
 								
 								//성공시 완료페이지로 이동
-								let alink = '/amigo/requestBook.do?sit_no='+${sitter.sit_no }+'&merchant_uid='+process_result[1]+"";
+								let alink = '/requestBook.do?sit_no='+${sitter.sit_no }+'&merchant_uid='+process_result[1]+"";
 								console.log(alink);
 								window.location.href = alink;
 							}else{
@@ -149,19 +149,19 @@
 										<tr class="row">
 											<td><c:choose>
 						                         <c:when test="${r.getStar_cnt() == 1}">
-						                            <img src="/amigo/resources/img/star1.png" style="width:50px;height:20px;">
+						                            <img src="/resources/img/star1.png" style="width:50px;height:20px;">
 						                         </c:when>
 						                         <c:when test="${r.getStar_cnt() == 2}">
-						                            <img src="/amigo/resources/img/star2.png" style="width:50px;height:20px;">
+						                            <img src="/resources/img/star2.png" style="width:50px;height:20px;">
 						                         </c:when>
 						                         <c:when test="${r.getStar_cnt() == 3}">
-						                            <img src="/amigo/resources/img/star3.png" style="width:50px;height:20px;">
+						                            <img src="/resources/img/star3.png" style="width:50px;height:20px;">
 						                         </c:when>
 						                         <c:when test="${r.getStar_cnt() == 4}">
-						                            <img src="/amigo/resources/img/star4.png" style="width:50px;height:20px;">
+						                            <img src="/resources/img/star4.png" style="width:50px;height:20px;">
 						                         </c:when>
 						                         <c:when test="${r.getStar_cnt() == 5}">
-						                            <img src="/amigo/resources/img/star5.png" style="width:50px;height:20px;">
+						                            <img src="/resources/img/star5.png" style="width:50px;height:20px;">
 						                         </c:when>
 						                        </c:choose>
 						                   </td>
@@ -180,9 +180,9 @@
 				<article>
 					<button type="button" class="btn btn-secondary" id="pay_btn" onclick="requestPay()">결제 및 신청</button>
 				</article>
-<%-- 			<a href="/amigo/requestBook.do?sit_no=${sitter.sit_no }">신청</a>
+<%-- 			<a href="/requestBook.do?sit_no=${sitter.sit_no }">신청</a>
 				<br>
-				<a href="/amigo/view/review/user_review_insert.do?sit_no=${sitter.sit_no}&user_name=${sitter.user_name}">리뷰작성</a> --%><!-- 리뷰작성 컨트롤러로 진입 -->
+				<a href="/view/review/user_review_insert.do?sit_no=${sitter.sit_no}&user_name=${sitter.user_name}">리뷰작성</a> --%><!-- 리뷰작성 컨트롤러로 진입 -->
 
 
 

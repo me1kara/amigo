@@ -324,7 +324,7 @@ figure.amigo1224 {
 				<div class="service_list">				
 		 <figure class="amigo1224">
     	  <img
-       		 src="/amigo/resources/img/service_img1.png"
+       		 src="/resources/img/service_img1.png"
        		 alt="돌봄"
        		 class="service_image"
    			   />
@@ -343,7 +343,7 @@ figure.amigo1224 {
    			 </figure>
    			 		 <figure class="amigo1224">
     	  <img
-       		 src="/amigo/resources/img/service_img2.png"
+       		 src="/resources/img/service_img2.png"
        		 alt="산책"
        		 class="service_image"
    			   />
@@ -362,7 +362,7 @@ figure.amigo1224 {
    			 </figure>
    			 		 <figure class="amigo1224">
     	  <img
-       		 src="/amigo/resources/img/service_img3.png"
+       		 src="/resources/img/service_img3.png"
        		 alt="케어"
        		 class="service_image"
    			   />
@@ -381,8 +381,8 @@ figure.amigo1224 {
    			 </figure>
    			 
 				<!-- 	
-					<img src="/amigo/resources/img/service_img2.png" alt="산책" class="service_image"/>
-					<img src="/amigo/resources/img/service_img3.png" alt="케어" class="service_image"/> -->
+					<img src="/resources/img/service_img2.png" alt="산책" class="service_image"/>
+					<img src="/resources/img/service_img3.png" alt="케어" class="service_image"/> -->
 				</div> 		
 				</div>		
 				</article>			
@@ -412,7 +412,7 @@ figure.amigo1224 {
 				</article>
 				
 				<article class="service_btn sitter_item"">	
-					<button type="button" class="btn btn-primary" ><a href="/amigo/view/book/book_sitter_form.do" style="color: white;">신청하기</a></button>
+					<button type="button" class="btn btn-primary" ><a href="/view/book/book_sitter_form.do" style="color: white;">신청하기</a></button>
 				</article>
 			</section>
 		</div>

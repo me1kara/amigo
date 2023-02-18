@@ -74,7 +74,7 @@
 						<c:when test="<%=checkRoom!=null %>">
 							<ul style="list-style: none;">
 							<c:forEach var="chat" items="${chatList }">
-										<li class="btn btn-outline-dark RL_item" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
+										<li class="btn btn-outline-dark RL_item" onclick="location.href='/chatList.do?index=${chat.getIndex()}'">
 											<table>
 												<tr>
 													<td>
@@ -111,7 +111,7 @@
 							
 							<% for(ChatRoom room :elseRoomList){
 							%>
-								<li class="btn btn-outline-dark" style="height:62px; width:308.88px; text-align: center; line-height: 45px;" onclick="location.href='/amigo/chatList.do?index=<%=room.getChat_index()%>'"><%=room.getChat_index()%>번방, 등록된 글이 없습니다!</li>
+								<li class="btn btn-outline-dark" style="height:62px; width:308.88px; text-align: center; line-height: 45px;" onclick="location.href='/chatList.do?index=<%=room.getChat_index()%>'"><%=room.getChat_index()%>번방, 등록된 글이 없습니다!</li>
 								<hr><br>
 							<% 
 							} %>							

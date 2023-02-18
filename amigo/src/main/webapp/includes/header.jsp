@@ -21,7 +21,7 @@ pageEncoding="UTF-8"%>
     <link
       rel="stylesheet"
       type="text/css"
-      href="/amigo/resources/css/style.css"
+      href="/resources/css/style.css"
     />
     <style>
       body {
@@ -120,14 +120,14 @@ pageEncoding="UTF-8"%>
         <a
           class="logo"
           href="<%=request.getContextPath()%>/main_home.do?ubd_no=5"
-          ><img alt="AmigoLogo" src="/amigo/resources/img/logo1.png"
+          ><img alt="AmigoLogo" src="/resources/img/logo1.png"
         /></a>
          <c:choose>
           	<c:when test="${user.getUser_photo()!=null and user.getUser_photo()!=''}">
           	<img src="/userimg/${user.getUser_photo()}" style="border-radius:50px; margin-right:20px;" alt="userphoto" width="50px" height="50px" style="border-radius:10px" />
             </c:when>
             <c:otherwise>
-            <img src="/amigo/resources/img/logo2.png" style="border-radius:50px; margin-right:20px;" alt="logo2" width="50px" height="50px"/>
+            <img src="/resources/img/logo2.png" style="border-radius:50px; margin-right:20px;" alt="logo2" width="50px" height="50px"/>
             </c:otherwise>
         </c:choose>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -153,10 +153,10 @@ pageEncoding="UTF-8"%>
               >
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/amigo/book_check.do">예약확인</a>
+              <a class="nav-link" href="/book_check.do">예약확인</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/amigo/myChatList.do">채팅</a>
+              <a class="nav-link" href="/myChatList.do">채팅</a>
             </li>
             <li class="nav-item">
               <a
@@ -168,7 +168,7 @@ pageEncoding="UTF-8"%>
             <li class="nav-item">
            <c:choose>
        		 <c:when test="${ sessionScope.user.getUser_type() == 'U' }">
-              <a class="nav-link" href="/amigo/view/mypage/apply/sitter_join.do">아미고 펫시터 모집</a>
+              <a class="nav-link" href="/view/mypage/apply/sitter_join.do">아미고 펫시터 모집</a>
              </c:when>
              <c:when test="${ sessionScope.user.getUser_type() == 'A' || sessionScope.user.getUser_type() == 'S'}">
              <a class="nav-link" href="#" onclick="alert('일반 회원만 신청 가능합니다')">아미고 펫시터 모집</a>
@@ -190,7 +190,7 @@ pageEncoding="UTF-8"%>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="/amigo/resources/js/script.js"></script>
+    <script src="/resources/js/script.js"></script>
     <script>
       var burger = $(".menu-trigger");
 

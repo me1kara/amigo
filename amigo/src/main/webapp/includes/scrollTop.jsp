@@ -17,7 +17,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
 <title>Insert title here</title>
 <style>
  /* 탑으로 스크롤 */
@@ -32,7 +32,7 @@
 <body>
     <!-- 스크롤 -->
       <a href="#" class="top"><img
-                  src="/amigo/resources/img/scrollTop1.png"
+                  src="/resources/img/scrollTop1.png"
                   alt="top" style="width:60px; height:60px;" /> </a>
     
     

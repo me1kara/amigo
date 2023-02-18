@@ -16,7 +16,7 @@
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
     <style>
   	.notification-container {
 	  background: rgba(0,0,0,.3);
@@ -38,11 +38,11 @@
 		console.log(user);
 		$('#notification_text').html('<span style="color:red;">new</span>'+user+' '+txt);
 		
-		let temp = '/amigo/chatList.do?index='+roomIndex;
+		let temp = '/chatList.do?index='+roomIndex;
 		$('#notification_text').attr("href", temp);
 		$('#notification-container').addClass('showChatMessage');
 		
-		//<a href="/amigo/
+		//<a href="/
 		setTimeout(()=>{
 			$('#notification-container').removeClass('showChatMessage');
 		},5000)
@@ -56,7 +56,7 @@
 	if(room_list!=null){
 	%>
 	
-	var url = "ws://localhost:80/amigo/chatHandler.do";
+	var url = "ws://www.amigoo.store/chatHandler.do";
 	var ws = new WebSocket(url);
 	
 	ws.onopen = function(){

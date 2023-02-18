@@ -21,7 +21,7 @@ prefix="c"%>
     <link
       rel="stylesheet"
       type="text/css"
-      href="/amigo/resources/css/style.css"
+      href="/resources/css/style.css"
     />
     <meta charset="UTF-8" />
     <style>
@@ -274,7 +274,7 @@ prefix="c"%>
       <div class="container col-md-6 text-center" id="AmigoTop">
         <figure class="snip0015">
           <img
-            src="/amigo/resources/img/MainPageImg.png"
+            src="/resources/img/MainPageImg.png"
             class="img-fluid"
             alt="amigoPet"
           />
@@ -300,9 +300,9 @@ prefix="c"%>
           <!-- 펫시터 -->
           <div class="col-6">
             <div class="p-3">
-              <a href="/amigo/view/sitter/sitter_service_main.jsp">
+              <a href="/view/sitter/sitter_service_main.jsp">
                 <img
-                  src="/amigo/resources/img/petsitter.png"
+                  src="/resources/img/petsitter.png"
                   class="img-fluid"
                   alt="sitter"
                 />
@@ -315,7 +315,7 @@ prefix="c"%>
             <div class="p-3">
               <a href="#" onclick="main_fail()">
                 <img
-                  src="/amigo/resources/img/walking.png"
+                  src="/resources/img/walking.png"
                   class="img-fluid"
                   alt="trail"
                 />
@@ -328,7 +328,7 @@ prefix="c"%>
             <div class="p-3">
               <a href="#" onclick="main_fail()">
                 <img
-                  src="/amigo/resources/img/hp3.png"
+                  src="/resources/img/hp3.png"
                   class="img-fluid"
                   alt="hospital"
                 />
@@ -342,7 +342,7 @@ prefix="c"%>
               <a
                 a href="#" onclick="main_fail()">
                 <img
-                  src="/amigo/resources/img/cs.png"
+                  src="/resources/img/cs.png"
                   class="img-fluid"
                   alt="..."
                 />
@@ -366,7 +366,7 @@ prefix="c"%>
         <div class="row text-center">
           <a href="#" onclick="main_fail()">
             <img
-              src="/amigo/resources/img/community.png"
+              src="/resources/img/community.png"
               class="img-fluid"
               alt="community"
             />
@@ -378,7 +378,7 @@ prefix="c"%>
         <c:when test="${ sessionScope.user.getUser_type() == 'U' }">
           <a href="#" onclick="main_fail()">
             <img
-              src="/amigo/resources/img/needYou.png"
+              src="/resources/img/needYou.png"
               class="img-fluid"
               alt="needYou"
             />
@@ -387,7 +387,7 @@ prefix="c"%>
          <c:when test="${ sessionScope.user.getUser_type() == 'A' || sessionScope.user.getUser_type() == 'S'}">
            <a href="#" onclick="main_fail()">
             <img
-              src="/amigo/resources/img/needYou.png"
+              src="/resources/img/needYou.png"
               class="img-fluid"
               alt="needYou"
               onclick="alert('일반 회원만 신청 가능합니다')"

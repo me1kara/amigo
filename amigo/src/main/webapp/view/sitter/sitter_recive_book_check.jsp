@@ -100,7 +100,7 @@
 	//예약내용 ajax로 서버에서 구해오기
 	function getBook_detail(rno){
  		$.ajax({
-			url : '/amigo/ajax/getBook_detail.do',
+			url : '/ajax/getBook_detail.do',
 			type : 'POST',
 			data : {
 				'rno' : rno
@@ -149,14 +149,14 @@
 						<h2 class="book_ch_title d-flex justify-content-center">예약 확인</h2>
 						<div class="d-flex justify-content-end">
 						<c:if test='${user.getUser_type().equals("S") }'>
-							<button class="btn" onclick="location.href='/amigo/book_check.do'"><b>유저모드</b></button>
+							<button class="btn" onclick="location.href='/book_check.do'"><b>유저모드</b></button>
 						</c:if>
 						<c:choose>
 						<c:when test="${sc eq 'past' }">
-							<button class="btn" onclick="location.href='/amigo/receiveBook_check.do'"><b>현재예약</b></button>
+							<button class="btn" onclick="location.href='/receiveBook_check.do'"><b>현재예약</b></button>
 						</c:when>
 						<c:otherwise>
-							<button class="btn" onclick="location.href='/amigo/receiveBook_check.do?searchCategory=past'"><b>지난예약</b></button>
+							<button class="btn" onclick="location.href='/receiveBook_check.do?searchCategory=past'"><b>지난예약</b></button>
 						</c:otherwise>
 						</c:choose>
 						</div>

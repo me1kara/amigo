@@ -41,7 +41,7 @@
 		<div class="container col-md-6">
 		
 			<hr>
-			<form role="form" action="/amigo/view/apply/sitter_join.do" method="post" enctype="multipart/form-data" onSubmit="return checkData();">
+			<form role="form" action="/view/apply/sitter_join.do" method="post" enctype="multipart/form-data" onSubmit="return checkData();">
 			
 				<input type="hidden" class="form-control" name="user_no" value="${ sessionScope.user.getUser_no() }">
 				<input type="hidden" class="form-control" name="user_name" value="${ sessionScope.user.getUser_name() }" >

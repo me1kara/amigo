@@ -19,7 +19,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
     <style>
     	
     	.star-rating {
@@ -53,7 +53,7 @@
                 <!-- 몇마리의 표현은 정보를 가져와줘야함. 02/09 백단에서 가져옴 -->
                 <div class="review-member">
                   <a href="#">${param.user_name}  </a>펫시터 후기
-                  <a href="/amigo/view/review/user_review_insert.do?sit_no=${param.sit_no}&user_name=${param.user_name}" class="btn btn-primary">리뷰작성</a>
+                  <a href="/view/review/user_review_insert.do?sit_no=${param.sit_no}&user_name=${param.user_name}" class="btn btn-primary">리뷰작성</a>
     			  
  
 
@@ -79,7 +79,7 @@
                   	<c:choose>
                   	<c:when test="${r.getUser_photo()!=null and r.getUser_photo()!=''}">
                     <img
-                      src="../amigo/resources/img/${r.getUser_photo() }"
+                      src="../resources/img/${r.getUser_photo() }"
                       class="review-user-photo"
                       alt="userProfile"
                       width="50px"
@@ -102,19 +102,19 @@
                       
                       	<c:choose>
                       	<c:when test="${r.getStar_cnt() == 1}">
-                      		<img src="../amigo/resources/img/star1.png" style="width:150px;height:60px;">
+                      		<img src="../resources/img/star1.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${r.getStar_cnt() == 2}">
-                      		<img src="../amigo/resources/img/star2.png" style="width:150px;height:60px;">
+                      		<img src="../resources/img/star2.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${r.getStar_cnt() == 3}">
-                      		<img src="../amigo/resources/img/star3.png" style="width:150px;height:60px;">
+                      		<img src="../resources/img/star3.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${r.getStar_cnt() == 4}">
-                      		<img src="../amigo/resources/img/star4.png" style="width:150px;height:60px;">
+                      		<img src="../resources/img/star4.png" style="width:150px;height:60px;">
                       	</c:when>
                       	<c:when test="${r.getStar_cnt() == 5}">
-                      		<img src="../amigo/resources/img/star5.png" style="width:150px;height:60px;">
+                      		<img src="../resources/img/star5.png" style="width:150px;height:60px;">
                       	</c:when>
                         </c:choose>
                         <input type="hidden" class="form-control" name="sit_no" value="${ r.getSit_no() }">

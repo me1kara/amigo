@@ -18,7 +18,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
 <meta charset="UTF-8">
 <style>
 
@@ -116,8 +116,8 @@
         class="img-responsive"
         src="resources/img/logo2.png"
         alt="AmigoMainLogo"
-        width="450"
-        height="440"
+        width="380"
+        height="350"
       />
     </div>
     <br/>

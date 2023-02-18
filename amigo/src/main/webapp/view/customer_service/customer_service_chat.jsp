@@ -56,7 +56,7 @@
     	function exit_room(index){
     		if(confirm('정말로 나가시겠습니까?')){
     			$.ajax({
-    				url  : '/amigo/ajax/deleteChatRoom.do',
+    				url  : '/ajax/deleteChatRoom.do',
     				type : 'POST',
     				data : {
     					'index' : index	
@@ -113,7 +113,7 @@
 										
 										
 										</h6>
-										<li class="btn btn-outline-dark RL_item" onclick="location.href='/amigo/chatList.do?index=${chat.getIndex()}'">
+										<li class="btn btn-outline-dark RL_item" onclick="location.href='/chatList.do?index=${chat.getIndex()}'">
 											<table>
 												<tr>
 													<td>
@@ -141,7 +141,7 @@
 														</ul>
 													</td>
 <%-- 													<td>
-														<button onclick="location.href='/amigo/exit_chat_room.do?room_index=${chat.getIndex()}'">채팅방나가기</button>
+														<button onclick="location.href='/exit_chat_room.do?room_index=${chat.getIndex()}'">채팅방나가기</button>
 													</td> --%>
 												</tr>
 											</table>	
@@ -171,7 +171,7 @@
 								</c:forEach>
 								
 								</h6>
-								<li class="btn btn-outline-dark" style="height:62px; width:308.88px; text-align: center; line-height: 45px;" onclick="location.href='/amigo/chatList.do?index=<%=room.getChat_index()%>'">등록된 글이 없습니다!</li>
+								<li class="btn btn-outline-dark" style="height:62px; width:308.88px; text-align: center; line-height: 45px;" onclick="location.href='/chatList.do?index=<%=room.getChat_index()%>'">등록된 글이 없습니다!</li>
 								<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(<%=room.getChat_index()%>)">나가기</button>
 								<hr>
 							<% 

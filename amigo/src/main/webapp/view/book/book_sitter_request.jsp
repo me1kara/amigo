@@ -68,12 +68,12 @@
 			<section id ="book_seccess">
 				<article>
 					<img
-            			src="/amigo/resources/img/MainPageImg.png"
+            			src="/resources/img/MainPageImg.png"
             			class="img_dog"
             			alt="amigoPet"
          			 />
 					<h1 class="book_title">예약이 완료됐습니다!</h1>
-					<button class="btn btn-primary" onclick="location.href='/amigo/book_check.do'">예약 확인</button>
+					<button class="btn btn-primary" onclick="location.href='/book_check.do'">예약 확인</button>
 				</article>
 			</section>
 		</div>

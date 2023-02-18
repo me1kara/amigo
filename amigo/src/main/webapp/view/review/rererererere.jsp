@@ -18,7 +18,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/amigo/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
     <style>
     	
     	.star-rating {
@@ -66,7 +66,7 @@
               <div class="rating-divided">
                 <div class="rating-progress">
                   <span class="rating-grade"
-                    >5 <img src="/amigo/resources/img/star.svg" alt=""
+                    >5 <img src="/resources/img/star.svg" alt=""
                   /></span>
                   <div class="progress">
                     <div
@@ -82,7 +82,7 @@
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
-                    >4 <img src="/amigo/resources/img/star.svg" alt=""
+                    >4 <img src="/resources/img/star.svg" alt=""
                   /></span>
                   <div class="progress">
                     <div
@@ -98,7 +98,7 @@
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
-                    >3 <img src="/amigo/resources/img/star.svg" alt=""
+                    >3 <img src="/resources/img/star.svg" alt=""
                   /></span>
                   <div class="progress">
                     <div
@@ -114,7 +114,7 @@
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
-                    >2 <img src="/amigo/resources/img/star.svg" alt=""
+                    >2 <img src="/resources/img/star.svg" alt=""
                   /></span>
                   <div class="progress">
                     <div
@@ -130,7 +130,7 @@
                 </div>
                 <div class="rating-progress">
                   <span class="rating-grade"
-                    >1 <img src="/amigo/resources/img/star.svg" alt=""
+                    >1 <img src="/resources/img/star.svg" alt=""
                   /></span>
                   <div class="progress">
                     <div
@@ -163,7 +163,7 @@
                 <div class="col-sm-3">
                   <div class="review-img">
                     <img
-                      src="/amigo/resources/img/reviewProfile.jpg"
+                      src="/resources/img/reviewProfile.jpg"
                       class="review-user-profile"
                       alt="profileImg"
                     />
@@ -220,7 +220,7 @@
                 <div class="col-sm-3">
                   <div class="review-img">
                     <img
-                      src="/amigo/resources/img/reviewProfile.jpg"
+                      src="/resources/img/reviewProfile.jpg"
                       class="review-user-profile"
                       alt="profileImg"
                     />

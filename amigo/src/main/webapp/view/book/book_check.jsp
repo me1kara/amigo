@@ -114,7 +114,7 @@
 	//예약내용모달 구하는 로직, ajax
 	function getBook_detail(rno,user_name,sit_no){
  		$.ajax({
-			url : '/amigo/ajax/getBook_detail.do',
+			url : '/ajax/getBook_detail.do',
 			type : 'POST',
 			data : {
 				'rno' : rno
@@ -151,7 +151,7 @@
 					if(today<limitDay){
 						temp+='<button class="btn btn-light book_btn btn-outline-danger" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
 					}else if(cate=='past'){
-						temp+='<button class="btn btn-ligth book_btn btn-outline-info" style="position:relative;"><a href="/amigo/sit_review_list.do?sit_no='+sit_no+"&user_name="+user_name+'">리뷰목록</a></button>';
+						temp+='<button class="btn btn-ligth book_btn btn-outline-info" style="position:relative;"><a href="/sit_review_list.do?sit_no='+sit_no+"&user_name="+user_name+'">리뷰목록</a></button>';
 					}else{
 						temp+='<button disabled="disabled" class="btn btn-light book_btn btn-outline-dark" style="position:relative;">취소불가</button>';
 					}
@@ -170,7 +170,7 @@
 	function book_delete(rno){
 		if(confirm('정말로 취소하시겠습니까?')){
 			$.ajax({
-				url  : '/amigo/ajax/deleteBook.do',
+				url  : '/ajax/deleteBook.do',
 				type : 'POST',
 				data : {
 					'rno' : rno	
@@ -218,7 +218,7 @@
 					<!-- 현재기록, 과거기록 버튼, 시터모드 버튼-->
 						<div class="d-flex justify-content-end">
 						<c:if test='${user.getUser_type().equals("S") }'>
-							<button class="btn" onclick="location.href='/amigo/receiveBook_check.do'"><b>시터모드</b></button>
+							<button class="btn" onclick="location.href='/receiveBook_check.do'"><b>시터모드</b></button>
 						</c:if>
 						<c:choose>
 						<c:when test="${sc eq 'past' }">
