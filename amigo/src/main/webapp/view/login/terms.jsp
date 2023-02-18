@@ -111,7 +111,7 @@
     </div>
     	<div class="container text-center" id="terms-photo">
         <img
-              src="/resources/imgLoginImg.png"
+              src="/resources/img/amigoLoginImg.png"
               class="img-fluid"
               alt="amigoTermsLogo"
             />

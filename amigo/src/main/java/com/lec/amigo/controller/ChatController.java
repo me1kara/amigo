@@ -41,16 +41,6 @@ public class ChatController {
 	@Autowired
 	UserServiceImpl userService;
 	
-	@RequestMapping(value = "/chat.do", method = { RequestMethod.GET })
-	public String chat (HttpServletRequest req, HttpServletResponse resp) {
-		return "chat/chat.jsp";
-	}
-	
-	@RequestMapping(value = "/chat/createChat.do", method = { RequestMethod.GET })
-	public String createChat (HttpServletRequest req, HttpServletResponse resp) {
-		return "my_chat_list.jsp";
-	}
-	
 	@GetMapping("/chatList.do")
 	public String getChatList(HttpServletRequest req) {
 		HttpSession session = req.getSession();
@@ -63,7 +53,7 @@ public class ChatController {
 		req.setAttribute("checkRoom", checkRoom);
 		req.setAttribute("chatList", chatList);
 		
-		return "chat/chat.jsp";
+		return "view/chat/chatRoom.jsp";
 	}
 	
 	
@@ -98,7 +88,7 @@ public class ChatController {
 		//유저이름 매칭용
 		req.setAttribute("userList", userList);
 		
-		return "/view/customer_service/customer_service_chat.jsp";
+		return "/view/chat/myChatList.jsp";
 	}
 	
 	@GetMapping("/exit_chat_room.do")
@@ -108,7 +98,7 @@ public class ChatController {
 		int user_no = ((UserVO)req.getSession().getAttribute("user")).getUser_no();
 		chatService.exitRoom(index,user_no);
 		
-		return "view/customer_service/customer_service_chat.jsp"; 
+		return "view/chat/myChatList.jsp"; 
 	}
 	
 	@PostMapping("/ajax/deleteChatRoom.do")

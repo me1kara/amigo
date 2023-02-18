@@ -243,8 +243,26 @@ public class LoginController {
 	
 	// 둘러보기
 	@RequestMapping(value="/main_tour.do", method = RequestMethod.GET) 
-	public String main_tour(BoardVO boardVO, Model model) {
+	public String main_tour(BoardVO boardVO, Model model, ReviewVO review) {
 		model.addAttribute("board", boardService.getBoard(boardVO));
+		int dogCount = reviewService.dogRowCount(); 
+		double starsAverage = reviewService.starsAverage();
+		int ssrc1 = reviewService.ssrc1();		                  // 각각 별이 n개일 때 리뷰 갯수
+		int ssrc2 = reviewService.ssrc2();
+		int ssrc3 = reviewService.ssrc3();
+		int ssrc4 = reviewService.ssrc4();
+		int ssrc5 = reviewService.ssrc5();
+		int starsTotalCount = reviewService.starsTotalCount();    // 리뷰 자체의 총 갯수
+		model.addAttribute("dogCount", dogCount);
+		model.addAttribute("starsAverage", starsAverage);
+		model.addAttribute("ssrc1", ssrc1);
+		model.addAttribute("ssrc2", ssrc2);
+		model.addAttribute("ssrc3", ssrc3);
+		model.addAttribute("ssrc4", ssrc4);
+		model.addAttribute("ssrc5", ssrc5);
+		model.addAttribute("starsTotalCount", starsTotalCount);
+		List<ReviewVO> revList = reviewService.getReviewList(review);	// 리뷰 리스트에
+		model.addAttribute("revList", revList);	
 		return "view/main_tour.jsp"; 
 	}
 	

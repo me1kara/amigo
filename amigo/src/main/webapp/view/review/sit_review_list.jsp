@@ -43,7 +43,11 @@
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-		<div class="title text-center">
+    			  
+ 
+    <!-- 유저 실시간 리뷰 -->
+ <div class="container" style="height:485px;">
+ 		<div class="title text-center">
         <h1 class="text-uppercase">${param.user_name} 펫시터 리뷰</h1>
         </div><input type="hidden" value="${param.sit_no}" >
         <br />
@@ -54,16 +58,10 @@
                 <div class="review-member">
                   <a href="#">${param.user_name}  </a>펫시터 후기
                   <a href="/view/review/user_review_insert.do?sit_no=${param.sit_no}&user_name=${param.user_name}" class="btn btn-primary">리뷰작성</a>
-    			  
- 
-
- 
-    <!-- 유저 실시간 리뷰 -->
- <div class="container">
       <div class="row">
       <c:choose>
          <c:when test="${ rev.isEmpty() || rev == null }">
-            <h6>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</h6>
+            <h6>등록된 리뷰 정보가 존재하지 않습니다. 다시 확인해주세요.</h6>
          </c:when>
       <c:otherwise>
      	 <c:forEach var="r" items="${ rev }">
