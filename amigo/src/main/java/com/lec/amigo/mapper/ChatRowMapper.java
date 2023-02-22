@@ -10,9 +10,7 @@ import com.lec.amigo.vo.ChatVO;
 public class ChatRowMapper implements RowMapper<ChatVO>{
 
 	@Override
-	public ChatVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		System.out.println("확인용");
-		
+	public ChatVO mapRow(ResultSet rs, int rowNum) throws SQLException {		
 		ChatVO chat = new ChatVO();
 		chat.setIndex(rs.getInt("sitt_chat_index"));
 		chat.setUser_nick(rs.getString("user_nick"));
