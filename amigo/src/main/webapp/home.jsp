@@ -132,7 +132,6 @@
     <!-- Submit button -->
     
       <form>
-      
       <!-- 새로운 버튼을 만듦 -->
        <div id="holder">
       <div class="button-main1"  onclick="location.href='login.do';" >

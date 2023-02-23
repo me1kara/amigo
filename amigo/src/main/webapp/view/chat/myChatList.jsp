@@ -1,3 +1,4 @@
+<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@page import="com.lec.amigo.vo.ChatRoom"%>
 <%@page import="com.lec.amigo.vo.UserVO"%>
 <%@page import="com.lec.amigo.vo.ChatVO"%>
@@ -54,7 +55,7 @@
     
     <script>
     	function exit_room(index){
-    		if(confirm('정말로 나가시겠습니까?')){
+    		if(confirm('정말로 채팅방을 나가시겠습니까? 환불을 원하시면 예약취소를 해주세요!')){
     			$.ajax({
     				url  : '/ajax/deleteChatRoom.do',
     				type : 'POST',
@@ -140,16 +141,8 @@
 														</c:choose>
 														</ul>
 													</td>
-<%-- 													<td>
-														<button onclick="location.href='/exit_chat_room.do?room_index=${chat.getIndex()}'">채팅방나가기</button>
-													</td> --%>
 												</tr>
 											</table>	
-									<!-- 				
-										<c:if test="${!chat.isRead_is() }"> 
-										<td>new</td>
-										</c:if>
-										 -->
 										</li>
 										<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(${ chat.index})" style="margin-top:10px;">나가기</button>
 										<hr>						
@@ -180,11 +173,12 @@
 						</c:when>
 					</c:choose>
 					</div>
+					<p style="position: sticky; bottom:50px; text-align: right;"><em>예약내용이 완수된 채팅방은 매주 금요일 삭제됩니다.</em></p>
 				</article>
 			</section>
 		</div>
-	<%@include file="/includes/footer.jsp" %>
 
+		<%@include file="/includes/footer.jsp" %>
 	
 </body>
 </html>

@@ -422,10 +422,11 @@ public class ChatDAO {
 		int row = 0;
 		row = jdbcTemplate.update(sql,index,user_no);
 		
-		if(row>0) {
-			String delete_chat = "delete from sit_chat where sitt_chat_index=? and user_no=?";
-			row = jdbcTemplate.update(delete_chat, index, user_no);
-		}
+		/* 채팅삭제 로직 but 보관후 매주금요일 삭제하는것으로.
+		 * if(row>0) { String delete_chat =
+		 * "delete from sit_chat where sitt_chat_index=? and user_no=?"; row =
+		 * jdbcTemplate.update(delete_chat, index, user_no); }
+		 */
 		
 		return row; 
 	}

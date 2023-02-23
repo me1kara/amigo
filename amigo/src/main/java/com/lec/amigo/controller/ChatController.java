@@ -91,15 +91,16 @@ public class ChatController {
 		return "/view/chat/myChatList.jsp";
 	}
 	
-	@GetMapping("/exit_chat_room.do")
-	public String delete_room(HttpServletRequest req) {
-		
-		int index = Integer.parseInt(req.getParameter("room_index"));
-		int user_no = ((UserVO)req.getSession().getAttribute("user")).getUser_no();
-		chatService.exitRoom(index,user_no);
-		
-		return "view/chat/myChatList.jsp"; 
-	}
+	/*
+	 * @GetMapping("/exit_chat_room.do") public String
+	 * delete_room(HttpServletRequest req) {
+	 * 
+	 * int index = Integer.parseInt(req.getParameter("room_index")); int user_no =
+	 * ((UserVO)req.getSession().getAttribute("user")).getUser_no();
+	 * chatService.exitRoom(index,user_no);
+	 * 
+	 * return "view/chat/myChatList.jsp"; }
+	 */
 	
 	@PostMapping("/ajax/deleteChatRoom.do")
 	@ResponseBody 

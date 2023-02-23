@@ -82,9 +82,8 @@
 <script>
 	//예약내용모달 오픈
 	function open_book_modal(e){
-		console.log("입장확인");
+		//this의 자식찾아서 내용가져오기, 번호를 통해 ajax로 내용조회
 		let rno = $(e).find("#book_res_no").text();		
-		//let res_state = $(e).find("#book_res_state").text();
 		getBook_detail(rno);
 		$('.modal').fadeIn();
 		$('body').css("overflow", "hidden");
@@ -109,6 +108,7 @@
 				let modalBody = $('.modal_body');
 				if (result != null) {
 					let temp='<ul class="book_content list-group" style="overflow: auto;">';
+					//한 예약에 여러 날짜가 들어갈 수 있기때문에 포문을 돌려줌
 					result.forEach((content, index) =>{
 						temp += '<li style="padding:5px;"><table class="table-sm table-bordered table-modal" border="2" style="width:95%;">';
 						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:50%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
@@ -130,6 +130,7 @@
 </script>
 </head>
 <body>
+			<!--페이징을 위한 세팅  -->
 			<c:set var="cp" value="${searchVO.getCurPage()}" />
 			<c:set var="rp" value="${searchVO.getRowSizePerPage()}" />
 			<c:set var="fp" value="${searchVO.getFirstPage()}" />
@@ -255,7 +256,6 @@
 		</div>
 		
 		<!-- 모달 -->
-		
 		<div class="modal">
 			<div class="modal_body">
 				<button class="btn-close btn-dark" style="position: relative; left:50%; top: -5%" onclick="close_book_modal()"></button>

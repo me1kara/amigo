@@ -278,7 +278,7 @@ body::-webkit-scrollbar { display:none; }
 
 	<script>
 	//채팅 서버 주소
-  		var url = "ws://localhost/chatHandler.do?<%=index%>";
+  		var url = "ws://www.amigoo.store/chatHandler.do?<%=index%>";
   		var index = "<%=index%>";
 		
   	//웹 소켓
