@@ -134,7 +134,6 @@
 																<li style="line-height: 45px; text-align: center;">${chat.getUser_nick()} 이(가) 나갔습니다.</li>
 																<script>
 																	$('#photoWrap').remove();
-																	console.log($('cwarp${chat.getIndex()}'));
 																	$('#cwarp${chat.getIndex()}').attr('onclick', 'alert("상대방이 나가서 입장이 불가능합니다!")');
 																</script>
 															</c:when>

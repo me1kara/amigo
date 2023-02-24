@@ -218,7 +218,7 @@ body::-webkit-scrollbar { display:none; }
 													<c:choose>
 													<c:when test='${chat.getContent() eq "해당유저는 나갔습니다" }'>
 														<div class="left">
-															<em>${chat.getUser_nick() } 이(가) 나갔습니다.</em>
+															<em>${chat.getUser_nick() } 이(가) 나갔습니다.</em>		
 														</div>
 													</c:when>
 													<c:otherwise>
@@ -270,8 +270,7 @@ body::-webkit-scrollbar { display:none; }
 							</ul>
 						</td>
 					</tr>
-					
-					<tr class="table-borderless" style="border: none;">
+					<tr class="table-borderless" id="submit_btn_wrap" style="border: none;">
 						<td colspan="5" id="msgTd" scroll=auto style="width: 376.5px; height:62px; overflow-x:hidden;"><textarea style="width: 100%;" type="text" name="msg" id="msg"
 							placeholder="대화 내용을 입력하세요." class="form-control"></textarea>
 							<label for="fileUpload" style="position: relative; bottom: 25px; left:5px;"><i class="bi bi-card-image" id="photo"></i>
@@ -279,9 +278,10 @@ body::-webkit-scrollbar { display:none; }
 							</td>
 						<td colspan="1" style="text-align: rigth;"><button
 								class="btn btn-light" style="width: 100px; height:62px; color:rgb(87, 160, 227); font-weight:bold;" id="chat_submit_btn">보내기</button></td>
-					</tr>		
+					</tr>	
 				</table>
 				<input type="file" id="fileUpload" onchange="previewFile()" style="display: none;" accept=".gif, .jpg, .png">
+					
 			</article>
 		</section>
 	</div>
