@@ -8,14 +8,14 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
+//웹소켓핸들러의 설정에 관한 클래스
 @Configuration
 @EnableWebSocket
 public class ChatConfigurer implements WebSocketConfigurer{
 	
 	@Autowired
 	ChatHandler socketHandler;
-	
-	
+
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		
@@ -23,9 +23,9 @@ public class ChatConfigurer implements WebSocketConfigurer{
 	
 	@Bean
 	public ServletServerContainerFactoryBean createWebSocketContainer() {
-	ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
-	container.setMaxTextMessageBufferSize(500000);
-	container.setMaxBinaryMessageBufferSize(500000000);
+		ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
+		container.setMaxTextMessageBufferSize(500000);
+		container.setMaxBinaryMessageBufferSize(500000000); //이미지파일 사이즈제한
 	return container;
 	}	
 

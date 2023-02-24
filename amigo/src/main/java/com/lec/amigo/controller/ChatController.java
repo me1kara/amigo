@@ -61,6 +61,7 @@ public class ChatController {
 	//내채팅방목록
 	@GetMapping("/myChatList.do")
 	public String getMyChatList(HttpServletRequest req) {
+		System.out.println("입장확인용");
 		HttpSession session = req.getSession();
 		UserVO user = (UserVO)session.getAttribute("user");
 		int user_no = user.getUser_no();
@@ -91,15 +92,16 @@ public class ChatController {
 		return "/view/chat/myChatList.jsp";
 	}
 	
-	@GetMapping("/exit_chat_room.do")
-	public String delete_room(HttpServletRequest req) {
-		
-		int index = Integer.parseInt(req.getParameter("room_index"));
-		int user_no = ((UserVO)req.getSession().getAttribute("user")).getUser_no();
-		chatService.exitRoom(index,user_no);
-		
-		return "view/chat/myChatList.jsp"; 
-	}
+	/*
+	 * @GetMapping("/exit_chat_room.do") public String
+	 * delete_room(HttpServletRequest req) {
+	 * 
+	 * int index = Integer.parseInt(req.getParameter("room_index")); int user_no =
+	 * ((UserVO)req.getSession().getAttribute("user")).getUser_no();
+	 * chatService.exitRoom(index,user_no);
+	 * 
+	 * return "view/chat/myChatList.jsp"; }
+	 */
 	
 	@PostMapping("/ajax/deleteChatRoom.do")
 	@ResponseBody 

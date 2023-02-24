@@ -25,14 +25,13 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
 
 
-<!-- 신청자격확인 -->
+<!-- 신청자격확인, 반려견이 등록된 사람만 가능 -->
 <% List<DogVO> myDog_list = (List<DogVO>)session.getAttribute("myDog_list");
 	if(myDog_list==null || myDog_list.isEmpty()){
 		%>
 		<script>
 			alert('등록된 강아지가 없습니다!마이페이지에서 등록해주세요!');
 			history.go(-1);
-			
 		</script>
 		<% 
 	}
@@ -48,11 +47,10 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
         var calendarEl = document.getElementById('calendar');
         calendar = new FullCalendar.Calendar(calendarEl, {
         	
-          //한글, 크기 설정
+          //한글설정, 크기 설정
           locale: "ko",
           initialView: 'dayGridMonth',
-          contentHeight: 300,
-          selectable: true,
+          width: 400,
           editable: false,
           droppable: true,
           firstDay : 1,
@@ -65,6 +63,9 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
           select: function(info) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
         	  let date = new Date();
         	  if(info.start>new Date(date.setDate(date.getDate()+1))){
+        		//기본시간설정
+        		$('#eventStartTime').val('10:00');
+        		$('#eventEndTime').val('12:00');
         	  	modalOpen('insert',info);
         	  }else{
         		  //예약가능날짜체크
@@ -101,8 +102,7 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
  	        dropdown: true,
  	        scrollbar: true,        
  		});
-        
-        $('#eventStartTime').time
+       
       });
      
       //예약내용
@@ -139,7 +139,6 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
      }
       //예약정보변경
       function modifyEvent(g_info){
-			console.log(g_info.event);
 			let start = $('#eventStartTime').val();
 			let end = $('#eventEndTime').val();
 		
@@ -153,6 +152,7 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 				startTime = startTimeList[0] + startTimeList[1];
 				endTime = endTimeList[0] + endTimeList[1];	
 				
+				//200인 이유는, 입력값이 3시20분 즉 1520 이라면 -> 1720 이 나와야하기때문
 				if(Number(startTime)+200>Number(endTime)){
 					alert('2시간 간격으로 입력해주세요!');
 				}else{
@@ -166,6 +166,7 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 					let title = $('#eventDog').val() + "," + startTime + "~" + endTime;
 					
 					console.log(title+"타이틀입니다");
+					//이벤트에 수정값을 넣어줍니다.
 		  		  	g_info.event.setProp('title', title);
 		  		  	modalClose();
 		  		  	cost_cal();
@@ -182,13 +183,16 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 			cost_cal();
       }
       
-      //예약내용검수
+      //폼유효성검사
       function checkResult() {
-    	  	var allEvent = calendar.getEvents();   	  
+    	var allEvent = calendar.getEvents();
+    	
+    	//예약내용체크
   	  	if(allEvent.length==0){
   	  		alert('예약일정을 등록해주세요!');
   	  		return false;
   	  	}else{
+  	  		//내용이있으면 히든 input에 등록
   	  		sendBookDate();
   	  	}
   	  	
@@ -226,7 +230,6 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
   padding-top: 50px;
   /* 생략 */
 }
-    	
     	li {
 	
   font-family: "Roboto", sans-serif;
@@ -477,8 +480,8 @@ td {
     		console.log(path);
  
 			//수정,삽입 분기
-    		if(path == 'modify'){
-        		console.log(g_info.event.title);	
+    		if(path == 'modify'){	
+    			//타이틀은 달력에 입력했었던 내용
     			let array = g_info.event.title.split(',');
     			let dog = array[0];
     			let time = array[1];
@@ -493,7 +496,7 @@ td {
     				endTime = endTime.substring(0,2) + ":" + endTime.substring(2,4);		
     			}
     			
-    			
+    			//타이틀을 가져와서 인풋에 미리 채워주기
     			$('#eventDog').val(dog);
     			$('#eventStartTime').val(startTime);
     			$('#eventEndTime').val(endTime);			
@@ -702,7 +705,7 @@ td {
 		<hr>
 		<section>
 			<!-- 신청하기 이전, 유효성검사 -->
-			<form action="book.do" onsubmit="return checkResult();" method="post">
+			<form action="book.do" onsubmit="return checkResult();" method="get">
 			
 				<!--방문여부 선택, radio사용  -->
 				<article class="select" style="display: flex; justify-content: space-between; margin-top: 50px;">

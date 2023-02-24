@@ -1,3 +1,4 @@
+<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@page import="com.lec.amigo.vo.ChatRoom"%>
 <%@page import="com.lec.amigo.vo.UserVO"%>
 <%@page import="com.lec.amigo.vo.ChatVO"%>
@@ -40,7 +41,8 @@
     
     <style>
     	.RL_item{
-    		width:90%;
+    		width: 308px;
+    		height: 62px;
     	}
     	
     	.chat-header-title {
@@ -54,7 +56,7 @@
     
     <script>
     	function exit_room(index){
-    		if(confirm('정말로 나가시겠습니까?')){
+    		if(confirm('정말로 채팅방을 나가시겠습니까? 환불을 원하시면 예약취소를 해주세요!')){
     			$.ajax({
     				url  : '/ajax/deleteChatRoom.do',
     				type : 'POST',
@@ -100,23 +102,21 @@
 							<!-- db에서 받아온 내 채팅방(마지막채팅담김)목록 출력 -->
 							<c:forEach var="chat" items="${chatList }">
 										<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;">
-										
 										<c:forEach var="room" items="${roomUserList }">
 										<c:if test="${ chat.index==room.chat_index}">
+											유저리스트:
 											<c:forEach var="rusl" items="${userList }">
 												<c:if test="${rusl.user_no==room.user_no }">
 													${rusl.user_nick} 
 												</c:if>
 											</c:forEach>
 										</c:if>
-										</c:forEach>
-										
-										
+										</c:forEach>		
 										</h6>
-										<li class="btn btn-outline-dark RL_item" onclick="location.href='/chatList.do?index=${chat.getIndex()}'">
+										<li class="btn btn-outline-dark RL_item" id="cwarp${chat.getIndex()}" onclick="location.href='/chatList.do?index=${chat.getIndex()}'">
 											<table>
 												<tr>
-													<td>
+													<td id="photoWrap">
 													<!-- 채팅객체에 유저이름 필드가 없기때문에 유저리스트를 조사해서 이름 얻어오기  -->
 														<c:forEach var="us" items="${userList }">
 															<c:if test="${us.user_no==chat.user_no }">
@@ -128,40 +128,46 @@
 													
 													<td>
 														<ul style="list-style: none;" >
-														<li style="width:250px; text-align: left;"><b>${chat.getUser_nick()}</b></li>
-														<c:choose>									
-															<c:when test="${chat.getContent()=='file' }">
-																<li style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;">이미지..</li>
+														
+														<c:choose>
+															<c:when test='${chat.getContent() eq "해당유저는 나갔습니다" }'>
+																<li style="line-height: 45px; text-align: center;">${chat.getUser_nick()} 이(가) 나갔습니다.</li>
+																<script>
+																	$('#photoWrap').remove();
+																	$('#cwarp${chat.getIndex()}').attr('onclick', 'alert("상대방이 나가서 입장이 불가능합니다!")');
+																</script>
 															</c:when>
 															<c:otherwise>
-																<li style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis; width:250px; text-align: left;"> ${chat.getContent() }</li>
+																<li style="width:250px; text-align: left;"><b>${chat.getUser_nick()}</b></li>
+																<c:choose>									
+																	<c:when test="${chat.getContent()=='file' }">
+																		<li style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;">이미지..</li>
+																	</c:when>
+																	<c:otherwise>
+																		<li style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis; width:250px; text-align: left;"> ${chat.getContent() }</li>
+																	</c:otherwise>
+																	
+																</c:choose>
 															</c:otherwise>
-															
 														</c:choose>
 														</ul>
 													</td>
-<%-- 													<td>
-														<button onclick="location.href='/exit_chat_room.do?room_index=${chat.getIndex()}'">채팅방나가기</button>
-													</td> --%>
 												</tr>
 											</table>	
-									<!-- 				
-										<c:if test="${!chat.isRead_is() }"> 
-										<td>new</td>
-										</c:if>
-										 -->
 										</li>
 										<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(${ chat.index})" style="margin-top:10px;">나가기</button>
 										<hr>						
 							</c:forEach>
 							
-							<% for(ChatRoom room :elseRoomList){
+							
+							<% if(elseRoomList!=null) for(ChatRoom room :elseRoomList){
 							%>
 							<c:set var="room" value="<%=room %>"/>
 								<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;">
 								
                                  <c:forEach var="rooml" items="${roomUserList }">
 										<c:if test="${ room.chat_index==rooml.chat_index}">
+										유저리스트:
 											<c:forEach var="rusl" items="${userList }">
 												<c:if test="${rusl.user_no==rooml.user_no }">
 													${rusl.user_nick} 
@@ -172,7 +178,8 @@
 								
 								</h6>
 								<li class="btn btn-outline-dark" style="height:62px; width:308.88px; text-align: center; line-height: 45px;" onclick="location.href='/chatList.do?index=<%=room.getChat_index()%>'">등록된 글이 없습니다!</li>
-								<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(<%=room.getChat_index()%>)">나가기</button>
+								
+								<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(<%=room.getChat_index()%>)" style="margin-top: 10px;">나가기</button>
 								<hr>
 							<% 
 							} %>							
@@ -180,11 +187,12 @@
 						</c:when>
 					</c:choose>
 					</div>
+					<p style="position: sticky; bottom:50px; text-align: right;"><em>예약내용이 완수된 채팅방은 매주 금요일 삭제됩니다.</em></p>
 				</article>
 			</section>
 		</div>
-	<%@include file="/includes/footer.jsp" %>
 
+		<%@include file="/includes/footer.jsp" %>
 	
 </body>
 </html>

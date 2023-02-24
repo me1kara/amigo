@@ -380,9 +380,6 @@ figure.amigo1224 {
      		 <a href="#"></a>
    			 </figure>
    			 
-				<!-- 	
-					<img src="/resources/img/service_img2.png" alt="산책" class="service_image"/>
-					<img src="/resources/img/service_img3.png" alt="케어" class="service_image"/> -->
 				</div> 		
 				</div>		
 				</article>			
