@@ -117,14 +117,14 @@ public class BookController {
 	}
 	
 	//예약정보 입력 후 인근지역 시터목록 구하는 로직
-	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.POST })
+	@RequestMapping(value = "/view/book/book.do", method = { RequestMethod.GET })
 	public String book (HttpServletRequest req, Model model, SearchVO search, 
 			@RequestParam(defaultValue="1") int curPage,
 			@RequestParam(defaultValue="10") int rowSizePerPage, BookVO bookVO) {
 		
 		
 		String calr = req.getParameter("bookDate");
-		String address = req.getParameter("res_addr"); //프론트에서 받은 주소
+		String address = bookVO.getRes_addr(); //프론트에서 받은 주소
 		
 		System.out.println(bookVO.toString());
 		
@@ -162,6 +162,8 @@ public class BookController {
 		
 		//페이징때문에 넣은 주소 보존
 		req.setAttribute("address", address);
+		System.out.println(addrList[0]);
+		req.setAttribute("addr", addrList[0]);
 		
 		//예약정보담김
 		req.setAttribute("calr", calr);
@@ -184,7 +186,7 @@ public class BookController {
 		}
 
 
-		return "book_sitter_list.jsp?addr="+secondeAddr;
+		return "book_sitter_list.jsp";
 	}
 	
 	

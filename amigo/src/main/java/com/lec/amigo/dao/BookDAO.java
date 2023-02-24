@@ -216,8 +216,6 @@ public class BookDAO {
 		String sql = "insert into reservation(user_no,sit_no,res_regdate,res_etc,res_pay,res_visit_is,res_term_is) "
 				+ "values(?,?,SYSDATE(), ?,?,?,?)";
 		
-		System.out.println(calr+"확인용");
-		
 		int user_no = book.getUser_no();
 		int sit_no = book.getSit_no();
 		String res_etc = book.getRes_etc();

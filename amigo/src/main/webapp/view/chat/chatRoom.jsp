@@ -214,13 +214,23 @@ body::-webkit-scrollbar { display:none; }
 											<c:when test="${chat.getFile()==null}">
 												<li class="chat_left" style="margin-bottom: 3px; clear: both;"
 													id="chat_no_${chat.getChat_no() }">
+													
+													<c:choose>
+													<c:when test='${chat.getContent() eq "해당유저는 나갔습니다" }'>
+														<div class="left">
+															<em>${chat.getUser_nick() } 이(가) 나갔습니다.</em>
+														</div>
+													</c:when>
+													<c:otherwise>
 													<div class="chat-bubble left">
 														<div class="align-self-center" style="max-height: 90%;">
 															${chat.getUser_nick() }<span style="font-size: 12px; color: #777;">${chat.getDate() }</span>
 														</div>
 														<div>${chat.getContent()}
 														</div>
-													</div>													
+													</div>
+													</c:otherwise>
+													</c:choose>													
 												</li>
 											</c:when>
 											<c:when test="${chat.getFile()!=null}">
@@ -278,7 +288,7 @@ body::-webkit-scrollbar { display:none; }
 
 	<script>
 	//채팅 서버 주소
-  		var url = "ws://www.amigoo.store/chatHandler.do?<%=index%>";
+  		var url = "ws://amigoo.store/chatHandler.do?<%=index%>";
   		var index = "<%=index%>";
 		
   	//웹 소켓

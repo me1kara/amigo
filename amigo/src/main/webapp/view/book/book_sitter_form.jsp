@@ -50,8 +50,7 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
           //한글설정, 크기 설정
           locale: "ko",
           initialView: 'dayGridMonth',
-          contentHeight: 300,
-          selectable: true,
+          width: 400,
           editable: false,
           droppable: true,
           firstDay : 1,
@@ -231,7 +230,6 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
   padding-top: 50px;
   /* 생략 */
 }
-    	
     	li {
 	
   font-family: "Roboto", sans-serif;
@@ -707,7 +705,7 @@ td {
 		<hr>
 		<section>
 			<!-- 신청하기 이전, 유효성검사 -->
-			<form action="book.do" onsubmit="return checkResult();" method="post">
+			<form action="book.do" onsubmit="return checkResult();" method="get">
 			
 				<!--방문여부 선택, radio사용  -->
 				<article class="select" style="display: flex; justify-content: space-between; margin-top: 50px;">

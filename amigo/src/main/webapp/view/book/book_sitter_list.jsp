@@ -6,7 +6,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
   <head>
-    <% String addr = request.getParameter("addr"); %>
 
     <script
       src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -108,7 +107,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     <div class="container col-md-6">
       <section>
         <article class="ssitter_list">
-          <h2 class="sitter_list_title"><%=addr%> 펫시터 목록</h2>
+          <h2 class="sitter_list_title">${addr } 펫시터 목록</h2>
           <hr />
           
           <!-- 시 단위의 시터목록 -->

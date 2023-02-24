@@ -61,6 +61,7 @@ public class ChatController {
 	//내채팅방목록
 	@GetMapping("/myChatList.do")
 	public String getMyChatList(HttpServletRequest req) {
+		System.out.println("입장확인용");
 		HttpSession session = req.getSession();
 		UserVO user = (UserVO)session.getAttribute("user");
 		int user_no = user.getUser_no();
