@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="org.springframework.beans.factory.annotation.Autowired"%>
 <%@page import="com.lec.amigo.vo.UserVO"%>
 <%@page import="com.lec.amigo.vo.ChatRoom"%>
@@ -7,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	UserVO user = (UserVO) session.getAttribute("user");
 	int index = Integer.parseInt(request.getParameter("index"));
@@ -202,6 +204,18 @@ body::-webkit-scrollbar { display:none; }
 					<button class="btn btn-close" style="margin-left: auto;" onclick="history.back(-1)"></button>
 				</div>
 				
+				<%SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd"); //지난날짜일때
+				  SimpleDateFormat formatter2 = new SimpleDateFormat("a hh:mm:ss");//시분초만, 오늘날짜일때
+				%>
+				<c:set var="formatter1" value="<%=formatter1%>">
+				</c:set>
+				<c:set var="formatter2" value="<%=formatter2%>">
+				</c:set>
+				
+
+
+				
+				
 				<table class="table table-bordered" style="background: rgb(87, 160, 227);">
 					<tr class="table-borderless" style="border: none;">
 						<td colspan="6">
@@ -223,8 +237,21 @@ body::-webkit-scrollbar { display:none; }
 													</c:when>
 													<c:otherwise>
 													<div class="chat-bubble left">
-														<div class="align-self-center" style="max-height: 90%;">
-															${chat.getUser_nick() }<span style="font-size: 12px; color: #777;">${chat.getDate() }</span>
+														<div class="align-self-center" style="max-height: 90%;">		
+														<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="nowDate" />
+														<fmt:formatDate value="${chat.getDate()}" pattern="yyyyMMdd" var="sDate" /> 
+																		
+															${chat.getUser_nick() }<span style="font-size: 12px; color: #777;">
+															
+															<c:choose>
+																<c:when test="${sDate<nowDate }">
+																	${formatter1.format(chat.getDate()) }
+																</c:when>
+																<c:otherwise>
+																	${formatter2.format(chat.getDate()) }
+																</c:otherwise>
+															</c:choose>
+															</span>
 														</div>
 														<div>${chat.getContent()}
 														</div>
@@ -288,7 +315,7 @@ body::-webkit-scrollbar { display:none; }
 
 	<script>
 	//채팅 서버 주소
-  		var url = "ws://amigoo.store/chatHandler.do?<%=index%>";
+  		var url = "ws://www.amigoo.store/chatHandler.do?<%=index%>";
   		var index = "<%=index%>";
 		
   	//웹 소켓

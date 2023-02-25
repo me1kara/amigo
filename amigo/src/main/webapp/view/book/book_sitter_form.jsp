@@ -43,38 +43,38 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
       var g_info = null;
       $(document).ready(function(){  
     	  
-    	//달력 api
-        var calendarEl = document.getElementById('calendar');
-        calendar = new FullCalendar.Calendar(calendarEl, {
-        	
-          //한글설정, 크기 설정
-          locale: "ko",
-          initialView: 'dayGridMonth',
-          width: 400,
-          editable: false,
-          droppable: true,
-          firstDay : 1,
-          
-      	  //달력내용수정
-          eventClick:function(info) {
-        	  modalOpen('modify',info);
-          },
-		 //달력내용넣기
-          select: function(info) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-        	  let date = new Date();
-        	  if(info.start>new Date(date.setDate(date.getDate()+1))){
-        		//기본시간설정
-        		$('#eventStartTime').val('10:00');
-        		$('#eventEndTime').val('12:00');
-        	  	modalOpen('insert',info);
-        	  }else{
-        		  //예약가능날짜체크
-        		  let arim =date.toLocaleDateString(date.setDate(date.getDate()+1));
-        		  alert(arim.substr(0,arim.length-1)+"부터 예약가능합니다");
-        		  
-        	  }
-        }});
-        calendar.render();
+      	//달력 api
+          var calendarEl = document.getElementById('calendar');
+          calendar = new FullCalendar.Calendar(calendarEl, {
+          	
+            //한글, 크기 설정
+            locale: "ko",
+            initialView: 'dayGridMonth',
+            width:400,
+            selectable: true,
+            editable: false,
+            droppable: true,
+            firstDay : 1,
+            
+        	  //달력내용수정
+            eventClick:function(info) {
+          	  modalOpen('modify',info);
+            },
+  		 //달력내용넣기
+            select: function(info) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+          	  let date = new Date();
+          	  if(info.start>new Date(date.setDate(date.getDate()+1))){
+            		$('#eventStartTime').val('10:00');
+          		$('#eventEndTime').val('12:00');
+          	  	modalOpen('insert',info);
+          	  }else{
+          		  //예약가능날짜체크
+          		  let arim =date.toLocaleDateString(date.setDate(date.getDate()+1));
+          		  alert(arim.substr(0,arim.length-1)+"부터 예약가능합니다");
+          		  
+          	  }
+          }});
+          calendar.render();
         
         //시작시간 ui설정,타임피커
    		$('#eventStartTime').timepicker({
