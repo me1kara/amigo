@@ -122,7 +122,6 @@ public class BookDAO {
 							cal.setTime(date1);
 							cal.add(Calendar.DATE, day);
 							String da = transFormat.format(cal.getTime()).toString();
-							System.out.println(da+"확인용");
 							if(jms.size()-i==1 && days-day==1) {
 								sql+="DATE('"+da+"')";
 							}else {

@@ -139,7 +139,7 @@
 					//날짜 비교해서 취소하기 버튼 유무
 					let res_start = new Date(result[0].res_date);
 					let today = new Date();	
-					let limitDay = new Date(today);
+					let limitDay = new Date(res_start);
 					limitDay.setDate(res_start.getDate()-1);
 					console.log(today + limitDay + res_start);
 					

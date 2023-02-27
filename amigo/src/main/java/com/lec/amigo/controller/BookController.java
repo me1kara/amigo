@@ -349,13 +349,8 @@ public class BookController {
 		//map, json 으로 받고 보내기
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
-		JSONObject responseObj = new JSONObject();
-		
-		System.out.println(model.toString());
-		
+		JSONObject responseObj = new JSONObject();	
 		UserVO user = (UserVO)req.getSession().getAttribute("user");
-		
-		System.out.println("입장확인");
 		
 		int money = (int)model.get("paid_amount"); //돈
 		String imp_uid = (String)model.get("imp_uid"); //고유번호
@@ -365,9 +360,6 @@ public class BookController {
 		
 		boolean success = (Boolean)model.get("success");
 		String error_msg = (String)model.get("error_msg");
-		
-		System.out.println(money + imp_uid + merchant_uid);
-		System.out.println("카드넘버"+card);
 		
 		//결제성공했을시
 		if(success==true) {
