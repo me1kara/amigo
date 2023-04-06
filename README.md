@@ -78,7 +78,7 @@
 
 ## 정보
 
-[www.amigoo.store](https://www.amigoo.store) 
+[www.amigoo.store](http://www.amigoo.store) 
 접속시 로그인용 아이디가 등록돼있으니 바로 로그인하시면 됩니다.
 
 
