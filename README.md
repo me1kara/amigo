@@ -1,10 +1,9 @@
 # amigo
 
-<p align="center">
-  <br>
-  <img src="./images/common/logo-sample.jpeg">
-  <br>
-</p>
+![amigoLogo](https://user-images.githubusercontent.com/111833798/230321286-a28c612d-0957-4e3a-b963-ad485064a980.png)
+
+
+
 
 반려견을 안심하고 맡길 수 있는 펫시터를 매칭시켜주는 사이트입니다.
 
@@ -19,6 +18,23 @@
 일할때 반려견이 제대로 돌봐지고있는지 확인할 수단으로 모바일이 적합하다고 생각하여
 모바일 사용자 친화적으로 UX/UI를 구성하였습니다.
 
+## 개발일정 및 인원
+
+> 개발일정 : 23.01.02 ~ 23.02.14
+
+> <p>개발인원 : <b>최한솔</b> 안승현 최성형 이진주 한준호</p>
+
+## 사용기술
+
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"><img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white">
+<img src="https://img.shields.io/badge/JS-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
+<img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=white">
+<img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=Bootstrap&logoColor=white">
+
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"><img src="https://img.shields.io/badge/Tomcat-F8DC75?style=for-the-badge&logo=ApacheTomcat&logoColor=white">
+<img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=MariaDB&logoColor=white">
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
+<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white">
 
 ## 기능 목록
 
@@ -51,24 +67,6 @@
   * 산책로 리뷰
 * 리뷰
   * 펫시터 리뷰 및 전체평점
-
-## 개발일정 및 인원
-
-> 개발일정 : 23.01.02 ~ 23.02.14
-
-> <p>개발인원 : <b>최한솔</b> 안승현 최성형 이진주 한준호</p>
-
-## 사용기술
-
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"><img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white">
-<img src="https://img.shields.io/badge/JS-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
-<img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=white">
-<img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=Bootstrap&logoColor=white">
-
-<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"><img src="https://img.shields.io/badge/Tomcat-F8DC75?style=for-the-badge&logo=ApacheTomcat&logoColor=white">
-<img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=MariaDB&logoColor=white">
-<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
-<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white">
 
 ## 정보
 
