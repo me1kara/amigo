@@ -75,10 +75,8 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(UserVO userVO, UserDAO userDAO, HttpSession sess, BoardVO boardVO, ReviewVO review, Model model) {
-			
-		UserVO user = userDAO.getUser(userVO.getUser_email()); // 사용자가 입력한 이메일을 getUser메서드로 DB 있는지 찾기
-			
+	public String login(UserVO userVO, HttpSession sess, BoardVO boardVO, ReviewVO review, Model model) {
+		UserVO user = userService.getUser(userVO.getUser_email()); // 사용자가 입력한 이메일을 getUser메서드로 DB 있는지 찾기
 		if(user == null) {
 			sess.setAttribute("isLoginSuccess", false);
 			return "view/login/login_form.jsp";
@@ -96,10 +94,8 @@ public class LoginController {
 		if(user.getUser_email().equals(userVO.getUser_email())) {
 			sess.setAttribute("user", user);
 			//실챗 실시간 알림용 세션 어트리뷰트 설정한거니 지우지마세요!
-			
-			
 			// 메인페이지의 실시간리뷰 현황판 설정용.
-			System.out.println("리뷰현황판");						  // 메인페이지 실시간리뷰 현황판
+			// 메인페이지 실시간리뷰 현황판
 			int dogCount = reviewService.dogRowCount(); 
 			double starsAverage = reviewService.starsAverage();
 			int ssrc1 = reviewService.ssrc1();		                  // 각각 별이 n개일 때 리뷰 갯수
@@ -118,14 +114,7 @@ public class LoginController {
 			model.addAttribute("starsTotalCount", starsTotalCount);
 			List<ReviewVO> revList = reviewService.getReviewList(review);	// 리뷰 리스트에
 			model.addAttribute("revList", revList);	
-			
-			
-			
-			
-			
 			List<ChatRoom> room_list = chatService.getRoomList(user.getUser_no());
-
-		
 			if(!room_list.isEmpty()) {
 				sess.setAttribute("chat_room_list", room_list);
 			}else {

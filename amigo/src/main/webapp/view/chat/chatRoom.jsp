@@ -5,6 +5,7 @@
 <%@page import="org.springframework.web.servlet.tags.Param"%>
 <%@page import="com.lec.amigo.vo.ChatVO"%>
 <%@page import="java.util.List"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -238,10 +239,13 @@ body::-webkit-scrollbar { display:none; }
 													<c:otherwise>
 													<div class="chat-bubble left">
 														<div class="align-self-center" style="max-height: 90%;">		
-														<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="nowDate" />
+														<fmt:formatDate value="<%=new java.util.Date()%>" pattern="yyyyMMdd" var="nowDate" />
 														<fmt:formatDate value="${chat.getDate()}" pattern="yyyyMMdd" var="sDate" /> 
 																		
 															${chat.getUser_nick() }<span style="font-size: 12px; color: #777;">
+															
+
+		
 															
 															<c:choose>
 																<c:when test="${sDate<nowDate }">
@@ -308,7 +312,8 @@ body::-webkit-scrollbar { display:none; }
 					</tr>	
 				</table>
 				<input type="file" id="fileUpload" onchange="previewFile()" style="display: none;" accept=".gif, .jpg, .png">
-					
+			
+								
 			</article>
 		</section>
 	</div>

@@ -63,7 +63,7 @@
 		    IMP.request_pay({
 		        pg : 'html5_inicis.INIpayTest',
 		        pay_method : 'card',
-		        merchant_uid: 'merchant_'+new Date().getTime(), 
+		        merchant_uid: new Date().getTime(), 
 		        name : '시터예약',
 		        amount : '100', //${book.res_pay},테스트용으로 100원 고정
 		        buyer_email : '<%=user.getUser_email()%>',

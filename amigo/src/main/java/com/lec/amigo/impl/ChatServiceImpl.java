@@ -97,5 +97,10 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		return chatDao.getRoomUserList(user_no);
 	}
+
+	public List<ChatVO> getMyChatRoomList(int user_no) {
+		
+		return chatDao.getMyChatRoomList(user_no);
+	}
 	
 }

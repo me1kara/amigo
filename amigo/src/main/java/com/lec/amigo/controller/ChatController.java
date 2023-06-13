@@ -66,28 +66,28 @@ public class ChatController {
 		UserVO user = (UserVO)session.getAttribute("user");
 		int user_no = user.getUser_no();
 		
-		List<ChatRoom> elseRoomList = chatService.getElseRoomList(user_no);
+/*		List<ChatRoom> elseRoomList = chatService.getElseRoomList(user_no);
 		ChatRoom checkRoom = chatService.getRoom(user_no);
-		List<ChatVO> myChatList = chatService.getMyChatList(user_no);
-		List<UserVO> userList = userService.getUserList();
-		
+		List<ChatVO> myChatList = chatService.getMyChatList(user_no);*/
 		List<ChatRoom> roomUserList = chatService.getRoomUserList(user_no);
-		
-		
-		//해당방의 유저
-		req.setAttribute("roomUserList", roomUserList);
-		
-		//방있는지여부 체크
-		req.setAttribute("checkRoom", checkRoom);
-		
-		//내채팅방(마지막채팅 있는것만)
-		req.setAttribute("myChatList", myChatList);
-		
-		//채팅이 없는 채팅방
-		req.setAttribute("elseRoomList", elseRoomList);
-		
-		//유저이름 매칭용
+		List<UserVO> userList = userService.getUserList();
+		List<ChatVO> myChatRoomList = chatService.getMyChatRoomList(user_no);
+	
+		req.setAttribute("myChatRoomList", myChatRoomList);
 		req.setAttribute("userList", userList);
+		req.setAttribute("roomUserList", roomUserList);
+		//해당방의 유저
+		/*
+		 * 
+		 * 
+		 * //방있는지여부 체크 req.setAttribute("checkRoom", checkRoom);
+		 * 
+		 * //내채팅방(마지막채팅 있는것만) req.setAttribute("myChatList", myChatList);
+		 * 
+		 * //채팅이 없는 채팅방 req.setAttribute("elseRoomList", elseRoomList);
+		 * 
+		 * //유저이름 매칭용 req.setAttribute("userList", userList);
+		 */
 		
 		return "/view/chat/myChatList.jsp";
 	}

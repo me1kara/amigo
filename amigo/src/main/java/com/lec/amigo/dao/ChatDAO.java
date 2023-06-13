@@ -400,6 +400,43 @@ public class ChatDAO {
 		
 		return row; 
 	}
+
+	public List<ChatVO> getMyChatRoomList(int user_no) {
+		String sql = "select chat_index, user_no, sitt_chat_content, sitt_chat_file, user_nick from (select ROW_NUMBER() OVER(PARTITION BY chat_index ORDER BY sitt_chat_no DESC) rn,chat_index, s.user_no, s.sitt_chat_content,s.sitt_chat_file,user_nick from chat_room r left outer join (select d.*, u.user_nick from sit_chat d, user u where d.user_no=u.user_no) s on sitt_chat_index=chat_index where r.user_no="
+				+ user_no
+				+ ") r where rn=1";
+		Connection conn = JDBCUtility.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<ChatVO> myChatRoomList = new ArrayList<ChatVO>();
+		try {
+		pstmt = conn.prepareStatement(sql);
+		rs=pstmt.executeQuery();
+		
+		while(rs.next()) {
+			ChatVO chat = new ChatVO();
+			chat.setIndex(rs.getInt("chat_index"));
+			chat.setUser_no(rs.getInt("user_no"));
+			chat.setContent(rs.getString("sitt_chat_content"));
+			chat.setFile(rs.getString("sitt_chat_file"));
+			chat.setUser_nick(rs.getString("user_nick"));
+			myChatRoomList.add(chat);
+		}
+		
+		if(!myChatRoomList.isEmpty()) {
+			return myChatRoomList;
+		}else {
+			return null;
+		}
+		}catch(Exception e) {
+			
+		}finally {
+			JDBCUtility.close(conn, rs, pstmt);
+		}
+		
+		
+		return null;
+	}
 	
 }
 

@@ -89,7 +89,14 @@ public class ReviewDAO {
 	
 	
 	public int dogRowCount() {
-		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM dog", Integer.class);
+		
+		try {
+			return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM dog", Integer.class);
+		} catch (Exception e) {
+			return 0;
+		}
+		
+		
 		}
 	
 	public double starsAverage() {

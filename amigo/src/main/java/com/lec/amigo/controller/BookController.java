@@ -293,10 +293,6 @@ public class BookController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			 System.out.println(title);
-			 System.out.println(start);
-			 System.out.println(end);
 		}
 		
 		
@@ -344,8 +340,6 @@ public class BookController {
 	@PostMapping("/view/book/ajax/payment.do")
 	@ResponseBody 
 	public ResponseEntity<?> payBook(@RequestBody Map<String, Object> model, HttpServletRequest req) {
-		
-		
 		//map, json 으로 받고 보내기
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");

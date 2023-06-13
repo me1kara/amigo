@@ -9,20 +9,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%
-		UserVO user = (UserVO)session.getAttribute("user");
-		List<ChatRoom> elseRoomList = (List<ChatRoom>)request.getAttribute("elseRoomList");
-		List<ChatVO> chatList = null;
-		ChatRoom checkRoom = null;
-		if(user!=null){
-			checkRoom = (ChatRoom)request.getAttribute("checkRoom");
-		
-			if(checkRoom!=null)chatList = (List<ChatVO>)request.getAttribute("myChatList");
-		}
-		
-		
-		
-	%>
 	
 
 
@@ -87,31 +73,29 @@
 				
 				    <p class="chat-header-title">채팅목록</p>
 						
-					<c:set var="chatList" value="<%=chatList %>"/>
-					<c:set var="elseRoomList" value="<%=elseRoomList %>"></c:set>
 					
 					<!-- 내 채팅방목록(마지막채팅), 채팅이 없으면 빈방출력-->
 					<!-- 유저가 채팅방을 소유하고있는지 여부 -->
 					<c:choose>
-						<c:when test="<%=checkRoom==null %>">	
+						<c:when test="${empty myChatRoomList}">	
 						<p><b>채팅방이 없습니다</b></p>
 						</c:when>
-						<c:when test="<%=checkRoom!=null %>">
+						<c:when test="${not empty myChatRoomList}">
 							<ul style="list-style: none;">
 							
 							<!-- db에서 받아온 내 채팅방(마지막채팅담김)목록 출력 -->
-							<c:forEach var="chat" items="${chatList }">
-										<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;">
+							<c:forEach var="chat" items="${myChatRoomList }">
+									<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;">
+										유저리스트:
 										<c:forEach var="room" items="${roomUserList }">
 										<c:if test="${ chat.index==room.chat_index}">
-											유저리스트:
 											<c:forEach var="rusl" items="${userList }">
 												<c:if test="${rusl.user_no==room.user_no }">
 													${rusl.user_nick} 
 												</c:if>
 											</c:forEach>
 										</c:if>
-										</c:forEach>		
+										</c:forEach>	
 										</h6>
 										<li class="btn btn-outline-dark RL_item" id="cwarp${chat.getIndex()}" onclick="location.href='/chatList.do?index=${chat.getIndex()}'">
 											<table>
@@ -124,12 +108,15 @@
 															</c:if>
 														</c:forEach>
 													</td>
-													
-													
-													<td>
-														<ul style="list-style: none;" >
-														
+
 														<c:choose>
+															<c:when test='${empty chat.getContent() }'>
+																<span style="line-height: 45px; text-align: center;">등록된 글이 없습니다!</span>
+															</c:when>
+															<c:otherwise>
+																<td>
+																<ul style="list-style: none;" >	
+									<c:choose>
 															<c:when test='${chat.getContent() eq "해당유저는 나갔습니다" }'>
 																<li style="line-height: 45px; text-align: center;">${chat.getUser_nick()} 이(가) 나갔습니다.</li>
 																<script>
@@ -150,7 +137,10 @@
 																</c:choose>
 															</c:otherwise>
 														</c:choose>
-														</ul>
+																</ul>
+															</c:otherwise>
+														</c:choose>
+												
 													</td>
 												</tr>
 											</table>	
@@ -159,30 +149,6 @@
 										<hr>						
 							</c:forEach>
 							
-							
-							<% if(elseRoomList!=null) for(ChatRoom room :elseRoomList){
-							%>
-							<c:set var="room" value="<%=room %>"/>
-								<h6 style="height:62px; width:308.88px;margin: 0 auto; text-align: left; line-height: 62px;">
-								
-                                 <c:forEach var="rooml" items="${roomUserList }">
-										<c:if test="${ room.chat_index==rooml.chat_index}">
-										유저리스트:
-											<c:forEach var="rusl" items="${userList }">
-												<c:if test="${rusl.user_no==rooml.user_no }">
-													${rusl.user_nick} 
-												</c:if>
-											</c:forEach>
-										</c:if>
-								</c:forEach>
-								
-								</h6>
-								<li class="btn btn-outline-dark" style="height:62px; width:308.88px; text-align: center; line-height: 45px;" onclick="location.href='/chatList.do?index=<%=room.getChat_index()%>'">등록된 글이 없습니다!</li>
-								
-								<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(<%=room.getChat_index()%>)" style="margin-top: 10px;">나가기</button>
-								<hr>
-							<% 
-							} %>							
 						</ul>
 						</c:when>
 					</c:choose>
