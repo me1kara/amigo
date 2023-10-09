@@ -23,7 +23,6 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
-
 <!-- 신청자격확인, 반려견이 등록된 사람만 가능 -->
 <% List<DogVO> myDog_list = (List<DogVO>)session.getAttribute("myDog_list");
 	if(myDog_list==null || myDog_list.isEmpty()){
@@ -227,14 +226,14 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 <style>
 
 
+
    	body {
   padding-top: 50px;
   /* 생략 */
 }
-    	li {
+  	li {
 	
   font-family: "Roboto", sans-serif;
-  text-decoration: none;
   color: black;
   font-family: "Jalnan";
   font-size: 90%;
@@ -328,10 +327,10 @@ td {
 	background: rgba(0,0,0,0.8);
 }
 
-.fc-col-header-cell a {
-	color: black;
-	text-decoration: none;
+.fc-daygrid-day-number {
+  text-decoration-line: none;
 }
+
 .fc-day{
 	width:61.92px;
 	hieght:25.61px;
@@ -375,6 +374,8 @@ td {
 	padding-top:20px;
 }
 
+
+
  #modal_content_st {
  	width:460px; 
  	margin:0 auto; 
@@ -397,7 +398,6 @@ td {
 
       .nav-link {
         font-family: "Roboto", sans-serif;
-        text-decoration: none;
         color: black;
         font-family: "Jalnan";
         font-size: 90%;
@@ -603,13 +603,6 @@ td {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <!-- 햄버거 -->
-          <a class="menu-trigger" href="#">
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
-          <!-- 햄버거/ -->
         </button>
         <a
           class="logo"
@@ -633,7 +626,7 @@ td {
             <hr />
             <li class="nav-nickName">
               <a
-                class="nav-link"
+                class="nav-link"  
                 href="<%=request.getContextPath() %>/my_profile.do"
                 >${ user.getUser_nick() }</a
               >

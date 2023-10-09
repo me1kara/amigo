@@ -35,12 +35,9 @@
 		<div class="container" >
 
 		<div id="map" style="width:100%;height:700px;"></div>
-		
-
-		</div>
-	<%@include file="/includes/footer.jsp" %>
-
 	
+		</div>
+	<%@include file="/includes/footer.jsp" %>	
 </body>
 </html>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f2228c73e69b779ab44c4ad05812df28&libraries=services"></script>
@@ -57,6 +54,7 @@
 	var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 	
 	var testData = JSON.parse(JSON.stringify(TestFile));
+	console.log(testData);
         
     for (var i = 0; i < 100; i += 1) {    // i 100개
 

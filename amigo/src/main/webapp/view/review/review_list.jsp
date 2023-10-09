@@ -20,8 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-    	
-    	
+    
     	.star-rating {
     		width:100%;
     		text-align: center;
@@ -32,9 +31,8 @@
     	}
     	
     	.main-content{
-    		border-bottom: 1px solid black;
+    		border-bottom: 1px solid #e1e1e1;
     	}
-        	
     	
     </style>
 <title>후기01_실시간 후기</title>
@@ -43,13 +41,10 @@
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
-		<div class="container">
-		  <section class="main-content" style="padding-bottom: 0px; margin-bottom: 0px;">
-      <br />
-      <div class="container" style="position: relative; top: -100px;">
-        <h1 class="text-uppercase">고객님들의 실시간 후기</h1>
-        <br />
-        <br />
+	<div class="container">
+	  <section class="main-content" style="padding-top: 0px; padding-bottom: 10px;">
+      <div class="container">
+        <h1 class="text-uppercase text-center" style="margin-bottom: 40px;">고객님들의 실시간 후기</h1>
         <div class="row">
           <div
             class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4"
@@ -160,7 +155,7 @@
     </section>
     <!-- 리뷰 종합 end -->
     <!-- 유저 실시간 리뷰 -->
-    <div class="container">
+    <div class="container" style="padding-top: 40px;">
       <div class="row">
       <c:choose>
          <c:when test="${ revList.isEmpty() || revList == null }">
@@ -249,15 +244,12 @@
                 </div>
                 <!-- 별 end -->
               </div>
-              <br />
               <div class="reviewMain text-center">
                 <div class="review-user-addr">
-                  <a href="#">${ rev.getUser_addr() }</a>
+                  <p>${ rev.getUser_addr() }</p>
                 </div>
-                <br />
-                <br />
                 <div class="review-main">
-                  <a href="#"></a>${ rev.getRev_content() }
+                  <p>${ rev.getRev_content() }</p>
                 </div>
               </div>
             </div>

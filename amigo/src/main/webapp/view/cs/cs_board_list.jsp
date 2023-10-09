@@ -88,7 +88,7 @@
 
 
    <div class="container col-md-6" align="left">
-      <div class="mt-4 p-5">
+      <div class="mt-4">
          <p class="ubd-header-title">고객센터</p>
       </div> 
       <hr/>

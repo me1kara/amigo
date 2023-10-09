@@ -566,7 +566,7 @@ body {
 
 /* 실시간 유저 리뷰창 */
 .review-user-card {
-  background-color: rgb(239, 239, 239);
+  background-color: white;
   padding: 30px;
   margin-bottom: 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -626,5 +626,5 @@ body {
 
 */
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }

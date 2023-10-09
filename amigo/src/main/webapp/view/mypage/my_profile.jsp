@@ -240,20 +240,8 @@
 				};
 				</script>
     
-    <footer class="bg-primary text-center text-white" style="background-color: rgb(87, 160, 227);">   
-      <!-- Grid container -->
-      <!-- Grid container -->
-      <!-- Copyright -->
-      <div class="text-center p-3">
-        © 2022 Copyright:
-        <a class="text-white" href="#">amigo.com</a>
-      </div>
-      <!-- Copyright -->
-    </footer>
-    <!-- profile page 종료 -->
-    <!-- Footer -->
-   
-    <!-- Footer 끝 -->
+    <%@include file="/includes/footer.jsp" %>
+
 
    
     <!--[if lt IE 9]>
