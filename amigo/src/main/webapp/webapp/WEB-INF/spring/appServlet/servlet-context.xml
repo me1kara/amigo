@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<annotation-driven />
+	
+	<resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- controller빈 -->
+	<context:component-scan base-package="com.lec.amigo.controller"/>	
+	
+	<!-- amigo빈 -->
+	<context:component-scan base-package="com.lec.amigo"/>
+	
+	<!-- 파일전송 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="-1" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+	</beans:bean>
+	
+	<!-- 웹소켓 -->
+	<beans:bean id="chatHandler" class="com.lec.amigo.chat.ChatHandler"/>
+	<websocket:handlers>
+		<websocket:mapping handler="chatHandler" path="/chatHandler.do"/>
+   		<websocket:handshake-interceptors>
+   		<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+    	</websocket:handshake-interceptors>
+	</websocket:handlers>
+	
+
+	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	     <beans:property name="host" value="smtp.naver.com"/> <!-- 메이서버 호스트 -->
+	     <beans:property name="port" value="465"/> <!-- 메이서버 포트번호 -->
+	     <beans:property name="username" value="amigo931224"/> <!-- 자신의 이메일 아이디 -->
+	     <beans:property name="password" value="7SP15RPSLE9Q"/> <!-- 자신의 비밀번호 -->
+	     
+	<!-- 보안연결 SSL과 관련된 설정 -->
+	 	<beans:property name="javaMailProperties">
+	      <beans:props>
+	      <beans:prop key="mail.smtp.auth">true</beans:prop>
+	      <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+	      <beans:prop key="mail.smtps.checkserveridentity">true</beans:prop>
+	      <beans:prop key="mail.smtps.ssl.trust">*</beans:prop>
+	      <beans:prop key="mail.debug">true</beans:prop>
+	      <beans:prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</beans:prop>
+	      </beans:props>
+	  	</beans:property>  
+	</beans:bean>
+		
+</beans:beans>
+

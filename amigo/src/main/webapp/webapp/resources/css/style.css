@@ -1,0 +1,638 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,100);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+/* 네이버 글씨체 */
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+@import url(https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css);
+/* 프리텐다드 폰트 */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css");
+
+/* 리뷰 import */
+/* 웹폰트 */
+
+@font-face {
+  font-family: "Jalnan";
+  font-weight: normal;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot");ㅌ
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+/* 프리텐다드 폰트 적용 */
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+body {
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
+    "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+/* 리뷰 import */
+/* 웹폰트 */
+@font-face {
+  font-family: "Jalnan";
+  font-weight: normal;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/goodchoice/Jalnan.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+/* 글씨체 전체 */
+/* 여기어때 글씨체*/
+/*
+ body {
+	
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  	: black;
+  font-family: "Jalnan";
+  font-size: 90%; 
+}
+*/
+
+/* 웹폰트2 네이버 글씨체 */
+/* CSS스타일시트상에 적용방법 아래 두가지중 하나를 선택하여 사용하면 됩니다.  */
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+@import url(https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css);
+/*
+.선택자{
+font-famliy:'NanumSquare',san-serif;
+font-size:17px;
+line-height:1.5;
+}
+*/
+
+/* -또는 아래와 같은 적용이 가능합니다.- */
+/*
+body{
+font-famliy:'NanumSquare',san-serif;
+font-size:17px;
+line-height:1.5;
+}
+*/
+/* 위처럼 적용시 body에 속해 있는 모든 폰트가 나눔스퀘어로 적용됨을 알수 있습니다.*/
+
+/* backGroundColor*/
+
+
+/* main 사진들 */
+
+.imgMainLogo {
+  width: 500px;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+
+#AmigoTop {
+  padding-top: 120px;
+}
+
+#myPageTop {
+  padding-top: 120px;
+}
+
+#communityTop {
+  padding-top: 120px;
+}
+
+#csHeader {
+  padding-top: 120px;
+}
+
+i {
+  margin-right: 10px;
+}
+#navTop {
+  padding-top: 150px;
+}
+.sittHeader {
+  padding-top: 150px;
+}
+.profileNav {
+  padding-top: 150px;
+}
+
+.whiteHeader {
+  padding-top: 150px;
+}
+
+/* 좋아요  버튼 */
+@import url(https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700);
+
+/*
+.fonts {
+  font-family: "Josefin Slab", serif;
+}
+*/
+p {
+  margin-bottom: 0.5em;
+}
+
+#likeClick {
+  text-decoration: none;
+  color: white;
+}
+
+.clear {
+  clear: both;
+}
+
+.pageTitle {
+  font-size: 2em;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1em;
+  color: #00ae68;
+}
+
+.pageSubTitle {
+  margin-bottom: 0.5em;
+  font-size: 1.3em;
+  font-weight: 700;
+  line-height: 1em;
+  color: #222;
+}
+
+.articleTitle {
+  font-size: 1.15em;
+  font-weight: 700;
+  line-height: 1em;
+  color: #222;
+}
+
+.wrapper {
+  width: 600px;
+  margin: 20px auto;
+}
+
+
+
+a.button {
+  display: block;
+  position: relative;
+  float: left;
+  width: 120px;
+  padding: 0;
+  margin: 10px 20px 10px 0;
+  font-weight: 600;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+.btnLightBlue {
+  background: #69abce;
+}
+
+/* 3D */
+
+.btnLightBlue.btnPush {
+  box-shadow: 0px 5px 0px 0px #1e8185;
+}
+
+.btnPush:hover {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.btnLightBlue.btnPush:hover {
+  box-shadow: 0px 0px 0px 0px #1e8185;
+}
+
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  /* 네브바 위치때문에 가려지는것을 막아줌 */
+  #AmigoTop {
+    padding-top: 0px;
+  }
+
+  #myPageTop {
+    padding-top: 120px;
+  }
+
+  #communityTop {
+    padding-top: 120px;
+  }
+
+  #csHeader {
+    padding-top: 120px;
+  }
+
+  i {
+    margin-right: 10px;
+  }
+  #navTop {
+    padding-top: 150px;
+  }
+  .sittHeader {
+    padding-top: 150px;
+  }
+  .profileNav {
+    padding-top: 150px;
+  }
+
+  .whiteHeader {
+    padding-top: 150px;
+  }
+  /*----------bootstrap-navbar-css------------*/
+  .mainLogo {
+    margin-right: 150px;
+  }
+
+  .navbar-logo {
+    padding: 15px;
+    color: #fff;
+  }
+  .navbar-mainbg {
+    background-color: #5161ce;
+    padding: 0px;
+  }
+  #navbarSupportedContent {
+    overflow: hidden;
+    position: relative;
+  }
+  #navbarSupportedContent ul {
+    padding: 0px;
+    margin: 0px;
+  }
+  #navbarSupportedContent ul li a i {
+    margin-right: 10px;
+  }
+  #navbarSupportedContent li {
+    list-style-type: none;
+    float: left;
+  }
+  #navbarSupportedContent ul li a {
+    color: #2f4f4f;
+    text-decoration: none;
+    font-size: 15px;
+    display: block;
+    padding: 20px 20px;
+    transition-duration: 0.6s;
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+  }
+  #navbarSupportedContent > ul > li.active > a {
+    color: #5161ce;
+    background-color: transparent;
+    transition: all 0.7s;
+  }
+  #navbarSupportedContent a:not(:only-child):after {
+    content: "\f105";
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 14px;
+    font-family: "Font Awesome 5 Free";
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+    transition: 0.5s;
+  }
+  #navbarSupportedContent .active > a:not(:only-child):after {
+    transform: rotate(90deg);
+  }
+  .hori-selector {
+    display: inline-block;
+    position: absolute;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    transition-duration: 0.6s;
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    background-color: #69abce;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin-top: 10px;
+  }
+  .hori-selector .right,
+  .hori-selector .left {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: #69abce;
+    bottom: 10px;
+  }
+  .hori-selector .right {
+    right: -25px;
+  }
+  .hori-selector .left {
+    left: -25px;
+  }
+  .hori-selector .right:before,
+  .hori-selector .left:before {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgb(248, 249, 250);
+  }
+  .hori-selector .right:before {
+    bottom: 0;
+    right: -25px;
+  }
+  .hori-selector .left:before {
+    bottom: 0;
+    left: -25px;
+  }
+
+  #navbarSupportedContent ul li a {
+    padding: 12px 30px;
+  }
+  .hori-selector {
+    margin-top: 0px;
+    margin-left: 10px;
+    border-radius: 0;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+  }
+  .hori-selector .left,
+  .hori-selector .right {
+    right: 10px;
+  }
+  .hori-selector .left {
+    top: -25px;
+    left: auto;
+  }
+  .hori-selector .right {
+    bottom: -25px;
+  }
+  .hori-selector .left:before {
+    left: -25px;
+    top: -25px;
+  }
+  .hori-selector .right:before {
+    bottom: -25px;
+    left: -25px;
+  }
+
+  .btn:active,
+  .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+/*  
+   Main css
+*/
+
+/* 버튼 */
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+/* hr */
+hr {
+  height: 0px;
+  border-radius: 2px;
+  color: teal;
+  border: 2px solid currentColor;
+  width: 100%;
+}
+
+/* 마이페이지 프로필  */
+/*Profile Pic Start*/
+.picture-container {
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+}
+
+.picture {
+  width: 106px;
+  height: 106px;
+  background-color: #999999;
+  border: 4px solid #cccccc;
+  color: #ffffff;
+  border-radius: 50%;
+  margin: 0px auto;
+  overflow: hidden;
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+}
+.picture:hover {
+  border-color: #2ca8ff;
+}
+.content.ct-wizard-green .picture:hover {
+  border-color: #05ae0e;
+}
+.content.ct-wizard-blue .picture:hover {
+  border-color: #3472f7;
+}
+.content.ct-wizard-orange .picture:hover {
+  border-color: #ff9500;
+}
+.content.ct-wizard-red .picture:hover {
+  border-color: #ff3b30;
+}
+.picture input[type="file"] {
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  left: 0;
+  opacity: 0 !important;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.picture-src {
+  width: 100%;
+}
+/*Profile Pic End*/
+
+/* 리뷰 별점  */
+/*
+body {
+  background: #f9f9f9;
+  font-family: "roboto", sans-serif;
+}
+*/
+
+.main-content {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.m-b-30 {
+  margin-bottom: 30px;
+}
+
+.rating-card {
+  background-color: white;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.rating-number {
+  font-size: 50px;
+  font-weight: 600;
+}
+.rating-number small {
+  font-size: 16px;
+}
+
+.rating-stars:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #eee;
+}
+
+.rating-stars .filled-star {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffc107;
+}
+
+.rating-stars img {
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.rating-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rating-progress .rating-grade {
+  padding: 3px 20px 3px 0;
+  float: left;
+  width: 50px;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.rating-progress .rating-grade img {
+  height: 15px;
+  margin-left: 3px;
+}
+.rating-progress .progress {
+  float: left;
+  width: calc(100% - 110px);
+  border-radius: 10px;
+}
+.rating-progress .progress .bg-warning {
+  background-color: #ffc107 !important;
+  border-radius: 10px;
+}
+.rating-progress .rating-value {
+  padding: 3px 0 3px 20px;
+  float: left;
+  width: 60px;
+}
+.rating-progress:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* 실시간 유저 리뷰창 */
+.review-user-card {
+  background-color: rgb(239, 239, 239);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 10%;
+}
+
+.review-user-profile {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+/* 별 모양 */
+.star-rating {
+  width: 304px;
+}
+.star-rating,
+.star-rating span {
+  display: inline-block;
+  height: 55px;
+  overflow: hidden;
+  background: url(../img/star.png) no-repeat;
+}
+.star-rating span {
+  background-position: left bottom;
+  line-height: 0;
+  vertical-align: top;
+}
+/* 
+.star-ratings {
+  color: #aaa9a9;
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) 
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+} 
+
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+}
+
+
+*/
+a {
+  text-decoration: none;
+}
