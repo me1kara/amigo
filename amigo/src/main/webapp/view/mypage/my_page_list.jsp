@@ -18,7 +18,6 @@ prefix="c"%>
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>main</title>
 
     <!-- a href컬러 조절 -->
@@ -105,16 +104,8 @@ prefix="c"%>
         </c:if>
       </ul>
     </div>
-    <!-- Footer -->
-    <footer class="bg-primary text-center text-white mt-5">
-      <!-- Copyright -->
-      <div class="text-center p-3 mt-5" style="background-color:rgb(87, 160, 227);">
-        © 2022 Copyright:
-        <a class="text-white" href="#">amigo.com</a>
-      </div>
-      <!-- Copyright -->
-    </footer>
-    <!-- Footer 끝 -->
+    <%@include file="/includes/footer.jsp" %>
+
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

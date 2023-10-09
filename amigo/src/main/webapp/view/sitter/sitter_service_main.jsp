@@ -17,6 +17,7 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <![endif]-->
+    
     <style>
 
 *{
@@ -24,7 +25,7 @@
 }
 
 .sitter_service{
-	margin: auto 0;
+	margin: z 0;
 	padding: 20px;
 	text-align: center;
 		
@@ -98,8 +99,7 @@ h1 {
   height: 400px;
   overflow:clip;
   background: #fff;
-  margin: 1em;
-  padding: 0.5em;
+  margin: 3px 1em;
   border-radius: 10px;
   box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.5);
 }
@@ -118,7 +118,7 @@ h1 {
       transform: translate(0, 0);
     }
     to {
-      transform: translate(calc(-100% + (2 * 300px)));
+      transform: translate(calc(-100% + (1 * 300px)));
     }
   }
 }
@@ -147,9 +147,6 @@ h1 {
        color: rgb(87, 160, 227);
  }
 
-.sitter_item {
-	margin-top:100px;
-}
 
 
 
@@ -391,7 +388,7 @@ figure.amigo1224 {
 					<hr>
 					  <div class="items">
 					<c:forEach var="sitter" items="${ mainSitterList}">					
-					<div class="entry" style="overflow: clip;">
+					<div class="entry" style="text-overflow: ellipsis; overflow:hidden;">
 				      <p class="name">${ sitter.user_name}</p>
 				      
 				      <c:choose>
@@ -402,14 +399,14 @@ figure.amigo1224 {
 				      	<img class="sitter_img" src="https://via.placeholder.com/150x100"  />
 				      </c:otherwise>
 				      </c:choose>
-				      <p class="quote">${sitter.sit_intro }</p>
+				      <p class="quote" style="padding-bottom: 10px;">${sitter.sit_intro }</p>
 				    </div>
 					</c:forEach>
 					</div>
 				</article>
 				
 				<article class="service_btn sitter_item"">	
-					<button type="button" class="btn btn-primary" ><a href="/view/book/book_sitter_form.do" style="color: white;">신청하기</a></button>
+					<button type="button" class="btn btn-primary" ><a href="/view/book/book_sitter_form.do" style="color: white; text-decoration-line: none;">신청하기</a></button>
 				</article>
 			</section>
 		</div>

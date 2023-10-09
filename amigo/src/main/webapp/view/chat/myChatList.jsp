@@ -36,10 +36,10 @@
       		font-size:40px;
       		text-align: left;
       		margin-left: 10%;
-    	}
+    	}	
     	
     </style>
-    
+        
     <script>
     	function exit_room(index){
     		if(confirm('정말로 채팅방을 나가시겠습니까? 환불을 원하시면 예약취소를 해주세요!')){
@@ -153,7 +153,6 @@
 						</c:when>
 					</c:choose>
 					</div>
-					<p style="position: sticky; bottom:50px; text-align: right;"><em>예약내용이 완수된 채팅방은 매주 금요일 삭제됩니다.</em></p>
 				</article>
 			</section>
 		</div>

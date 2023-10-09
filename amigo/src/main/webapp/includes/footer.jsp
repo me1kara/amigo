@@ -16,7 +16,6 @@
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
     <style>
   	.notification-container {
 	  background: rgba(0,0,0,.3);
@@ -29,6 +28,9 @@
 	}
 	.notification-container.showChatMessage{
 	  transform: translateY(-150px);
+	}
+	footer{
+		width:100%;
 	}
   </style>
  </head>
@@ -94,8 +96,6 @@
 				}
 				<%
 				}%>
-
-			
 		}
 	}
 	}
@@ -104,17 +104,36 @@
 	}
 }%>
 </script>
- 
+<script type="text/javascript">
+// 화면 크기가 변경될 때마다 푸터 위치 조정
+  function adjustFooterPosition() {
+    const footer = document.querySelector("footer");
+    const windowHeight = window.innerHeight;
+    const bodyHeight = document.body.offsetHeight;
+
+    // 페이지 내용이 화면보다 작을 때만 푸터를 아래로 이동
+    if (bodyHeight < windowHeight) {
+      footer.style.position = "absolute";
+      footer.style.bottom = "0";
+    } 
+  }
+
+  // 페이지 로드 시 및 화면 크기 변경 시 푸터 위치 조정
+  window.addEventListener("load", adjustFooterPosition);
+  window.addEventListener("resize", adjustFooterPosition);
+</script>
+  
+  <!-- 실시간알림용 -->
   <div class="notification-container" id="notification-container">
     <a ref="" id="notification_text" style="color: white;"></a>
   </div>
   
     <!-- Footer -->
-    <footer class="text-center text-white mt-5">
+    <footer class="text-center text-white mt-3">
       <!-- Copyright -->
-      <div class="text-center p-3 mt-5" style="background-color:rgb(87, 160, 227);">
-        © 2022 Copyright:
-        <a class="text-white" href="#">amigo.com</a>
+      <div class="text-center p-3" style="background-color:rgb(87, 160, 227);">
+        © 2023 Copyright:
+        <a class="text-white" href="#">amigoo.store</a>
       </div>
       <!-- Copyright -->
     </footer>

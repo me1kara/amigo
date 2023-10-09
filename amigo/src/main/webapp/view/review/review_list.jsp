@@ -19,8 +19,8 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
     <style>
+    	
     	
     	.star-rating {
     		width:100%;
@@ -30,20 +30,23 @@
     	 font-family: "Jalnan";
       	 font-size:40px; 
     	}
+    	
+    	.main-content{
+    		border-bottom: 1px solid black;
+    	}
+        	
+    	
     </style>
 <title>후기01_실시간 후기</title>
 
 </head>
-<%
-
-%>
 <body>
 	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
-		  <section class="main-content">
+		  <section class="main-content" style="padding-bottom: 0px; margin-bottom: 0px;">
       <br />
-      <div class="container">
+      <div class="container" style="position: relative; top: -100px;">
         <h1 class="text-uppercase">고객님들의 실시간 후기</h1>
         <br />
         <br />
@@ -51,7 +54,7 @@
           <div
             class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4"
           >
-            <div class="rating-card">
+            <div class="rating-card" style="background: white;">
               <div class="text-center m-b-30">
                 																<!-- $ {도그카운트} 로 강아지 테이블의 마릿수를 가져옴 -->
                 <div class="review-member">

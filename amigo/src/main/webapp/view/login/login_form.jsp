@@ -17,7 +17,6 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <!--[if lt IE 9]>
@@ -57,7 +56,7 @@
 		
        <!-- button -->
       <div class="d-grid">
-        <button type="submit" class="btn btn-default btn-primary mt-5 mb-5" value="로그인">
+        <button type="submit" class="btn btn-default mt-5 mb-5" value="로그인" style="background: rgb(87, 160, 227); color: white;">
           로그인
         </button>
          <!-- button end -->

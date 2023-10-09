@@ -22,7 +22,6 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 <!-- 타임피커 -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
 
 
 <!-- 신청자격확인, 반려견이 등록된 사람만 가능 -->
@@ -226,6 +225,8 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
     <![endif]-->
 
 <style>
+
+
    	body {
   padding-top: 50px;
   /* 생략 */
@@ -359,13 +360,7 @@ td {
 	z-index: 1056;
 }
 
-#book_title {
-	padding-top: 80px;
-	font-family: "Jalnan";
-    font-size:30px;
-    color: rgb(87, 160, 227);
-    text-align: center;
-}
+
 
 .timepick {
 	width:90px;
@@ -597,7 +592,7 @@ td {
 
 <body>
 
-	 <div class="container">
+	 <div class="container" style="padding-top: 50px;">
       <nav
         class="navbar navbar fixed-top navbar-light bg-light navbar-expand-custom navbar-mainbg"
       >
@@ -701,8 +696,6 @@ td {
     <!-- Core theme JS-->
     <script src="/resources/js/script.js"></script>
 	<div class="container" style="width: 480px;">
-		<h2 id="book_title">예약 상세</h2>
-		<hr>
 		<section>
 			<!-- 신청하기 이전, 유효성검사 -->
 			<form action="book.do" onsubmit="return checkResult();" method="get">

@@ -58,17 +58,14 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
       }
 
       .sitter_item {
-        display: flex;
-        margin: 50px auto;
+        padding-top: 25px auto;
         padding-right: 10px;
         border-radius: 10px;
-        width: 450px;
-        height: 300px;
-        background-color: #f8f9fa;
+        max-width : 970px;
+        height : 146px;
         align-items: center;
-        flex-direction: column;
-        justify-content: space-around;
-        box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.2);
+        border-bottom: 1px solid #e1e1e1;
+
       }
 
       #item-box-shadow:hover {
@@ -77,7 +74,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
       .sitter_list_title {
         font-family: "Jalnan";
-        font-size: 30px;
+        font-size: 25px;
         color: rgb(87, 160, 227);
         text-align: center;
       }
@@ -85,6 +82,32 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
       th {
         font-family: "Jalnan";
       }
+      
+      article{
+      	margin-bottom: 10px;
+      }
+      .sitter_item > div {
+	    max-width: 100px; /* 첫 번째 자식 요소의 최대 너비 설정 */
+	    flex-shrink: 0; /* 자식 요소 크기 고정 */
+	    margin-right: 10px; /* 간격 설정 (원하는 간격으로 조절) */
+	  }
+	
+	.sitter_item ul.sitter-content {
+	    flex-grow: 1; /* 나머지 공간을 모두 차지하도록 설정 */
+	    white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	  }
+      
+      .sitter-content > li:first-child{
+      	font-size: 18px;
+    
+      }
+
+      .sitter-content > li:not(:first-of-type){
+      	font-size: 14px;
+      }
+      
     </style>
   </head>
   <body>
@@ -117,9 +140,9 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
               <c:forEach var="sit" items="${sittList }">
 
                 <div
-                  class="sitter_item"
+                  class="sitter_item d-flex"
                   id="item-box-shadow"
-                  style="cursor: pointer"
+                  style="cursor: pointer;"
                   onclick="location.href='sitter_profile.do?sit_no=${sit.getSit_no()}&user_name=${sit.getUser_name() }';"
                 >
                   <div>
@@ -144,20 +167,12 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                     
                   </div>
                   <!-- 전체 테이블 -->
-                  <table>
-                    <tr>
-                      <th style="width: 100px; padding: 2px">이름</th>
-                      <td>${sit.getUser_name() }</td>
-                    </tr>
-                    <tr>
-                      <th style="padding: 2px">시간</th>
-                      <td>${sit.getSit_time() }</td>
-                    </tr>
-                    <tr>
-                      <th style="padding: 2px">경력 및 특기</th>
-                      <td>${sit.sit_care_exp }</td>
-                    </tr>
-                  </table>
+             
+                  <ul style="list-style: none;" class="sitter-content">
+                    <li><b>${sit.getUser_name() }</b></li>
+                    <li>${sit.getSit_time() }</li>
+                    <li style="white-space: nowrap; max-width:inherit; text-overflow: ellipsis; overflow: hidden;">${sit.sit_care_exp }</li>
+                  </ul>
                   <!-- 전체 테이블 end -->
                 </div>
               </c:forEach>

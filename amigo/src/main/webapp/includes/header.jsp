@@ -24,11 +24,6 @@ pageEncoding="UTF-8"%>
       href="/resources/css/style.css"
     />
     <style>
-      body {
-        padding-top: 50px;
-        /* 생략 */
-      }
-
       .nav-link {
         font-family: "Roboto", sans-serif;
         text-decoration: none;
@@ -98,7 +93,7 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
     <!-- css를 적용하지 않았기 때문에 차후에 적용해줘야합니다. -->
-    <div class="container">
+    <div class="container" style="margin-bottom: 150px;">
       <nav
         class="navbar navbar fixed-top navbar-light bg-light navbar-expand-custom navbar-mainbg"
       >
@@ -136,15 +131,7 @@ pageEncoding="UTF-8"%>
               <div class="left"></div>
               <div class="right"></div>
             </div>
-            <hr />
-            <li class="nav-nickName">
-              <a
-                class="nav-link"
-                href="<%=request.getContextPath() %>/my_profile.do"
-                >${ user.getUser_nick() }</a
-              >
-            </li>
-            <hr />
+            <hr/>
             <li class="nav-item">
               <a
                 class="nav-link"

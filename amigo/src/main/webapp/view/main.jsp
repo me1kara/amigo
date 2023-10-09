@@ -18,11 +18,7 @@ prefix="c"%>
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="/resources/css/style.css"
-    />
+
     <meta charset="UTF-8" />
     <style>
       /* aimgo 메인 사진들 css */
@@ -46,8 +42,9 @@ prefix="c"%>
       }
       
       .rating-card {
+     
       box-shadow: 5px 2px 20px rgba(0, 0, 0, 0.2);
-       border-radius: 20px;
+      border-radius: 20px;
       }
       
       .rating-card:hover{
@@ -350,7 +347,7 @@ prefix="c"%>
       </div>
       <!-- 실시간 후기 추가한부분-카드가 아래로 내려가버림. -->
       
-      <div class="rating-card">
+      <div class="rating-card" style="background: white">
               <div class="text-center m-b-30" style="cursor:pointer;" onclick="location.href='user_review_list.do';">                                                    <!-- $ {도그카운트} 로 강아지 테이블의 마릿수를 가져옴 -->
                 <div class="review-member">
                   <a href="#">${dogCount}</a>마리의 친구들이 AM!GO와 함께했어요!
