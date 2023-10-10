@@ -11,7 +11,9 @@ pageEncoding="UTF-8"%>
       src="https://code.jquery.com/jquery-3.6.3.min.js"
       integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
       crossorigin="anonymous"
-    ></script>
+    ></script>    
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
+    
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
