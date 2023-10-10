@@ -35,7 +35,7 @@
 		<div class="container col-md-6">
 		  <!-- header -->
   	  <div class="container text-center mt-5 mb-5">
-      <a class="logo" href="#home.jsp"
+      <a class="logo" href="/home.jsp"
         ><img alt="AmigoLogo1" src="resources/img/logo1.png"
       /></a>
   	  </div>
@@ -67,8 +67,9 @@
         <hr>
         <br>
         
-        <a href="#">다른 방식으로 로그인 할게요.</a>
+        <!--  <a href="#">다른 방식으로 로그인 할게요.</a>-->
 		<input type="hidden" name="ubd_no" value="5"/>
+		
 		</form>
 		</div>
 		

@@ -76,7 +76,9 @@
   <body>
     <!-- header -->
     <div class="container text-center mb-5">
-      <img alt="AmigoLogo" src="/resources/img/logo1.png" />
+    <a href="/home.jsp">
+      <img alt="AmigoLogo" src="/resources/img/logo1.png"/>
+    </a>
     </div>
     
     <!-- header end  -->

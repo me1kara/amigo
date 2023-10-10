@@ -66,7 +66,7 @@
   <body>
  <!-- header -->
  <div class="container text-center mb-5">
- <a class="logo" href="#home.jsp"
+ <a class="logo" href="/home.jsp"
  ><img alt="AmigoLogo" src="/resources/img/logo1.png"
 /></a>
 <!-- 제거해도 될거라고 판단 --> 

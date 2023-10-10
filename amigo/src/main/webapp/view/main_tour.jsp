@@ -246,7 +246,7 @@ prefix="c"%>
            <div class="container mt-3 py-5  h-100" align="center" style="max-height: 100px;">
           <!-- 이메일 로그인 -->
           <div class="buttons">
-          <button type="button" class="btn-hover color-9" onclick="location.href='terms.do';" style="position: relative; top: -50px;">
+          <button type="button" class="btn-hover color-9" onclick="location.href='terms.do';" style="position: relative; top: -25px;">
             이메일 가입
           </button>
           </div>
