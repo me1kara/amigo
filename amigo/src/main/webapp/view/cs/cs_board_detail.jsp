@@ -11,6 +11,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <meta charset="UTF-8">
 <style>
 	.ubd-group {
@@ -23,6 +24,7 @@
 		cursor : pointer;
 		
 	}
+
 
 </style>
 <title>질문03_질문내용확인~04</title>
@@ -90,7 +92,7 @@
 					<li>
 						<div>
 							<div>
-							<span id="csreply_user">${csreply.user_nick}</span> / <fmt:formatDate value="${csreply.hbd_r_regdate}" type="date"/>
+							<span id="csreply_user">${csreply.user_nick}</span> <fmt:formatDate value="${csreply.hbd_r_regdate}" type="date"/>
 							
 							<c:if test="${csreply.user_no == user.getUser_no() || user.getUser_type() == 'A'}">
 		     					<a href="#" onclick="deleteCsReply(${csreply.hbd_r_no})">삭제</a>
@@ -110,7 +112,7 @@
 			</div>
 			
 			
-			<div id="csreply_form">
+			<div id="csreply_form" style="text-align: center;">
 				<form action="insertCsReply.do" method="POST" >
 				
 				

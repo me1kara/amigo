@@ -340,7 +340,7 @@ prefix="c"%>
       <div class="container col-md-6 mt-5">
       <div class="row justify-content-between">
         <div class="col-4">
-          <h4>실시간 후기</h4>
+          <h4 style="white-space: nowrap;">실시간 후기</h4>
         </div>
         <div class="col-4 text-end">
           <a href="user_review_list.do" class="all-view">전체보기</a>

@@ -38,8 +38,19 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 <style>
 .container {
-	width: 500px;
+	max-width: 500px;
 }
+
+@media screen and (max-width: 400px) {
+   	.container > section >article {
+ 		max-width: 350px;
+	
+   	}
+   	tbody >tr{ 
+   		margin-left: -20px;
+   		width: 350px;
+   	}
+  }
 
 #list {
 	height: 300px;
@@ -217,7 +228,7 @@ body::-webkit-scrollbar { display:none; }
 
 				
 				
-				<table class="table table-bordered" style="background: rgb(87, 160, 227);">
+				<table class="table table-bordered" style="background: rgb(87, 160, 227);" id="chat-board">
 					<tr class="table-borderless" style="border: none;">
 						<td colspan="6">
 							<ul id="list" style="list-style: none; height:550px;"" >

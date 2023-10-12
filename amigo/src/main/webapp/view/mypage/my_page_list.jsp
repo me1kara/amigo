@@ -102,11 +102,12 @@ prefix="c"%>
           <a href="apply/sitter_join.do" class="mypage_link">펫시터 지원하기</a>
         </li>
         </c:if>
+        <!--
         <c:if test="${ sessionScope.user.getUser_type() == 'S' }">
-        <li class="list-group-item">
+          <li class="list-group-item">
           <a href="#" class="mypage_link">펫시터모드로 전환</a>
         </li>
-        </c:if>
+        </c:if>-->
       </ul>
     </div>
     <%@include file="/includes/footer.jsp" %>

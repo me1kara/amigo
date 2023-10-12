@@ -170,7 +170,7 @@
  				<article id="sitter_book">
 					<c:choose>
 						<c:when test="${sitBookList!=null && !sitBookList.isEmpty() }">
-							<ul style="list-style: none;">
+							<ul style="list-style: none; padding-left: 0px;">
 							<c:forEach var="book" items="${sitBookList }">
 								<c:forEach var="usr" items="${userList }">
 								<c:if test="${ book.getUser_no()==usr.getUser_no()}">

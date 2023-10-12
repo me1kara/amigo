@@ -331,6 +331,10 @@ td {
   text-decoration-line: none;
 }
 
+.fc-col-header-cell-cushion{
+	text-decoration: none;
+}
+
 .fc-day{
 	width:61.92px;
 	hieght:25.61px;

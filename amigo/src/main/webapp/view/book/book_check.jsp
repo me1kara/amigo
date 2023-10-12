@@ -236,11 +236,11 @@
 					<article id="user_book">
 						<c:choose>
 						<c:when test="${!myBookList.isEmpty()}">	
-							<ul style="list-style: none;">
+							<ul style="list-style: none; padding-left: 0;'">
 							<c:forEach var="book" items="${myBookList }">
 								<c:forEach var="sit" items="${sitList }">
 								<c:if test="${ book.getSit_no()==sit.getSit_no()}">
-								<li class="book_item">
+								<li class="book_item" style="margin: 0 auto">
 									<table class="table" id="main_table">
 										<tbody onclick="open_book_modal(this)">
 										<tr style="background:rgb(87, 160, 227);"><th colspan="2" style="text-align: center; color:white;">${sit.getUser_name() } 펫시터</th></tr>
@@ -249,7 +249,7 @@
 										</tr>
 										<tr>
 											<th class="tTitle">방문여부</th>
-											<th colspan="2" style="color:blue;'">
+											<th colspan="2" style="colfor:blue;'">
 												
 												<c:choose>
 													<c:when test="${book.res_visit_is }">
