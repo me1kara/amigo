@@ -33,7 +33,6 @@
 	
 	<%@include file="/includes/header.jsp" %>
 		<div class="container" >
-
 		<div id="map" style="width:100%;height:700px;"></div>
 	
 		</div>
@@ -45,7 +44,7 @@
 	var mapContainer  = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var mapOption  = { //지도를 생성할 때 필요한 기본 옵션
 		center: new kakao.maps.LatLng(37.526215674471935   , 126.97602792607842   ), //지도의 중심좌표.
-		level: 8, //지도의 레벨(확대, 축소 정도)
+		level: 9, //지도의 레벨(확대, 축소 정도)
 	};
 	
 	var map = new kakao.maps.Map(mapContainer, mapOption); //지도 생성 및 객체 리턴
@@ -54,26 +53,33 @@
 	var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 	
 	var testData = JSON.parse(JSON.stringify(TestFile));
-	console.log(testData);
+
         
-    for (var i = 0; i < 100; i += 1) {    // i 100개
+    for (var i = 0; i < 100; i ++) {    // i 100개
 
     	var linePath =[];
 
     	var route_no = (testData.features[i].id).substr(14),  // 넘버
         	route_nm  = testData.features[i].properties.route_nm,   // 이름 
         	length_km = testData.features[i].properties.length_km,  // 길이
-        	time2walk = testData.features[i].properties.time2walk;  // 소요시간
+        	time2walk = testData.features[i].properties.time2walk,  // 소요시간
+        	latpoint = testData.features[i].geometry.coordinates[0][0][1],
+        	lonpoint = testData.features[i].geometry.coordinates[0][0][0];
     	var places    = [route_no,route_nm,length_km,time2walk];
-        	
+    	
 
-        for (var j = 0; j < testData.features[i].geometry.coordinates[0].length; j += 1){
+    	var marker = new kakao.maps.Marker({
+            map: map, // 마커를 표시할 지도
+            position: new kakao.maps.LatLng(latpoint, lonpoint)
+        });
+
+        for (var j = 0; j < testData.features[i].geometry.coordinates[0].length; j ++){
     	   	
     	var lat = testData.features[i].geometry.coordinates[0][j][1], // 위도
             lon = testData.features[i].geometry.coordinates[0][j][0]; // 경도
 
         linePath.push(new kakao.maps.LatLng(lat, lon));
-          
+
     	}
 
     	// 지도에 표시할 선을 생성합니다
@@ -87,25 +93,23 @@
 		
      // 지도에 선을 표시합니다 
 	polyline.setMap(map);
-    
-	(function(polyline, places) {
-	kakao.maps.event.addListener(polyline, 'mouseover', function(mouseEvent) {
-		displayInfowindow(polyline,places,mouseEvent.latLng);
+   
+	(function(marker, places) {
+	kakao.maps.event.addListener(marker, 'click', function() {
+		displayInfowindow(marker,places);
+		map.panTo(marker.getPosition());
 	});
 	
-	kakao.maps.event.addListener(map, 'dragstart', function(mouseEvent) {
-		infowindow.close();
-	});
-	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+	kakao.maps.event.addListener(map, 'click', function() {
 		infowindow.close();
 	});
 	
-	 })(polyline, places);
+	 })(marker, places);
 	
     }
     
   // 인포윈도우에 장소명을 표시합니다
-	function displayInfowindow(polyline,places,latLng) {
+	function displayInfowindow(marker,places,latLng) {
 
         // places = [route_no,route_nm,length_km,time2walk]
         
@@ -115,10 +119,7 @@
         ' <span title="' + places[3] + '"> 소요시간  : ' + places[3] + '</span>' +
         '</div><div class="after"></div>';
          
-	 	
-        var marker = new kakao.maps.Marker({
-            position: latLng
-        });
+
 		infowindow.setContent(content);
 		infowindow.open(map, marker); 
  }

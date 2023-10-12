@@ -73,7 +73,7 @@
 					   				 <div class="input-group">
 						                    <label class="sr-only" for="keyword">현재위치에서 &nbsp;</label>
 						                    <input class="form-control" type="text" value="동물병원" id="keyword" size="10"> 
-						                    <button type="submit" class='btn btn-primary'>검색하기</button> 
+						                    <button type="submit" class='btn btn-primary'>다시 검색하기</button> 
 						                  </div>
 					       			 </div> 
 						           </form>
