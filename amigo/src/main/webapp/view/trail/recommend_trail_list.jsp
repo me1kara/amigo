@@ -34,7 +34,7 @@
 	<%@include file="/includes/header.jsp" %>
 		<div class="container" >
 		<div id="map" style="width:100%;height:700px;"></div>
-	
+
 		</div>
 	<%@include file="/includes/footer.jsp" %>	
 </body>
