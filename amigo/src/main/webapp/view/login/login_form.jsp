@@ -42,10 +42,10 @@
     <!-- header end  -->
 		<form action="login.do" method="post">
 		
-        <input type="text" name="user_email" class="form-control" id="user_email" placeholder="아이디(이메일)">
+        <input type="text" name="user_email" class="form-control" id="user_email" placeholder="아이디(이메일)" value="hjh@gmail.com">
        	<br>
         
-        <input type="password" name="user_pw" class="form-control" id="user_pw" placeholder="비밀번호" autoComplete="off"> 
+        <input type="password" name="user_pw" class="form-control" id="user_pw" placeholder="비밀번호" autoComplete="off" value="12345"> 
 		<br>
        	<c:if test="${ !sessionScope.isLoginSuccess and sessionScope.isLoginSuccess != null || sessionScope.matchedPassword != null and !sessionScope.matchedPassword}">
          	<h6 id ="idpwcheck">&nbsp;&nbsp;* 아이디와 비밀번호를 확인해주세요.</h6>

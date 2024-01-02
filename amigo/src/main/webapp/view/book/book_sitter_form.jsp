@@ -23,6 +23,7 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
+<link rel="stylesheet" href="/resources/css/book/book_sitter_form.css">
 <!-- 신청자격확인, 반려견이 등록된 사람만 가능 -->
 <% List<DogVO> myDog_list = (List<DogVO>)session.getAttribute("myDog_list");
 	if(myDog_list==null || myDog_list.isEmpty()){
@@ -34,564 +35,7 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 		<% 
 	}
 %>
-
-<script>
-	//예약기능 달력 스크립트
-      var calendar = null;
-      var g_info = null;
-      $(document).ready(function(){  
-    	  
-      	//달력 api
-          var calendarEl = document.getElementById('calendar');
-          calendar = new FullCalendar.Calendar(calendarEl, {
-          	
-            //한글, 크기 설정
-            locale: "ko",
-            initialView: 'dayGridMonth',
-            width:400,
-            selectable: true,
-            editable: false,
-            droppable: true,
-            firstDay : 1,
-            
-        	  //달력내용수정
-            eventClick:function(info) {
-          	  modalOpen('modify',info);
-            },
-  		 //달력내용넣기
-            select: function(info) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-          	  let date = new Date();
-          	  if(info.start>new Date(date.setDate(date.getDate()+1))){
-            		$('#eventStartTime').val('10:00');
-          		$('#eventEndTime').val('12:00');
-          	  	modalOpen('insert',info);
-          	  }else{
-          		  //예약가능날짜체크
-          		  let arim =date.toLocaleDateString(date.setDate(date.getDate()+1));
-          		  alert(arim.substr(0,arim.length-1)+"부터 예약가능합니다");
-          		  
-          	  }
-          }});
-          calendar.render();
-        
-        //시작시간 ui설정,타임피커
-   		$('#eventStartTime').timepicker({
-   			timeFormat: 'HH:mm',
- 	        interval: 60,
- 	        minTime: '10',
- 	        maxTime: '6:00pm',
- 	        defaultTime: '10',
- 	        startTime: '10:00',
- 	        dynamic: false,
- 	        dropdown: true,
- 	        scrollbar: true
-
- 		});
-        
-        //끝시간 ui설정
-   		$('#eventEndTime').timepicker({
-   		 	timeFormat: 'HH:mm',
- 	        interval: 60,
- 	        minTime: '12',
- 	        maxTime: '8:00pm',
- 	        defaultTime: '12',
- 	        startTime: '12:00',
- 	        dynamic: false,
- 	        dropdown: true,
- 	        scrollbar: true,        
- 		});
-       
-      });
-     
-      //예약내용
-      function addEvent(g_info){
-    	  	let title = $('#eventDog').val() + "," + $('#eventStartTime').val() + "~" + $('#eventEndTime').val();
-			if($('#eventStartTime').val()=='' || $('#eventEndTime').val()==''){
-				alert('시간을 입력해주세요!');
-			}else{
-				let startTime = $('#eventStartTime').val();
-				let endTime = $('#eventEndTime').val();
- 				let startTimeList = startTime.split(':');
-				let endTimeList = endTime.split(':');		
-				startTime = startTimeList[0] + startTimeList[1];
-				endTime = endTimeList[0] + endTimeList[1];
-				
-				console.log("스타트:"+startTime);
-				console.log("엔드:"+endTime);
-				
-				if(Number(startTime)+200>Number(endTime)){
-					alert('2시간 간격으로 입력해주세요!');
-				}else{
-		            calendar.addEvent({
-		            title: title,
-		            start: g_info.start,
-		            end: g_info.end,
-		            allDay: g_info.allDay
-		            })
-		            calendar.unselect();
-		            modalClose();
-		            cost_cal();
-				}
-
-			}
-     }
-      //예약정보변경
-      function modifyEvent(g_info){
-			let start = $('#eventStartTime').val();
-			let end = $('#eventEndTime').val();
-		
-			if(start=='' || end==''){
-				alert('시간을 입력해주세요!');
-			}else{
-				let startTime = $('#eventStartTime').val();
-				let endTime = $('#eventEndTime').val();			
- 				let startTimeList = startTime.split(':');
-				let endTimeList = endTime.split(':');		
-				startTime = startTimeList[0] + startTimeList[1];
-				endTime = endTimeList[0] + endTimeList[1];	
-				
-				//200인 이유는, 입력값이 3시20분 즉 1520 이라면 -> 1720 이 나와야하기때문
-				if(Number(startTime)+200>Number(endTime)){
-					alert('2시간 간격으로 입력해주세요!');
-				}else{
-	    			if(!startTime.includes(':')){
-	    				startTime = startTime.substring(0,2) + ":" + startTime.substring(2,4);	
-	    			}
-	    			if(!endTime.includes(':')){
-	    				endTime = endTime.substring(0,2) + ":" + endTime.substring(2,4);		
-	    			}
-					
-					let title = $('#eventDog').val() + "," + startTime + "~" + endTime;
-					
-					console.log(title+"타이틀입니다");
-					//이벤트에 수정값을 넣어줍니다.
-		  		  	g_info.event.setProp('title', title);
-		  		  	modalClose();
-		  		  	cost_cal();
-				}
-				
-			}
-			
-	
-      }
-      //예약내용지우기
-      function deleteEvent(g_info){
-			g_info.event.remove();
-			modalClose();
-			cost_cal();
-      }
-      
-      //폼유효성검사
-      function checkResult() {
-    	var allEvent = calendar.getEvents();
-    	
-    	//예약내용체크
-  	  	if(allEvent.length==0){
-  	  		alert('예약일정을 등록해주세요!');
-  	  		return false;
-  	  	}else{
-  	  		//내용이있으면 히든 input에 등록
-  	  		sendBookDate();
-  	  	}
-  	  	
-  	  	if($("input[name=res_visit_is]:radio:checked").length<1){
-  	  		alert("방문여부를 선택해주세요!");
-  	  		return false;
-  	  	}
-      }
-      
-      //예약정보 백단에 넘기기
-      function sendBookDate(){
-    	  var allEvent = calendar.getEvents();   	  
-    	  console.log(allEvent);
-    	  var events = new Array();
-    	  for(let i=0; i< allEvent.length; i++){
-    		  var obj = new Object();
-    		  console.log(allEvent[i]);
-    		  obj.title = allEvent[i]._def.title;
-    		  obj.allday = allEvent[i]._def.allDay;
-    		  obj.start = allEvent[i].startStr;
-    		  obj.end = allEvent[i].endStr;		  
-    		  events.push(obj);
-    	  }
-    	  let bookDate = JSON.stringify(events);
-    	  $('#reciveBookData').val(bookDate);
-      }
-    </script>
 <title>펫시터02_펫시터예약폼</title>
-<!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <![endif]-->
-
-<style>
-
-
-
-   	body {
-  padding-top: 50px;
-  /* 생략 */
-}
-  	li {
-	
-  font-family: "Roboto", sans-serif;
-  color: black;
-  font-family: "Jalnan";
-  font-size: 90%;
-  
-}
-td {
-	width: 100px;
-	heigth: 500px;
-}
-
-.select {
-	padding: 15px 10px;
-}
-
-.select input[type=radio] {
-	display: none;
-}
-
-.select input[type=radio]+label {
-	display: inline-block;
-	cursor: pointer;
-	height: 36px;
-	width: 90px;
-	border: 1px solid #333;
-	line-height: 36px;
-	text-align: center;
-	font-weight: bold;
-	font-size: 16px;
-	width: 150px;
-	border-radius: 5px;
-}
-
-.select input[type=radio]+label {
-	background-color: #fff;
-	color: #333;
-	width: 150px;
-}
-
-.select input[type=radio]:checked+label {
-	background-color: #333;
-	color: #fff;
-}
-
-.etc_content {
-	width: 100%;
-	height: 80px;
-	padding: 10px;
-	box-sizing: border-box;
-	border: solid 2px gray;
-	border-radius: 5px;
-	font-size: 16px;
-	resize: both;
-}
-
-#address {
-	border-radius: 5px;
-	border: solid 2px gray;
-}
-
-.item_change {
-	background: #d2d2d2;
-	border-radius: 5px;
-	border: none;
-	margin-left: 5px;
-	height: 30px;
-}
-
-.select input {
-	border-radius: 5px;
-	width: 150px;
-}
-
-.ctn_btn {
-	width: 150px;
-}
-
-.inline_box {
-	text-align: center;
-}
-
-.term_css {
-	display: block;
-}
-
-
-<!-- 일정입력 모달창, 컨트롤 f 강아지 검색하면 돼요 -->
-.modal{
-	position:absolute;
-	top:0; left:0;
-	dispaly:none;
-	background: rgba(0,0,0,0.8);
-}
-
-.fc-daygrid-day-number {
-  text-decoration-line: none;
-}
-
-.fc-col-header-cell-cushion{
-	text-decoration: none;
-}
-
-.fc-day{
-	width:61.92px;
-	hieght:25.61px;
-	text-overflow:ellipsis;
-}
-.fc-day a{
-	color : black;
-}
-.fc-day-sun a {
-  color: red;
-  text-decoration: none;
-}
-.fc-day-sat a {
-  color: blue;
-  text-decoration: none;
-}
-
-.fc-event-title-container{
-	text-align: center;
-}
-
-.ui-timepicker { 
-	font-size: 12px; width: 80px;
-	background: white;
-	position:relative;
-	z-index: 1056;
-}
-
-
-
-.timepick {
-	width:90px;
-	border: 1px solid rgb(87, 160, 227);
-	border-radius: 10px;
-	padding-left:10px;
-}
-
-.modal_title {
-	font-family: "Jalnan";
-	color: color: rgb(87, 160, 227);
-	padding-top:20px;
-}
-
-
-
- #modal_content_st {
- 	width:460px; 
- 	margin:0 auto; 
- 	margin-top:170px;
- 	border-radius: 10px;
-	box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
- }
- 
- #eventDog {
- 	border: 1px solid rgb(87, 160, 227);
- 	border-radius: 10px;
- 	padding-left:10px;
- }
-
- h2 {
- 	font-family: "Jalnan";
- }
- 
-   /* header nav css  */
-
-      .nav-link {
-        font-family: "Roboto", sans-serif;
-        color: black;
-        font-family: "Jalnan";
-        font-size: 90%;
-        border-bottom:20px;
-      }
-
-      .navbar-toggler {
-        margin-left: 20px;
-        width: 30px;
-        display: contents;
-      }
-
-      .menu-trigger,
-      .menu-trigger span {
-        display: inline-block;
-        transition: all 0.4s;
-        box-sizing: border-box;
-      }
-
-      .menu-trigger {
-        position: relative;
-        width: 40px;
-        height: 34px;
-        margin-left: 30px;
-      }
-
-      .menu-trigger span {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background-color: gray;
-        border-radius: 4px;
-      }
-
-      .menu-trigger span:nth-of-type(1) {
-        top: 0;
-      }
-
-      .menu-trigger span:nth-of-type(2) {
-        top: 15px;
-      }
-
-      .menu-trigger span:nth-of-type(3) {
-        bottom: 0;
-      }
-
-      /* type-01 */
-      /* 중앙 라인이 고정된 자리에서 투명하게 사라지며 상하라인 회전하며 엑스자 만들기 */
-      .menu-trigger.active-1 span:nth-of-type(1) {
-        -webkit-transform: translateY (15px) rotate (-45deg);
-        transform: translateY(15px) rotate(-45deg);
-      }
-
-      .menu-trigger.active-1 span:nth-of-type(2) {
-        opacity: 0;
-      }
-
-      .menu-trigger.active-1 span:nth-of-type(3) {
-        -webkit-transform: translateY(-15px) rotate(45deg);
-        transform: translateY(-15px) rotate(45deg);
-      }
-
-
-</style>
-
-<script> 
-		//약관동의 토글
-    	function term_text_toggle(){
-    		$('.term_text').toggle();
-    	}
-		//예약내용모달open
-    	function modalOpen(path ,info){
-    		g_info = info;
-    		console.log(path);
- 
-			//수정,삽입 분기
-    		if(path == 'modify'){	
-    			//타이틀은 달력에 입력했었던 내용
-    			let array = g_info.event.title.split(',');
-    			let dog = array[0];
-    			let time = array[1];
-    
-    			let startTime = time.split('~')[0];
-    			let endTime = time.split('~')[1];
-    			
-    			if(!startTime.includes(':')){
-    				startTime = startTime.substring(0,2) + ":" + startTime.substring(2,4);	
-    			}
-    			if(!endTime.includes(':')){
-    				endTime = endTime.substring(0,2) + ":" + endTime.substring(2,4);		
-    			}
-    			
-    			//타이틀을 가져와서 인풋에 미리 채워주기
-    			$('#eventDog').val(dog);
-    			$('#eventStartTime').val(startTime);
-    			$('#eventEndTime').val(endTime);			
-    			
-    			
-    			$('#eventModifyForm').fadeIn();
-    			$('#modifyEvent').fadeIn();
-    			$('#deleteEvent').fadeIn()
-           		
-    		}else if(path == 'insert'){
-    			
-    			$('#eventModifyForm').fadeIn();
-    			$('#addEvent').fadeIn();
-    		}
-    		
-    	}
-    	
-		
-		//예약modal 닫기
-    	function modalClose(){
-			$('#addEvent').fadeOut();
-			$('#modifyEvent').fadeOut();
-			$('#deleteEvent').fadeOut();
-    		$("#eventModifyForm").fadeOut();
-    		$('#eventStartTime').val('');
-			$('#eventEndTime').val('');
-    	}
-        
-		//방문여부 선택 자바스크립트
-        $('#select1').click(function(){
-        	$('#select2').prop("checked", false);
-        	$('#select1').prop("checked", true);
-        });
-        $('#select2').click(function(){
-        	$('#select2').prop("checked", true);
-        	$('#select1').prop("checked", false);
-        });
-</script>
-
-
-<script>
-//모달 스크립트
-	function open_address_modal(){
-		console.log('입장확인');
-		$('#address_modal').show();
-	}
-	function close_address_modal(){
-		$('#address_modal').hide();	
-	}
-</script>
-
-<script>
-	//예약금액계산
-	function cost_cal() {
-		var allEvent = calendar.getEvents();
-		console.log(allEvent);
-		var events = new Array();
-
-		if (allEvent.length > 0) {
-			for (let i = 0; i < allEvent.length; i++) {
-				var obj = new Object();
-				console.log(allEvent[i]);
-				obj.title = allEvent[i]._def.title;
-				obj.allday = allEvent[i]._def.allDay;
-				obj.start = allEvent[i].startStr;
-				obj.end = allEvent[i].endStr;
-				events.push(obj);
-			}
-			let bookDate = JSON.stringify(events);
-			
-			//아작스로 비동기적 처리, json형태로 데이터 통신
-			$.ajax({
-				url : 'ajax/calMoney.do',
-				type : 'POST',
-				data : {
-					'book_date' : bookDate
-				},
-				success : function(result) {
-					//that.prop('name', data);
-					console.log('결과:' + result);
-					if (result != 0) {
-						//서버에서 계산한 값 form에 넣기 
-						$('#money').val(result); 
-						$('#show_money').text(result + '원');
-					} else {
-						$('#money').val('');
-						$('#show_money').text(' 0원');
-					}
-				}
-			});
-		} else {
-			$('#money').val('');
-		}
-	}
-</script>
-
 </head>
 
 <body>
@@ -845,6 +289,318 @@ td {
 			</div>
 		</div>
 	</div>
+	
+	<script>
+	//예약기능 달력 스크립트
+      var calendar = null;
+      var g_info = null;
+      $(document).ready(function(){  
+    	  
+      	//달력 api
+          var calendarEl = document.getElementById('calendar');
+          calendar = new FullCalendar.Calendar(calendarEl, {
+          	
+            //한글, 크기 설정
+            locale: "ko",
+            initialView: 'dayGridMonth',
+            width:400,
+            selectable: true,
+            editable: false,
+            droppable: true,
+            firstDay : 1,
+            
+        	  //달력내용수정
+            eventClick:function(info) {
+          	  modalOpen('modify',info);
+            },
+  		 //달력내용넣기
+            select: function(info) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+          	  let date = new Date();
+          	  if(info.start>new Date(date.setDate(date.getDate()+1))){
+            		$('#eventStartTime').val('10:00');
+          		$('#eventEndTime').val('12:00');
+          	  	modalOpen('insert',info);
+          	  }else{
+          		  //예약가능날짜체크
+          		  let arim =date.toLocaleDateString(date.setDate(date.getDate()+1));
+          		  alert(arim.substr(0,arim.length-1)+"부터 예약가능합니다");
+          		  
+          	  }
+          }});
+          calendar.render();
+        
+        //시작시간 ui설정,타임피커
+   		$('#eventStartTime').timepicker({
+   			timeFormat: 'HH:mm',
+ 	        interval: 60,
+ 	        minTime: '10',
+ 	        maxTime: '6:00pm',
+ 	        defaultTime: '10',
+ 	        startTime: '10:00',
+ 	        dynamic: false,
+ 	        dropdown: true,
+ 	        scrollbar: true
+
+ 		});
+        
+        //끝시간 ui설정
+   		$('#eventEndTime').timepicker({
+   		 	timeFormat: 'HH:mm',
+ 	        interval: 60,
+ 	        minTime: '12',
+ 	        maxTime: '8:00pm',
+ 	        defaultTime: '12',
+ 	        startTime: '12:00',
+ 	        dynamic: false,
+ 	        dropdown: true,
+ 	        scrollbar: true,        
+ 		});
+       
+      });
+     
+      //예약내용
+      function addEvent(g_info){
+    	  	let title = $('#eventDog').val() + "," + $('#eventStartTime').val() + "~" + $('#eventEndTime').val();
+			if($('#eventStartTime').val()=='' || $('#eventEndTime').val()==''){
+				alert('시간을 입력해주세요!');
+			}else{
+				let startTime = $('#eventStartTime').val();
+				let endTime = $('#eventEndTime').val();
+ 				let startTimeList = startTime.split(':');
+				let endTimeList = endTime.split(':');		
+				startTime = startTimeList[0] + startTimeList[1];
+				endTime = endTimeList[0] + endTimeList[1];
+				
+				console.log("스타트:"+startTime);
+				console.log("엔드:"+endTime);
+				
+				if(Number(startTime)+200>Number(endTime)){
+					alert('2시간 간격으로 입력해주세요!');
+				}else{
+		            calendar.addEvent({
+		            title: title,
+		            start: g_info.start,
+		            end: g_info.end,
+		            allDay: g_info.allDay
+		            })
+		            calendar.unselect();
+		            modalClose();
+		            cost_cal();
+				}
+
+			}
+     }
+      //예약정보변경
+      function modifyEvent(g_info){
+			let start = $('#eventStartTime').val();
+			let end = $('#eventEndTime').val();
+		
+			if(start=='' || end==''){
+				alert('시간을 입력해주세요!');
+			}else{
+				let startTime = $('#eventStartTime').val();
+				let endTime = $('#eventEndTime').val();			
+ 				let startTimeList = startTime.split(':');
+				let endTimeList = endTime.split(':');		
+				startTime = startTimeList[0] + startTimeList[1];
+				endTime = endTimeList[0] + endTimeList[1];	
+				
+				//200인 이유는, 입력값이 3시20분 즉 1520 이라면 -> 1720 이 나와야하기때문
+				if(Number(startTime)+200>Number(endTime)){
+					alert('2시간 간격으로 입력해주세요!');
+				}else{
+	    			if(!startTime.includes(':')){
+	    				startTime = startTime.substring(0,2) + ":" + startTime.substring(2,4);	
+	    			}
+	    			if(!endTime.includes(':')){
+	    				endTime = endTime.substring(0,2) + ":" + endTime.substring(2,4);		
+	    			}
+					
+					let title = $('#eventDog').val() + "," + startTime + "~" + endTime;
+					
+					console.log(title+"타이틀입니다");
+					//이벤트에 수정값을 넣어줍니다.
+		  		  	g_info.event.setProp('title', title);
+		  		  	modalClose();
+		  		  	cost_cal();
+				}
+				
+			}
+			
+	
+      }
+      //예약내용지우기
+      function deleteEvent(g_info){
+			g_info.event.remove();
+			modalClose();
+			cost_cal();
+      }
+      
+      //폼유효성검사
+      function checkResult() {
+    	var allEvent = calendar.getEvents();
+    	
+    	//예약내용체크
+  	  	if(allEvent.length==0){
+  	  		alert('예약일정을 등록해주세요!');
+  	  		return false;
+  	  	}else{
+  	  		//내용이있으면 히든 input에 등록
+  	  		sendBookDate();
+  	  	}
+  	  	
+  	  	if($("input[name=res_visit_is]:radio:checked").length<1){
+  	  		alert("방문여부를 선택해주세요!");
+  	  		return false;
+  	  	}
+      }
+      
+      //예약정보 백단에 넘기기
+      function sendBookDate(){
+    	  var allEvent = calendar.getEvents();   	  
+    	  console.log(allEvent);
+    	  var events = new Array();
+    	  for(let i=0; i< allEvent.length; i++){
+    		  var obj = new Object();
+    		  console.log(allEvent[i]);
+    		  obj.title = allEvent[i]._def.title;
+    		  obj.allday = allEvent[i]._def.allDay;
+    		  obj.start = allEvent[i].startStr;
+    		  obj.end = allEvent[i].endStr;		  
+    		  events.push(obj);
+    	  }
+    	  let bookDate = JSON.stringify(events);
+    	  $('#reciveBookData').val(bookDate);
+      }
+    </script>
+<!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+<script> 
+		//약관동의 토글
+    	function term_text_toggle(){
+    		$('.term_text').toggle();
+    	}
+		//예약내용모달open
+    	function modalOpen(path ,info){
+    		g_info = info;
+    		console.log(path);
+ 
+			//수정,삽입 분기
+    		if(path == 'modify'){	
+    			//타이틀은 달력에 입력했었던 내용
+    			let array = g_info.event.title.split(',');
+    			let dog = array[0];
+    			let time = array[1];
+    
+    			let startTime = time.split('~')[0];
+    			let endTime = time.split('~')[1];
+    			
+    			if(!startTime.includes(':')){
+    				startTime = startTime.substring(0,2) + ":" + startTime.substring(2,4);	
+    			}
+    			if(!endTime.includes(':')){
+    				endTime = endTime.substring(0,2) + ":" + endTime.substring(2,4);		
+    			}
+    			
+    			//타이틀을 가져와서 인풋에 미리 채워주기
+    			$('#eventDog').val(dog);
+    			$('#eventStartTime').val(startTime);
+    			$('#eventEndTime').val(endTime);			
+    			
+    			
+    			$('#eventModifyForm').fadeIn();
+    			$('#modifyEvent').fadeIn();
+    			$('#deleteEvent').fadeIn()
+           		
+    		}else if(path == 'insert'){
+    			
+    			$('#eventModifyForm').fadeIn();
+    			$('#addEvent').fadeIn();
+    		}
+    		
+    	}
+    	
+		
+		//예약modal 닫기
+    	function modalClose(){
+			$('#addEvent').fadeOut();
+			$('#modifyEvent').fadeOut();
+			$('#deleteEvent').fadeOut();
+    		$("#eventModifyForm").fadeOut();
+    		$('#eventStartTime').val('');
+			$('#eventEndTime').val('');
+    	}
+        
+		//방문여부 선택 자바스크립트
+        $('#select1').click(function(){
+        	$('#select2').prop("checked", false);
+        	$('#select1').prop("checked", true);
+        });
+        $('#select2').click(function(){
+        	$('#select2').prop("checked", true);
+        	$('#select1').prop("checked", false);
+        });
+</script>
+
+
+<script>
+//모달 스크립트
+	function open_address_modal(){
+		console.log('입장확인');
+		$('#address_modal').show();
+	}
+	function close_address_modal(){
+		$('#address_modal').hide();	
+	}
+</script>
+
+<script>
+	//예약금액계산
+	function cost_cal() {
+		var allEvent = calendar.getEvents();
+		console.log(allEvent);
+		var events = new Array();
+
+		if (allEvent.length > 0) {
+			for (let i = 0; i < allEvent.length; i++) {
+				var obj = new Object();
+				console.log(allEvent[i]);
+				obj.title = allEvent[i]._def.title;
+				obj.allday = allEvent[i]._def.allDay;
+				obj.start = allEvent[i].startStr;
+				obj.end = allEvent[i].endStr;
+				events.push(obj);
+			}
+			let bookDate = JSON.stringify(events);
+			
+			//아작스로 비동기적 처리, json형태로 데이터 통신
+			$.ajax({
+				url : 'ajax/calMoney.do',
+				type : 'POST',
+				data : {
+					'book_date' : bookDate
+				},
+				success : function(result) {
+					//that.prop('name', data);
+					console.log('결과:' + result);
+					if (result != 0) {
+						//서버에서 계산한 값 form에 넣기 
+						$('#money').val(result); 
+						$('#show_money').text(result + '원');
+					} else {
+						$('#money').val('');
+						$('#show_money').text(' 0원');
+					}
+				}
+			});
+		} else {
+			$('#money').val('');
+		}
+	}
+</script>
+	
 
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

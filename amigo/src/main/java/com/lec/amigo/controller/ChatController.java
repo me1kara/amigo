@@ -41,8 +41,29 @@ public class ChatController {
 	@Autowired
 	UserServiceImpl userService;
 	
+	/*
+	 * TODO : CL-1 채팅방목록 컨트롤러
+	 */
+	@GetMapping("/myChatList.do")
+	public String getChatRoomList(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		UserVO user = (UserVO)session.getAttribute("user");
+		int user_no = user.getUser_no();
+		List<ChatRoom> roomUserList = chatService.getRoomUserList(user_no);
+		List<UserVO> userList = userService.getUserList();
+		List<ChatVO> myChatRoomList = chatService.getMyChatRoomList(user_no);
+	
+		req.setAttribute("myChatRoomList", myChatRoomList);
+		req.setAttribute("userList", userList);
+		req.setAttribute("roomUserList", roomUserList);
+		
+		return "/view/chat/myChatList.jsp";
+	}
+	/*
+	 * TODO : CR-1 채팅방 컨트롤러
+	 */
 	@GetMapping("/chatList.do")
-	public String getChatList(HttpServletRequest req) {
+	public String getChatInRoom(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		UserVO user = (UserVO)session.getAttribute("user");
 		int user_no = user.getUser_no();
@@ -56,53 +77,9 @@ public class ChatController {
 		return "view/chat/chatRoom.jsp";
 	}
 	
-	
-	
-	//내채팅방목록
-	@GetMapping("/myChatList.do")
-	public String getMyChatList(HttpServletRequest req) {
-		System.out.println("입장확인용");
-		HttpSession session = req.getSession();
-		UserVO user = (UserVO)session.getAttribute("user");
-		int user_no = user.getUser_no();
-		
-/*		List<ChatRoom> elseRoomList = chatService.getElseRoomList(user_no);
-		ChatRoom checkRoom = chatService.getRoom(user_no);
-		List<ChatVO> myChatList = chatService.getMyChatList(user_no);*/
-		List<ChatRoom> roomUserList = chatService.getRoomUserList(user_no);
-		List<UserVO> userList = userService.getUserList();
-		List<ChatVO> myChatRoomList = chatService.getMyChatRoomList(user_no);
-	
-		req.setAttribute("myChatRoomList", myChatRoomList);
-		req.setAttribute("userList", userList);
-		req.setAttribute("roomUserList", roomUserList);
-		//해당방의 유저
-		/*
-		 * 
-		 * 
-		 * //방있는지여부 체크 req.setAttribute("checkRoom", checkRoom);
-		 * 
-		 * //내채팅방(마지막채팅 있는것만) req.setAttribute("myChatList", myChatList);
-		 * 
-		 * //채팅이 없는 채팅방 req.setAttribute("elseRoomList", elseRoomList);
-		 * 
-		 * //유저이름 매칭용 req.setAttribute("userList", userList);
-		 */
-		
-		return "/view/chat/myChatList.jsp";
-	}
-	
 	/*
-	 * @GetMapping("/exit_chat_room.do") public String
-	 * delete_room(HttpServletRequest req) {
-	 * 
-	 * int index = Integer.parseInt(req.getParameter("room_index")); int user_no =
-	 * ((UserVO)req.getSession().getAttribute("user")).getUser_no();
-	 * chatService.exitRoom(index,user_no);
-	 * 
-	 * return "view/chat/myChatList.jsp"; }
+	 * TODO : CD-1 채팅방 삭제 컨트롤러
 	 */
-	
 	@PostMapping("/ajax/deleteChatRoom.do")
 	@ResponseBody 
 	public int deleteChatRoom(HttpServletRequest req) {

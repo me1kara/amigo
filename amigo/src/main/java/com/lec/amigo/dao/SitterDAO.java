@@ -15,7 +15,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.mapper.BookContentRowMapper;
 import com.lec.amigo.mapper.SitRowMapper;

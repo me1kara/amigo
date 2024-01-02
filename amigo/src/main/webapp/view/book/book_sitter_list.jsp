@@ -111,21 +111,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     </style>
   </head>
   <body>
-    <script type="text/javascript">
-
-      $(document).ready(function(){
-        	 let b = ${calr};
-        	 $('#bookDate').val(JSON.stringify(b));
-      });
-       	function sendJsonUrl(curPage,rowSize){
-       		console.log('입장확인용');
-       	    var f = document.f;
-       	    f.curPage.value=curPage;
-       	    f.rowSizePerPage.value=rowSize;
-       	    f.submit();
-       	}
-    </script>
-
     <%@include file="/includes/header.jsp"%>
     <div class="container col-md-6">
       <section>
@@ -246,5 +231,18 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
       <input type="hidden" name="curPage" />
       <input type="hidden" id="bookDate" name="bookDate" />
     </form>
+     <script type="text/javascript">
+
+      $(document).ready(function(){
+        	 let b = ${calr};
+        	 $('#bookDate').val(JSON.stringify(b));
+      });
+       	function sendJsonUrl(curPage,rowSize){
+       	    var f = document.f;
+       	    f.curPage.value=curPage;
+       	    f.rowSizePerPage.value=rowSize;
+       	    f.submit();
+       	}
+    </script>
   </body>
 </html>

@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.lec.amigo.vo.UserVO;
-import com.lec.amigo.mapper.JDBCUtility;
+import com.lec.amigo.etc.JDBCUtility;
 import com.lec.amigo.mapper.UserRowMapper;
 
 @Repository("userDAO")

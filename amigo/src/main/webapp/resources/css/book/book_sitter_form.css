@@ -1,0 +1,238 @@
+ body {
+  padding-top: 50px;
+  /* 생략 */
+}
+  	li {
+	
+  font-family: "Roboto", sans-serif;
+  color: black;
+  font-family: "Jalnan";
+  font-size: 90%;
+  
+}
+td {
+	width: 100px;
+	heigth: 500px;
+}
+
+.select {
+	padding: 15px 10px;
+}
+
+.select input[type=radio] {
+	display: none;
+}
+
+.select input[type=radio]+label {
+	display: inline-block;
+	cursor: pointer;
+	height: 36px;
+	width: 90px;
+	border: 1px solid #333;
+	line-height: 36px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+	width: 150px;
+	border-radius: 5px;
+}
+
+.select input[type=radio]+label {
+	background-color: #fff;
+	color: #333;
+	width: 150px;
+}
+
+.select input[type=radio]:checked+label {
+	background-color: #333;
+	color: #fff;
+}
+
+.etc_content {
+	width: 100%;
+	height: 80px;
+	padding: 10px;
+	box-sizing: border-box;
+	border: solid 2px gray;
+	border-radius: 5px;
+	font-size: 16px;
+	resize: both;
+}
+
+#address {
+	border-radius: 5px;
+	border: solid 2px gray;
+}
+
+.item_change {
+	background: #d2d2d2;
+	border-radius: 5px;
+	border: none;
+	margin-left: 5px;
+	height: 30px;
+}
+
+.select input {
+	border-radius: 5px;
+	width: 150px;
+}
+
+.ctn_btn {
+	width: 150px;
+}
+
+.inline_box {
+	text-align: center;
+}
+
+.term_css {
+	display: block;
+}
+
+
+<!-- 일정입력 모달창, 컨트롤 f 강아지 검색하면 돼요 -->
+.modal{
+	position:absolute;
+	top:0; left:0;
+	dispaly:none;
+	background: rgba(0,0,0,0.8);
+}
+
+.fc-daygrid-day-number {
+  text-decoration-line: none;
+}
+
+.fc-col-header-cell-cushion{
+	text-decoration: none;
+}
+
+.fc-day{
+	width:61.92px;
+	hieght:25.61px;
+	text-overflow:ellipsis;
+}
+.fc-day a{
+	color : black;
+}
+.fc-day-sun a {
+  color: red;
+  text-decoration: none;
+}
+.fc-day-sat a {
+  color: blue;
+  text-decoration: none;
+}
+
+.fc-event-title-container{
+	text-align: center;
+}
+
+.ui-timepicker { 
+	font-size: 12px; width: 80px;
+	background: white;
+	position:relative;
+	z-index: 1056;
+}
+
+
+
+.timepick {
+	width:90px;
+	border: 1px solid rgb(87, 160, 227);
+	border-radius: 10px;
+	padding-left:10px;
+}
+
+.modal_title {
+	font-family: "Jalnan";
+	color: color: rgb(87, 160, 227);
+	padding-top:20px;
+}
+
+
+
+ #modal_content_st {
+ 	width:460px; 
+ 	margin:0 auto; 
+ 	margin-top:170px;
+ 	border-radius: 10px;
+	box-shadow: 5px 2px 20px rgba(0,0,0,0.2);
+ }
+ 
+ #eventDog {
+ 	border: 1px solid rgb(87, 160, 227);
+ 	border-radius: 10px;
+ 	padding-left:10px;
+ }
+
+ h2 {
+ 	font-family: "Jalnan";
+ }
+ 
+   /* header nav css  */
+
+      .nav-link {
+        font-family: "Roboto", sans-serif;
+        color: black;
+        font-family: "Jalnan";
+        font-size: 90%;
+        border-bottom:20px;
+      }
+
+      .navbar-toggler {
+        margin-left: 20px;
+        width: 30px;
+        display: contents;
+      }
+
+      .menu-trigger,
+      .menu-trigger span {
+        display: inline-block;
+        transition: all 0.4s;
+        box-sizing: border-box;
+      }
+
+      .menu-trigger {
+        position: relative;
+        width: 40px;
+        height: 34px;
+        margin-left: 30px;
+      }
+
+      .menu-trigger span {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: gray;
+        border-radius: 4px;
+      }
+
+      .menu-trigger span:nth-of-type(1) {
+        top: 0;
+      }
+
+      .menu-trigger span:nth-of-type(2) {
+        top: 15px;
+      }
+
+      .menu-trigger span:nth-of-type(3) {
+        bottom: 0;
+      }
+
+      /* type-01 */
+      /* 중앙 라인이 고정된 자리에서 투명하게 사라지며 상하라인 회전하며 엑스자 만들기 */
+      .menu-trigger.active-1 span:nth-of-type(1) {
+        -webkit-transform: translateY (15px) rotate (-45deg);
+        transform: translateY(15px) rotate(-45deg);
+      }
+
+      .menu-trigger.active-1 span:nth-of-type(2) {
+        opacity: 0;
+      }
+
+      .menu-trigger.active-1 span:nth-of-type(3) {
+        -webkit-transform: translateY(-15px) rotate(45deg);
+        transform: translateY(-15px) rotate(45deg);
+      }
+

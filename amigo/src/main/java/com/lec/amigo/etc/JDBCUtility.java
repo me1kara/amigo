@@ -1,4 +1,4 @@
-package com.lec.amigo.chat.JDBCUtility;
+package com.lec.amigo.etc;
 
 import java.sql.Connection;
 
@@ -7,14 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 
 public class JDBCUtility {
-
-	private final static String driver = "org.mariadb.jdbc.Driver";
-	private final static String url = "jdbc:mariadb://3.34.29.36:3306/amigo";
-	private final static String user = "amigo2";
-	private final static String pwd = "0104";
+	@Value("jdbc.driver")
+	private static String driver;
+	@Value("jdbc.url")
+	private static String url;
+	@Value("jdbc.user")
+	private static String user;
+	@Value("jdbc.pwd")
+	private static String pwd;
 	
 	public static Connection getConnection(){
 		Connection conn = null;	

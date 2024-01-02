@@ -89,25 +89,6 @@
     <![endif]-->
 </head>
 <body>
-	<!-- 로그인 화면에서는 네비바가 필요 없을거 같습니다. --> 
-	<!-- <@include file="/includes/header.jsp" %> -->
-	 
-	 <!--  
-	     과거 코드
-		<div class="container">
-	
-		<a href="login.do">이메일 로그인</a>
-		<br>
-		<a href="terms.do">이메일 가입</a>
-		<br> 
-		
-		<br><br>
-		<a href="main_tour.do">둘러보기</a>
-		
-		</div>
-		-->
-		
-		 <!-- 메인 화면-->
     <!-- icon -->
     <div class="container col-md-6 mb-5">
     <div class="contaier mt-5 text-center">
@@ -147,33 +128,6 @@
         </div>
       </div>
     </div>
-      
-      <!--   <div class="container mt-3 mb-5 py-5 h-100" align="center">
-          이메일 로그인
-          <button type="button" class="btn btn-primary btn-block" style="width:300px; height:50px" onclick="location.href='login.do';">
-            이메일 로그인
-          </button>
-          <button type="button" class="btn btn-secondary btn-block" style="width:300px; height:50px" onclick="location.href='terms.do';">
-            이메일 가입
-          </button> -->
-          <!-- 이메일 로그인 end -->
-          <!-- 카카오, 지메일 
-          <div class="container py-5 h-100" align="center">
-            <a class="kakaoLogin" href="#" alt="kakao">
-              <img src="resources/img/kakao.png" alt="kakaoButton" width="242" />
-            </a>
-            <a class="googleLogin" href="#" alt="google">
-              <img
-                src="resources/img/google.png"
-                alt="googleButton"
-                height="65"
-                width="250"
-              />
-            </a>
-          </div>
-          카카오, 지메일 end -->
-          
-        
         <hr />
         <div class="container text-center mt-2">
           <div class="row justify-content-center">

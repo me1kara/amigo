@@ -191,6 +191,7 @@ figure.amigo1224 {
         backface-visibility: hidden;
         vertical-align: top;
         opacity: 0.9;
+        margin: 0 0;
       }
       figure.amigo1224 .title {
         position: absolute;
@@ -306,9 +307,6 @@ figure.amigo1224 {
         transition-delay: 0.2s;
       }
 
-
-
-
 </style>
     
 <title>펫시터01_펫시터화면</title>    
@@ -415,8 +413,6 @@ figure.amigo1224 {
 			</section>
 		</div>
 		
-	<%@include file="/includes/footer.jsp" %>
-
-	
+	<%@include file="/includes/footer.jsp" %>	
 </body>
 </html>

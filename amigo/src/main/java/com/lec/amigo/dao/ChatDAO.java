@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
+import com.lec.amigo.etc.JDBCUtility;
 import com.lec.amigo.mapper.ChatRowMapper;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.ChatVO;

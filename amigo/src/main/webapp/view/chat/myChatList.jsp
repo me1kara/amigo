@@ -39,29 +39,6 @@
     	}	
     	
     </style>
-        
-    <script>
-    	function exit_room(index){
-    		if(confirm('정말로 채팅방을 나가시겠습니까? 환불을 원하시면 예약취소를 해주세요!')){
-    			$.ajax({
-    				url  : '/ajax/deleteChatRoom.do',
-    				type : 'POST',
-    				data : {
-    					'index' : index	
-    				},
-    				success : function(result){
-    					alert('삭제에 성공했습니다!');
-    					history.go(0);
-    				},
-    			    error : function(request, status, error) { // 결과 에러 콜백함수
-    			        console.log(error);
-    			        alert('삭제에 실패했습니다!');
-    			        history.go(0);
-    			    }
-    			});
-    		}
-    	}
-    </script>
 </head>
 <body>
 	
@@ -158,6 +135,29 @@
 		</div>
 
 		<%@include file="/includes/footer.jsp" %>
+		
+		    <script>
+    	function exit_room(index){
+    		if(confirm('정말로 채팅방을 나가시겠습니까? 환불을 원하시면 예약취소를 해주세요!')){
+    			$.ajax({
+    				url  : '/ajax/deleteChatRoom.do',
+    				type : 'POST',
+    				data : {
+    					'index' : index	
+    				},
+    				success : function(result){
+    					alert('삭제에 성공했습니다!');
+    					history.go(0);
+    				},
+    			    error : function(request, status, error) { // 결과 에러 콜백함수
+    			        console.log(error);
+    			        alert('삭제에 실패했습니다!');
+    			        history.go(0);
+    			    }
+    			});
+    		}
+    	}
+    </script>
 	
 </body>
 </html>

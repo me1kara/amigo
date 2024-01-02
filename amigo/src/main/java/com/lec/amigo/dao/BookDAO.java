@@ -22,9 +22,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.common.PagingVO;
 import com.lec.amigo.common.SearchVO;
+import com.lec.amigo.etc.JDBCUtility;
 import com.lec.amigo.mapper.BoardRowMapper;
 import com.lec.amigo.mapper.BookContentRowMapper;
 import com.lec.amigo.mapper.BookRowMapper;
@@ -368,7 +368,7 @@ public class BookDAO {
 		}else {
 			sql = "select r.res_no, res_etc, user_no, sit_no, res_regdate,res_date,res_pay, res_visit_is, res_term_is from reservation r, (select res_no, IF(DATEDIFF(max(res_date), min(res_date))!=0,concat(min(res_date),' ~ ',max(res_date)),min(res_date)) res_date,DATEDIFF(max(res_date), sysdate()) df from res_content GROUP BY res_no) rs where sit_no = (select p.sit_no from user u, petsitter p where u.user_no = p.user_no and p.user_no=?) and r.res_no = rs.res_no and rs.df>=0 ORDER BY res_date limit ?,?";
 		}
-		Connection conn = JDBCUtility.getConnection();
+		Connection conn = com.lec.amigo.etc.JDBCUtility.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<BookVO> bookList = new ArrayList<BookVO>();

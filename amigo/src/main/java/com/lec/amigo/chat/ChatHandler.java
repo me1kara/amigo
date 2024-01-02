@@ -28,7 +28,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.dao.ChatDAO;
 import com.lec.amigo.impl.ChatServiceImpl;
 import com.lec.amigo.vo.ChatRoom;
@@ -42,11 +41,21 @@ public class ChatHandler extends TextWebSocketHandler{
 	private static HashMap<String, WebSocketSession> sessions = new HashMap<>();
 	private static final String FILE_UPLOAD_PATH = "C:/FTP/upload/img/chatImg/";
 
+	private ChatServiceImpl chatServiceImpl;
+	private ChatUtil chatUtil;
+	
 	@Autowired
-	@Qualifier("chatService")
-	ChatServiceImpl chatServiceImpl;
+	public ChatHandler(ChatUtil chatUtil, ChatServiceImpl chatServiceImpl) {
+		this.chatServiceImpl = chatServiceImpl;
+		this.chatUtil = chatUtil;
+	}
 	
 	private final Logger logger = LoggerFactory.getLogger(ChatHandler.class);
+	
+	private final String ENTER = "enter";
+	private final String SEND = "send";
+	private final String EXIT = "exit";
+	private final String DELETE = "delete";
 	
 	//웹소켓에 최초 접근시
 	@Override
@@ -57,153 +66,57 @@ public class ChatHandler extends TextWebSocketHandler{
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-
 		//채팅메세지 받기
 		String msg = message.getPayload();
-		JSONObject jms = jsonToObjectParser(msg);
-	
-		String no=null;
-		int roomIndex=0;
-		String sendUser=null;
-		String text=null;
-		String type=null;
-
-		//메세지 분기, 삭제하란 요청이면
-		if(jms!=null && jms.size()==4) {
-				no = (String) jms.get("no");
-				roomIndex = Integer.parseInt((String)jms.get("roomIndex"));
-				if(no.equals("1")) {
-				sendUser =(String)jms.get("userName");				
-				}
-				
-		//메세지분기
-		}else if(jms!=null && jms.size()==5) {
-				no = (String) jms.get("no");
-				sendUser =(String)jms.get("userName");
-				roomIndex = Integer.parseInt((String)jms.get("roomIndex"));
-				type = (String) jms.get("type");
-		}		
-	
-		int user_no = getUser(session).getUser_no();
+		JSONObject chat = chatUtil.jsonToObjectParser(msg);
 		
+		//채팅구분
+		String order = (String) chat.get("order");
+		int roomIndex = Integer.parseInt((String)chat.get("roomIndex"));
+		String sendUser=sendUser =(String)chat.get("userName");					
+		int user_no = chatUtil.getUser(session).getUser_no();
 		
-		//채팅방 입장한것일시
-		if (no.equals("1")) {
-				for (String key : sessions.keySet()) {
-					WebSocketSession s = sessions.get(key);
-						if (s != session) { // 현재 접속자가 아닌 나머지 사람들				
-							try {
-								//세션의 로그인정보가 있으면
-								if(getUser(s)!=null) {
-									//해당 세션의 유저가 메세지의 룸번호를 가지고있는지 조회
-									boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
-									
-									//해당 				
-									if(checkIndex) {
-										s.sendMessage(new TextMessage(jms.toJSONString()));
-									}	
-								}
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-					
-					}
-				}
-		//채팅메세지일시
-		} else if (no.equals("2") && type.equals("message")) {
-			
-			//받은 메세지를 db에 삽입 
-			text = (String)jms.get("msg");
-			int a = chatServiceImpl.insertChatMessage(roomIndex, user_no, text);
-			int chat_no=0;
-			if(a>0) {
-				chat_no = chatServiceImpl.getLastChat(roomIndex).getChat_no();
-			}
-			
-			//같은 방 접속자에게 메세지 보내기 위한 로직
-			for (String key : sessions.keySet()) {
-				WebSocketSession s = sessions.get(key);							
-						try {
-							if(getUser(s)!=null) {
-								//같은 방인지 체크
-								boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);								
-								if(checkIndex) {
-									//json형태로 보내기
-									jms.put("chatNo", chat_no);
-									s.sendMessage(new TextMessage(jms.toJSONString()));							
-								}
-							}
-						} catch (IOException e) {
-							e.printStackTrace();
+		if(order!=null) {
+			String type = (String) chat.get("type");
+			if(type.equals("message")){
+				switch(order) { 
+					case SEND : {
+						//받은 메세지를 db에 삽입 
+						String text = (String)chat.get("msg");
+						int a = chatServiceImpl.insertChatMessage(roomIndex, user_no, text);
+						int chat_no=0;
+						if(a>0) {
+							chat_no = chatServiceImpl.getLastChat(roomIndex).getChat_no();
 						}
-			
-					//}
-				//}
-				
-			//}
-			}
-			
-		}else if(no.equals("2") && type.equals("fileUpload")){
-			//이미지일시		
-			String fileName = (String)jms.get("file");
-			chatServiceImpl.insertFile(roomIndex, user_no, fileName);
-		//나갔을시
-		}else if (no.equals("3")) {
-					for (String key : sessions.keySet()) {
-						WebSocketSession s = sessions.get(key);
-			
-						if (s != session) { // 현재 접속자가 아닌 나머지 사람들
-							try {			
-								if(getUser(s)!=null) {
-									boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
-									if(checkIndex) {
-									s.sendMessage(new TextMessage(jms.toJSONString()));
-									}
-								}
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}	
-					//}
-				}
-				sessions.remove(session.getId());
-			//삭제일시
-			}else if(no.equals("4")) {
-				String ab = (String)jms.get("chatNo");
-				int chat_no = Integer.parseInt(ab);
-				String fileName = chatServiceImpl.getFileName(chat_no);
-				
-				//서버에 파일존재여부체크, 있을시 삭제
-				File deleteFile = new File("C:/FTP/upload/img/chatImg/"+fileName);
-				if(deleteFile.exists()) {
-					deleteFile.delete();
-				}
-				//db삭제
-				chatServiceImpl.deleteChat(chat_no);
-				
-				//같은 방에 있는 유저들의 화면에서도 채팅이 삭제되게 하기
-					for (String key : sessions.keySet()) {
-						WebSocketSession s = sessions.get(key);
-						if (s != session) { // 현재 접속자가 아닌 나머지 사람들
-							try {
-								if(getUser(s)!=null) {
-					
-									boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);
-									if(checkIndex) {
+						chat.put("chatNo", chat_no);
 						
-										s.sendMessage(new TextMessage(jms.toJSONString()));
-									}
-								}
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}	
-					//}
+					}
+					case EXIT : {
+						sessions.remove(session.getId());
+					}
+					case DELETE : {
+						int chat_no = Integer.parseInt((String)chat.get("chatNo"));
+						String fileName = chatServiceImpl.getFileName(chat_no);
+						
+						//서버에 파일존재여부체크, 있을시 삭제
+						File deleteFile = new File("C:/FTP/upload/img/chatImg/"+fileName);
+						if(deleteFile.exists()) {
+							deleteFile.delete();
+						}
+						//db삭제
+						chatServiceImpl.deleteChat(chat_no);
+					}; 
 				}
-				}  
-				
-				
+				sendOtherSessions(session, chat, roomIndex, order);
+			}else {
+				//이미지일시		
+				String fileName = (String)chat.get("file");
+				chatServiceImpl.insertFile(roomIndex, user_no, fileName);
 			}
+		}
+	}
+	
+	
 	//파일을 서버에 저장하는 로직 
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
@@ -215,7 +128,7 @@ public class ChatHandler extends TextWebSocketHandler{
 		//url에서 방번호 구하는 로직
 		int roomIndex = Integer.parseInt(url.split("/chatHandler.do?")[1].substring(1));
 		//세션에 저장된 유저 읽어오기
-		UserVO user = getUser(session);
+		UserVO user = chatUtil.getUser(session);
 		
 		//파일 보낸이의 정보
 		int user_no = user.getUser_no();
@@ -260,18 +173,18 @@ public class ChatHandler extends TextWebSocketHandler{
 						try {
 							//세션아이디로 인덱스를 구하고,
 							//해당인덱스와 일치하면 문자를 보내면됨
-							if(getUser(s)!=null) {		
+							if(chatUtil.getUser(s)!=null) {		
 								//방번호 체크
-								boolean checkIndex = chatServiceImpl.checkRoomIndex(getUser(s).getUser_no(), roomIndex);								
+								boolean checkIndex = chatServiceImpl.checkRoomIndex(chatUtil.getUser(s).getUser_no(), roomIndex);								
 								if(checkIndex) {
-									JSONObject jms = new JSONObject();
-									jms.put("no", "2");
-									jms.put("type", "file");
-									jms.put("fileName", fileName);
-									jms.put("roomIndex", roomIndex);
-									jms.put("userName", sendUser);
-									jms.put("chatNo", last_chat_no);								
-									s.sendMessage(new TextMessage(jms.toJSONString()));
+									JSONObject chat = new JSONObject();
+									chat.put("order", SEND);
+									chat.put("type", "file");
+									chat.put("fileName", fileName);
+									chat.put("roomIndex", roomIndex);
+									chat.put("userName", sendUser);
+									chat.put("chatNo", last_chat_no);								
+									s.sendMessage(new TextMessage(chat.toJSONString()));
 								}
 							}
 							//s.getBasicRemote().sendText("2#" + snderId +"#" + text);
@@ -300,27 +213,47 @@ public class ChatHandler extends TextWebSocketHandler{
 		
 	}	
 	
-	//http세션에 담긴 유저얻어오기
-	private UserVO getUser(WebSocketSession session) {
-		Map<String, Object> httpSession = session.getAttributes();
-		UserVO loginUser = (UserVO)httpSession.get("user");
-		
-		if(loginUser!=null) {
-			return loginUser;
-		}else return null;
-		
-	}
-	
-	//json파싱용
-	private static JSONObject jsonToObjectParser(String jsonStr) {
-		JSONParser parser = new JSONParser();
-		JSONObject obj = null;
-		try {
-			obj = (JSONObject) parser.parse(jsonStr);
-		} catch (ParseException e) {
-			e.printStackTrace();
+	private void sendOtherSessions(WebSocketSession session, JSONObject chat, int roomIndex,String order) {
+		if(order.equals(SEND)) {
+			for (String key : sessions.keySet()) {
+				WebSocketSession s = sessions.get(key);
+				try {
+					//세션의 로그인정보가 있으면
+					if(chatUtil.getUser(s)!=null) {
+						//해당 세션의 유저가 메세지의 룸번호를 가지고있는지 조회
+						boolean checkIndex = chatServiceImpl.checkRoomIndex(chatUtil.getUser(s).getUser_no(), roomIndex);
+						//해당 				
+						if(checkIndex) {
+							s.sendMessage(new TextMessage(chat.toJSONString()));
+						}	
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}else {
+			for (String key : sessions.keySet()) {
+				WebSocketSession s = sessions.get(key);
+					if (s != session) { // 현재 접속자가 아닌 나머지 사람들				
+						try {
+							//세션의 로그인정보가 있으면
+							if(chatUtil.getUser(s)!=null) {
+								//해당 세션의 유저가 메세지의 룸번호를 가지고있는지 조회
+								boolean checkIndex = chatServiceImpl.checkRoomIndex(chatUtil.getUser(s).getUser_no(), roomIndex);
+								//해당 				
+								if(checkIndex) {
+									s.sendMessage(new TextMessage(chat.toJSONString()));
+								}	
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
+					}
+				
+				}
+			}
 		}
-		return obj;
+		
 	}
 
 }

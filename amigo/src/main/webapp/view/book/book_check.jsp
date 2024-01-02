@@ -88,115 +88,7 @@
 	
 </style>
 
-<script>
 
-	//예약내용 모달 열기
-	function open_book_modal(e){
-		let rno = $(e).find("#book_res_no").text();
-
-		let sit_name = $(e).find("#sit_name").text();
-		let sit_no = $(e).find("#sit_no").text();
-		
-		console.log(sit_name, sit_no);
-		//let res_state = $(e).find("#book_res_state").text();
-		getBook_detail(rno, sit_name, sit_no);
-		$('.modal').fadeIn();
-		$('body').css("overflow", "hidden");
-	}
-	//예약내용 모달 닫기
-	function close_book_modal(){
-		$('.modal').fadeOut();
-		$('.book_content').remove();
-		$('.book_btn').remove();	
-		$('body').css("overflow", "auto");
-	}
-	
-	//예약내용모달 구하는 로직, ajax
-	function getBook_detail(rno,user_name,sit_no){
- 		$.ajax({
-			url : '/ajax/getBook_detail.do',
-			type : 'POST',
-			data : {
-				'rno' : rno
-			},
-			success : function(result) {
-				let modalBody = $('.modal_body');
-				if (result != null) {
-					let temp='<ul class="book_content list-group" style="overflow: auto;">';
-					result.forEach((content, index) =>{
-						console.log(content);
-						temp += '<li style="padding:5px;"><table class="table-sm table-bordered table-modal" border="2" style="width:95%;">';
-						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:20%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
-						temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">시간</td><td>' + content.res_time +'</td></tr>';
-						temp += '<tr style="border-bottom:1px solid black; vertical-align: middle;"><td class="modal_tTitle">장소</td><td>' + content.res_addr +'</td></tr>';
-						temp += '</table></li>';
-					});
-					temp+='</ul>';
-					
-					console.log(sit_no);
-					console.log(user_name);
-					
-					//날짜 비교해서 취소하기 버튼 유무
-					let res_start = new Date(result[0].res_date);
-					let today = new Date();	
-					let limitDay = new Date(res_start);
-					limitDay.setDate(res_start.getDate()-1);
-					console.log(today + limitDay + res_start);
-					
-					//이전기록,현재기록 확인하기,현재기록일시에만 취소버튼 나오게
-					let cate;
-					if('${searchVO.getSearchCategory()}'!=''){
-						cate = '${searchVO.getSearchCategory()}';
-					}
-					if(today<limitDay){
-						temp+='<button class="btn btn-light book_btn btn-outline-danger" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
-					}else if(cate=='past'){
-						temp+='<button class="btn btn-ligth book_btn btn-outline-info" style="position:relative;"><a href="/sit_review_list.do?sit_no='+sit_no+"&user_name="+user_name+'">리뷰목록</a></button>';
-					}else{
-						temp+='<button disabled="disabled" class="btn btn-light book_btn btn-outline-dark" style="position:relative;">취소불가</button>';
-					}
-					modalBody.append(temp);
-				} else {
-					alert('예약정보가 없습니다! 다시 시도해주세요!');
-					close_book_modal();
-				}
-			}
-		});
-		
-	}
-	
-	
-	//예약취소함수
-	function book_delete(rno){
-		if(confirm('정말로 취소하시겠습니까?')){
-			$.ajax({
-				url  : '/ajax/deleteBook.do',
-				type : 'POST',
-				data : {
-					'rno' : rno	
-				},
-				success : function(payment){
-					if(payment!=null){
-						history.go(0);
-					}else{
-						alert('삭제에 실패했습니다!');
-					    close_book_modal();
-					}
-				},
-			    error : function(request, status, error) { // 결과 에러 콜백함수
-			        console.log(error);
-			        alert('삭제에 실패했습니다!');
-			        history.go(0);
-			    }
-			});
-			
-		}
-	}
-	
- 	function cancelPay() {
-		
-	  } 
-</script>
 </head>
 <body>
 	<%@include file="/includes/header.jsp" %>
@@ -336,6 +228,112 @@
 				
 		
 	<%@include file="/includes/footer.jsp" %>
+	
+	<script>
+
+	//예약내용 모달 열기
+	function open_book_modal(e){
+		let rno = $(e).find("#book_res_no").text();
+
+		let sit_name = $(e).find("#sit_name").text();
+		let sit_no = $(e).find("#sit_no").text();
+		
+		console.log(sit_name, sit_no);
+		//let res_state = $(e).find("#book_res_state").text();
+		getBook_detail(rno, sit_name, sit_no);
+		$('.modal').fadeIn();
+		$('body').css("overflow", "hidden");
+	}
+	//예약내용 모달 닫기
+	function close_book_modal(){
+		$('.modal').fadeOut();
+		$('.book_content').remove();
+		$('.book_btn').remove();	
+		$('body').css("overflow", "auto");
+	}
+	
+	//예약내용모달 구하는 로직, ajax
+	function getBook_detail(rno,user_name,sit_no){
+ 		$.ajax({
+			url : '/ajax/getBook_detail.do',
+			type : 'POST',
+			data : {
+				'rno' : rno
+			},
+			success : function(result) {
+				let modalBody = $('.modal_body');
+				if (result != null) {
+					let temp='<ul class="book_content list-group" style="overflow: auto;">';
+					result.forEach((content, index) =>{
+						console.log(content);
+						temp += '<li style="padding:5px;"><table class="table-sm table-bordered table-modal" border="2" style="width:95%;">';
+						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:20%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
+						temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">시간</td><td>' + content.res_time +'</td></tr>';
+						temp += '<tr style="border-bottom:1px solid black; vertical-align: middle;"><td class="modal_tTitle">장소</td><td>' + content.res_addr +'</td></tr>';
+						temp += '</table></li>';
+					});
+					temp+='</ul>';
+					
+					console.log(sit_no);
+					console.log(user_name);
+					
+					//날짜 비교해서 취소하기 버튼 유무
+					let res_start = new Date(result[0].res_date);
+					let today = new Date();	
+					let limitDay = new Date(res_start);
+					limitDay.setDate(res_start.getDate()-1);
+					console.log(today + limitDay + res_start);
+					
+					//이전기록,현재기록 확인하기,현재기록일시에만 취소버튼 나오게
+					let cate;
+					if('${searchVO.getSearchCategory()}'!=''){
+						cate = '${searchVO.getSearchCategory()}';
+					}
+					if(today<limitDay){
+						temp+='<button class="btn btn-light book_btn btn-outline-danger" onclick="book_delete('+rno+')" style="position:relative;">예약취소</button>';
+					}else if(cate=='past'){
+						temp+='<button class="btn btn-ligth book_btn btn-outline-info" style="position:relative;"><a href="/sit_review_list.do?sit_no='+sit_no+"&user_name="+user_name+'">리뷰목록</a></button>';
+					}else{
+						temp+='<button disabled="disabled" class="btn btn-light book_btn btn-outline-dark" style="position:relative;">취소불가</button>';
+					}
+					modalBody.append(temp);
+				} else {
+					alert('예약정보가 없습니다! 다시 시도해주세요!');
+					close_book_modal();
+				}
+			}
+		});
+		
+	}
+	
+	
+	//예약취소함수
+	function book_delete(rno){
+		if(confirm('정말로 취소하시겠습니까?')){
+			$.ajax({
+				url  : '/ajax/deleteBook.do',
+				type : 'POST',
+				data : {
+					'rno' : rno	
+				},
+				success : function(payment){
+					if(payment!=null){
+						history.go(0);
+					}else{
+						alert('삭제에 실패했습니다!');
+					    close_book_modal();
+					}
+				},
+			    error : function(request, status, error) { // 결과 에러 콜백함수
+			        console.log(error);
+			        alert('삭제에 실패했습니다!');
+			        history.go(0);
+			    }
+			});
+			
+		}
+	}
+</script>
 
 	
 </body>

@@ -79,55 +79,7 @@
 	
 </style>
 
-<script>
-	//예약내용모달 오픈
-	function open_book_modal(e){
-		//this의 자식찾아서 내용가져오기, 번호를 통해 ajax로 내용조회
-		let rno = $(e).find("#book_res_no").text();		
-		getBook_detail(rno);
-		$('.modal').fadeIn();
-		$('body').css("overflow", "hidden");
-		
-	}
-	//예약내용모달 닫기
-	function close_book_modal(){
-		$('.modal').fadeOut();
-		$('.book_content').remove();
-		$('body').css("overflow", "auto");
-	}
-	
-	//예약내용 ajax로 서버에서 구해오기
-	function getBook_detail(rno){
- 		$.ajax({
-			url : '/ajax/getBook_detail.do',
-			type : 'POST',
-			data : {
-				'rno' : rno
-			},
-			success : function(result) {
-				let modalBody = $('.modal_body');
-				if (result != null) {
-					let temp='<ul class="book_content list-group" style="overflow: auto;">';
-					//한 예약에 여러 날짜가 들어갈 수 있기때문에 포문을 돌려줌
-					result.forEach((content, index) =>{
-						temp += '<li style="padding:5px;"><table class="table-sm table-bordered table-modal" border="2" style="width:95%;">';
-						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:50%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
-						temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">시간</td><td>' + content.res_time +'</td></tr>';
-						temp += '<tr style="border-bottom:1px solid black; vertical-align: middle;"><td class="modal_tTitle">장소</td><td>' + content.res_addr +'</td></tr>';
-						temp += '</table></li>';
-					});
-					temp+='</ul>';
-					modalBody.append(temp);
-				} else {
-					alert('예약정보가 없습니다! 다시 시도해주세요!');
-					close_book_modal();
-				}
-			}
-		});
-		
-	}
-	
-</script>
+
 </head>
 <body>
 			<!--페이징을 위한 세팅  -->
@@ -265,6 +217,55 @@
 				
 		
 	<%@include file="/includes/footer.jsp" %>
+	<script>
+	//예약내용모달 오픈
+	function open_book_modal(e){
+		//this의 자식찾아서 내용가져오기, 번호를 통해 ajax로 내용조회
+		let rno = $(e).find("#book_res_no").text();		
+		getBook_detail(rno);
+		$('.modal').fadeIn();
+		$('body').css("overflow", "hidden");
+		
+	}
+	//예약내용모달 닫기
+	function close_book_modal(){
+		$('.modal').fadeOut();
+		$('.book_content').remove();
+		$('body').css("overflow", "auto");
+	}
+	
+	//예약내용 ajax로 서버에서 구해오기
+	function getBook_detail(rno){
+ 		$.ajax({
+			url : '/ajax/getBook_detail.do',
+			type : 'POST',
+			data : {
+				'rno' : rno
+			},
+			success : function(result) {
+				let modalBody = $('.modal_body');
+				if (result != null) {
+					let temp='<ul class="book_content list-group" style="overflow: auto;">';
+					//한 예약에 여러 날짜가 들어갈 수 있기때문에 포문을 돌려줌
+					result.forEach((content, index) =>{
+						temp += '<li style="padding:5px;"><table class="table-sm table-bordered table-modal" border="2" style="width:95%;">';
+						temp += '<tr style="border-bottom:solid 1px black;"><td style="width:50%;" class="modal_tTitle">일자</td><td style="width:50%;">' + content.res_date +'</td></tr>';
+						temp += '<tr style="border-bottom:solid 1px black;"><td class="modal_tTitle">시간</td><td>' + content.res_time +'</td></tr>';
+						temp += '<tr style="border-bottom:1px solid black; vertical-align: middle;"><td class="modal_tTitle">장소</td><td>' + content.res_addr +'</td></tr>';
+						temp += '</table></li>';
+					});
+					temp+='</ul>';
+					modalBody.append(temp);
+				} else {
+					alert('예약정보가 없습니다! 다시 시도해주세요!');
+					close_book_modal();
+				}
+			}
+		});
+		
+	}
+	
+</script>
 
 	
 </body>

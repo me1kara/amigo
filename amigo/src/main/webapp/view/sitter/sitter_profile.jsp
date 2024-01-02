@@ -54,62 +54,7 @@
     	}
     	#rev_list::-webkit-scrollbar { display:none; }
     </style>
-    <script>	
-    
-    //아임포트 결제api 구동, 
-		function requestPay() {
-			var IMP = window.IMP; 
-			IMP.init("imp07716558"); 
-		    IMP.request_pay({
-		        pg : 'html5_inicis.INIpayTest',
-		        pay_method : 'card',
-		        merchant_uid: 'merchant_'+new Date().getTime(), 
-		        name : '시터예약',
-		        amount : '100', //${book.res_pay},테스트용으로 100원 고정
-		        buyer_email : '<%=user.getUser_email()%>',
-		        buyer_name : '<%=user.getUser_name()%>',
-		        buyer_tel : '<%=user.getUser_phone()%>',
-		        buyer_addr : '<%=user.getUser_addr()%>',
-		        buyer_postcode : <%=user.getUser_no() %>
-		    }, function (rsp) { // callback
-		    	
-		    	//결제성공시
-		        if (rsp.success) {
-		        	
-		        	//백단에 내용전달
-					$.ajax({
-						url : 'ajax/payment.do',
-						type : 'POST',
-			            //dataType: 'json',
-			            contentType: 'application/json; charset=utf-8',
-						data : JSON.stringify(rsp),
-						success : function(result) {
-							console.log(result);
-							
-							//백단에 성공적으로 들어갔을시
-							//실패시 자동환불(백단에서)
-							let process_result = result.process_result.split(":");
- 							if(process_result[0]=='결제성공'){
-								alert('결제성공!');
-								
-								//성공시 완료페이지로 이동
-								let alink = '/requestBook.do?sit_no='+${sitter.sit_no }+'&merchant_uid='+process_result[1]+"";
-								console.log(alink);
-								window.location.href = alink;
-							}else{
-								alert(process_result[1]);
-							}
-
-						},error: function(result){
-							alert(result);
-						}
-					});
-		        } else {
-		            alert("결제실패!");
-		        }
-		    });
-		}
-</script>
+ 
 </head>
 
 <body>
@@ -180,36 +125,65 @@
 				<article>
 					<button type="button" class="btn btn-secondary" id="pay_btn" onclick="requestPay()">결제 및 신청</button>
 				</article>
-<%-- 			<a href="/requestBook.do?sit_no=${sitter.sit_no }">신청</a>
-				<br>
-				<a href="/view/review/user_review_insert.do?sit_no=${sitter.sit_no}&user_name=${sitter.user_name}">리뷰작성</a> --%><!-- 리뷰작성 컨트롤러로 진입 -->
-
-
-
-<!-- 메시지 요청된 리소스 [/view/review/user_review_insert.do]은(는) 가용하지 않습니다. -->
-<!-- 파일 [/view/review/view/review/review_insert.jsp]을(를) 찾을 수 없습니다. -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 				</section>
 			</div>
 	<%@include file="/includes/footer.jsp" %>
+	   <script>	
+    
+    //아임포트 결제api 구동, 
+		function requestPay() {
+			var IMP = window.IMP; 
+			IMP.init("imp07716558"); 
+		    IMP.request_pay({
+		        pg : 'html5_inicis.INIpayTest',
+		        pay_method : 'card',
+		        merchant_uid: 'merchant_'+new Date().getTime(), 
+		        name : '시터예약',
+		        amount : '100', //${book.res_pay},테스트용으로 100원 고정
+		        buyer_email : '<%=user.getUser_email()%>',
+		        buyer_name : '<%=user.getUser_name()%>',
+		        buyer_tel : '<%=user.getUser_phone()%>',
+		        buyer_addr : '<%=user.getUser_addr()%>',
+		        buyer_postcode : <%=user.getUser_no() %>
+		    }, function (rsp) { // callback
+		    	
+		    	//결제성공시
+		        if (rsp.success) {
+		        	
+		        	//백단에 내용전달
+					$.ajax({
+						url : 'ajax/payment.do',
+						type : 'POST',
+			            //dataType: 'json',
+			            contentType: 'application/json; charset=utf-8',
+						data : JSON.stringify(rsp),
+						success : function(result) {
+							console.log(result);
+							
+							//백단에 성공적으로 들어갔을시
+							//실패시 자동환불(백단에서)
+							let process_result = result.process_result.split(":");
+ 							if(process_result[0]=='결제성공'){
+								alert('결제성공!');
+								
+								//성공시 완료페이지로 이동
+								let alink = '/requestBook.do?sit_no='+${sitter.sit_no }+'&merchant_uid='+process_result[1]+"";
+								console.log(alink);
+								window.location.href = alink;
+							}else{
+								alert(process_result[1]);
+							}
 
+						},error: function(result){
+							alert(result);
+						}
+					});
+		        } else {
+		            alert("결제실패!");
+		        }
+		    });
+		}
+</script>
 	
 </body>
 </html>

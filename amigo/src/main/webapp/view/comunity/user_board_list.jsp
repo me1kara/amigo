@@ -111,30 +111,7 @@
                    <option value="자유글">자유글</option>                     
                    <option value="질문">질문</option>                              
                </select>
-                 </div>
-            
-   
-               
-               <script type="text/javascript">
-               
-               function chageSelect(){ 
-                  
-                  var selectList = document.getElementById("searchCategory")
-                  
-                  if(selectList.options[selectList.selectedIndex].value == "말머리"){
-                     location.href = "user_board_list.do?";
-                  }
-                  if(selectList.options[selectList.selectedIndex].value == "자랑글"){
-                     location.href = "user_board_cate.do?ubd_cate=자랑글";
-                  }
-                  if(selectList.options[selectList.selectedIndex].value == "자유글"){
-                     location.href = "user_board_cate.do?ubd_cate=자유글";
-                  }
-                  if(selectList.options[selectList.selectedIndex].value == "질문"){
-                     location.href = "user_board_cate.do?ubd_cate=질문";
-                  }
-               }
-               </script>         
+                 </div>    
             
          </div>
       
@@ -252,5 +229,26 @@
        
 <%@include file="/includes/scrollTop.jsp" %>       
 <%@include file="/includes/footer.jsp" %>
+
+               <script type="text/javascript">
+               
+               function chageSelect(){ 
+                  
+                  var selectList = document.getElementById("searchCategory")
+                  
+                  if(selectList.options[selectList.selectedIndex].value == "말머리"){
+                     location.href = "user_board_list.do?";
+                  }
+                  if(selectList.options[selectList.selectedIndex].value == "자랑글"){
+                     location.href = "user_board_cate.do?ubd_cate=자랑글";
+                  }
+                  if(selectList.options[selectList.selectedIndex].value == "자유글"){
+                     location.href = "user_board_cate.do?ubd_cate=자유글";
+                  }
+                  if(selectList.options[selectList.selectedIndex].value == "질문"){
+                     location.href = "user_board_cate.do?ubd_cate=질문";
+                  }
+               }
+               </script>     
 </body>
 </html>
