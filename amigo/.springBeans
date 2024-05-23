@@ -10,6 +10,7 @@
 	</configs>
 	<autoconfigs>
 		<config>src/main/resources/applicationContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

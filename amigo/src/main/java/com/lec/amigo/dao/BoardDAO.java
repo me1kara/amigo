@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,10 +17,13 @@ import com.lec.amigo.mapper.BoardRowMapper;
 import com.lec.amigo.vo.BoardVO;
 import com.lec.amigo.vo.HeartVO;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 
 @Repository("boardDAO")
 @PropertySource("classpath:config/boardsql.properties")
+@Slf4j
 public class BoardDAO {
 
 	@Autowired
@@ -176,8 +180,13 @@ public class BoardDAO {
 
 
 	public BoardVO getBoard(BoardVO board) {
-		Object[] args = { board.getUbd_no() };		
-		return (BoardVO) jdbcTemplate.queryForObject(selectByUbdNo, args, new BoardRowMapper());
+	    Object[] args = { board.getUbd_no() };		
+	    try {
+	        return (BoardVO) jdbcTemplate.queryForObject(selectByUbdNo, args, new BoardRowMapper());
+	    } catch (EmptyResultDataAccessException e) {
+	        log.error("selectByUbdNo = {}",e.getMessage());
+	        return new BoardVO(); 
+	    }
 	}
 
 

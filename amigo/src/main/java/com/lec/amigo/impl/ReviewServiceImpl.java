@@ -1,6 +1,7 @@
 package com.lec.amigo.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,6 +77,12 @@ public class ReviewServiceImpl implements ReviewService {
 		// TODO Auto-generated method stub
 		return reviewDAO.ssrc5();
 	}
+	
+	@Override
+	public List<Map<String, Object>> ssrc() {
+		// TODO Auto-generated method stub
+		return reviewDAO.ssrc();
+	}
 
 	@Override
 	public int starsTotalCount() {
@@ -95,6 +102,8 @@ public class ReviewServiceImpl implements ReviewService {
 		// TODO Auto-generated method stub
 		return reviewDAO.starsAveragePerSit(sit_no);
 	}
+
+
 	
 	
 

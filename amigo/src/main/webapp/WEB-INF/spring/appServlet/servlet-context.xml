@@ -15,11 +15,9 @@
 	
 	<resources mapping="/resources/**" location="/resources/" />
 	
-	<!-- controller빈 -->
-	<context:component-scan base-package="com.lec.amigo.controller"/>	
+	<context:component-scan base-package="com.lec.amigo" />
 	
-	<!-- amigo빈 -->
-	<context:component-scan base-package="com.lec.amigo"/>
+
 	
 	<!-- 파일전송 -->
 	<beans:bean id="multipartResolver"

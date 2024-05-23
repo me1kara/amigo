@@ -213,7 +213,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
               </c:if>
             </c:when>
             <c:otherwise>
-              <h1>해당한 지역의 펫시터가 없습니다!</h1>
+              <h1 style="text-align: center;">죄송합니다.펫시터가 없습니다!</h1>
             </c:otherwise>
           </c:choose>
         </article>

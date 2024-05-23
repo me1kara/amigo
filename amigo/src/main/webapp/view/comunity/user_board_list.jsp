@@ -118,7 +118,7 @@
 
       <div class="container">               
          <c:if test="${ boardList.isEmpty() }">
-            <h6>등록된 게시판 정보가 존재하지 않습니다. 다시 확인해주세요.</h6>
+            <h6 class="text-center">등록된 글이 없습니다.</h6>
          </c:if>
                <c:forEach  var="board" items="${ boardList }">
                     <div class="container" style="cursor: pointer;">

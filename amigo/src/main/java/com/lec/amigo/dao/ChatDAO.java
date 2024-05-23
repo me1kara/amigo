@@ -4,23 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import javax.websocket.Session;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.socket.WebSocketSession;
-
 import com.lec.amigo.etc.JDBCUtility;
 import com.lec.amigo.mapper.ChatRowMapper;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.ChatVO;
-import com.lec.amigo.vo.UserVO;
 
 
 
@@ -59,17 +53,34 @@ public class ChatDAO {
 
 	}
 	//채팅내용 넣기
-	public int insertChat(int index, int user_no, String content) {
+    public int insertChat(int index, int user_no, String content) {
+        String sql = "INSERT INTO sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) VALUES (?, ?, ?, DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'), 0, ?, ?)";
+        try (Connection conn = JDBCUtility.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-		String sql = "insert into sit_chat(sitt_chat_index, user_no, sitt_chat_content, sitt_chat_regdate, sitt_chat_readis, sitt_chat_file, sitt_chat_emo) values(?,?,?,DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'),0,?,?)";
-		try {
-			return jdbcTemplate.update(sql, index, user_no, content, null, null);
-		} catch (Exception e) {
-			e.getMessage();
-			return 0;
-		}
-		
-	}
+            pstmt.setInt(1, index);
+            pstmt.setInt(2, user_no);
+            pstmt.setString(3, content);
+            pstmt.setNull(4, java.sql.Types.VARCHAR);
+            pstmt.setNull(5, java.sql.Types.VARCHAR);
+
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Insertion failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Insertion failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // 예외 처리
+            return 0;
+        }
+    }
 	
 	//파일이름 삽입로직
 	public void insertFile(int roomIndex, int user_no, String fileName) {

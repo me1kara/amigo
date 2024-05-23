@@ -7,18 +7,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 
+
+@Configuration
+@PropertySource("classpath:/config/database.properties")
 public class JDBCUtility {
-	@Value("jdbc.driver")
 	private static String driver;
-	@Value("jdbc.url")
 	private static String url;
-	@Value("jdbc.user")
 	private static String user;
-	@Value("jdbc.pwd")
 	private static String pwd;
+
+	@Autowired
+	public JDBCUtility(Environment env) {
+		driver = env.getProperty("jdbc.driver");
+		url = env.getProperty("jdbc.url");
+		user = env.getProperty("jdbc.username");
+		pwd = env.getProperty("jdbc.password");
+	}
 	
 	public static Connection getConnection(){
 		Connection conn = null;	

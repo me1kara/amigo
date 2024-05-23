@@ -1,27 +1,19 @@
 package com.lec.amigo.controller;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.mail.search.IntegerComparisonTerm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.eclipse.jdt.internal.compiler.lookup.ImportConflictBinding;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
@@ -29,18 +21,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.annotation.RequestScope;
-
-import com.lec.amigo.common.PagingVO;
 import com.lec.amigo.common.SearchVO;
-import com.lec.amigo.dao.SitterDAO;
 import com.lec.amigo.impl.BookServiceImpl;
 import com.lec.amigo.impl.DogServiceImpl;
 import com.lec.amigo.impl.ReviewServiceImpl;
@@ -49,37 +36,28 @@ import com.lec.amigo.impl.UserServiceImpl;
 import com.lec.amigo.vo.BookContentVO;
 import com.lec.amigo.vo.BookVO;
 import com.lec.amigo.vo.DogVO;
-import com.lec.amigo.vo.HeartVO;
 import com.lec.amigo.vo.Payment;
 import com.lec.amigo.vo.ReviewVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @PropertySource("classpath:config/iamport.properties")
 @Controller
+@RequiredArgsConstructor
+@Slf4j
 public class BookController {
-	
-	@Autowired
-	BookServiceImpl bookService;
-	
-	@Autowired
-	ReviewServiceImpl reviewService;
-	
-	@Autowired
-	SitterServiceImpl sitterService;
-	
-	@Autowired
-	UserServiceImpl userService;
-	
-	@Autowired
-	DogServiceImpl dogSerice;
-	
-	@Autowired
-	Environment environment;
+	private final BookServiceImpl bookService;
+	private final ReviewServiceImpl reviewService;
+	private final SitterServiceImpl sitterService;
+	private final UserServiceImpl userService;
+	private final DogServiceImpl dogSerice;
+	private final Environment environment;
 	
 	private String imp_key = "";
 	private String imp_secret = "";
@@ -126,35 +104,37 @@ public class BookController {
 		String calr = req.getParameter("bookDate");
 		String address = bookVO.getRes_addr(); //프론트에서 받은 주소
 		
-		System.out.println(bookVO.toString());
+		log.info("bookVO ={}",bookVO.toString());
 		
 		String[] addrList = address.split("\\s");
 		String secondeAddr = addrList[0];
 		
 		
 		//페이징처리
-		search.setCurPage(curPage); // 현재페이지
-		search.setRowSizePerPage(rowSizePerPage); // 페이지당 담길 글 갯수
-		int totalCount = bookService.getTotalRowCount(secondeAddr);
-		int totalPage = (totalCount % rowSizePerPage>0) ? (totalCount/rowSizePerPage)+1 : (totalCount/rowSizePerPage); //나머지가 있다면, 없다면 
-		search.setTotalRowCount(totalCount); // 토탈 펫시터 갯수
-		search.setTotalPageCount(totalPage); // 토탈 페이지 갯수
-		int startPage = (search.getCurPage() % search.getRowSizePerPage()>0) ? (int)(search.getCurPage()/search.getRowSizePerPage())+1:((int)(search.getCurPage()/search.getRowSizePerPage()))-search.getRowSizePerPage()+1;
-		int endPage = startPage+rowSizePerPage-1;
-		if(endPage>totalPage) {
-			endPage=totalPage;
-		}
-		search.setFirstPage(startPage);//현재 페이지기준 스타트페이지
-		search.setLastPage(endPage);//현재 페이지기준 엔드페이지
-		search.setPageSize(rowSizePerPage);
+//		search.setCurPage(curPage); // 현재페이지
+//		search.setRowSizePerPage(rowSizePerPage); // 페이지당 담길 글 갯수
+//		int totalCount = bookService.getTotalRowCount(secondeAddr);
+//		int totalPage = (totalCount % rowSizePerPage>0) ? (totalCount/rowSizePerPage)+1 : (totalCount/rowSizePerPage); //나머지가 있다면, 없다면 
+//		search.setTotalRowCount(totalCount); // 토탈 펫시터 갯수
+//		search.setTotalPageCount(totalPage); // 토탈 페이지 갯수
+//		int startPage = (search.getCurPage() % search.getRowSizePerPage()>0) ? (int)(search.getCurPage()/search.getRowSizePerPage())+1:((int)(search.getCurPage()/search.getRowSizePerPage()))-search.getRowSizePerPage()+1;
+//		int endPage = startPage+rowSizePerPage-1;
+//		if(endPage>totalPage) {
+//			endPage=totalPage;
+//		}
+//		search.setFirstPage(startPage);//현재 페이지기준 스타트페이지
+//		search.setLastPage(endPage);//현재 페이지기준 엔드페이지
+//		search.setPageSize(rowSizePerPage);
+		
+		search.setTotalRowCount(bookService.getTotalRowCount(secondeAddr));
+		search.setCurPage(curPage);
+		search.setRowSizePerPage(rowSizePerPage);
+		search.pageSetting();
+		
 		
 		//프론트에서 받은 주소를통해 db단에서 인근지역 시터들조회
 		List<SitterVO> sittList = bookService.getArroundSitter(secondeAddr,search,calr);
 		List<UserVO> sittNameList = bookService.getUserNameList(secondeAddr);
-		
-		for(SitterVO sit : sittList) {
-			System.out.println(sit.getUser_no()+"컨트롤러에서 확인!");			
-		}
 		
 		req.setAttribute("sittList", sittList); //현재쪽기반리스트
 		req.setAttribute("sittNameList", sittNameList); // 이름
@@ -162,7 +142,6 @@ public class BookController {
 		
 		//페이징때문에 넣은 주소 보존
 		req.setAttribute("address", address);
-		System.out.println(addrList[0]);
 		req.setAttribute("addr", addrList[0]);
 		
 		//예약정보담김
@@ -172,19 +151,6 @@ public class BookController {
 		sess.setAttribute("calr", calr);
 		sess.setAttribute("book", bookVO);
 		
-		JSONParser parser = new JSONParser();
-		JSONArray jms = null;
-		try {
-			jms = (JSONArray) parser.parse(calr);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		for (int i = 0; i < jms.size(); i++) {
-			JSONObject jsonObj = (JSONObject) jms.get(i);
-			String title = (String)jsonObj.get("title");
-			System.out.println(title);
-		}
-
 
 		return "book_sitter_list.jsp";
 	}
@@ -202,11 +168,11 @@ public class BookController {
 		
 		List<ReviewVO> rev = reviewService.getReviewListBySitNo(sit_no);
 		model.addAttribute("rev", rev);
-		System.out.println(rev.toString());
-		
 		req.setAttribute("sitter", s);
 		req.setAttribute("book", book);
 		req.setAttribute("user_name", user_name);
+		
+		log.info("rev ={}",rev.toString());
 		
 		return "/view/sitter/sitter_profile.jsp";
 	}
@@ -222,8 +188,6 @@ public class BookController {
 		BookVO book = (BookVO)sess.getAttribute("book");
 		
 		String merchant_uid = req.getParameter("merchant_uid");
-		
-		System.out.println("확인확인확인영"+merchant_uid);
 		
 		book.setSit_no(sit_no);
 		book.setUser_no(user_no);
@@ -256,7 +220,6 @@ public class BookController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}	
-		int time = 0;
 		
 		for(int i=0; i< jms.size(); i++) {
 			 JSONObject jsonObj = (JSONObject)jms.get(i);
@@ -280,15 +243,15 @@ public class BookController {
 				
 				//이벤트의 일차이,풀캘린더 api의 데이터저장방식 때문에 날짜차이를 통한 시간계산
 				int days = diffDays.intValue();			
-				System.out.println(days+"일차이");
 				Date t1 = f.parse(startTime);
 				Date t2 = f.parse(endTime);
 				long diff = t2.getTime() - t1.getTime();				
 				Long diffMinute = diff/(1000*60);
 				int bun = diffMinute.intValue();		
-				System.out.println(bun+"해당 분은");
 				data += bookService.calMoney(days, bun);
-				 
+				
+				log.info("time_diff = {}",days,bun);
+ 
 			} catch (java.text.ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -309,12 +272,6 @@ public class BookController {
 		//예약상세내용
 		List<BookContentVO> bookDetailList = bookService.getBookDetailList(rno);
 		
-		System.out.println(rno);
-		
-		for (BookContentVO bookContentVO : bookDetailList) {
-			System.out.println(bookContentVO.getRes_time()+"확인용시간");
-		}
-		
 		return bookDetailList;
 	}
 	
@@ -326,10 +283,9 @@ public class BookController {
 		int result = bookService.deleteBook(rno);
 		
 		if(result>0) {
-			Payment payment = bookService.getPayment(rno);
-			return payment;
+			return bookService.getPayment(rno);
 		}else {
-			return null;
+			return new Payment();
 		}
 
 
@@ -344,12 +300,10 @@ public class BookController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 		JSONObject responseObj = new JSONObject();	
-		UserVO user = (UserVO)req.getSession().getAttribute("user");
 		
 		int money = (int)model.get("paid_amount"); //돈
 		String imp_uid = (String)model.get("imp_uid"); //고유번호
 		String merchant_uid = (String)model.get("merchant_uid"); //주문번호
-		String card = (String)model.get("card_number");
 		int user_no = Integer.parseInt((String)model.get("buyer_postcode"));
 		
 		boolean success = (Boolean)model.get("success");
@@ -388,10 +342,11 @@ public class BookController {
 				e.printStackTrace();
 			} 
 		}else {
-			System.out.println("error_msg:" + error_msg);
+			log.error("payment_error_msg = {}",error_msg);
 			responseObj.put("process_result", "결제에러:" + error_msg);
 		}
-		System.out.println("responseObj:" + responseObj.toString());
+		
+		log.info("결제={}",responseObj.toString());
 		return new ResponseEntity<String>(responseObj.toString(), responseHeaders, HttpStatus.OK);
 	}
 	
@@ -442,6 +397,8 @@ public class BookController {
 			SitterVO sitter = new SitterVO();
 			sitter.setUser_no(user_no);
 			searchVO.setTotalRowCount(bookService.getMyBookCount(sitter,searchVO));
+			searchVO.setCurPage(curPage);
+			searchVO.setRowSizePerPage(rowSizePerPage);
 			searchVO.pageSetting();
 			List<BookVO> sitBookList = bookService.getSitBookList(user_no,searchVO);
 			List<UserVO> userList  = userService.getUserList();

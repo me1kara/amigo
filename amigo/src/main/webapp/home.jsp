@@ -20,6 +20,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta charset="UTF-8">
 <style>
+    footer {
+         margin-top: auto;
+         position: fixed;
+    	 bottom: 0;
+    	 width: 100%;
+     }
+
 
 /* 버튼 css */
      #holder {
@@ -151,4 +158,6 @@
     </footer>
     <!-- Footer 끝 -->
 </body>
+
+
 </html>

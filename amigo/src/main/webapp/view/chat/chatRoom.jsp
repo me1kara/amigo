@@ -432,13 +432,13 @@ List<ChatVO> chatList = (List<ChatVO>) request.getAttribute("chatList");
   					roomIndex: index,
   					userName : user_name
   				}
-  				ws.send(JSON.stringify(param)); // 보내기전 메시지를 보내서 파일을 보냄을 명시, 파일 이외에 기타 정보를 얻기 위함(누가 보냈는지, 어떤 방에서 보냈는지) 
   			    rawData = e.target.result;
+  				ws.send(JSON.stringify(param)); // 보내기전 메시지를 보내서 파일을 보냄을 명시
   			  	ws.send(rawData); //실파일보내기(비나리타입), 서버에 저장용
   			};
   			//인풋파일을 어레이버퍼형식으로 읽기
   			fileReader.readAsArrayBuffer(file);
-  		}   	
+  			}   	
   		};
 
   

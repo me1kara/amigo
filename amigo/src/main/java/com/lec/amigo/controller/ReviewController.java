@@ -49,7 +49,6 @@ public class ReviewController {
 	@RequestMapping("/user_review_list.do")
 	public String getReviewList (Model model, ReviewVO review) {  // 메인페이지에서 총리뷰리스트를 보기 위함
 		
-		System.out.println("리뷰리스트");						  // 구동 확인
 		int dogCount = reviewService.dogRowCount();               // n 마리의 amigo 가 함께합니다(강아지마릿수)
 		double starsAverage = reviewService.starsAverage();
 		int ssrc1 = reviewService.ssrc1();		                  // 각각 별이 n개일 때 리뷰 갯수

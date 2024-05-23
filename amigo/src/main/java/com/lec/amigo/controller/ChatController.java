@@ -1,45 +1,27 @@
 package com.lec.amigo.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.http.HttpRequest;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import com.lec.amigo.dao.ChatDAO;
 import com.lec.amigo.impl.ChatServiceImpl;
 import com.lec.amigo.impl.UserServiceImpl;
-import com.lec.amigo.service.ChatService;
 import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.ChatVO;
-import com.lec.amigo.vo.Payment;
 import com.lec.amigo.vo.UserVO;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class ChatController {
-	
-	@Autowired
-	@Qualifier("chatService")
-	ChatServiceImpl chatService; 
-	
-	@Autowired
-	UserServiceImpl userService;
+
+	private final ChatServiceImpl chatService; 
+	private final UserServiceImpl userService;
 	
 	/*
 	 * TODO : CL-1 채팅방목록 컨트롤러

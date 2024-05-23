@@ -5,52 +5,36 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.websocket.Session;
-
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.lec.amigo.dao.ChatDAO;
+import com.lec.amigo.etc.FileUtil;
 import com.lec.amigo.impl.ChatServiceImpl;
-import com.lec.amigo.vo.ChatRoom;
 import com.lec.amigo.vo.UserVO;
 
-import lombok.RequiredArgsConstructor;
 
-
+@PropertySource("classpath:config/chat/chat.properties")
 public class ChatHandler extends TextWebSocketHandler{
 	
 	private static HashMap<String, WebSocketSession> sessions = new HashMap<>();
-	private static final String FILE_UPLOAD_PATH = "C:/FTP/upload/img/chatImg/";
+	
+	private final String FILE_UPLOAD_PATH;
 
 	private ChatServiceImpl chatServiceImpl;
-	private ChatUtil chatUtil;
 	
 	@Autowired
-	public ChatHandler(ChatUtil chatUtil, ChatServiceImpl chatServiceImpl) {
+	public ChatHandler(ChatServiceImpl chatServiceImpl, @Value("${CHAT_FILE_UPLOAD_PATH}") String FILE_UPLOAD_PATH) {
 		this.chatServiceImpl = chatServiceImpl;
-		this.chatUtil = chatUtil;
-	}
-	
-	private final Logger logger = LoggerFactory.getLogger(ChatHandler.class);
+		this.FILE_UPLOAD_PATH = FILE_UPLOAD_PATH;
+	} 
 	
 	private final String ENTER = "enter";
 	private final String SEND = "send";
@@ -68,13 +52,12 @@ public class ChatHandler extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		//채팅메세지 받기
 		String msg = message.getPayload();
-		JSONObject chat = chatUtil.jsonToObjectParser(msg);
+		JSONObject chat = ChatUtil.jsonToObjectParser(msg);
 		
 		//채팅구분
 		String order = (String) chat.get("order");
-		int roomIndex = Integer.parseInt((String)chat.get("roomIndex"));
-		String sendUser=sendUser =(String)chat.get("userName");					
-		int user_no = chatUtil.getUser(session).getUser_no();
+		int roomIndex = Integer.parseInt((String)chat.get("roomIndex"));				
+		int user_no = ChatUtil.getUser(session).getUser_no();
 		
 		if(order!=null) {
 			String type = (String) chat.get("type");
@@ -83,13 +66,8 @@ public class ChatHandler extends TextWebSocketHandler{
 					case SEND : {
 						//받은 메세지를 db에 삽입 
 						String text = (String)chat.get("msg");
-						int a = chatServiceImpl.insertChatMessage(roomIndex, user_no, text);
-						int chat_no=0;
-						if(a>0) {
-							chat_no = chatServiceImpl.getLastChat(roomIndex).getChat_no();
-						}
+						int chat_no = chatServiceImpl.insertChatMessage(roomIndex, user_no, text);
 						chat.put("chatNo", chat_no);
-						
 					}
 					case EXIT : {
 						sessions.remove(session.getId());
@@ -99,7 +77,7 @@ public class ChatHandler extends TextWebSocketHandler{
 						String fileName = chatServiceImpl.getFileName(chat_no);
 						
 						//서버에 파일존재여부체크, 있을시 삭제
-						File deleteFile = new File("C:/FTP/upload/img/chatImg/"+fileName);
+						File deleteFile = new File(FILE_UPLOAD_PATH+fileName);
 						if(deleteFile.exists()) {
 							deleteFile.delete();
 						}
@@ -128,7 +106,7 @@ public class ChatHandler extends TextWebSocketHandler{
 		//url에서 방번호 구하는 로직
 		int roomIndex = Integer.parseInt(url.split("/chatHandler.do?")[1].substring(1));
 		//세션에 저장된 유저 읽어오기
-		UserVO user = chatUtil.getUser(session);
+		UserVO user = ChatUtil.getUser(session);
 		
 		//파일 보낸이의 정보
 		int user_no = user.getUser_no();
@@ -137,45 +115,18 @@ public class ChatHandler extends TextWebSocketHandler{
 		//파일을 보내기 전에 미리 채팅을 추가함으로서 파일이름 가져오기
 		int last_chat_no = chatServiceImpl.getLastMyChatNo(user_no, roomIndex);
 		String fileName = chatServiceImpl.getFileName(last_chat_no); 
+		
+		FileUtil.uploadFile(FILE_UPLOAD_PATH, fileName, byteBuffer);
 
-		//파일생성로직
-		File dir = new File(FILE_UPLOAD_PATH);
-		if(!dir.exists()) {
-			dir.mkdirs();
-		}
-		File file = new File(FILE_UPLOAD_PATH, fileName);
-		FileOutputStream out = null;
-		FileChannel outChannel = null;
-		try {
-			byteBuffer.flip(); //byteBuffer를 읽기 위해 세팅
-			out = new FileOutputStream(file, true); //생성을 위해 OutputStream을 연다.
-			outChannel = out.getChannel(); //채널을 열고
-			byteBuffer.compact(); //파일을 복사한다.
-			outChannel.write(byteBuffer); //binary타입으로 받은 파일을 작성
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(out != null) {
-					out.close();
-				}
-				if(outChannel != null) {
-					outChannel.close();
-				}
-			}catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		byteBuffer.position(0); 
 		try {
 			for (String key : sessions.keySet()) {
 				WebSocketSession s = sessions.get(key);
 						try {
 							//세션아이디로 인덱스를 구하고,
 							//해당인덱스와 일치하면 문자를 보내면됨
-							if(chatUtil.getUser(s)!=null) {		
+							if(ChatUtil.getUser(s)!=null) {		
 								//방번호 체크
-								boolean checkIndex = chatServiceImpl.checkRoomIndex(chatUtil.getUser(s).getUser_no(), roomIndex);								
+								boolean checkIndex = chatServiceImpl.checkRoomIndex(ChatUtil.getUser(s).getUser_no(), roomIndex);								
 								if(checkIndex) {
 									JSONObject chat = new JSONObject();
 									chat.put("order", SEND);
@@ -219,9 +170,9 @@ public class ChatHandler extends TextWebSocketHandler{
 				WebSocketSession s = sessions.get(key);
 				try {
 					//세션의 로그인정보가 있으면
-					if(chatUtil.getUser(s)!=null) {
+					if(ChatUtil.getUser(s)!=null) {
 						//해당 세션의 유저가 메세지의 룸번호를 가지고있는지 조회
-						boolean checkIndex = chatServiceImpl.checkRoomIndex(chatUtil.getUser(s).getUser_no(), roomIndex);
+						boolean checkIndex = chatServiceImpl.checkRoomIndex(ChatUtil.getUser(s).getUser_no(), roomIndex);
 						//해당 				
 						if(checkIndex) {
 							s.sendMessage(new TextMessage(chat.toJSONString()));
@@ -238,9 +189,9 @@ public class ChatHandler extends TextWebSocketHandler{
 					if (s != session) { // 현재 접속자가 아닌 나머지 사람들				
 						try {
 							//세션의 로그인정보가 있으면
-							if(chatUtil.getUser(s)!=null) {
+							if(ChatUtil.getUser(s)!=null) {
 								//해당 세션의 유저가 메세지의 룸번호를 가지고있는지 조회
-								boolean checkIndex = chatServiceImpl.checkRoomIndex(chatUtil.getUser(s).getUser_no(), roomIndex);
+								boolean checkIndex = chatServiceImpl.checkRoomIndex(ChatUtil.getUser(s).getUser_no(), roomIndex);
 								//해당 				
 								if(checkIndex) {
 									s.sendMessage(new TextMessage(chat.toJSONString()));

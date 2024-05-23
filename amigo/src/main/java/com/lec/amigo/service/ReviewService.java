@@ -1,6 +1,7 @@
 package com.lec.amigo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lec.amigo.vo.ReviewVO;
 
@@ -44,6 +45,8 @@ public interface ReviewService {
 	
 	// 별점 5점일때
 	int ssrc5();
+	
+	List<Map<String,Object>> ssrc();
 	
 	// 총 리뷰갯수
 	int starsTotalCount();

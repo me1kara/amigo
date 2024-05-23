@@ -33,19 +33,21 @@ import com.lec.amigo.vo.HeartVO;
 import com.lec.amigo.vo.ReplyVO;
 import com.lec.amigo.vo.UserVO;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 
 @Controller
 @PropertySource("classpath:config/uploadpath.properties")
+@RequiredArgsConstructor
+@Slf4j
 public class BoardController {
-
-	@Autowired
-	BoardService boardService;
 	
-	@Autowired
-	ReplyService replyService;
+	private final BoardService boardService;
 	
-	@Autowired
-	Environment environment;
+	private final ReplyService replyService;
+	
+	private final Environment environment;
 	
 	private String uploadFolder = "";
 	
@@ -306,7 +308,7 @@ public class BoardController {
 				}
 				
 			} catch (Exception e) {
-				System.out.println("------------------------> 다중 파일 업로드 실패");
+				log.error("다중 파일 업로드 실패 = {} ", e.getMessage());
 				for(int i=0; i<uploadFile.size(); i++) {
 					new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName")).delete();
 				}

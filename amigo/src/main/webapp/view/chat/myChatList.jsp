@@ -9,9 +9,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
-
-
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
   integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
@@ -34,10 +31,11 @@
     	.chat-header-title {
     		font-family: "Jalnan";
       		font-size:40px;
+      		/* 
       		text-align: left;
       		margin-left: 10%;
+      		*/
     	}	
-    	
     </style>
 </head>
 <body>
@@ -93,7 +91,7 @@
 															<c:otherwise>
 																<td>
 																<ul style="list-style: none;" >	
-									<c:choose>
+														<c:choose>
 															<c:when test='${chat.getContent() eq "해당유저는 나갔습니다" }'>
 																<li style="line-height: 45px; text-align: center;">${chat.getUser_nick()} 이(가) 나갔습니다.</li>
 																<script>
@@ -125,7 +123,6 @@
 										<button class="btn btn-ligth btn-outline-danger" onclick="exit_room(${ chat.index})" style="margin-top:10px;">나가기</button>
 										<hr>						
 							</c:forEach>
-							
 						</ul>
 						</c:when>
 					</c:choose>
@@ -136,28 +133,28 @@
 
 		<%@include file="/includes/footer.jsp" %>
 		
-		    <script>
-    	function exit_room(index){
-    		if(confirm('정말로 채팅방을 나가시겠습니까? 환불을 원하시면 예약취소를 해주세요!')){
-    			$.ajax({
-    				url  : '/ajax/deleteChatRoom.do',
-    				type : 'POST',
-    				data : {
-    					'index' : index	
-    				},
-    				success : function(result){
-    					alert('삭제에 성공했습니다!');
-    					history.go(0);
-    				},
-    			    error : function(request, status, error) { // 결과 에러 콜백함수
-    			        console.log(error);
-    			        alert('삭제에 실패했습니다!');
-    			        history.go(0);
-    			    }
-    			});
-    		}
-    	}
-    </script>
+<script>
+	function exit_room(index){
+		if(confirm('정말로 채팅방을 나가시겠습니까? 환불을 원하시면 예약취소를 해주세요!')){
+			$.ajax({
+				url  : '/ajax/deleteChatRoom.do',
+				type : 'POST',
+				data : {
+					'index' : index	
+				},
+				success : function(result){
+					alert('삭제에 성공했습니다!');
+					history.go(0);
+				},
+			    error : function(request, status, error) { // 결과 에러 콜백함수
+			        console.log(error);
+			        alert('삭제에 실패했습니다!');
+			        history.go(0);
+			    }
+			});
+		}
+	}
+</script>
 	
 </body>
 </html>

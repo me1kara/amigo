@@ -336,61 +336,66 @@ prefix="c"%>
       </div>
       <!-- 커뮤니티 종료-->
       <br />
-      <!-- 실시간 후기 -->
-      <div class="container col-md-6 mt-5">
-      <div class="row justify-content-between">
-        <div class="col-4">
-          <h4 style="white-space: nowrap;">실시간 후기</h4>
-        </div>
-        <div class="col-4 text-end">
-          <a href="user_review_list.do" class="all-view">전체보기</a>
-        </div>
-      </div>
-      <!-- 실시간 후기 추가한부분-카드가 아래로 내려가버림. -->
       
-      <div class="rating-card" style="background: white">
-              <div class="text-center m-b-30" style="cursor:pointer;" onclick="location.href='user_review_list.do';">                                                    <!-- $ {도그카운트} 로 강아지 테이블의 마릿수를 가져옴 -->
-                <div class="review-member">
-                  <a href="#">${dogCount}</a>마리의 친구들이 AM!GO와 함께했어요!
-                </div>
-                <br />
-                <!-- 점수 -->
-                <h1 class="rating-number">${starsAverage}<small>/5</small></h1>
-                <div class="rating-stars d-inline-block position-relative mr-2">
-                  <!--  -->
-                  <img src="resources/img/grey-star.svg" alt="" />
-                  <div class="filled-star" style="width: 86%"></div>
-                </div>
-                                                               <!-- 총 레이팅 : 별 갯수를 서버단에서 직접 가져옴. -->
-                <div class="text-muted">${starsTotalCount } ratings</div>
-      </div> 
-      </div>
-      <!-- 후기 종료 -->
-      <!-- Q&A -->
-      <div class="container col-md-6">
-      <div class="row justify-content-between mt-5">
-        <div class="col-4">
-          <h4>Q&A</h4>
-        </div>
-        <div class="col-4 text-end">
-          <a href="user_board_cate.do?ubd_cate=질문" class="all-view">전체보기</a>
-        </div>
-      </div>
-      <div class="container card text-center" id="card-last" style="cursor:pointer; border-radius: 20px;" onclick="location.href='user_board_detail.do?ubd_no=5&updateCount_is=abd&cnt=3'">
-      	<h5 class="card-title"><b>Q ${ board.getUbd_title() }</b></h5>
-        	<small> ${ board.getUser_nick() } </small>
-        <div class="card-body">
-          <p class="card-text">
-            ${ board.getUbd_cont() }
-          </p>
-        </div>
-      </div>
-      </div>
-      <br />
-      <!-- Q&A 종료 -->
-
-
-    </div>
+      
+	      <!-- 실시간 후기 -->
+	      <div class="container col-md-6 mt-5">
+	      <c:if test="${starsTotalCount !=0 && starsTotalCount !=null} ">
+	      <div class="row justify-content-between">
+	        <div class="col-4">
+	          <h4 style="white-space: nowrap;">실시간 후기</h4>
+	        </div>
+	        <div class="col-4 text-end">
+	          <a href="user_review_list.do" class="all-view">전체보기</a>
+	        </div>
+	      </div>
+	      <!-- 실시간 후기 추가한부분-카드가 아래로 내려가버림. -->
+	      
+	      <div class="rating-card" style="background: white">
+	              <div class="text-center m-b-30" style="cursor:pointer;" onclick="location.href='user_review_list.do';">                                                    <!-- $ {도그카운트} 로 강아지 테이블의 마릿수를 가져옴 -->
+	                <div class="review-member">
+	                  <a href="#">${dogCount}</a>마리의 친구들이 AM!GO와 함께했어요!
+	                </div>
+	                <br />
+	                <!-- 점수 -->
+	                <h1 class="rating-number">${starsAverage}<small>/5</small></h1>
+	                <div class="rating-stars d-inline-block position-relative mr-2">
+	                  <!--  -->
+	                  <img src="resources/img/grey-star.svg" alt="" />
+	                  <div class="filled-star" style="width: 86%"></div>
+	                </div>
+	                                                               <!-- 총 레이팅 : 별 갯수를 서버단에서 직접 가져옴. -->
+	                <div class="text-muted">${starsTotalCount } ratings</div>
+	      </div> 
+	      </div>
+	      </c:if>
+	      <!-- 후기 종료 -->
+	      <!-- Q&A -->
+	      
+	      <c:if test="${board != null} ">
+	      <div class="container col-md-6">
+	      <div class="row justify-content-between mt-5">
+	        <div class="col-4">
+	          <h4>Q&A</h4>
+	        </div>
+	        <div class="col-4 text-end">
+	          <a href="user_board_cate.do?ubd_cate=질문" class="all-view">전체보기</a>
+	        </div>
+	      </div>
+	      <div class="container card text-center" id="card-last" style="cursor:pointer; border-radius: 20px;" onclick="location.href='user_board_detail.do?ubd_no=5&updateCount_is=abd&cnt=3'">
+	      	<h5 class="card-title"><b>Q ${ board.getUbd_title() }</b></h5>
+	        	<small> ${ board.getUser_nick() } </small>
+	        <div class="card-body">
+	          <p class="card-text">
+	            ${ board.getUbd_cont() }
+	          </p>
+	        </div>
+	      </div>
+	      </div>
+	      <br />
+	      </c:if>
+	      <!-- Q&A 종료 -->
+	    </div>
     </div>
     
 	<%@include file="/includes/scrollTop.jsp" %>

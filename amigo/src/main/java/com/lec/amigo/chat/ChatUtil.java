@@ -1,21 +1,18 @@
 package com.lec.amigo.chat;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.lec.amigo.vo.UserVO;
 
-@Component
 public class ChatUtil {
 	//http세션에 담긴 유저얻어오기
-	public UserVO getUser(WebSocketSession session) {
+	public static UserVO getUser(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
 		UserVO loginUser = (UserVO)httpSession.get("user");
 		
@@ -26,7 +23,7 @@ public class ChatUtil {
 	}
 	
 	//json파싱용
-	public JSONObject jsonToObjectParser(String jsonStr) {
+	public  static JSONObject jsonToObjectParser(String jsonStr) {
 		JSONParser parser = new JSONParser();
 		JSONObject obj = null;
 		try {

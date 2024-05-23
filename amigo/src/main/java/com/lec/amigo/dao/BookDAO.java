@@ -39,8 +39,11 @@ import com.lec.amigo.vo.Payment;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Repository("bookDAO")
 @PropertySource("classpath:config/paymentsql.properties")
+@Slf4j
 public class BookDAO {
 	
 	@Autowired
@@ -88,14 +91,15 @@ public class BookDAO {
 	public int calMoney(int days, int time) {
 		String sql = "select sit_price from sit_price where sit_time=1";
 		int price = jdbcTemplate.queryForObject(sql, Integer.class);
-		int calResult = days*time*price;
-		System.out.println(calResult+"예상비용입니다");
+		log.info("days, time, price = {}, {}, {}", days, time, price);
+		int calResult = days*(time/60)*price;
 		return calResult;
 	}
 	
 	//인근지역시터
 	public List<SitterVO> getArroudSitter(String secondeAddr, PagingVO page, String calr) {		
-		System.out.println(secondeAddr);
+		log.debug("인근지역 시터 = {} ",secondeAddr);
+		
 		String sql = "select u.user_name,u.user_addr, ss.* from user u,"
 				+ "(select * from petsitter where sit_no not in("
 				+ "select distinct r.sit_no from reservation r,(select distinct * from res_content where res_date in (";
@@ -138,8 +142,7 @@ public class BookDAO {
 		sql +=")) rs where r.res_no = rs.res_no)) ss where u.user_no=ss.user_no and u.user_type='S' and u.user_addr like ? limit ?,?";
 		
 		String sqlinput = "%"+secondeAddr+"%";
-		
-		System.out.println(sqlinput);
+
 		int startSno = (page.getCurPage()*page.getRowSizePerPage())-page.getRowSizePerPage();	
 		List<SitterVO> sitList = new ArrayList<SitterVO>();
 		Connection conn = JDBCUtility.getConnection();
@@ -162,12 +165,12 @@ public class BookDAO {
 				si.setSit_intro(rs.getString("sit_intro"));
 				si.setSit_care_exp(rs.getString("sit_care_exp"));
 				sitList.add(si);	
-				System.out.println(si.getSit_no()+"sit_no 확인용");
 			}
 			
 		}catch(Exception e){
 			e.printStackTrace();
-			System.out.println("해당한 결과가 없습니다!");
+		}finally {
+			JDBCUtility.close(conn, rs, pstmt);
 		}
 	
 	

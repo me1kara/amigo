@@ -91,7 +91,7 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
     <!-- css를 적용하지 않았기 때문에 차후에 적용해줘야합니다. -->
-    <div class="container" style="margin-bottom: 150px;">
+    <header class="container" style="margin-bottom: 150px;">
       <nav
         class="navbar navbar fixed-top navbar-light bg-light navbar-expand-custom navbar-mainbg"
       >
@@ -170,7 +170,7 @@ pageEncoding="UTF-8"%>
           </ul>
         </div>
       </nav>
-    </div>
+    </header>
     <!-- 네비바 종료 -->
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

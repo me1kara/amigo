@@ -38,29 +38,29 @@
     </footer>
     <!-- Footer 끝 -->
 <script type="text/javascript">
+const footer = document.querySelector("footer");
+const header = document.querySelector("header");
+const body = document.querySelector("body");
+const windowHeight = window.innerHeight;
 // 화면 크기가 변경될 때마다 푸터 위치 조정
-  function adjustFooterPosition() {
-    const footer = document.querySelector("footer");
-    const windowHeight = window.innerHeight;
-    const bodyHeight = document.body.offsetHeight;
-    //footer.style.width = window.innerWidth + 'px';
+	function adjustFooterPosition() {    
+	  //header크기가 바디에 포함 안 돼서 
+	  let bodyHeight = body.offsetHeight + header.offsetHeight;
+	  //바디가 모니터 화면보다 작은 경우,중간에 푸터가 위치하는걸 방지
+	  if (bodyHeight< windowHeight) {
+	    //모바일과 윈도우의 height 값의 차이를 상정
+	    if(window.innerWidth>=700){
+	footer.style.position = "absolute";
+	    }
+	    footer.style.bottom = "0";
+	  }else {
+	      footer.style.position = "static"; // 푸터를 기본 위치로 돌림
+	  }
+	}
 
-    //바디가 모니터 화면보다 작은 경우,중간에 푸터가 위치하는걸 방지
-    if (bodyHeight< windowHeight) {
-      //모바일과 윈도우의 height 값의 차이를 상정
-      if(window.innerWidth>1000){
-		footer.style.position = "absolute";
-      }
-        footer.style.bottom = "0";
-    }else {
-        footer.style.position = "static"; // 푸터를 기본 위치로 돌림
-
-    }
-  }
-
-  // 페이지 로드 시 푸터 위치 조정
-  window.addEventListener("load", adjustFooterPosition);
-
+// 페이지 로드 시 푸터 위치 조정
+window.addEventListener("load", adjustFooterPosition);
+window.addEventListener("resize", adjustFooterPosition);
 
 </script>
 	
@@ -82,11 +82,9 @@
 
 <script>
 <% if(session.getAttribute("user")!=null){
-	
 	List<ChatRoom> room_list = (List)session.getAttribute("chat_room_list");
 	if(room_list!=null){
 	%>
-	
 	var url = "ws://www.amigoo.store/chatHandler.do";
 	var ws = new WebSocket(url);
 	
@@ -110,16 +108,13 @@
 						showNotification(user, msg, roomIndex);
 					}else{
 						showNotification(user, "이미지가 도착했습니다!", roomIndex);
-					}
-			
-					
+					}			
 				}
 				<%
 				}%>
 		}
 	}
 	}
-		
 	<%
 	}
 }%>

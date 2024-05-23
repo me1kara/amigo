@@ -398,8 +398,10 @@ prefix="c"%>
       </div>
       <!-- 커뮤니티 종료-->
       <br />
-      <!-- 실시간 후기 -->
+
       <div class="container col-md-6 mt-5">
+      <!-- 실시간 후기 -->
+      <c:if test="${starsTotalCount !=0 && starsTotalCount !=null} ">
       <div class="row justify-content-between">
         <div class="col-4">
           <h4>실시간 후기</h4>
@@ -427,8 +429,10 @@ prefix="c"%>
                 <div class="text-muted">${starsTotalCount } ratings</div>
       </div> 
       </div>
+      </c:if>
       <!-- 후기 종료 -->
       <!-- Q&A -->
+      <c:if test="${board != null} ">
       <div class="container col-md-6">
       <div class="row justify-content-between mt-5">
         <div class="col-4">
@@ -449,6 +453,7 @@ prefix="c"%>
       </div>
       </div>
       <br />
+      </c:if>
       <!-- Q&A 종료 -->
 
 

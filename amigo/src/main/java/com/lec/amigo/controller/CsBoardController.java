@@ -1,6 +1,7 @@
 package com.lec.amigo.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tomcat.util.http.fileupload.impl.FileUploadIOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -20,22 +23,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.amigo.common.SearchVO;
+import com.lec.amigo.etc.FileUtil;
 import com.lec.amigo.service.CsBoardService;
 import com.lec.amigo.service.CsReplyService;
 import com.lec.amigo.vo.CsBoardVO;
 import com.lec.amigo.vo.CsReplyVO;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@RequiredArgsConstructor
+@Slf4j
 public class CsBoardController {
 
-	@Autowired
-	CsBoardService csBoardService;
-	
-	@Autowired
-	CsReplyService csReplyService;
-	
-	@Autowired
-	Environment environment;
+	private final CsBoardService csBoardService;
+	private final CsReplyService csReplyService;
+	private final Environment environment;
 	
 	private String uploadFolder = "";
 	
@@ -127,57 +131,15 @@ public class CsBoardController {
 	}
 	
 	@RequestMapping(value="/cs_board_update.do", method=RequestMethod.POST)
-	public String cs_board_update(Model model, CsBoardVO csboard, SearchVO searchVO ) {	
-		
+	public String cs_board_update(Model model, CsBoardVO csboard, SearchVO searchVO ) throws FileUploadException {	
 		if(csboard.getUploadFile() != null) {
-		List<MultipartFile> uploadFile = csboard.getUploadFile(); 
-		
-		if (!uploadFile.isEmpty()) {
-
-			List<Map<String, String>> uploadFileList = new ArrayList<>();
-
-			for(int i = 0; i < uploadFile.size(); i++) {
-			String fileRealName = uploadFile.get(i).getOriginalFilename(); // 파일 진짜 이름 가져오기
-				if(fileRealName != "") {
-
-			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length()); // 확장자명 구하기
-			
-			UUID uuid = UUID.randomUUID();
-			String[] uuids = uuid.toString().split("-");
-			String uniqueName = uuids[0] + fileExtension; // 랜덤 글자 생성
-			
-			Map<String, String> map = new HashMap<>();
-			map.put("fileRealName", fileRealName);
-			map.put("uniqueName", uniqueName);
-			
-			uploadFileList.add(map);
-				}
-			}			
-				
-			try {
-				for(int i=0; i<uploadFileList.size(); i++) {
-					File saveFile = new File(uploadFolder +"\\"+uploadFileList.get(i).get("uniqueName"));
-					uploadFile.get(i).transferTo(saveFile);
-				}
-				
-			} catch (Exception e) {
-				System.out.println("------------------------> 다중 파일 업로드 실패");
-				for(int i=0; i<uploadFile.size(); i++) {
-					new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName")).delete();
-				}
-				e.printStackTrace();
-			} 
-			ArrayList<String> DBUpload = new ArrayList<>();
-			for(int i=0; i<uploadFileList.size(); i++) {
-				DBUpload.add(uploadFileList.get(i).get("uniqueName"));
+			List<MultipartFile> uploadFile = csboard.getUploadFile(); 
+			String fileNames = FileUtil.uploadFiles(uploadFile, uploadFolder);
+			if(!fileNames.equals("fail")) {
+				csboard.setHbd_file(fileNames); // 파일 이름을 ,로 연결해서 DB에 저장
+				csBoardService.updateCsBoard(csboard);
 			}
-		
-			String DBUploadFile = StringUtils.join(DBUpload, ",");  // 리스트 값들을 ,로 연결해주는 자바에 있는 메서드
-			csboard.setHbd_file(DBUploadFile); // 파일 이름을 ,로 연결해서 DB에 저장
-		} 
 		}
-		
-		csBoardService.updateCsBoard(csboard);
 		model.addAttribute("msg","글이 정상적으로 수정되었습니다.");
 		model.addAttribute("url","cs_board_detail.do?&Hbd_no="+csboard.getHbd_no()+"&curPage="+searchVO.getCurPage()+"&rowSizePerPage="+searchVO.getRowSizePerPage()
 							+"&searchType="+searchVO.getSearchType()+"&searchWord="+searchVO.getSearchWord()+"&updateCount_is=xyz");
@@ -203,7 +165,6 @@ public class CsBoardController {
 			for(int i = 0; i < uploadFile.size(); i++) {
 			String fileRealName = uploadFile.get(i).getOriginalFilename(); // 파일 진짜 이름 가져오기
 				if(fileRealName != "") {
-
 					String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length()); // 확장자명 구하기
 				
 					UUID uuid = UUID.randomUUID();
@@ -225,7 +186,7 @@ public class CsBoardController {
 				}
 				
 			} catch (Exception e) {
-				System.out.println("------------------------> 다중 파일 업로드 실패");
+				log.error("다중 파일 업로드 실패 = {} ",e.getMessage());
 				for(int i=0; i<uploadFile.size(); i++) {
 					new File(uploadFolder+"\\"+uploadFileList.get(i).get("uniqueName")).delete();
 				}

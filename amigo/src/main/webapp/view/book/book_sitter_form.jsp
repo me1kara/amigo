@@ -3,10 +3,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<% UserVO user=(UserVO)session.getAttribute("user");%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<% UserVO user=(UserVO)session.getAttribute("user");%>
 <!-- 제이쿼리 -->
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"
 integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
@@ -593,6 +594,10 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 						$('#money').val('');
 						$('#show_money').text(' 0원');
 					}
+				},
+				error : function(reponse){
+					$('#show_money').text('ERROR 발생, 다시 시작해주십시오.');
+					console.log(response);
 				}
 			});
 		} else {
@@ -600,8 +605,6 @@ integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 		}
 	}
 </script>
-	
-
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>

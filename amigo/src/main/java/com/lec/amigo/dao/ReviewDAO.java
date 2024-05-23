@@ -16,6 +16,9 @@ import com.lec.amigo.common.SearchVO;
 import com.lec.amigo.mapper.DogRowMapper;
 import com.lec.amigo.mapper.ReviewRowMapper;
 import com.lec.amigo.vo.ReviewVO;
+
+import lombok.extern.slf4j.Slf4j;
+
 import com.lec.amigo.vo.DogVO;
 import com.lec.amigo.vo.HeartVO;
 
@@ -23,6 +26,7 @@ import com.lec.amigo.vo.HeartVO;
 
 @Repository("reviewDAO")
 @PropertySource("classpath:config/reviewsql.properties")
+@Slf4j
 public class ReviewDAO {
 
 	@Autowired
@@ -56,8 +60,8 @@ public class ReviewDAO {
 	
 	// 총 리뷰 다뜨게하기
 	public List<ReviewVO> getReviewList(ReviewVO review) {
+		log.info(selectReviewList);
 		
-		System.out.println(selectReviewList);
 		return jdbcTemplate.query(selectReviewList, new ReviewRowMapper());
 	}
 	
@@ -100,7 +104,14 @@ public class ReviewDAO {
 		}
 	
 	public double starsAverage() {
-		return jdbcTemplate.queryForObject("select round(AVG(star_cnt),2) from sit_review", Double.class);
+		double res = 0;
+		try {
+			res = jdbcTemplate.queryForObject("select ifnull(round(AVG(star_cnt),2),0)  from sit_review", Double.class);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res; 
 	}
 	
 	public double starsAveragePerSit(int sit_no) {
@@ -117,6 +128,10 @@ public class ReviewDAO {
 		
 		Object[] args = {sit_no};
 		return jdbcTemplate.queryForObject("select count(*) from sit_review where sit_no = ?", args, Integer.class);
+	}
+	
+	public List<Map<String, Object>> ssrc() {
+	    return jdbcTemplate.queryForList("SELECT star_cnt, COUNT(star_cnt) FROM sit_review GROUP BY star_cnt");
 	}
 	
 	public int ssrc1() { 
